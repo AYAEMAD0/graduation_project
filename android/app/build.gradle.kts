@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mock_flow"
+    namespace = "com.example.mock_mate_ai"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

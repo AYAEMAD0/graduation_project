@@ -1,4 +1,4 @@
-package com.example.mock_flow
+package com.example.mock_mate_ai
 
 import io.flutter.embedding.android.FlutterActivity
 
