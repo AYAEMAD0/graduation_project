@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mock_mate_ai/core/routes/app_router.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +16,10 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return  MaterialApp(
-            debugShowCheckedModeBanner: false,
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: AppRoutes.splash,
+          routes: AppRouter.routes,
         );
       },
     );
