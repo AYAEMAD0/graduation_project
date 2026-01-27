@@ -6,8 +6,13 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  final double? widthBtn;
+  const CustomButton({
+    super.key,
+    this.widthBtn,
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class CustomButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
         height: 54.h,
-        width: 204.w,
+        width: widthBtn ?? 204.w,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
           borderRadius: BorderRadius.circular(20.r),
