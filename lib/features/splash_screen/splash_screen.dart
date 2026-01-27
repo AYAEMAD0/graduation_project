@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
-import 'package:mock_mate_ai/features/verfiy_screen/verify_screen.dart';
+import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -40,7 +40,7 @@ class SplashScreen extends StatelessWidget {
           ),
         ),
       ),
-      nextScreen: const VerifyScreen(),
+      nextScreen:  OnboardingScreen(),
       splashTransition: SplashTransition.fadeTransition,
       animationDuration: const Duration(milliseconds: 300),
     );
