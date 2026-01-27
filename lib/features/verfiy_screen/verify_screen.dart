@@ -66,7 +66,7 @@ class VerifyScreen extends StatelessWidget {
 
                     SizedBox(
                       width: 0.6.sw,
-                      child: CustomButton(onTap: () {}, text: 'Verify'),
+                      child: CustomButton( text: 'Verify', onPressed: () {  },),
                     ),
                   ],
                 ),
