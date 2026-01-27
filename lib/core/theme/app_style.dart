@@ -5,7 +5,7 @@ import 'app_color.dart';
 import 'font_weight_helper.dart';
 
 class AppStyle {
-  static final TextStyle font34BlackSemiBold = GoogleFonts.roboto(
+  static final TextStyle font34BlackSemiBold =  GoogleFonts.roboto(
     fontSize: 34.sp,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.semiBold,
