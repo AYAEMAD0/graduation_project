@@ -19,7 +19,7 @@ class SocialButton extends StatelessWidget {
         height: 51.h,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: AppColor.LightGrey, width: 1.w),
+          border: Border.all(color: AppColor.whiteDarkColor, width: 1.w),
         ),
         child: Center(
           child: SvgPicture.asset(icon,width: 41.w,height: 41.h,),
