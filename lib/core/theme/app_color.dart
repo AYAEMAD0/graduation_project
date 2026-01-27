@@ -8,5 +8,5 @@ class AppColor {
   static const Color grayColor = Color(0xff515151);
   static const Color grayDarkColor = Color(0xff282828);
   static const Color transparentColor = Colors.transparent;
-
+  static const Color activeBorder = Color(0xff3C473F);
 }
