@@ -5,6 +5,7 @@ import 'package:mock_mate_ai/core/routes/app_router.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'core/config/di.dart';
 import 'core/config/my_bloc_observer.dart';
+import 'core/theme/app_theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

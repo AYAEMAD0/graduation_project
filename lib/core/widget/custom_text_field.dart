@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
+import '../theme/app_color.dart';
+
+class CustomTextField extends StatelessWidget {
+  final String hint;
+  final String? label;
+
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+
+  final Color? borderColor;
+  final int maxLines;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboard;
+  final bool? obscure;
+  final String? obscureCharacter;
+  final void Function(String)? onChanged;
+
+  const CustomTextField({
+    super.key,
+    required this.hint,
+     this.controller,
+     this.borderColor,
+    this.validator,
+    this.maxLines = 1,
+    this.keyboard,
+    this.label,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.obscure = false,
+    this.obscureCharacter,
+    this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: AppStyle.font18BlackRegular,
+      controller: controller,
+      validator: validator,
+      onChanged: onChanged,
+      autofocus: false,
+      obscureText: obscure!,
+      obscuringCharacter: obscureCharacter ?? "*",
+      maxLines: maxLines,
+      cursorColor: AppColor.primaryBlueColor,
+      cursorHeight: 23.h,
+      cursorWidth: 3.w,
+      keyboardType: keyboard ?? TextInputType.text,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: AppStyle.font14GrayRegular,
+        labelText: label,
+        labelStyle: AppStyle.font14GrayRegular,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12.w,
+          vertical: 20.h,
+        ),
+        enabledBorder: builtBorder(AppColor.transparentColor),
+        focusedBorder: builtBorder(AppColor.primaryBlueColor),
+        errorBorder: builtBorder(),
+        focusedErrorBorder: builtBorder(),
+        prefixIcon: Icon(prefixIcon),
+        prefixIconColor: AppColor.grayColor,
+        suffixIcon: Icon(suffixIcon),
+        suffixIconColor: AppColor.grayColor,
+        filled: true,
+        fillColor:AppColor.whiteDarkColor,
+      ),
+    );
+  }
+
+  OutlineInputBorder builtBorder([Color colorBorder = AppColor.primaryPurpleColor]) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.r),
+      borderSide: BorderSide(color: colorBorder, width: 1.5.w),
+    );
+  }
+}
