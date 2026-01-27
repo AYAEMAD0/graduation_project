@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mock_mate_ai/core/routes/AppRoutes.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/Login_Screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +18,11 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return  MaterialApp(
             debugShowCheckedModeBanner: false,
+          routes: {
+              AppRoutes.login: (context) => const LoginScreen(),
+          },
+          initialRoute: AppRoutes.login,
+
         );
       },
     );
