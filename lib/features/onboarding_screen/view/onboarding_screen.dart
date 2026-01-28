@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mock_mate_ai/core/theme/app_color.dart';
+import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import '../../../core/config/di.dart';
+import '../../../core/routes/app_routes.dart';
 import '../widget/gradient_dot_indicator.dart';
 import '../viewmodel/onboarding_cubit.dart';
 
@@ -14,16 +16,13 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<OnboardingCubit>(); // DI instance
-
+    final cubit = getIt<OnboardingCubit>();
     return BlocProvider.value(
       value: cubit,
       child: BlocBuilder<OnboardingCubit, int>(
         builder: (context, currentPage) {
           final pages = cubit.pages;
-
           return Scaffold(
-            backgroundColor: AppColor.whiteColor,
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
               child: Column(
@@ -61,14 +60,13 @@ class OnboardingScreen extends StatelessWidget {
                       },
                     ),
                   ),
-
                   // Dots
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       pages.length,
-                          (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                      (index) => Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
                         child: GestureDetector(
                           onTap: () {
                             _controller.animateToPage(
@@ -85,41 +83,33 @@ class OnboardingScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 50.h),
-
                   // Buttons
                   Row(
                     spacing: 45.w,
                     children: [
                       Spacer(),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColor.primaryPurpleColor,
-                          foregroundColor: AppColor.whiteColor,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 45.w,
-                            vertical: 20.h,
-                          ),
-                        ),
+                      CustomButton(
+                        text: "SKIP",
+                        widthBtn: 126.w,
                         onPressed: () {
                           _controller.jumpToPage(pages.length - 1);
                           cubit.skip();
                         },
-                        child: Text("SKIP", style: AppStyle.font16WhiteBold),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColor.primaryPurpleColor,
-                          foregroundColor: AppColor.whiteColor,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 45.w,
-                            vertical: 20.h,
-                          ),
-                        ),
+                      CustomButton(
+                        text: "NEXT",
+                        widthBtn: 126.w,
                         onPressed: () {
                           if (currentPage == pages.length - 1) {
-                            Navigator.pushReplacementNamed(context, '/home');
+                            SharedCheckHelper.setValue(
+                              SharedCheckHelper.keyIsOnBoarding,
+                              true,
+                            );
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.login,
+                            );
                           } else {
                             _controller.nextPage(
                               duration: Duration(milliseconds: 300),
@@ -128,12 +118,10 @@ class OnboardingScreen extends StatelessWidget {
                             cubit.nextPage();
                           }
                         },
-                        child: Text("NEXT", style: AppStyle.font16WhiteBold),
                       ),
                       Spacer(),
                     ],
                   ),
-
                   SizedBox(height: 50.h),
                 ],
               ),
