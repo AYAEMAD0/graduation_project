@@ -4,7 +4,8 @@ import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
-import '../widget/social_button.dart';
+import '../../../../../core/routes/app_routes.dart';
+import '../../widget/social_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -77,8 +78,19 @@ class LoginScreen extends StatelessWidget {
                       "Don’t have an account?",
                       style: AppStyle.font16GrayRegular,
                     ),
-                    SizedBox(width: 5.w),
-                    Text("Sign Up", style: AppStyle.font16BlackBold),
+                    SizedBox(width: 3.w),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.signup,
+                        );
+                      },
+                      child: Text(
+                        "Sign Up",
+                        style: AppStyle.font16BlackBold,
+                      ),
+                    ),
                   ],
                 ),
               ],

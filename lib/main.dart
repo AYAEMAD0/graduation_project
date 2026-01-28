@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mock_mate_ai/core/routes/app_router.dart';
-import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'core/config/di.dart';
 import 'core/config/my_bloc_observer.dart';
 import 'core/helper/shared_check_helper.dart';
+import 'core/routes/app_router.dart';
+import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 
 void main() async {
