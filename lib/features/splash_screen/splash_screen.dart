@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
-import 'package:mock_mate_ai/features/auth/presentation/screen/login_screen.dart';
-import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
-
 import '../../core/helper/shared_check_helper.dart';
+import '../auth/presentation/screen/login/login_screen.dart';
+import '../onboarding_screen/view/onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
