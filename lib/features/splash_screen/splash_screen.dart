@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
+import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import '../../core/helper/shared_check_helper.dart';
 import '../auth/presentation/screen/login/login_screen.dart';
 import '../onboarding_screen/view/onboarding_screen.dart';
@@ -21,16 +23,8 @@ class SplashScreen extends StatelessWidget {
           splash: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF6997DD),
-                  Color(0xFFE5E5E5),
-                  Color(0xFFB87CF8),
-                ],
-              ),
+            decoration:  BoxDecoration(
+              gradient: AppGradient.gradientSplash
             ),
             child: Center(
               child: TweenAnimationBuilder<double>(
@@ -46,7 +40,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Image.asset(AppAsset.logoAppImage, width: 180),
+                child: Image.asset(AppAsset.logoAppImage, width: 180.w),
               ),
             ),
           ),

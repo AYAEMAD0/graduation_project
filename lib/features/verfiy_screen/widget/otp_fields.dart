@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class OtpFields extends StatefulWidget {
   const OtpFields({super.key});
@@ -70,7 +71,7 @@ class _OtpFieldsState extends State<OtpFields> {
         focusNode: focusNodes[index],
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        style: AppStyle.font18BlackRegular,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(otpLength),
@@ -81,7 +82,7 @@ class _OtpFieldsState extends State<OtpFields> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: Color(0xffCECECE), width: 1.2),
+            borderSide: BorderSide(color: AppColor.unactiveBorder, width: 1.2.w),
           ),
 
           focusedBorder: OutlineInputBorder(
