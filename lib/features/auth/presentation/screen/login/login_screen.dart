@@ -25,17 +25,29 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Text("Welcome back!", style: AppStyle.font24BlackBold),
                 SizedBox(height: 30.h),
-                CustomTextField(hint: "Email",prefixIcon: Icons.email_outlined,),
+                CustomTextField(
+                  hint: "Email",
+                  prefixIcon: Icons.email_outlined,
+                ),
                 SizedBox(height: 30.h),
-                CustomTextField(hint: "Password",prefixIcon: Icons.lock_outline,obscure: true,),
+                CustomTextField(
+                  hint: "Password",
+                  prefixIcon: Icons.lock_outline,
+                  obscure: true,
+                ),
                 SizedBox(height: 20.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "Forgot Password?",
-                      style: AppStyle.font14GrayMedium,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.forgotPassword);
+                      },
+                      child: Text(
+                        "Forgot Password?",
+                        style: AppStyle.font14GrayMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -86,10 +98,7 @@ class LoginScreen extends StatelessWidget {
                           AppRoutes.signup,
                         );
                       },
-                      child: Text(
-                        "Sign Up",
-                        style: AppStyle.font16BlackBold,
-                      ),
+                      child: Text("Sign Up", style: AppStyle.font16BlackBold),
                     ),
                   ],
                 ),

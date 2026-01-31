@@ -6,6 +6,8 @@ import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/features/verfiy_screen/widget/otp_fields.dart';
 
+import '../../../../../../core/routes/app_routes.dart';
+
 class ForgotOtp extends StatelessWidget {
   const ForgotOtp({super.key});
 
@@ -40,7 +42,13 @@ class ForgotOtp extends StatelessWidget {
               OtpFields(otpLength: 5),
               SizedBox(height: 33.h),
               Center(
-                child: CustomButton(text: "verify", onPressed: () {}),
+                child: CustomButton(
+                  text: "verify",
+                  onPressed: () {
+                    //logic verify
+                    Navigator.pushNamed(context, AppRoutes.resetPassword);
+                  },
+                ),
               ),
               SizedBox(height: 30.h),
               Center(
