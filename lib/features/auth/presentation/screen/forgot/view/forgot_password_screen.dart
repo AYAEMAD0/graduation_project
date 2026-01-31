@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:mock_mate_ai/core/widget/AppBackButton.dart';
+import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
 import '../../../../../../core/routes/app_routes.dart';
@@ -18,7 +18,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBackButton(),
+              ArrowButton(),
               SizedBox(height: 50.h),
               Text("Forgot password", style: AppStyle.font20BlackSemiBold),
               SizedBox(height: 10.h),
