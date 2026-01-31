@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
-import 'package:mock_mate_ai/features/auth/presentation/forgot_password/forgot_password_screen.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/new_password.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/successful_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/login_screen.dart';

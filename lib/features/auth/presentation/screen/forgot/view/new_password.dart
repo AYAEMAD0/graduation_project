@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_style.dart';
 import '../../../../../../core/widget/arrow_button.dart';
 import '../../../../../../core/widget/custom_button.dart';
@@ -18,7 +19,7 @@ class NewPassword extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24.h,horizontal: 22.w),
+            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 22.w),
             child: Column(
               children: [
                 Column(
@@ -26,7 +27,10 @@ class NewPassword extends StatelessWidget {
                   children: [
                     ArrowButton(),
                     SizedBox(height: 50.h),
-                    Text("Set a new password", style: AppStyle.font20BlackSemiBold),
+                    Text(
+                      "Set a new password",
+                      style: AppStyle.font20BlackSemiBold,
+                    ),
                     SizedBox(height: 18.h),
                     Text(
                       "Create a new password. Ensure it differs from \nprevious ones for security",
@@ -34,7 +38,7 @@ class NewPassword extends StatelessWidget {
                     ),
                     SizedBox(height: 38.h),
 
-                    Text("Password",style: AppStyle.font16BlackSemiBold,),
+                    Text("Password", style: AppStyle.font16BlackSemiBold),
                     SizedBox(height: 10.h),
 
                     BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
@@ -42,16 +46,23 @@ class NewPassword extends StatelessWidget {
                         return CustomTextField(
                           hint: "Enter your new password",
                           prefixIcon: Icons.lock_outline,
-                          suffixIcon: state.isPasswordObscure ? Icons.visibility_off : Icons.visibility,
+                          suffixIcon: state.isPasswordObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           obscure: state.isPasswordObscure,
-                          onSuffixTap: () => context.read<ForgotPasswordCubit>().togglePassword(),
+                          onSuffixTap: () => context
+                              .read<ForgotPasswordCubit>()
+                              .togglePassword(),
                         );
                       },
                     ),
 
                     SizedBox(height: 20.h),
 
-                    Text("Confirm Password",style: AppStyle.font16BlackSemiBold,),
+                    Text(
+                      "Confirm Password",
+                      style: AppStyle.font16BlackSemiBold,
+                    ),
                     SizedBox(height: 10.h),
 
                     BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
@@ -59,9 +70,13 @@ class NewPassword extends StatelessWidget {
                         return CustomTextField(
                           hint: "Re-enter password",
                           prefixIcon: Icons.lock_outline,
-                          suffixIcon: state.isConfirmPasswordObscure ? Icons.visibility_off : Icons.visibility,
+                          suffixIcon: state.isConfirmPasswordObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           obscure: state.isConfirmPasswordObscure,
-                          onSuffixTap: () => context.read<ForgotPasswordCubit>().toggleConfirmPassword(),
+                          onSuffixTap: () => context
+                              .read<ForgotPasswordCubit>()
+                              .toggleConfirmPassword(),
                         );
                       },
                     ),
@@ -72,6 +87,7 @@ class NewPassword extends StatelessWidget {
                   text: "Update Password",
                   onPressed: () {
                     // Handle Update Password button press
+                    Navigator.pushNamed(context, AppRoutes.successful);
                   },
                 ),
               ],

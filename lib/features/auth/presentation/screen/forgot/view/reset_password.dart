@@ -4,6 +4,8 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 
+import '../../../../../../core/routes/app_routes.dart';
+
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
 
@@ -12,7 +14,7 @@ class ResetPassword extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 24.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 24.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -26,9 +28,15 @@ class ResetPassword extends StatelessWidget {
               ),
               SizedBox(height: 33.h),
               Center(
-                child: CustomButton(text: "confirm", onPressed: () {}),
+                child: CustomButton(
+                  text: "confirm",
+                  onPressed: () {
+                    //logic confirm
+                    Navigator.pushNamed(context, AppRoutes.newPassword);
+                  },
+                ),
               ),
-              Spacer()
+              Spacer(),
             ],
           ),
         ),
