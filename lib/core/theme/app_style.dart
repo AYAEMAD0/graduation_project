@@ -107,5 +107,11 @@ class AppStyle {
     fontWeight: FontWeightHelper.semiBold,
 
   );
+  static final TextStyle font16GrayMediumSemiBold= GoogleFonts.roboto(
+    fontSize: 16.sp,
+    color: AppColor.grayMediumColor,
+    fontWeight: FontWeightHelper.semiBold,
+
+  );
 
 }

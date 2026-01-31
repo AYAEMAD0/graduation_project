@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/new_password.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/signup_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
@@ -19,6 +20,7 @@ class AppRouter {
       AppRoutes.signup: (context) =>  SignupScreen(),
       AppRoutes.forgotOtp: (context) =>  ForgotOtp(),
       AppRoutes.resetPassword: (context) =>  ResetPassword(),
+      AppRoutes.newPassword: (context) =>  NewPassword(),
     };
   }
 }
