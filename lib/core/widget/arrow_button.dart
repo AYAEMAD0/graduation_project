@@ -13,14 +13,14 @@ class ArrowButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap ?? () => Navigator.pop(context),
       child: Container(
-        width: 50.w,
+        width: 45.w,
         height: 50.h,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
           borderRadius: BorderRadius.circular(360.r),
         ),
         child: Center(
-          child: SvgPicture.asset(AppAsset.arrowIcon, width: 8.w, height: 30.h),
+          child: SvgPicture.asset(AppAsset.arrowIcon, width: 10.w, height: 25.h),
         ),
       ),
     );
