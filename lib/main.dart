@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/successful_screen.dart';
 import 'core/config/di.dart';
 import 'core/config/my_bloc_observer.dart';
 import 'core/helper/shared_check_helper.dart';
@@ -29,9 +28,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
-          // initialRoute: AppRoutes.splash,
-          // routes: AppRouter.routes,
-          home: SuccessfulScreen(),
+          initialRoute: AppRoutes.splash,
+          routes: AppRouter.routes,
         );
       },
     );
