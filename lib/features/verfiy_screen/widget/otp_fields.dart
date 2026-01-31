@@ -5,14 +5,15 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class OtpFields extends StatefulWidget {
-  const OtpFields({super.key});
+  final int? otpLength;
+  const OtpFields({super.key, this.otpLength});
 
   @override
   State<OtpFields> createState() => _OtpFieldsState();
 }
 
 class _OtpFieldsState extends State<OtpFields> {
-  final int otpLength = 6;
+  int get otpLength => widget.otpLength ?? 6;
 
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
@@ -47,6 +48,7 @@ class _OtpFieldsState extends State<OtpFields> {
       focusNodes[index - 1].requestFocus();
     }
   }
+
   void _pasteCode(String code) {
     for (int i = 0; i < otpLength; i++) {
       controllers[i].text = i < code.length ? code[i] : '';
@@ -57,7 +59,7 @@ class _OtpFieldsState extends State<OtpFields> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(otpLength, (index) => _otpField(index)),
     );
   }
@@ -82,7 +84,10 @@ class _OtpFieldsState extends State<OtpFields> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: AppColor.unactiveBorder, width: 1.2.w),
+            borderSide: BorderSide(
+              color: AppColor.unactiveBorder,
+              width: 1.2.w,
+            ),
           ),
 
           focusedBorder: OutlineInputBorder(
