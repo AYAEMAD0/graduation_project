@@ -17,7 +17,7 @@ class ResetPassword extends StatelessWidget {
             children: [
               ArrowButton(),
               SizedBox(height: 50),
-              Text("Password reset", style: AppStyle.font20BlackBold),
+              Text("Password reset", style: AppStyle.font20BlackSemiBold),
               SizedBox(height: 18),
               Text(
                 "Your password has been successfully reset. click confirm to set a new password",
