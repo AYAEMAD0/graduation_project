@@ -13,99 +13,121 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 40.h),
-            Column(
-              children: [
-                Image.asset(AppAsset.logoAppImage, width: 188.w, height: 144.h),
-                SizedBox(height: 20.h),
-                Text("Welcome back!", style: AppStyle.font24BlackBold),
-                SizedBox(height: 30.h),
-                CustomTextField(
-                  hint: "Email",
-                  prefixIcon: Icons.email_outlined,
-                ),
-                SizedBox(height: 30.h),
-                CustomTextField(
-                  hint: "Password",
-                  prefixIcon: Icons.lock_outline,
-                  obscure: true,
-                ),
-                SizedBox(height: 20.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.forgotPassword);
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: AppStyle.font14GrayMedium,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWeb = constraints.maxWidth > 800;
+
+          return Center(
+            child: SingleChildScrollView(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 420),
+                padding: EdgeInsets.symmetric(horizontal: isWeb ? 24 : 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: isWeb ? 40 : 40.h),
+                    Center(
+                      child: Image.asset(
+                        AppAsset.logoAppImage,
+                        width: isWeb ? 140 : 336.w,
+                        height: isWeb ? 140 : 245.h,
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 50.h),
-                CustomButton(
-                  text: "LOG IN",
-                  onPressed: () {
-                    // Handle login button press
-                  },
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  " Or sign up using ",
-                  style: AppStyle.font15GrayDarkRegular,
-                ),
-                SizedBox(height: 20.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialButton(
-                      icon: AppAsset.facebookIcon,
-                      onTap: () {
-                        //  Facebook login
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                    SocialButton(
-                      icon: AppAsset.googleIcon,
-                      onTap: () {
-                        // Google login
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 180.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+
+                    SizedBox(height: isWeb ? 20 : 20.h),
+
                     Text(
-                      "Don’t have an account?",
-                      style: AppStyle.font16GrayRegular,
+                      "Welcome back!",
+                      style: AppStyle.font24BlackBold,
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(width: 3.w),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          AppRoutes.signup,
-                        );
-                      },
-                      child: Text("Sign Up", style: AppStyle.font16BlackBold),
+
+                    SizedBox(height: isWeb ? 30 : 30.h),
+
+                    CustomTextField(
+                      hint: "Email",
+                      prefixIcon: Icons.email_outlined,
+                    ),
+
+                    SizedBox(height: isWeb ? 20 : 30.h),
+
+                    CustomTextField(
+                      hint: "Password",
+                      prefixIcon: Icons.lock_outline,
+                      obscure: true,
+                    ),
+
+                    SizedBox(height: isWeb ? 12 : 20.h),
+
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.forgotPassword,
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: AppStyle.font14GrayMedium,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: isWeb ? 24 : 50.h),
+
+                    CustomButton(text: "LOG IN", onPressed: () {}),
+
+                    SizedBox(height: isWeb ? 20 : 20.h),
+
+                    Text(
+                      " Or sign up using ",
+                      style: AppStyle.font15GrayDarkRegular,
+                      textAlign: TextAlign.center,
+                    ),
+
+                    SizedBox(height: isWeb ? 20 : 20.h),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocialButton(icon: AppAsset.facebookIcon, onTap: () {}),
+                        SizedBox(width: isWeb ? 16 : 20.w),
+                        SocialButton(icon: AppAsset.googleIcon, onTap: () {}),
+                      ],
+                    ),
+
+                    SizedBox(height: isWeb ? 40 : 180.h),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don’t have an account?",
+                          style: AppStyle.font16GrayRegular,
+                        ),
+                        SizedBox(width: 4),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.signup,
+                            );
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: AppStyle.font16BlackBold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
