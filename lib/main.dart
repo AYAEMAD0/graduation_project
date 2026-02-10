@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
-          initialRoute: AppRoutes.forgotPassword,
+          initialRoute: AppRoutes.splash,
           routes: AppRouter.routes,
         );
       },
