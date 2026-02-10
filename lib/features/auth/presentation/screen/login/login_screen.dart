@@ -4,7 +4,8 @@ import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
-import '../widget/social_button.dart';
+import '../../../../../core/routes/app_routes.dart';
+import '../../widget/social_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,17 +25,29 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Text("Welcome back!", style: AppStyle.font24BlackBold),
                 SizedBox(height: 30.h),
-                CustomTextField(hint: "Email",prefixIcon: Icons.email_outlined,),
+                CustomTextField(
+                  hint: "Email",
+                  prefixIcon: Icons.email_outlined,
+                ),
                 SizedBox(height: 30.h),
-                CustomTextField(hint: "Password",prefixIcon: Icons.lock_outline,obscure: true,),
+                CustomTextField(
+                  hint: "Password",
+                  prefixIcon: Icons.lock_outline,
+                  obscure: true,
+                ),
                 SizedBox(height: 20.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "Forgot Password?",
-                      style: AppStyle.font14GrayMedium,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.forgotPassword);
+                      },
+                      child: Text(
+                        "Forgot Password?",
+                        style: AppStyle.font14GrayMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -77,8 +90,16 @@ class LoginScreen extends StatelessWidget {
                       "Don’t have an account?",
                       style: AppStyle.font16GrayRegular,
                     ),
-                    SizedBox(width: 5.w),
-                    Text("Sign Up", style: AppStyle.font16BlackBold),
+                    SizedBox(width: 3.w),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.signup,
+                        );
+                      },
+                      child: Text("Sign Up", style: AppStyle.font16BlackBold),
+                    ),
                   ],
                 ),
               ],
