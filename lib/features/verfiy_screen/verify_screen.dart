@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
-import 'package:mock_mate_ai/features/verfiy_screen/widget/otp_fields.dart';
+import 'package:mock_mate_ai/features/auth/presentation/widget/otp_fields.dart';
 import 'package:mock_mate_ai/features/verfiy_screen/widget/resend_code_timer.dart';
 
 class VerifyScreen extends StatelessWidget {
