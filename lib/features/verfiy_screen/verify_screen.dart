@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:mock_mate_ai/core/constants/app_asset.dart';
-import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/features/verfiy_screen/widget/otp_fields.dart';
 import 'package:mock_mate_ai/features/verfiy_screen/widget/resend_code_timer.dart';
@@ -20,29 +18,9 @@ class VerifyScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Verification Code", style: AppStyle.font32BlackBold),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      width: 48.w,
-                      height: 48.w,
-                      decoration: BoxDecoration(
-                        gradient: AppGradient.primaryGradient,
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppAsset.arrowIcon,
-                          width: 20.w,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              ArrowButton(),
+              SizedBox(height: 50.h),
+              Text("Verification Code", style: AppStyle.font32BlackBold),
               SizedBox(height: 70.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -66,7 +44,7 @@ class VerifyScreen extends StatelessWidget {
 
                     SizedBox(
                       width: 0.6.sw,
-                      child: CustomButton( text: 'Verify', onPressed: () {  },),
+                      child: CustomButton(text: 'Verify', onPressed: () {}),
                     ),
                   ],
                 ),

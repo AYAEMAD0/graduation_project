@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
 
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final VoidCallback? onSuffixTap;
 
   final Color? borderColor;
   final int maxLines;
@@ -33,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     this.obscure = false,
     this.obscureCharacter,
     this.onChanged,
+    this.onSuffixTap,
   });
 
   @override
@@ -65,7 +67,12 @@ class CustomTextField extends StatelessWidget {
         focusedErrorBorder: builtBorder(),
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: AppColor.grayColor,
-        suffixIcon: Icon(suffixIcon),
+        suffixIcon: suffixIcon != null
+            ? GestureDetector(
+          onTap: onSuffixTap,
+          child: Icon(suffixIcon),
+        )
+            : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,
         fillColor:AppColor.whiteDarkColor,

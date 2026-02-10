@@ -1,133 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
-import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import '../../../core/config/di.dart';
 import '../../../core/routes/app_routes.dart';
-import '../widget/gradient_dot_indicator.dart';
 import '../viewmodel/onboarding_cubit.dart';
+import '../widget/onboarding_section.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  OnboardingScreen({super.key});
-
-  final PageController _controller = PageController();
+  const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<OnboardingCubit>();
-    return BlocProvider.value(
-      value: cubit,
-      child: BlocBuilder<OnboardingCubit, int>(
-        builder: (context, currentPage) {
-          final pages = cubit.pages;
-          return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
-              child: Column(
-                children: [
-                  // PageView
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _controller,
-                      itemCount: pages.length,
-                      onPageChanged: (index) => cubit.setPage(index),
-                      itemBuilder: (context, index) {
-                        final page = pages[index];
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              page.title,
-                              style: AppStyle.font34BlackSemiBold,
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 20.h),
-                            Image.asset(
-                              page.image,
-                              height: 320.h,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(height: 20.h),
-                            Text(
-                              page.description,
-                              style: AppStyle.font27BlackLight,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                  // Dots
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      pages.length,
-                      (index) => Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            _controller.animateToPage(
-                              index,
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                            cubit.setPage(index);
-                          },
-                          child: GradientDotIndicator(
-                            isActive: currentPage == index,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 50.h),
-                  // Buttons
-                  Row(
-                    spacing: 45.w,
-                    children: [
-                      Spacer(),
-                      CustomButton(
-                        text: "SKIP",
-                        widthBtn: 126.w,
-                        onPressed: () {
-                          _controller.jumpToPage(pages.length - 1);
-                          cubit.skip();
-                        },
-                      ),
-                      CustomButton(
-                        text: "NEXT",
-                        widthBtn: 126.w,
-                        onPressed: () {
-                          if (currentPage == pages.length - 1) {
-                            SharedCheckHelper.setValue(
-                              SharedCheckHelper.keyIsOnBoarding,
-                              true,
-                            );
-                            Navigator.pushReplacementNamed(
-                              context,
-                              AppRoutes.login,
-                            );
-                          } else {
-                            _controller.nextPage(
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                            cubit.nextPage();
-                          }
-                        },
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                  SizedBox(height: 50.h),
-                ],
+    final pages = cubit.pages;
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+        child: Center(
+          child: Column(
+            children: [
+              // Section 1
+              OnboardingSection(
+                title: pages[0].title,
+                image: pages[0].image,
+                description: pages[0].description,
               ),
-            ),
-          );
-        },
+
+              SizedBox(height: 180.h),
+
+              // Section 2
+              OnboardingSection(
+                title: pages[1].title,
+                image: pages[1].image,
+                description: pages[1].description,
+              ),
+
+              SizedBox(height: 180.h),
+
+              // Section 3
+              OnboardingSection(
+                title: pages[2].title,
+                image: pages[2].image,
+                description: pages[2].description,
+              ),
+
+              SizedBox(height: 100.h),
+
+              // Next Button
+              CustomButton(
+                text: "NEXT",
+                onPressed: () {
+                  SharedCheckHelper.setValue(
+                    SharedCheckHelper.keyIsOnBoarding,
+                    true,
+                  );
+                  Navigator.pushReplacementNamed(
+                    context,
+                    AppRoutes.login,
+                  );
+                },
+              ),
+
+              SizedBox(height: 40.h),
+            ],
+          ),
+        ),
       ),
     );
   }

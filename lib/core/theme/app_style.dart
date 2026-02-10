@@ -11,8 +11,8 @@ class AppStyle {
     fontWeight: FontWeightHelper.semiBold,
   );
 
-  static final TextStyle font27BlackLight = GoogleFonts.roboto(
-    fontSize: 27.sp,
+  static final TextStyle font22BlackLight = GoogleFonts.roboto(
+    fontSize: 22.sp,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.light,
   );
@@ -87,5 +87,36 @@ class AppStyle {
     fontSize: 18.sp,
     color: AppColor.whiteColor,
     fontWeight: FontWeightHelper.bold,
+  );
+
+    static final TextStyle font20BlackSemiBold = GoogleFonts.roboto(
+    fontSize: 20.sp,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static final TextStyle font16GrayMediumMedium = GoogleFonts.roboto(
+    fontSize: 16.sp,
+    color: AppColor.grayMediumColor,
+    fontWeight: FontWeightHelper.medium,
+  );
+
+  static final TextStyle font16BlackSemiBold= GoogleFonts.roboto(
+    fontSize: 16.sp,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static final TextStyle font16GrayMediumSemiBold= GoogleFonts.roboto(
+    fontSize: 16.sp,
+    color: AppColor.grayMediumColor,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static final TextStyle font16BlackMedium = GoogleFonts.roboto(
+    fontSize: 16.sp,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.medium,
+
   );
 }
