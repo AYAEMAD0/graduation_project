@@ -11,8 +11,8 @@ class AppStyle {
     fontWeight: FontWeightHelper.semiBold,
   );
 
-  static final TextStyle font22BlackLight = GoogleFonts.roboto(
-    fontSize: 22.sp,
+  static final TextStyle font27BlackLight = GoogleFonts.roboto(
+    fontSize: 27.sp,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.light,
   );

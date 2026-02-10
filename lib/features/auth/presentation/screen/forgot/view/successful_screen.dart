@@ -33,8 +33,7 @@ class SuccessfulScreen extends StatelessWidget {
                           color: AppColor.primaryPurpleColor,
                         ),
                         gradient: AppGradient.primaryGradient,
-                      ),
-                      child: Icon(
+                      ), child: Icon(
                         Icons.check,
                         color: AppColor.whiteColor,
                         size: 80.sp,
