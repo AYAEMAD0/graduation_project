@@ -19,31 +19,42 @@ class ForgotPasswordScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ArrowButton(),
-              SizedBox(height: 50.h),
-              Text("Forgot password", style: AppStyle.font20BlackSemiBold),
-              SizedBox(height: 10.h),
-              Text(
-                "Please enter your User ID to reset the password",
-                style: AppStyle.font16GrayMediumSemiBold,
-              ),
-              SizedBox(height: 30.h),
-              Text("User ID", style: AppStyle.font16BlackMedium),
-              SizedBox(height: 12.h),
-              CustomTextField(
-                hint: "Enter your User ID",
-                prefixIcon: Icons.email_outlined,
-              ),
-              SizedBox(height: 30.h),
-              Align(
-                alignment: Alignment.center,
-                child: CustomButton(
-                  text: "Reset Password",
-                  onPressed: () {
-                    //logic reset password
-                    Navigator.pushNamed(context, AppRoutes.forgotOtp);
-                  },
+              Center(
+                child: Column(
+                  children: [
+                    Text("Forgot password", style: AppStyle.font40BlackSemiBold),
+                    SizedBox(height: 50.h),
+                    Text(
+                      "Please enter your User ID to reset the password",
+                      style: AppStyle.font25GrayMediumSemiBold,
+                    ),
+                    SizedBox(height: 50.h),
+                    SizedBox(
+                      width: 700.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("User ID", style: AppStyle.font20BlackSemiBold),
+                          SizedBox(height: 15.h),
+                          CustomTextField(
+                            hint: "Enter your User ID",
+                            prefixIcon: Icons.email_outlined,
+                          ),
+                          SizedBox(height: 80.h),
+                        ],
+                      ),
+                    ),
+                    CustomButton(
+                      text: "Reset Password",
+                      onPressed: () {
+                        //logic reset password
+                        Navigator.pushNamed(context, AppRoutes.forgotOtp);
+                      },
+                    ),
+                  ],
                 ),
               ),
+
             ],
           ),
         ),

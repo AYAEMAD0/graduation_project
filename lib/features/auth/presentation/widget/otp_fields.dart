@@ -66,8 +66,8 @@ class _OtpFieldsState extends State<OtpFields> {
 
   Widget _otpField(int index) {
     return SizedBox(
-      width: 45.w,
-      height: 48.h,
+      width: 70.w,
+      height: 75.h,
       child: TextFormField(
         controller: controllers[index],
         focusNode: focusNodes[index],

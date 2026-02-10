@@ -19,24 +19,27 @@ class ResetPassword extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ArrowButton(),
-              SizedBox(height: 50.h),
-              Text("Password reset", style: AppStyle.font16BlackSemiBold),
-              SizedBox(height: 18.h),
-              Text(
-                "Your password has been successfully reset. click \nconfirm to set a new password",
-                style: AppStyle.font16GrayMediumMedium,
-              ),
-              SizedBox(height: 33.h),
               Center(
-                child: CustomButton(
-                  text: "confirm",
-                  onPressed: () {
-                    //logic confirm
-                    Navigator.pushNamed(context, AppRoutes.newPassword);
-                  },
+                child: Column(
+                  children: [
+                    SizedBox(height: 50.h),
+                    Text("Password reset", style: AppStyle.font40BlackSemiBold),
+                    SizedBox(height: 50.h),
+                    Text(
+                      "Your password has been successfully reset. \nclick confirm to set a new password",
+                      style: AppStyle.font16GrayMediumMedium,
+                    ),
+                    SizedBox(height: 80.h),
+                    CustomButton(
+                      text: "confirm",
+                      onPressed: () {
+                        //logic confirm
+                        Navigator.pushNamed(context, AppRoutes.newPassword);
+                      },
+                    ),
+                  ],
                 ),
               ),
-              Spacer(),
             ],
           ),
         ),

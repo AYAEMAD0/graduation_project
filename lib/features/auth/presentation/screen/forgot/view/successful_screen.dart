@@ -20,37 +20,38 @@ class SuccessfulScreen extends StatelessWidget {
             children: [
               ArrowButton(),
               SizedBox(height: 50.h),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 98.w,
-                    height: 98.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 2.w,
-                        color: AppColor.primaryPurpleColor,
+              Center(
+                child: Column(
+                  children: [
+                    Container(
+                      width: 174.w,
+                      height: 174.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 2.w,
+                          color: AppColor.primaryPurpleColor,
+                        ),
+                        gradient: AppGradient.primaryGradient,
                       ),
-                      gradient: AppGradient.primaryGradient,
+                      child: Icon(
+                        Icons.check,
+                        color: AppColor.whiteColor,
+                        size: 80.sp,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.check,
-                      color: AppColor.whiteColor,
-                      size: 45.sp,
+                    SizedBox(height: 44.h),
+                    Text('Successful', style: AppStyle.font40BlackSemiBold),
+                    SizedBox(height: 23.h),
+                    Text(
+                      'Congratulations! Your password has been successfully \nupdated. Click Continue to login',
+                      textAlign: TextAlign.center,
+                      style: AppStyle.font18GrayMediumMedium,
                     ),
-                  ),
-                  SizedBox(height: 44.h),
-                  Text('Successful', style: AppStyle.font20BlackSemiBold),
-                  SizedBox(height: 23.h),
-                  Text(
-                    'Congratulations! Your password has been successfully updated. Click Continue to login',
-                    textAlign: TextAlign.center,
-                    style: AppStyle.font16GrayMediumMedium,
-                  ),
-                  SizedBox(height: 137.h),
-                  CustomButton(text: "Continue", onPressed: () {}),
-                ],
+                    SizedBox(height: 80.h),
+                    CustomButton(text: "Continue", onPressed: () {}),
+                  ],
+                ),
               ),
             ],
           ),
