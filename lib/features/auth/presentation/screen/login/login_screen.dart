@@ -21,37 +21,46 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 40.h),
             Column(
               children: [
-                Image.asset(AppAsset.logoAppImage, width: 188.w, height: 144.h),
-                SizedBox(height: 20.h),
+                Image.asset(AppAsset.logoAppImage, width: 200.w, height: 190.h),
                 Text("Welcome back!", style: AppStyle.font24BlackBold),
                 SizedBox(height: 30.h),
-                CustomTextField(
-                  hint: "Email",
-                  prefixIcon: Icons.email_outlined,
-                ),
-                SizedBox(height: 30.h),
-                CustomTextField(
-                  hint: "Password",
-                  prefixIcon: Icons.lock_outline,
-                  obscure: true,
-                ),
-                SizedBox(height: 20.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.forgotPassword);
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: AppStyle.font14GrayMedium,
+                SizedBox(
+                  width: 900.w,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        hint: "Email",
+                        prefixIcon: Icons.email_outlined,
                       ),
-                    ),
+                      SizedBox(height: 30.h),
+                      CustomTextField(
+                        hint: "Password",
+                        prefixIcon: Icons.lock_outline,
+                        obscure: true,
+                      ),
+                      SizedBox(height: 30.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.forgotPassword,
+                              );
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: AppStyle.font14GrayMedium,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 50.h),
+                    ],
                   ),
                 ),
-                SizedBox(height: 50.h),
                 CustomButton(
                   text: "LOG IN",
                   onPressed: () {

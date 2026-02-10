@@ -54,7 +54,6 @@ class SignupScreen extends StatelessWidget {
                   text: "CREATE",
                   onPressed: () {
                     // Handle create button press
-                    Navigator.pushNamed(context, AppRoutes.verify);
                   },
                 ),
                 SizedBox(height: 30.h),
