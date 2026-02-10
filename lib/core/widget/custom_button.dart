@@ -18,13 +18,13 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(20.r),
+      borderRadius: BorderRadius.circular(36.r),
       child: Container(
         height: 54.h,
-        width: widthBtn ?? 204.w,
+        width: widthBtn ?? 566.w,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(36.r),
         ),
         child: Center(child: Text(text, style: AppStyle.font16WhiteBold)),
       ),

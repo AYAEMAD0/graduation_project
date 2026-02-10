@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(439, 951),
+      designSize: const Size(1541, 1024),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
-          initialRoute: AppRoutes.splash,
+          initialRoute: AppRoutes.newPassword,
           routes: AppRouter.routes,
         );
       },
