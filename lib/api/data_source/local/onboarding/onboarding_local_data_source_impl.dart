@@ -10,19 +10,19 @@ class OnboardingLocalDataSourceImpl extends OnboardingLocalDataSource {
   List<OnboardingEntity> getPages() {
     final List<OnboardingModelDTO> dtos = [
       OnboardingModelDTO(
-        title: "Personalized \nInterviews",
+        title: "Personalized Interviews",
         image: AppAsset.onboarding1Image,
-        description: "Upload your CV or job \ndescription to get personalized \ninterview questions.",
+        description: "Upload your CV or job description to get personalized \ninterview questions.",
       ),
       OnboardingModelDTO(
-        title: "Real Interview \nPractice",
+        title: "Real Interview Practice",
         image: AppAsset.onboarding2Image,
-        description: "Timed MCQs and coding \nchallenges that feel like the \nreal thing",
+        description: "Timed MCQs and coding challenges that feel like the \nreal thing",
       ),
       OnboardingModelDTO(
-        title: "Track Your \nProgress",
+        title: "Track Your Progress",
         image: AppAsset.onboarding3Image,
-        description: "View scores, history, and \ninsights to improve your \nperformance",
+        description: "View scores, history, and insights to improve your \nperformance",
       ),
     ];
     return dtos.map((e) => e.toEntity(),).toList();
