@@ -103,7 +103,6 @@ class LoginScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      SizedBox(width: isMobile ? 5 : 10),
                       Flexible(
                         child: TextButton(
                           onPressed: () {
