@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import '../theme/app_color.dart';
 
@@ -49,8 +48,8 @@ class CustomTextField extends StatelessWidget {
       obscuringCharacter: obscureCharacter ?? "*",
       maxLines: maxLines,
       cursorColor: AppColor.primaryBlueColor,
-      cursorHeight: 23.h,
-      cursorWidth: 3.w,
+      cursorHeight: 23,
+      cursorWidth: 3,
       keyboardType: keyboard ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
@@ -58,8 +57,8 @@ class CustomTextField extends StatelessWidget {
         labelText: label,
         labelStyle: AppStyle.font14GrayRegular,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: 12.w,
-          vertical: 20.h,
+          horizontal: 12,
+          vertical: 20,
         ),
         enabledBorder: builtBorder(AppColor.transparentColor),
         focusedBorder: builtBorder(AppColor.primaryBlueColor),
@@ -82,8 +81,8 @@ class CustomTextField extends StatelessWidget {
 
   OutlineInputBorder builtBorder([Color colorBorder = AppColor.primaryPurpleColor]) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.r),
-      borderSide: BorderSide(color: colorBorder, width: 1.5.w),
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: colorBorder, width: 1.5),
     );
   }
 }

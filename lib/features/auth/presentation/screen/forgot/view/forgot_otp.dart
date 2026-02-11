@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
@@ -15,7 +14,7 @@ class ForgotOtp extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 24.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -23,9 +22,9 @@ class ForgotOtp extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    SizedBox(height: 50.h),
+                    SizedBox(height: 50),
                     Text("Enter OTP", style: AppStyle.font40BlackSemiBold),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 60),
                     RichText(
                       text: TextSpan(
                         text:
@@ -39,12 +38,12 @@ class ForgotOtp extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 60.h),
+                    SizedBox(height: 60),
                     SizedBox(
-                        width: 700.w,
+                        width: 700,
                         child: OtpFields(otpLength: 5),
                     ),
-                    SizedBox(height: 80.h),
+                    SizedBox(height: 80),
                     CustomButton(
                       text: "verify",
                       onPressed: () {
@@ -52,7 +51,7 @@ class ForgotOtp extends StatelessWidget {
                         Navigator.pushNamed(context, AppRoutes.resetPassword);
                       },
                     ),
-                    SizedBox(height: 80.h),
+                    SizedBox(height: 80),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

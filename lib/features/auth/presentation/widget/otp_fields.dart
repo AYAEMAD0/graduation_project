@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
@@ -66,8 +65,8 @@ class _OtpFieldsState extends State<OtpFields> {
 
   Widget _otpField(int index) {
     return SizedBox(
-      width: 70.w,
-      height: 75.h,
+      width: 70,
+      height: 75,
       child: TextFormField(
         controller: controllers[index],
         focusNode: focusNodes[index],
@@ -81,20 +80,20 @@ class _OtpFieldsState extends State<OtpFields> {
         onChanged: (value) => _onChanged(value, index),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
               color: AppColor.unactiveBorder,
-              width: 1.2.w,
+              width: 1.2,
             ),
           ),
 
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
               color: AppColor.primaryBlueColor,
-              width: 1.5.w,
+              width: 1.5,
             ),
           ),
         ),
