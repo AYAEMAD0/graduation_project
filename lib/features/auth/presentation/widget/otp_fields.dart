@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class OtpFields extends StatefulWidget {
-  const OtpFields({super.key});
+  final int? otpLength;
+  const OtpFields({super.key, this.otpLength});
 
   @override
   State<OtpFields> createState() => _OtpFieldsState();
 }
 
 class _OtpFieldsState extends State<OtpFields> {
-  final int otpLength = 6;
+  int get otpLength => widget.otpLength ?? 6;
 
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
@@ -46,6 +48,7 @@ class _OtpFieldsState extends State<OtpFields> {
       focusNodes[index - 1].requestFocus();
     }
   }
+
   void _pasteCode(String code) {
     for (int i = 0; i < otpLength; i++) {
       controllers[i].text = i < code.length ? code[i] : '';
@@ -56,21 +59,21 @@ class _OtpFieldsState extends State<OtpFields> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(otpLength, (index) => _otpField(index)),
     );
   }
 
   Widget _otpField(int index) {
     return SizedBox(
-      width: 45.w,
-      height: 48.h,
+      width: 70.w,
+      height: 75.h,
       child: TextFormField(
         controller: controllers[index],
         focusNode: focusNodes[index],
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        style: AppStyle.font18BlackRegular,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(otpLength),
@@ -81,7 +84,10 @@ class _OtpFieldsState extends State<OtpFields> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: Color(0xffCECECE), width: 1.2),
+            borderSide: BorderSide(
+              color: AppColor.unactiveBorder,
+              width: 1.2.w,
+            ),
           ),
 
           focusedBorder: OutlineInputBorder(

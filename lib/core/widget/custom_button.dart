@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onTap;
   final String text;
-
-  const CustomButton({super.key, required this.onTap, required this.text});
+  final VoidCallback onPressed;
+  final double? widthBtn;
+  const CustomButton({
+    super.key,
+    this.widthBtn,
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: onTap,
-      style: FilledButton.styleFrom(
-        backgroundColor: Colors.transparent,
-        padding: EdgeInsets.zero,
-      ),
-      child: Ink(
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(36.r),
+      child: Container(
+        height: 54.h,
+        width: widthBtn ?? 566.w,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(36.r),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 90),
-          child: Center(child: Text(text, style: AppStyle.font18WhiteBold)),
-        ),
+        child: Center(child: Text(text, style: AppStyle.font16WhiteBold)),
       ),
     );
   }

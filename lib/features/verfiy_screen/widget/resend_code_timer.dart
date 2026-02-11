@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
@@ -54,7 +55,7 @@ class _ResendCodeTimerState extends State<ResendCodeTimer> {
             : "Resend code in 00:${seconds.toString().padLeft(2, '0')}",
         style: AppStyle.font16BlackRegular.copyWith(
           color: seconds == 0 ? AppColor.primaryBlueColor : Colors.black,
-          fontSize: 16.45,
+          fontSize: 16.45.sp,
         ),
       ),
     );
