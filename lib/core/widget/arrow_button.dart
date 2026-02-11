@@ -13,13 +13,13 @@ class ArrowButton extends StatelessWidget {
       onTap: onTap ?? () => Navigator.pop(context),
       child: Container(
         width: 45,
-        height: 50,
+        height: 45,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
           borderRadius: BorderRadius.circular(360),
         ),
         child: Center(
-          child: SvgPicture.asset(AppAsset.arrowIcon, width: 10, height: 25),
+          child: SvgPicture.asset(AppAsset.arrowIcon, width: 10, height: 20),
         ),
       ),
     );
