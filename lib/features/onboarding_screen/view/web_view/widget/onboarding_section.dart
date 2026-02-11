@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_style.dart';
+import '../../../../../core/theme/app_style.dart';
 
 class OnboardingSection extends StatelessWidget {
   final String title;
