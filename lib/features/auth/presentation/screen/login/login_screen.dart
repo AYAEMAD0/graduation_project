@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
@@ -14,33 +13,33 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 40.h),
+            SizedBox(height: 40),
             Column(
               children: [
-                Image.asset(AppAsset.logoAppImage, width: 200.w, height: 190.h),
+                Image.asset(AppAsset.logoAppImage, width: 200, height: 190),
                 Text("Welcome back!", style: AppStyle.font24BlackBold),
-                SizedBox(height: 30.h),
+                SizedBox(height: 30),
                 SizedBox(
-                  width: 900.w,
+                  width: 900,
                   child: Column(
                     children: [
                       CustomTextField(
                         hint: "Email",
                         prefixIcon: Icons.email_outlined,
                       ),
-                      SizedBox(height: 30.h),
+                      SizedBox(height: 30),
                       CustomTextField(
                         hint: "Password",
                         prefixIcon: Icons.lock_outline,
                         obscure: true,
                       ),
-                      SizedBox(height: 30.h),
+                      SizedBox(height: 30),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
@@ -57,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 50.h),
+                      SizedBox(height: 50),
                     ],
                   ),
                 ),
@@ -67,12 +66,12 @@ class LoginScreen extends StatelessWidget {
                     // Handle login button press
                   },
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
                 Text(
                   " Or sign up using ",
                   style: AppStyle.font15GrayDarkRegular,
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -82,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                         //  Facebook login
                       },
                     ),
-                    SizedBox(width: 20.w),
+                    SizedBox(width: 20),
                     SocialButton(
                       icon: AppAsset.googleIcon,
                       onTap: () {
@@ -91,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 180.h),
+                SizedBox(height: 180),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -99,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                       "Don’t have an account?",
                       style: AppStyle.font16GrayRegular,
                     ),
-                    SizedBox(width: 3.w),
+                    SizedBox(width: 3),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(

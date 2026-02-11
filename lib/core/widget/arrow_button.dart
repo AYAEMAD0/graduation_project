@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
@@ -13,14 +12,14 @@ class ArrowButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap ?? () => Navigator.pop(context),
       child: Container(
-        width: 45.w,
-        height: 50.h,
+        width: 45,
+        height: 50,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(360.r),
+          borderRadius: BorderRadius.circular(360),
         ),
         child: Center(
-          child: SvgPicture.asset(AppAsset.arrowIcon, width: 10.w, height: 25.h),
+          child: SvgPicture.asset(AppAsset.arrowIcon, width: 10, height: 25),
         ),
       ),
     );

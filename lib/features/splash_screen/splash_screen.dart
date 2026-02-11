@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '../../core/helper/shared_check_helper.dart';
 import '../auth/presentation/screen/login/login_screen.dart';
 import '../onboarding_screen/view/onboarding_screen.dart';
@@ -12,6 +12,10 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final logoWidth = isMobile ? 180.0 : isDesktop ? 220.0 : 300.0;
+
     return FutureBuilder<bool>(
       future: SharedCheckHelper.getBoolValue(SharedCheckHelper.keyIsOnBoarding),
       builder: (context, snapshot) {
@@ -40,7 +44,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Image.asset(AppAsset.logoAppImage, width: 180.w),
+                child: Image.asset(AppAsset.logoAppImage, width: logoWidth),
               ),
             ),
           ),
