@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import '../../../core/config/di.dart';
@@ -17,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Center(
           child: Column(
             children: [
@@ -28,7 +27,7 @@ class OnboardingScreen extends StatelessWidget {
                 description: pages[0].description,
               ),
 
-              SizedBox(height: 180.h),
+              SizedBox(height: 180),
 
               // Section 2
               OnboardingSection(
@@ -37,7 +36,7 @@ class OnboardingScreen extends StatelessWidget {
                 description: pages[1].description,
               ),
 
-              SizedBox(height: 180.h),
+              SizedBox(height: 180),
 
               // Section 3
               OnboardingSection(
@@ -46,7 +45,7 @@ class OnboardingScreen extends StatelessWidget {
                 description: pages[2].description,
               ),
 
-              SizedBox(height: 100.h),
+              SizedBox(height: 100),
 
               // Next Button
               CustomButton(
@@ -63,7 +62,7 @@ class OnboardingScreen extends StatelessWidget {
                 },
               ),
 
-              SizedBox(height: 40.h),
+              SizedBox(height: 40),
             ],
           ),
         ),

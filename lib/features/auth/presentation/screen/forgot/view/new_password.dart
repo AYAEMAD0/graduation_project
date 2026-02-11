@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_style.dart';
 import '../../../../../../core/widget/arrow_button.dart';
@@ -19,7 +18,7 @@ class NewPassword extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 22.w),
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -29,26 +28,26 @@ class NewPassword extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 50.h),
+                      SizedBox(height: 50),
                       Text(
                         "Set a new password",
                         style: AppStyle.font20BlackSemiBold,
                       ),
-                      SizedBox(height: 18.h),
+                      SizedBox(height: 18),
                       Text(
                         "Create a new password. Ensure it differs from \nprevious ones for security",
                         style: AppStyle.font16GrayMediumMedium,
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 38.h),
+                      SizedBox(height: 38),
 
                       SizedBox(
-                        width: 900.w,
+                        width: 900,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Password", style: AppStyle.font16BlackSemiBold),
-                            SizedBox(height: 15.h),
+                            SizedBox(height: 15),
                             BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                               builder: (context, state) {
                                 return CustomTextField(
@@ -64,13 +63,13 @@ class NewPassword extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 35.h),
+                            SizedBox(height: 35),
 
                             Text(
                               "Confirm Password",
                               style: AppStyle.font16BlackSemiBold,
                             ),
-                            SizedBox(height: 15.h),
+                            SizedBox(height: 15),
                             BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                               builder: (context, state) {
                                 return CustomTextField(
@@ -86,7 +85,7 @@ class NewPassword extends StatelessWidget {
                                 );
                               },
                             ),
-                            SizedBox(height: 62.h),
+                            SizedBox(height: 62),
                           ],
                         ),
                       ),

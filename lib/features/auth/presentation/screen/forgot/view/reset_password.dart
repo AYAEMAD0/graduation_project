@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
-
 import '../../../../../../core/routes/app_routes.dart';
 
 class ResetPassword extends StatelessWidget {
@@ -14,7 +12,7 @@ class ResetPassword extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.0.w, vertical: 24.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -22,14 +20,14 @@ class ResetPassword extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    SizedBox(height: 50.h),
+                    SizedBox(height: 50),
                     Text("Password reset", style: AppStyle.font40BlackSemiBold),
-                    SizedBox(height: 50.h),
+                    SizedBox(height: 50),
                     Text(
                       "Your password has been successfully reset. \nclick confirm to set a new password",
                       style: AppStyle.font16GrayMediumMedium,
                     ),
-                    SizedBox(height: 80.h),
+                    SizedBox(height: 80),
                     CustomButton(
                       text: "confirm",
                       onPressed: () {
