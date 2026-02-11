@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 
@@ -13,16 +12,16 @@ class SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(50.r),
+      borderRadius: BorderRadius.circular(50),
       child: Container(
-        width: 51.w,
-        height: 51.h,
+        width: 51,
+        height: 51,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: AppColor.whiteDarkColor, width: 1.w),
+          border: Border.all(color: AppColor.whiteDarkColor, width: 1),
         ),
         child: Center(
-          child: SvgPicture.asset(icon,width: 41.w,height: 41.h,),
+          child: SvgPicture.asset(icon,width: 41,height: 41,),
         ),
       ),
     );

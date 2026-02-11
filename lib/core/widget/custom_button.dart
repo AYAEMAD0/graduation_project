@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
@@ -9,22 +8,21 @@ class CustomButton extends StatelessWidget {
   final double? widthBtn;
   const CustomButton({
     super.key,
-    this.widthBtn,
     required this.text,
     required this.onPressed,
+    this.widthBtn,
   });
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(36.r),
+      borderRadius: BorderRadius.circular(36),
       child: Container(
-        height: 54.h,
-        width: widthBtn ?? 566.w,
+        height: 54,
+        width: widthBtn ?? 250,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(36.r),
+          borderRadius: BorderRadius.circular(36),
         ),
         child: Center(child: Text(text, style: AppStyle.font16WhiteBold)),
       ),
