@@ -13,8 +13,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
-    final logoWidth = isMobile ? 180.0 : isDesktop ? 220.0 : 300.0;
+    final logoWidth = isMobile ? 180.0 :220.0 ;
 
     return FutureBuilder<bool>(
       future: SharedCheckHelper.getBoolValue(SharedCheckHelper.keyIsOnBoarding),
