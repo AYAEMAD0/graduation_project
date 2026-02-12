@@ -8,5 +8,6 @@ abstract class AppRoutes {
   static const String resetPassword = '/resetPassword';
   static const String newPassword = '/newPassword';
   static const String successful= '/successful';
+  static const String interviewSetup = '/interviewSetup';
 
 }
