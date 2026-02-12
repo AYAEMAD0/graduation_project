@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OtpFields extends StatefulWidget {
   final int? otpLength;
@@ -27,12 +27,8 @@ class _OtpFieldsState extends State<OtpFields> {
 
   @override
   void dispose() {
-    for (final c in controllers) {
-      c.dispose();
-    }
-    for (final f in focusNodes) {
-      f.dispose();
-    }
+    for (final c in controllers) c.dispose();
+    for (final f in focusNodes) f.dispose();
     super.dispose();
   }
 
@@ -58,43 +54,56 @@ class _OtpFieldsState extends State<OtpFields> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    final fontSize = isMobile ? 16.0 : 18.0;
+    final fieldHeight = isMobile ? 50.0 : 75.0;
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List.generate(otpLength, (index) => _otpField(index)),
+      children: List.generate(
+        otpLength,
+            (index) => Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? 8: 14),
+            child: _otpField(index, fieldHeight, fontSize),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _otpField(int index) {
+
+  Widget _otpField(int index, double height, double fontSize) {
     return SizedBox(
-      width: 45.w,
-      height: 48.h,
+      height: height,
       child: TextFormField(
         controller: controllers[index],
         focusNode: focusNodes[index],
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: AppStyle.font18BlackRegular,
+        style: AppStyle.font18BlackRegular.copyWith(fontSize: fontSize),
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
-          LengthLimitingTextInputFormatter(otpLength),
+          LengthLimitingTextInputFormatter(1),
         ],
         onChanged: (value) => _onChanged(value, index),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.zero,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
               color: AppColor.unactiveBorder,
-              width: 1.2.w,
+              width: 1.2,
             ),
           ),
-
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
               color: AppColor.primaryBlueColor,
-              width: 1.5.w,
+              width: 1.5,
             ),
           ),
         ),

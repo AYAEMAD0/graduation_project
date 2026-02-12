@@ -12,7 +12,7 @@ class OnboardingLocalDataSourceImpl extends OnboardingLocalDataSource {
       OnboardingModelDTO(
         title: "Personalized Interviews",
         image: AppAsset.onboarding1Image,
-        description: "Upload your CV or job description to get personalized \ninterview questions.",
+        description: "Upload your CV or job description to get\n personalized interview questions.",
       ),
       OnboardingModelDTO(
         title: "Real Interview Practice",
@@ -22,7 +22,7 @@ class OnboardingLocalDataSourceImpl extends OnboardingLocalDataSource {
       OnboardingModelDTO(
         title: "Track Your Progress",
         image: AppAsset.onboarding3Image,
-        description: "View scores, history, and insights to improve your \nperformance",
+        description: "View scores, history, and \ninsights to improve your performance",
       ),
     ];
     return dtos.map((e) => e.toEntity(),).toList();

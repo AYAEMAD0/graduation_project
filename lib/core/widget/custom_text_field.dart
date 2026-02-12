@@ -5,9 +5,11 @@ import '../theme/app_color.dart';
 class CustomTextField extends StatelessWidget {
   final String hint;
   final String? label;
+
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
+
   final Color? borderColor;
   final int maxLines;
   final TextEditingController? controller;
@@ -20,8 +22,8 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.hint,
-    this.controller,
-    this.borderColor,
+     this.controller,
+     this.borderColor,
     this.validator,
     this.maxLines = 1,
     this.keyboard,
@@ -41,21 +43,22 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       validator: validator,
       onChanged: onChanged,
+      autofocus: false,
       obscureText: obscure!,
       obscuringCharacter: obscureCharacter ?? "*",
       maxLines: maxLines,
       cursorColor: AppColor.primaryBlueColor,
       cursorHeight: 23,
-      cursorWidth: 2,
+      cursorWidth: 3,
       keyboardType: keyboard ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: AppStyle.font14GrayRegular,
         labelText: label,
         labelStyle: AppStyle.font14GrayRegular,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 18,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 20,
         ),
         enabledBorder: builtBorder(AppColor.transparentColor),
         focusedBorder: builtBorder(AppColor.primaryBlueColor),
@@ -71,16 +74,15 @@ class CustomTextField extends StatelessWidget {
             : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,
-        fillColor: AppColor.whiteDarkColor,
+        fillColor:AppColor.whiteDarkColor,
       ),
     );
   }
 
-  OutlineInputBorder builtBorder(
-      [Color colorBorder = AppColor.primaryPurpleColor]) {
+  OutlineInputBorder builtBorder([Color colorBorder = AppColor.primaryPurpleColor]) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(color: colorBorder, width: 1.2),
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: colorBorder, width: 1.5),
     );
   }
 }
