@@ -50,56 +50,31 @@ class _InterviewSessionState extends State<InterviewSession> {
                     endTime: endTime,
                   ),
                   Expanded(
-                    child: isMobile
-                        ? Column(
-                            children: [
-                              Expanded(
-                                child: QuestionSection(
-                                  question: questions[currentIndex],
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              ActionSection(
-                                onNext: () {
-                                  if (currentIndex < questions.length - 1) {
-                                    setState(() {
-                                      currentIndex++;
-                                    });
-                                  }
-                                },
-                              ),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              Expanded(
-                                flex: 6,
-                                child: QuestionSection(
-                                  question: questions[currentIndex],
-                                ),
-                              ),
-                              const SizedBox(width: 50),
-                              Expanded(
-                                flex: 4,
-                                child: ActionSection(
-                                  onNext: () {
-                                    if (currentIndex <
-                                        questions.length - 1) {
-                                      setState(() {
-                                        currentIndex++;
-                                      });
-                                    }else{
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        AppRoutes.scoreScreen,
-                                            (route) => false,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: QuestionSection(
+                            question: questions[currentIndex],
                           ),
+                        ),
+                        const SizedBox(height: 20),
+                        ActionSection(
+                          onNext: () {
+                            if (currentIndex < questions.length - 1) {
+                              setState(() {
+                                currentIndex++;
+                              });
+                            } else {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                AppRoutes.scoreScreen,
+                                    (route) => false,
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
