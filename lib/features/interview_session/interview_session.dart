@@ -50,7 +50,7 @@ class _InterviewSessionState extends State<InterviewSession> {
               ),
               child: Column(
                 children: [
-                  /// Header
+              
                   Stack(
                     alignment: Alignment.center,
                     children: const [
@@ -69,8 +69,6 @@ class _InterviewSessionState extends State<InterviewSession> {
                   ),
 
                   const SizedBox(height: 30),
-
-                  /// Question + Timer
                   Row(
                     children: [
                       Text(
@@ -135,8 +133,6 @@ class _InterviewSessionState extends State<InterviewSession> {
                   ),
 
                   const SizedBox(height: 40),
-
-                  /// Responsive Layout
                   Expanded(
                     child: isMobile
                         ? Column(
@@ -158,30 +154,29 @@ class _InterviewSessionState extends State<InterviewSession> {
                               ),
                             ],
                           )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 9,
-                                child: QuestionSection(
-                                  question: questions[currentIndex],
-                                ),
+                        : Column(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: QuestionSection(
+                                question: questions[currentIndex],
                               ),
-                              const SizedBox(width: 50),
-                              Expanded(
-                                flex: 2,
-                                child: ActionSection(
-                                  onNext: () {
-                                    if (currentIndex < questions.length - 1) {
-                                      setState(() {
-                                        currentIndex++;
-                                      });
-                                    }
-                                  },
-                                ),
+                            ),
+                            const SizedBox(width: 50),
+                            Expanded(
+                              flex: 4,
+                              child: ActionSection(
+                                onNext: () {
+                                  if (currentIndex < questions.length - 1) {
+                                    setState(() {
+                                      currentIndex++;
+                                    });
+                                  }
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                   ),
                 ],
               ),

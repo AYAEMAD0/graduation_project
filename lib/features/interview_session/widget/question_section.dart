@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/features/interview_session/model/QuestionModel.dart';
-import 'package:mock_mate_ai/features/interview_session/widget/OptionItem.dart';
+import 'package:mock_mate_ai/features/interview_session/widget/option_item.dart';
 
 class QuestionSection extends StatefulWidget {
   final QuestionModel question;
