@@ -66,14 +66,18 @@ class ScoreScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomButton(
-                        text: "View Details",
-                        onPressed: () {},
+                      Expanded(
+                        child: CustomButton(
+                          text: "View Details",
+                          onPressed: () {},
+                        ),
                       ),
                       const SizedBox(width: 20),
-                      CustomButton(
-                        text: "Back to Home",
-                        onPressed: () {},
+                      Expanded(
+                        child: CustomButton(
+                          text: "Back to Home",
+                          onPressed: () {},
+                        ),
                       ),
                     ],
                   ),
