@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
-
 import '../../../core/routes/app_routes.dart';
 
 class ActionSection extends StatelessWidget {
