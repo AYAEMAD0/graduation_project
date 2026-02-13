@@ -9,5 +9,5 @@ abstract class AppRoutes {
   static const String newPassword = '/newPassword';
   static const String successful= '/successful';
   static const String interviewSession= '/interviewSession';
-
+  static const String uploadCvJd= '/uploadCVJd';
 }

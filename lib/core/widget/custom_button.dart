@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
           gradient: AppGradient.primaryGradient,
           borderRadius: BorderRadius.circular(36),
         ),
-        child: Center(child: Text(text, style: AppStyle.font16WhiteBold)),
+        child: Center(child: Text(text, style: AppStyle.font18WhiteBold)),
       ),
     );
   }

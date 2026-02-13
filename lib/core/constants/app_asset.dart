@@ -9,6 +9,6 @@ class AppAsset {
   static const String facebookIcon = 'assets/images/svgs/facebook_icon.svg';
   static const String googleIcon = 'assets/images/svgs/google_icon.svg';
   static const String arrowIcon = 'assets/images/svgs/arrow_icon.svg';
-  static const String backArrow = 'assets/images/svgs/BackArrow.svg';
+  static const String uploadIcon  = 'assets/images/svgs/upload_icon.svg';
 
 }

@@ -9,6 +9,7 @@ import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgo
 import 'package:mock_mate_ai/features/interview_session/interview_session.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
+import 'package:mock_mate_ai/features/upload_cv_jd/upload_cv_jd.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 
 
@@ -25,6 +26,7 @@ class AppRouter {
       AppRoutes.newPassword: (context) =>  NewPassword(),
       AppRoutes.successful: (context) =>  SuccessfulScreen(),
       AppRoutes.interviewSession: (context) =>  InterviewSession(),
+      AppRoutes.uploadCvJd: (context) =>  UploadCvJd(),
     };
   }
 }
