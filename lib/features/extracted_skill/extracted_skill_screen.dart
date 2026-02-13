@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_toast.dart';
@@ -86,8 +87,9 @@ class _ExtractedSkillScreenState extends State<ExtractedSkillScreen> {
                               context: context,
                             );
                             return;
+                          }else{
+                            Navigator.pushNamed(context, AppRoutes.interviewSetup);
                           }
-                          debugPrint("Selected Skill: $selectedSkill");
                         },
                       ),
                     ],
