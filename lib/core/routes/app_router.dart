@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/InterviewSetup/presentation/screens/InterviewSetupScreen.dart';
+import 'package:mock_mate_ai/features/ScoreScreen/presentation/screens/ScoreScreen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/new_password.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/successful_screen.dart';
@@ -29,6 +30,7 @@ class AppRouter {
       AppRoutes.uploadCvJd: (context) =>  UploadCvJd(),
       AppRoutes.interviewSetup : (context)=> InterviewSetupScreen(),
       AppRoutes.interviewSession: (context) =>  InterviewSession(),
+      AppRoutes.ScoreScreen :(context)=> ScoreScreen(),
     };
   }
 }
