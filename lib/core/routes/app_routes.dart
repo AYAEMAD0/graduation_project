@@ -11,5 +11,5 @@ abstract class AppRoutes {
   static const String uploadCvJd= '/uploadCVJd';
   static const String interviewSetup = '/interviewSetup';
   static const String interviewSession= '/interviewSession';
-  static const String ScoreScreen = '/ScoreScreen';
+  static const String scoreScreen = '/scoreScreen';
 }
