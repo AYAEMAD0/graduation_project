@@ -4,8 +4,9 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
 import '../../../../../core/routes/app_routes.dart';
-import '../../widget/social_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+import 'widget/build_social_section.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -40,7 +41,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Text(
                     "Welcome back!",
-                    style: AppStyle.font24BlackBold.copyWith(fontSize: textFontSize),
+                    style: AppStyle.font24BlackBold.copyWith(
+                      fontSize: textFontSize,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: spacingMedium),
@@ -72,54 +75,17 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: spacingLarge),
                   CustomButton(
                     text: "LOG IN",
-                    onPressed: () {},
+                    onPressed: () {
+                      //todo logic home
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.uploadCvJd,
+                        (Route<dynamic> route) => false,
+                      );
+                    },
                   ),
                   SizedBox(height: spacingMedium),
-                  Text(
-                    " Or sign up using ",
-                    style: AppStyle.font15GrayDarkRegular.copyWith(
-                      fontSize: isMobile ? 15 : 18,
-                    ),
-                  ),
-                  SizedBox(height: spacingMedium),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialButton(icon: AppAsset.facebookIcon, onTap: () {}),
-                      SizedBox(width: isMobile ? 20 : 30),
-                      SocialButton(icon: AppAsset.googleIcon, onTap: () {}),
-                    ],
-                  ),
-                  SizedBox(height: spacingLarge),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          "Don’t have an account?",
-                          style: AppStyle.font16GrayRegular.copyWith(
-                            fontSize: isMobile ? 16 : 18,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Flexible(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, AppRoutes.signup);
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: AppStyle.font16BlackBold.copyWith(
-                              fontSize: isMobile ? 16 : 18,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: spacingLarge),
+                  BuildSocialSection(),
                 ],
               ),
             ),

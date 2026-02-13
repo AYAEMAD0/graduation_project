@@ -3,7 +3,7 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
-import 'package:mock_mate_ai/features/auth/presentation/widget/otp_fields.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/widget/otp_fields.dart';
 import '../../../../../../core/routes/app_routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
