@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
-import 'package:mock_mate_ai/features/InterviewSetup/presentation/screens/InterviewSetupScreen.dart';
 import 'package:mock_mate_ai/features/ScoreScreen/presentation/screens/ScoreScreen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/new_password.dart';
@@ -13,6 +12,7 @@ import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.d
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
 import 'package:mock_mate_ai/features/upload_cv_jd/upload_cv_jd.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
+import '../../features/interview_setup/presentation/screens/interview_setup_screen.dart';
 
 
 class AppRouter {

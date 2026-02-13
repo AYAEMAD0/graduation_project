@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/features/interview_session/model/question_model.dart';
 import 'package:mock_mate_ai/features/interview_session/widget/option_item.dart';
@@ -24,22 +25,20 @@ class _QuestionSectionState extends State<QuestionSection> {
 
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
-    final isTablet = breakpoints.isTablet;
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 0 : (isTablet ? 30 : 80),
+        horizontal: isMobile ? 0 : (isMobile ? 80 : 30),
       ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             /// Question Title
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xffEDEDED),
+                color: AppColor.whiteDarkColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -52,12 +51,11 @@ class _QuestionSectionState extends State<QuestionSection> {
             ),
 
             const SizedBox(height: 20),
-
             /// Options Container
             Container(
-              padding: EdgeInsets.all(isMobile ? 16 : 30),
+              padding: EdgeInsets.all(isMobile ? 16 : 20),
               decoration: BoxDecoration(
-                color: const Color(0xffEDEDED),
+                color:  AppColor.whiteDarkColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
