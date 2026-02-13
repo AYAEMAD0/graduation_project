@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/upload_cv_jd/widget/btn_upload.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../core/theme/app_style.dart';
@@ -68,7 +69,9 @@ class _UploadCvJdState extends State<UploadCvJd> {
                         CustomButton(
                           text: "Analyze Skills",
                           widthBtn: isMobile ? double.infinity : 500,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.extractedSkill);
+                          },
                         ),
                         SizedBox(height: 20),
                       ],
