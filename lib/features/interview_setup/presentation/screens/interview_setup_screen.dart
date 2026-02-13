@@ -3,6 +3,7 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../widget/selection_selector.dart';
 
 class InterviewSetupScreen extends StatefulWidget {
@@ -104,7 +105,13 @@ class _InterviewSetupScreenState extends State<InterviewSetupScreen> {
                         child: CustomButton(
                           text: "Start Interview",
                           widthBtn: buttonWidth,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRoutes.interviewSession,
+                                  (route) => false,
+                            );
+                          },
                         ),
                       ),
                       SizedBox(height: spacingSmall),
