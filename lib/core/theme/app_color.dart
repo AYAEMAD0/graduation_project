@@ -15,5 +15,7 @@ class AppColor {
   static const Color activeBorder = Color(0xff3C473F);
   static const Color unactiveBorder = Color(0xffCECECE);
   static const Color red= Colors.red;
+  static const Color blueLightSwitch = Color(0xFFDCE3F5);
+
 
 }

@@ -157,5 +157,9 @@ class AppStyle {
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.light,
   );
-
+  static final TextStyle font25WhiteBold= GoogleFonts.roboto(
+    fontSize: 25,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeightHelper.bold,
+  );
 }
