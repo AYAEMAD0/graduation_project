@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mock_mate_ai/core/widget/arrow_button.dart';
-import 'package:mock_mate_ai/features/interview_session/model/QuestionModel.dart';
+import 'package:mock_mate_ai/features/interview_session/model/question_model.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
