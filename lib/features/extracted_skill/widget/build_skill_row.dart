@@ -22,12 +22,6 @@ class BuildSkillRow extends StatelessWidget {
           Text(title, style: AppStyle.font25WhiteBold),
           const Spacer(),
           CustomSwitch(
-            // value: isSelected,
-            // onChanged: (val) {
-            //   setState(() {
-            //     selectedSkill = val ? widget.title : "";
-            //   });
-            // },
             value: isSelected,
             onChanged: onChanged,
           ),
