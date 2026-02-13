@@ -27,8 +27,12 @@ class _OtpFieldsState extends State<OtpFields> {
 
   @override
   void dispose() {
-    for (final c in controllers) c.dispose();
-    for (final f in focusNodes) f.dispose();
+    for (final c in controllers) {
+      c.dispose();
+    }
+    for (final f in focusNodes) {
+      f.dispose();
+    }
     super.dispose();
   }
 

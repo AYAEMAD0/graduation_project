@@ -147,4 +147,15 @@ class AppStyle {
     fontWeight: FontWeightHelper.medium,
 
   );
+  static final TextStyle font31WhiteSemiBold= GoogleFonts.roboto(
+    fontSize: 31,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+  static final TextStyle font30BlackLight= GoogleFonts.roboto(
+    fontSize: 30,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.light,
+  );
+
 }
