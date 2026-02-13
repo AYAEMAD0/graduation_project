@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
 
 class OptionItem extends StatelessWidget {
   final String text;
@@ -15,7 +16,7 @@ class OptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onTap: onTap,
         child: Row(
@@ -28,13 +29,13 @@ class OptionItem extends StatelessWidget {
                     : Icons.radio_button_unchecked,
                 key: ValueKey(isSelected),
                 size: 20,
-                color: const Color(0xff7F7FD5),
+                color:AppColor.purpleDarkColor,
               ),
             ),
             const SizedBox(width: 12),
             Text(
               text,
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
+              style: const TextStyle(fontSize: 16, color: AppColor.blackColor),
             ),
           ],
         ),
