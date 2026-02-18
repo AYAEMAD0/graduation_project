@@ -14,10 +14,10 @@ class CustomDialog {
         return AlertDialog(
           backgroundColor: AppTheme.theme.scaffoldBackgroundColor,
           title: Row(
-            spacing: 15,
+            spacing: 20,
             children: [
               CircularProgressIndicator(color: AppColor.primaryBlueColor),
-              Text('Loading', style:AppStyle.font24BlackBold,),
+              Text('Loading', style:AppStyle.font20BlackSemiBold,),
             ],
           ),
         );
@@ -35,10 +35,8 @@ class CustomDialog {
     required String title,
     TextStyle? styleTitle,
     String? posActionName,
-    TextStyle? stylePosActionName,
     Function? posActionClick,
     String? nagActionName,
-    TextStyle? styleNagActionName,
     Function? nagActionClick,
   }) {
     List<Widget>? actions = [];
@@ -49,7 +47,7 @@ class CustomDialog {
             Navigator.pop(context);
             posActionClick?.call();
           },
-          child: Text(posActionName, style: stylePosActionName),
+          child: Text(posActionName, style: AppStyle.font20BlueDarkBold),
         ),
       );
     }
@@ -60,7 +58,7 @@ class CustomDialog {
             Navigator.pop(context);
             nagActionClick?.call();
           },
-          child: Text(nagActionName, style: styleNagActionName),
+          child: Text(nagActionName, style:  AppStyle.font20BlueDarkBold),
         ),
       );
     }
@@ -71,8 +69,8 @@ class CustomDialog {
       builder: (context) {
         return AlertDialog(
           backgroundColor:  AppTheme.theme.scaffoldBackgroundColor,
-          title: Text(title, style: AppStyle.font24BlackBold),
-          content: Text(message, style: AppStyle.font18BlackRegular,),
+          title: Text(title, style: AppStyle.font20BlackBold),
+          content: Text(message, style: AppStyle.font16BlackRegular,),
           actions: actions,
         );
       },

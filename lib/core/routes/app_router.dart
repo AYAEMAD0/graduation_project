@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/login_screen.dart';
-import 'package:mock_mate_ai/features/auth/presentation/screen/signup/signup_screen.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
 import 'package:mock_mate_ai/features/extracted_skill/extracted_skill_screen.dart';
 import 'package:mock_mate_ai/features/interview_session/interview_session.dart';

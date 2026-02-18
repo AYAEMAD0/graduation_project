@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:mock_mate_ai/domain/entities/onboarding_entity.dart';
-import '../../domain/repo/onboarding_repo.dart';
-import '../data_source/local/onboarding/onboarding_local_data_source.dart';
+import 'package:mock_mate_ai/domain/entities/onboarding/onboarding_entity.dart';
+import '../../../domain/repo/onboarding/onboarding_repo.dart';
+import '../../data_source/local/onboarding/onboarding_local_data_source.dart';
 
 @ Injectable(as: OnboardingRepo)
 class OnboardingRepoImpl implements OnboardingRepo {

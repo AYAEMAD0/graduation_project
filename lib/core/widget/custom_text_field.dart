@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final String? label;
 
+  final String? prefixText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
@@ -28,6 +29,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.keyboard,
     this.label,
+    this.prefixText,
     this.prefixIcon,
     this.suffixIcon,
     this.obscure = false,
@@ -64,6 +66,8 @@ class CustomTextField extends StatelessWidget {
         focusedBorder: builtBorder(AppColor.primaryBlueColor),
         errorBorder: builtBorder(),
         focusedErrorBorder: builtBorder(),
+        prefixText: prefixText,
+        prefixStyle: AppStyle.font18BlackRegular,
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: AppColor.grayColor,
         suffixIcon: suffixIcon != null

@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import '../entities/onboarding_entity.dart';
-import '../repo/onboarding_repo.dart';
+import '../../entities/onboarding/onboarding_entity.dart';
+import '../../repo/onboarding/onboarding_repo.dart';
 
 @injectable
 class OnboardingUseCase {

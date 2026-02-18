@@ -162,4 +162,14 @@ class AppStyle {
     color: AppColor.whiteColor,
     fontWeight: FontWeightHelper.bold,
   );
+  static final TextStyle font20BlueDarkBold= GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColor.blueDarkColor,
+    fontWeight: FontWeightHelper.bold,
+  );
+  static final TextStyle font20BlackBold = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.bold,
+  );
 }

@@ -1,4 +1,4 @@
-import '../../domain/entities/onboarding_entity.dart';
+import '../../../domain/entities/onboarding/onboarding_entity.dart';
 
 class OnboardingModelDTO {
   final String title;
