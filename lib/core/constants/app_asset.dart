@@ -11,4 +11,9 @@ class AppAsset {
   static const String arrowIcon = 'assets/images/svgs/arrow_icon.svg';
   static const String uploadIcon  = 'assets/images/svgs/upload_icon.svg';
 
+  static const String avatar1 = 'assets/images/avatar/avatar1.png';
+  static const String avatar2 = 'assets/images/avatar/avatar2.png';
+  static const String avatar3 = 'assets/images/avatar/avatar3.png';
+  static const String avatar4 = 'assets/images/avatar/avatar4.png';
+
 }
