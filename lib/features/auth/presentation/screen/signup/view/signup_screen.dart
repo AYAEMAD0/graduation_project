@@ -50,16 +50,15 @@ class SignupScreen extends StatelessWidget {
                         title: 'Error',
                         message: state.messageError,
                         nagActionName: 'Cancel',
-                        nagActionClick: () => Navigator.pop(context),
                       );
                     } else if (state is SignupValidationError) {
                       final firstError = state.errors.values.first.first;
+                      CustomDialog.hideLoading(context: context);
                       CustomDialog.showMessage(
                         context: context,
                         title: 'Validation Error',
                         message: firstError,
                         nagActionName: 'Cancel',
-                        nagActionClick: () => Navigator.pop(context),
                       );
                     } else if (state is SignupLoading) {
                       CustomDialog.showLoading(context: context);
