@@ -7,44 +7,44 @@ import 'dio_interceptor.dart';
 
 @module
 abstract class DioModule {
+
   @singleton
-  @injectable
   BaseOptions provideBaseOption() {
     return BaseOptions(
       baseUrl: ApiEndpoint.baseUrl,
       receiveDataWhenStatusError: true,
-      connectTimeout: Duration(seconds: 20),
-      receiveTimeout: Duration(seconds: 20),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
     );
   }
 
   @singleton
-  @injectable
   PrettyDioLogger providePrettyLogger() {
     return PrettyDioLogger(
-      error: true,
       request: true,
       responseBody: true,
-      requestBody: true,
-      responseHeader: true,
-      requestHeader: true,
     );
   }
 
   @singleton
-  @injectable
-  Dio provideDio(BaseOptions baseOptions, PrettyDioLogger prettyLogger) {
-    Dio dio = Dio(baseOptions);
-    //todo dio inter
-    dio.interceptors.add(DioInterceptor());
-    dio.interceptors.add(prettyLogger);
+  Dio provideDio(
+    BaseOptions baseOptions,
+    DioInterceptor dioInterceptor,
+    PrettyDioLogger logger,
+  ) {
+    final dio = Dio(baseOptions);
+
+    dioInterceptor.setDio(dio);
+
+    dio.interceptors.add(dioInterceptor);
+    dio.interceptors.add(logger);
+
     return dio;
   }
 
+
   @singleton
-  @injectable
   ApiServices provideApiServices(Dio dio) {
     return ApiServices(dio);
   }
-
 }
