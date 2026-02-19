@@ -107,6 +107,13 @@ class LoginScreen extends StatelessWidget {
                             hint: "Password",
                             prefixIcon: Icons.lock_outline,
                             obscure: !viewmodel.isShowPassword,
+                            onSuffixTap: () {
+                              //todo show password
+                              viewmodel.togglePassword();
+                            },
+                            suffixIcon:viewmodel.isShowPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off_sharp,
                           ),
                           SizedBox(height: spacingMedium),
                           Align(
