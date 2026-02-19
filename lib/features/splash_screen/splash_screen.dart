@@ -4,7 +4,7 @@ import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../../core/helper/shared_check_helper.dart';
-import '../auth/presentation/screen/login/login_screen.dart';
+import '../auth/presentation/screen/login/view/login_screen.dart';
 import '../onboarding_screen/view/onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {

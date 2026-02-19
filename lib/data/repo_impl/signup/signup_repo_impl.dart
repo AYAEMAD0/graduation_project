@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import '../../../domain/entities/signup/signup_entity.dart';
 import '../../../domain/repo/signup/signup_repo.dart';
-import '../../data_source/remote/signup/signup_remote_data_source.dart';
+import '../../data_source/remote/signup/Login_Remote_Data_Source .dart';
 
 @Injectable(as: SignupRepo)
 class SignupRepoImpl implements SignupRepo {
