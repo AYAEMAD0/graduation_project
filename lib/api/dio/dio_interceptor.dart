@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/api/api_endpoint.dart';
 import 'package:mock_mate_ai/domain/repo/auth/token_storage.dart';
 
+import '../../core/exception/app_exception.dart';
 
 @LazySingleton()
 class DioInterceptor extends Interceptor {
@@ -18,9 +19,9 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) async {
     final accessToken = await tokenStorage.getAccessToken();
 
     if (accessToken != null) {
@@ -45,7 +46,6 @@ class DioInterceptor extends Interceptor {
           return handler.next(err);
         }
 
-  
         final refreshResponse = await _dio.post(
           ApiEndpoint.refreshTokenApi,
           data: {"token": refreshToken},
@@ -72,6 +72,43 @@ class DioInterceptor extends Interceptor {
         await tokenStorage.clearTokens();
         return handler.next(err);
       }
+    }
+
+    final responseData = err.response?.data;
+    if (responseData is Map<String, dynamic>) {
+      if (responseData['validationErrors'] != null) {
+        final validationErrors =
+        responseData['validationErrors'] as Map<String, dynamic>;
+
+        final Map<String, List<String>> errors = {};
+        validationErrors.forEach((key, value) {
+          errors[key] = List<String>.from(value);
+        });
+
+        return handler.next(
+          DioException(
+            requestOptions: err.requestOptions,
+            response: err.response,
+            type: err.type,
+            error: ValidationException(
+              message: "Validation Error",
+              errors: errors,
+            ),
+          ),
+        );
+      }
+
+      final message =
+          responseData['message'] ?? "Unexpected error occurred";
+
+      return handler.next(
+        DioException(
+          requestOptions: err.requestOptions,
+          response: err.response,
+          type: err.type,
+          error: message,
+        ),
+      );
     }
 
     return handler.next(err);
