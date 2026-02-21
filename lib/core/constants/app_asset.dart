@@ -10,5 +10,7 @@ class AppAsset {
   static const String googleIcon = 'assets/images/svgs/google_icon.svg';
   static const String arrowIcon = 'assets/images/svgs/arrow_icon.svg';
   static const String uploadIcon  = 'assets/images/svgs/upload_icon.svg';
+  static const String notifications  = 'assets/images/svgs/notifications.svg';
+
 
 }

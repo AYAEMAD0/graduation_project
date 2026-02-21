@@ -162,4 +162,17 @@ class AppStyle {
     color: AppColor.whiteColor,
     fontWeight: FontWeightHelper.bold,
   );
+  static const TextStyle font48BlackBold = TextStyle(
+    fontSize: 48,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    height: 1.2,
+  );
+
+  static const TextStyle font36BlackBold = TextStyle(
+    fontSize: 36,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    height: 1.2,
+  );
 }
