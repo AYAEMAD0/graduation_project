@@ -6,7 +6,7 @@ class AppColor {
   static const Color purpleDarkColor = Color(0xff7F7FD5);
   static const Color blueDarkColor = Color(0xff5182ca);
   static const Color whiteColor = Color(0xffFFFFFF);
-  static const Color whiteDarkColor= Color(0xFFF2F2F2);
+  static const Color whiteDarkColor = Color(0xFFF2F2F2);
   static const Color blackColor = Color(0xff000000);
   static const Color grayLightColor = Color(0xffD9D9D9);
   static const Color grayMediumColor = Color(0xff989898);
@@ -15,8 +15,8 @@ class AppColor {
   static const Color transparentColor = Colors.transparent;
   static const Color activeBorder = Color(0xff3C473F);
   static const Color unactiveBorder = Color(0xffCECECE);
-  static const Color red= Colors.red;
+  static const Color red = Colors.red;
   static const Color blueLightSwitch = Color(0xFFDCE3F5);
-
-
+  static const Color homeBackground = Color(0xFFF3F4F6);
+  static const Color purple = Color(0xffA855F7);
 }
