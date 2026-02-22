@@ -20,6 +20,8 @@ import '../../api/data_source/local/onboarding/onboarding_local_data_source_impl
     as _i382;
 import '../../api/data_source/remote/login/login_remote_data_source_impl.dart'
     as _i226;
+import '../../api/data_source/remote/refresh/refresh_remote_data_source_impl.dart'
+    as _i775;
 import '../../api/data_source/remote/signup/signup_remote_data_source_impl.dart'
     as _i85;
 import '../../api/dio/dio_interceptor.dart' as _i600;
@@ -28,8 +30,11 @@ import '../../data/data_source/local/onboarding/onboarding_local_data_source.dar
     as _i697;
 import '../../data/data_source/remote/login/login_remote_data_source.dart'
     as _i581;
+import '../../data/data_source/remote/refresh/refresh_remote_data_source.dart'
+    as _i394;
 import '../../data/data_source/remote/signup/signup_remote_data_source.dart'
     as _i912;
+import '../../data/repo_impl/auth/token_storage_impl.dart' as _i241;
 import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
 import '../../data/repo_impl/refresh/refresh_repo_impl.dart' as _i597;
@@ -68,9 +73,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i697.OnboardingLocalDataSource>(
       () => _i382.OnboardingLocalDataSourceImpl(),
     );
-    gh.factory<_i253.LoginRepo>(
-      () => _i274.LoginRepoImpl(gh<_i581.LoginRemoteDataSource>()),
-    );
     gh.factory<_i154.OnboardingRepo>(
       () => _i209.OnboardingRepoImpl(
         localDataSource: gh<_i697.OnboardingLocalDataSource>(),
@@ -79,10 +81,35 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i645.OnboardingUseCase>(
       () => _i645.OnboardingUseCase(onboardingRepo: gh<_i154.OnboardingRepo>()),
     );
+    gh.lazySingleton<_i232.TokenStorage>(
+      () => _i241.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.lazySingleton<_i600.DioInterceptor>(
+      () => _i600.DioInterceptor(gh<_i232.TokenStorage>()),
+    );
     gh.factory<_i1035.OnboardingCubit>(
       () => _i1035.OnboardingCubit(
         onboardingUseCase: gh<_i645.OnboardingUseCase>(),
       ),
+    );
+    gh.singleton<_i361.Dio>(
+      () => dioModule.provideDio(
+        gh<_i361.BaseOptions>(),
+        gh<_i600.DioInterceptor>(),
+        gh<_i528.PrettyDioLogger>(),
+      ),
+    );
+    gh.singleton<_i394.ApiServices>(
+      () => dioModule.provideApiServices(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i394.RefreshRemoteDataSource>(
+      () => _i775.RefreshRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
+    gh.factory<_i996.RefreshRepo>(
+      () => _i597.RefreshRepoImpl(gh<_i394.RefreshRemoteDataSource>()),
+    );
+    gh.factory<_i811.RefreshUsecase>(
+      () => _i811.RefreshUsecase(gh<_i996.RefreshRepo>()),
     );
     gh.factory<_i581.LoginRemoteDataSource>(
       () => _i226.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
