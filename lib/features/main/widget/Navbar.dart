@@ -3,7 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:mock_mate_ai/features/home/widget/nav_item.dart';
+import 'package:mock_mate_ai/features/main/widget/nav_item.dart';
 
 class Navbar extends StatelessWidget {
   final int currentIndex;

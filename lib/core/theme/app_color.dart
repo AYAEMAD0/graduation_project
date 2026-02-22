@@ -19,4 +19,7 @@ class AppColor {
   static const Color blueLightSwitch = Color(0xFFDCE3F5);
   static const Color homeBackground = Color(0xFFF3F4F6);
   static const Color purple = Color(0xffA855F7);
+  static const Color homeEffectBlue = Color(0xff06B6D4);
+  static const Color darkGray = Color(0XFF475569);
+  
 }

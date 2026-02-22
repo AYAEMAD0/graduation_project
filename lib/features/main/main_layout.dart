@@ -2,11 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
-import 'package:mock_mate_ai/features/home/taps/faq_tap.dart';
-import 'package:mock_mate_ai/features/home/taps/history_tap.dart';
-import 'package:mock_mate_ai/features/home/taps/home_tap.dart';
-import 'package:mock_mate_ai/features/home/taps/profile_tap.dart';
-import 'package:mock_mate_ai/features/home/widget/Navbar.dart';
+import 'package:mock_mate_ai/features/main/taps/faq/faq_tap.dart';
+import 'package:mock_mate_ai/features/main/taps/history/history_tap.dart';
+import 'package:mock_mate_ai/features/main/taps/home/home_tap.dart';
+import 'package:mock_mate_ai/features/main/taps/profile/profile_tap.dart';
+import 'package:mock_mate_ai/features/main/widget/Navbar.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -17,7 +17,6 @@ class MainLayout extends StatefulWidget {
 
 class _MainLayoutState extends State<MainLayout> {
   int currentIndex = 0;
-
 
   final List<Widget> pages = const [
     HomeTap(),
@@ -31,31 +30,31 @@ class _MainLayoutState extends State<MainLayout> {
     final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      extendBody: true, 
+      extendBody: true,
       body: Stack(
         children: [
           Column(
             children: [
               if (!isMobile)
                 Navbar(
-                
                   currentIndex: currentIndex > 2 ? 0 : currentIndex,
                   onTap: (index) => setState(() => currentIndex = index),
                 ),
-              
+
               Expanded(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 400),
-                  transitionBuilder: (Widget child, Animation<double> animation) {
-                    return FadeTransition(opacity: animation, child: child);
-                  },
-          
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+
                   child: pages[currentIndex],
                 ),
               ),
             ],
           ),
-          
+
           if (isMobile) _buildMobileDock(),
         ],
       ),
@@ -72,7 +71,7 @@ class _MainLayoutState extends State<MainLayout> {
           borderRadius: BorderRadius.circular(35),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -84,14 +83,14 @@ class _MainLayoutState extends State<MainLayout> {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildDockItem(0, Icons.home_rounded, "Home"),
                   _buildDockItem(1, Icons.history_rounded, "History"),
                   _buildDockItem(2, Icons.help_outline_rounded, "FAQ"),
-                  _buildDockAvatar(3), 
+                  _buildDockAvatar(3),
                 ],
               ),
             ),
@@ -109,7 +108,9 @@ class _MainLayoutState extends State<MainLayout> {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.purple.withOpacity(0.1) : Colors.transparent,
+          color: isSelected
+              ? AppColor.purple.withValues(alpha: 0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -151,10 +152,12 @@ class _MainLayoutState extends State<MainLayout> {
         ),
         child: CircleAvatar(
           radius: 18,
-          backgroundColor: isSelected ? AppColor.purple.withOpacity(0.1) : Colors.white,
+          backgroundColor: isSelected
+              ? AppColor.purple.withValues(alpha: 0.1)
+              : Colors.white,
           child: Icon(
-            Icons.person, 
-            color: isSelected ? AppColor.purple : Colors.black, 
+            Icons.person,
+            color: isSelected ? AppColor.purple : Colors.black,
             size: 22,
           ),
         ),

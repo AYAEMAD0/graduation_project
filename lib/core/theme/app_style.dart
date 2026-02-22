@@ -191,4 +191,12 @@ class AppStyle {
     height: 192.98 / 154.39,
     letterSpacing: 0,
   );
+
+  static final TextStyle font58InterRegularSlate = GoogleFonts.inter(
+    fontSize: 57.89,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF475569),
+    height: 94.1 / 57.89,
+    letterSpacing: 0,
+  );
 }
