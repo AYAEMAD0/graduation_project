@@ -243,7 +243,7 @@ class HomeTap extends StatelessWidget {
 
                         const SizedBox(height: 100),
 
-                        // بطاقات المميزات (Features)
+                      
                         Column(
                           children: [
                             FeatureStepCard(
