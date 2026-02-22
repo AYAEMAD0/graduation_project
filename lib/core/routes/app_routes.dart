@@ -13,4 +13,5 @@ abstract class AppRoutes {
   static const String interviewSession= '/interviewSession';
   static const String scoreScreen = '/scoreScreen';
   static const String extractedSkill = '/extractedSkill';
+  static const String home = '/home';
 }

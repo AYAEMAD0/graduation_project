@@ -100,7 +100,7 @@ class SignupScreen extends StatelessWidget {
                           BuildForm(viewmodel: viewmodel,),
                           SizedBox(height: spacingMedium),
                           CustomButton(
-                            text: "CREATE",
+                            text: "CREATE ACCOUNT",
                             onPressed: () {
                               viewmodel.signup();
                             },

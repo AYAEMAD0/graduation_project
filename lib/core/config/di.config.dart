@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
@@ -21,6 +22,7 @@ import '../../api/data_source/remote/login/login_remote_data_source_impl.dart'
     as _i226;
 import '../../api/data_source/remote/signup/signup_remote_data_source_impl.dart'
     as _i85;
+import '../../api/dio/dio_interceptor.dart' as _i600;
 import '../../api/dio/dio_module.dart' as _i67;
 import '../../data/data_source/local/onboarding/onboarding_local_data_source.dart'
     as _i697;
@@ -30,12 +32,16 @@ import '../../data/data_source/remote/signup/signup_remote_data_source.dart'
     as _i912;
 import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
+import '../../data/repo_impl/refresh/refresh_repo_impl.dart' as _i597;
 import '../../data/repo_impl/signup/signup_repo_impl.dart' as _i1018;
+import '../../domain/repo/auth/token_storage.dart' as _i232;
 import '../../domain/repo/login/login_repo.dart' as _i253;
 import '../../domain/repo/onboarding/onboarding_repo.dart' as _i154;
+import '../../domain/repo/refresh/refresh_repo.dart' as _i996;
 import '../../domain/repo/signup/signup_repo.dart' as _i671;
 import '../../domain/usecase/login/login_usecase.dart' as _i623;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
+import '../../domain/usecase/refresh/refresh_usecase.dart' as _i811;
 import '../../domain/usecase/signup/signup_usecase.dart' as _i394;
 import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart'
     as _i407;
@@ -43,6 +49,7 @@ import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.da
     as _i461;
 import '../../features/onboarding_screen/viewmodel/onboarding_cubit.dart'
     as _i1035;
+import 'storage_module.dart' as _i371;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -52,19 +59,17 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
+    final storageModule = _$StorageModule();
     gh.singleton<_i361.BaseOptions>(() => dioModule.provideBaseOption());
     gh.singleton<_i528.PrettyDioLogger>(() => dioModule.providePrettyLogger());
+    gh.singleton<_i558.FlutterSecureStorage>(
+      () => storageModule.provideSecureStorage(),
+    );
     gh.factory<_i697.OnboardingLocalDataSource>(
       () => _i382.OnboardingLocalDataSourceImpl(),
     );
-    gh.singleton<_i361.Dio>(
-      () => dioModule.provideDio(
-        gh<_i361.BaseOptions>(),
-        gh<_i528.PrettyDioLogger>(),
-      ),
-    );
-    gh.singleton<_i394.ApiServices>(
-      () => dioModule.provideApiServices(gh<_i361.Dio>()),
+    gh.factory<_i253.LoginRepo>(
+      () => _i274.LoginRepoImpl(gh<_i581.LoginRemoteDataSource>()),
     );
     gh.factory<_i154.OnboardingRepo>(
       () => _i209.OnboardingRepoImpl(
@@ -100,7 +105,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
     );
     gh.factory<_i461.SignupCubit>(
-      () => _i461.SignupCubit(gh<_i394.SignupUsecase>()),
+      () => _i461.SignupCubit(
+        gh<_i394.SignupUsecase>(),
+        gh<_i232.TokenStorage>(),
+      ),
     );
     gh.factory<_i407.LoginCubit>(
       () => _i407.LoginCubit(gh<_i623.LoginUsecase>()),
@@ -110,3 +118,5 @@ extension GetItInjectableX on _i174.GetIt {
 }
 
 class _$DioModule extends _i67.DioModule {}
+
+class _$StorageModule extends _i371.StorageModule {}

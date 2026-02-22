@@ -16,7 +16,7 @@ class BuildForm extends StatelessWidget {
         CustomTextField(
           hint: "Name",
           controller: viewmodel.nameController,
-          prefixIcon: Icons.person,
+          prefixIcon: Icons.person_outline_sharp,
         ),
         SizedBox(height: spacingMedium),
         CustomTextField(
@@ -30,7 +30,7 @@ class BuildForm extends StatelessWidget {
           controller: viewmodel.phoneController,
           keyboard: TextInputType.phone,
           prefixText: "+20 ",
-          prefixIcon: Icons.phone,
+          prefixIcon: Icons.phone_outlined,
         ),
         SizedBox(height: spacingMedium),
         CustomTextField(
@@ -48,8 +48,8 @@ class BuildForm extends StatelessWidget {
             viewmodel.togglePassword();
           },
           suffixIcon: isShowPassword
-              ? Icons.visibility
-              : Icons.visibility_off_sharp,
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined,
           obscure: !isShowPassword,
         ),
       ],
