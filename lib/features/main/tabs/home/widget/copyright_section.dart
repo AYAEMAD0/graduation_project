@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'build_footer_link.dart';
+
 class CopyrightSection extends StatelessWidget {
   const CopyrightSection({super.key});
 
@@ -42,11 +44,11 @@ class CopyrightSection extends StatelessWidget {
            Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildFooterLink('Privacy'),
+                  BuildFooterLink(label: 'Privacy'),
                   const SizedBox(width: 40),
-                  _buildFooterLink('Terms'),
+                  BuildFooterLink(label:'Terms'),
                   const SizedBox(width: 40),
-                  _buildFooterLink('Support'),
+                  BuildFooterLink(label:'Support'),
                 ],
               ),
 
@@ -65,24 +67,6 @@ class CopyrightSection extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildFooterLink(String label) {
-    return InkWell(
-      onTap: () {},
-      borderRadius: BorderRadius.circular(4),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(
-          label,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            color: const Color(0xFF64748B),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
       ),
     );
   }

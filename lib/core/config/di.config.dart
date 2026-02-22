@@ -18,8 +18,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import '../../api/api_services.dart' as _i394;
 import '../../api/data_source/local/onboarding/onboarding_local_data_source_impl.dart'
     as _i382;
-import '../../api/data_source/remote/login/Login_Remote_Data_Source_impl.dart'
-    as _i914;
 import '../../api/data_source/remote/refresh/refresh_remote_data_source_impl.dart'
     as _i775;
 import '../../api/data_source/remote/signup/signup_remote_data_source_impl.dart'
@@ -28,12 +26,12 @@ import '../../api/dio/dio_interceptor.dart' as _i600;
 import '../../api/dio/dio_module.dart' as _i67;
 import '../../data/data_source/local/onboarding/onboarding_local_data_source.dart'
     as _i697;
-import '../../data/data_source/remote/login/signin_remote_data_source.dart'
-    as _i358;
+import '../../data/data_source/remote/login/login_remote_data_source.dart'
+    as _i581;
 import '../../data/data_source/remote/refresh/refresh_remote_data_source.dart'
     as _i394;
-import '../../data/data_source/remote/signup/Login_Remote_Data_Source%20.dart'
-    as _i979;
+import '../../data/data_source/remote/signup/signup_remote_data_source%20.dart'
+    as _i122;
 import '../../data/repo_impl/auth/token_storage_impl.dart' as _i241;
 import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
@@ -73,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i697.OnboardingLocalDataSource>(
       () => _i382.OnboardingLocalDataSourceImpl(),
     );
+    gh.factory<_i253.LoginRepo>(
+      () => _i274.LoginRepoImpl(gh<_i581.LoginRemoteDataSource>()),
+    );
     gh.factory<_i154.OnboardingRepo>(
       () => _i209.OnboardingRepoImpl(
         localDataSource: gh<_i697.OnboardingLocalDataSource>(),
@@ -105,31 +106,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i394.RefreshRemoteDataSource>(
       () => _i775.RefreshRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.factory<_i623.LoginUsecase>(
+      () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
+    );
     gh.factory<_i996.RefreshRepo>(
       () => _i597.RefreshRepoImpl(gh<_i394.RefreshRemoteDataSource>()),
     );
     gh.factory<_i811.RefreshUsecase>(
       () => _i811.RefreshUsecase(gh<_i996.RefreshRepo>()),
     );
-    gh.factory<_i979.SignupRemoteDataSource>(
+    gh.factory<_i122.SignupRemoteDataSource>(
       () => _i85.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
-    );
-    gh.factory<_i358.LoginRemoteDataSource>(
-      () => _i914.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
-    );
-    gh.factory<_i671.SignupRepo>(
-      () => _i1018.SignupRepoImpl(
-        signupRemoteDataSource: gh<_i979.SignupRemoteDataSource>(),
-      ),
-    );
-    gh.factory<_i253.LoginRepo>(
-      () => _i274.LoginRepoImpl(gh<_i358.LoginRemoteDataSource>()),
-    );
-    gh.factory<_i623.LoginUsecase>(
-      () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
     );
     gh.factory<_i407.LoginCubit>(
       () => _i407.LoginCubit(gh<_i623.LoginUsecase>()),
+    );
+    gh.factory<_i671.SignupRepo>(
+      () => _i1018.SignupRepoImpl(
+        signupRemoteDataSource: gh<_i122.SignupRemoteDataSource>(),
+      ),
     );
     gh.factory<_i394.SignupUsecase>(
       () => _i394.SignupUsecase(signupRepo: gh<_i671.SignupRepo>()),

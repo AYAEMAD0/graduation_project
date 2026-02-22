@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:mock_mate_ai/data/data_source/remote/login/signin_remote_data_source.dart';
+import 'package:mock_mate_ai/data/data_source/remote/login/login_remote_data_source.dart';
 import 'package:mock_mate_ai/domain/entities/login/login_entity.dart';
 import 'package:mock_mate_ai/domain/repo/login/login_repo.dart';
 @Injectable(as: LoginRepo)
