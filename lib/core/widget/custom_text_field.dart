@@ -19,6 +19,8 @@ class CustomTextField extends StatelessWidget {
   final bool? obscure;
   final String? obscureCharacter;
   final void Function(String)? onChanged;
+  final Color? fillColor;
+  final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
     super.key,
@@ -36,6 +38,8 @@ class CustomTextField extends StatelessWidget {
     this.obscureCharacter,
     this.onChanged,
     this.onSuffixTap,
+    this.fillColor,
+    this.contentPadding,
   });
 
   @override
@@ -58,8 +62,10 @@ class CustomTextField extends StatelessWidget {
         hintStyle: AppStyle.font14GrayRegular,
         labelText: label,
         labelStyle: AppStyle.font14GrayRegular,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12,
+        contentPadding:
+        contentPadding??
+        EdgeInsets.symmetric(
+          horizontal: 10,
           vertical: 20,
         ),
         enabledBorder: builtBorder(AppColor.transparentColor),
@@ -78,7 +84,7 @@ class CustomTextField extends StatelessWidget {
             : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,
-        fillColor:AppColor.whiteDarkColor,
+        fillColor:fillColor??AppColor.whiteDarkColor,
       ),
     );
   }

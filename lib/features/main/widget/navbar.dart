@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-import '../../../core/theme/app_color.dart';
 import 'nav_item.dart';
 
 class Navbar extends StatelessWidget {
@@ -53,15 +52,16 @@ class Navbar extends StatelessWidget {
                 onTap: () => onTap(2),
               ),
               const SizedBox(width: 10),
-              CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.white,
-                child:Icon(
-                    Icons.person,
-                    size: 20,
-                    color: AppColor.blackColor,
-                  ),
+              NavItem(
+                icon: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person),
                 ),
+                index: 3,
+                currentIndex: currentIndex,
+                onTap: () => onTap(3),
+              ),
             ],
           ),
         ],

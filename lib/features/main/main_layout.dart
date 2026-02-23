@@ -36,7 +36,7 @@ class _MainLayoutState extends State<MainLayout> {
             children: [
               if (!isMobile)
                 Navbar(
-                  currentIndex: currentIndex > 2 ? 0 : currentIndex,
+                  currentIndex: currentIndex,
                   onTap: (index) => setState(() => currentIndex = index),
                 ),
               Expanded(
