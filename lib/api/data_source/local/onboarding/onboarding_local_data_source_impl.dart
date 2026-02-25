@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
-import 'package:mock_mate_ai/api/model/onboarding_model_dto.dart';
+import 'package:mock_mate_ai/api/model/onboarding/onboarding_model_dto.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import '../../../../data/data_source/local/onboarding/onboarding_local_data_source.dart';
-import '../../../../domain/entities/onboarding_entity.dart';
+import '../../../../domain/entities/onboarding/onboarding_entity.dart';
 
 @Injectable(as: OnboardingLocalDataSource)
 class OnboardingLocalDataSourceImpl extends OnboardingLocalDataSource {

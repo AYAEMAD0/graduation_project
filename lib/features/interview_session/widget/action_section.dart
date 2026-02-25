@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
+import '../../../core/routes/app_routes.dart';
 
 class ActionSection extends StatelessWidget {
   final VoidCallback onNext;
@@ -14,8 +15,6 @@ class ActionSection extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final availableWidth = constraints.maxWidth;
-
-      
         final useExpanded = availableWidth < 420;
 
         return Padding(
@@ -44,14 +43,26 @@ class ActionSection extends StatelessWidget {
                   ? Expanded(
                       child: CustomButton(
                         text: "Submit",
-                        onPressed: () {},
+                        onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            AppRoutes.scoreScreen,
+                                (route) => false,
+                          );
+                        },
                       ),
                     )
                   : SizedBox(
                       width: 200,
                       child: CustomButton(
                         text: "Submit",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            AppRoutes.scoreScreen,
+                                (route) => false,
+                          );
+                        },
                       ),
                     ),
             ],

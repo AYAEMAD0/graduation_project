@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 class CustomButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
+  final String? text;
+  final VoidCallback? onPressed;
   final double? widthBtn;
   final double? height;
   final double? borderRadius;
   final bool hasShadow;
   final IconData? icon;
 
+  final Widget? child;
+  final double? radius;
   const CustomButton({
     super.key,
-    required this.text,
+    this.text,
     required this.onPressed,
     this.widthBtn,
     this.height,
     this.borderRadius,
     this.hasShadow = false,
     this.icon,
+    this.child,
+    this.radius,
   });
 
   @override
@@ -29,6 +33,7 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(finalRadius),
+      borderRadius: BorderRadius.circular(radius ?? 36),
       child: Container(
         height: finalHeight,
         width: widthBtn ?? 250,
@@ -51,6 +56,11 @@ class CustomButton extends StatelessWidget {
             style: AppStyle.font18WhiteBold,
           ),
         ),
+          borderRadius: BorderRadius.circular(radius ?? 36),
+        ),
+        child:
+            child ??
+            Center(child: Text(text ?? "", style: AppStyle.font18WhiteBold)),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import '../../../../core/config/di.dart';
+import '../../../../core/helper/shared_check_helper.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../viewmodel/onboarding_cubit.dart';
 import 'widget/gradient_dot_indicator.dart';
@@ -105,6 +106,10 @@ class MobileOnboardingView extends StatelessWidget {
                           widthBtn: 130,
                           onPressed: () {
                             if (currentPage == pages.length - 1) {
+                              SharedCheckHelper.setValue(
+                                SharedCheckHelper.keyIsOnBoarding,
+                                true,
+                              );
                              Navigator.pushReplacementNamed(context,AppRoutes.login);
                             } else {
                               _controller.nextPage(

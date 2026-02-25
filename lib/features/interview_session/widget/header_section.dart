@@ -23,7 +23,7 @@ class HeaderSection extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(height: isMobile ? 45 : 60),
+        SizedBox(height: isMobile ? 20 : 30),
         Text(
           "Interview Session",
           style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),

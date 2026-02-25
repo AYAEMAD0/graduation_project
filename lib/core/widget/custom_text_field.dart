@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final String? label;
 
+  final String? prefixText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
@@ -18,6 +19,8 @@ class CustomTextField extends StatelessWidget {
   final bool? obscure;
   final String? obscureCharacter;
   final void Function(String)? onChanged;
+  final Color? fillColor;
+  final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
     super.key,
@@ -28,12 +31,15 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.keyboard,
     this.label,
+    this.prefixText,
     this.prefixIcon,
     this.suffixIcon,
     this.obscure = false,
     this.obscureCharacter,
     this.onChanged,
     this.onSuffixTap,
+    this.fillColor,
+    this.contentPadding,
   });
 
   @override
@@ -56,14 +62,18 @@ class CustomTextField extends StatelessWidget {
         hintStyle: AppStyle.font14GrayRegular,
         labelText: label,
         labelStyle: AppStyle.font14GrayRegular,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12,
+        contentPadding:
+        contentPadding??
+        EdgeInsets.symmetric(
+          horizontal: 10,
           vertical: 20,
         ),
         enabledBorder: builtBorder(AppColor.transparentColor),
         focusedBorder: builtBorder(AppColor.primaryBlueColor),
         errorBorder: builtBorder(),
         focusedErrorBorder: builtBorder(),
+        prefixText: prefixText,
+        prefixStyle: AppStyle.font18BlackRegular,
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: AppColor.grayColor,
         suffixIcon: suffixIcon != null
@@ -74,7 +84,7 @@ class CustomTextField extends StatelessWidget {
             : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,
-        fillColor:AppColor.whiteDarkColor,
+        fillColor:fillColor??AppColor.whiteDarkColor,
       ),
     );
   }
