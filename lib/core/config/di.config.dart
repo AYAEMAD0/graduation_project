@@ -20,6 +20,8 @@ import '../../api/data_source/local/onboarding/onboarding_local_data_source_impl
     as _i382;
 import '../../api/data_source/remote/login/login_remote_data_source_impl.dart'
     as _i226;
+import '../../api/data_source/remote/logout/logout_remote_data_source_impl.dart'
+    as _i12;
 import '../../api/data_source/remote/profile/get_profile_remote_data_source_impl.dart'
     as _i130;
 import '../../api/data_source/remote/profile/update_profile_remote_data_source_impl.dart'
@@ -34,6 +36,8 @@ import '../../data/data_source/local/onboarding/onboarding_local_data_source.dar
     as _i697;
 import '../../data/data_source/remote/login/login_remote_data_source.dart'
     as _i581;
+import '../../data/data_source/remote/logout/logout_remote_data_source.dart'
+    as _i887;
 import '../../data/data_source/remote/profile/get_profile_remote_data_source.dart'
     as _i1011;
 import '../../data/data_source/remote/profile/update_profile_remote_data_source.dart'
@@ -44,6 +48,7 @@ import '../../data/data_source/remote/signup/signup_remote_data_source.dart'
     as _i912;
 import '../../data/repo_impl/auth/token_storage_impl.dart' as _i241;
 import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
+import '../../data/repo_impl/logout/logout_repo_impl.dart' as _i238;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
 import '../../data/repo_impl/profile/get_profile_repo_impl.dart' as _i904;
 import '../../data/repo_impl/profile/update_profile_repo_impl.dart' as _i577;
@@ -51,12 +56,14 @@ import '../../data/repo_impl/refresh/refresh_repo_impl.dart' as _i597;
 import '../../data/repo_impl/signup/signup_repo_impl.dart' as _i1018;
 import '../../domain/repo/auth/token_storage.dart' as _i232;
 import '../../domain/repo/login/login_repo.dart' as _i253;
+import '../../domain/repo/logout/logout_repo.dart' as _i425;
 import '../../domain/repo/onboarding/onboarding_repo.dart' as _i154;
 import '../../domain/repo/profile/get_profile_repo.dart' as _i494;
 import '../../domain/repo/profile/update_profile_repo.dart' as _i884;
 import '../../domain/repo/refresh/refresh_repo.dart' as _i996;
 import '../../domain/repo/signup/signup_repo.dart' as _i671;
 import '../../domain/usecase/login/login_usecase.dart' as _i623;
+import '../../domain/usecase/logout/logout_usecase.dart' as _i238;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
 import '../../domain/usecase/profile/get_profile_usecase.dart' as _i152;
 import '../../domain/usecase/profile/update_profile_usecase.dart' as _i1049;
@@ -66,6 +73,8 @@ import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart
     as _i407;
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
     as _i461;
+import '../../features/main/tabs/profile/viewmodel/logout/logout_cubit.dart'
+    as _i540;
 import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart'
     as _i315;
 import '../../features/onboarding_screen/viewmodel/onboarding_cubit.dart'
@@ -121,6 +130,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i394.RefreshRemoteDataSource>(
       () => _i775.RefreshRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.factory<_i887.LogoutRemoteDataSource>(
+      () => _i12.LogoutRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i996.RefreshRepo>(
       () => _i597.RefreshRepoImpl(gh<_i394.RefreshRemoteDataSource>()),
     );
@@ -146,11 +158,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i912.SignupRemoteDataSource>(
       () => _i85.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i425.LogoutRepo>(
+      () => _i238.LogoutRepoImpl(
+        gh<_i887.LogoutRemoteDataSource>(),
+        gh<_i232.TokenStorage>(),
+      ),
+    );
     gh.factory<_i494.GetProfileRepo>(
       () => _i904.GetProfileRepoImpl(gh<_i1011.GetProfileRemoteDataSource>()),
     );
     gh.factory<_i253.LoginRepo>(
       () => _i274.LoginRepoImpl(gh<_i581.LoginRemoteDataSource>()),
+    );
+    gh.factory<_i238.LogoutUseCase>(
+      () => _i238.LogoutUseCase(gh<_i425.LogoutRepo>()),
     );
     gh.factory<_i671.SignupRepo>(
       () => _i1018.SignupRepoImpl(
@@ -165,6 +186,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i623.LoginUsecase>(
       () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
+    );
+    gh.factory<_i540.LogoutCubit>(
+      () => _i540.LogoutCubit(gh<_i238.LogoutUseCase>()),
     );
     gh.factory<_i461.SignupCubit>(
       () => _i461.SignupCubit(

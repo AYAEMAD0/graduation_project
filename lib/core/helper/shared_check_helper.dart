@@ -34,4 +34,7 @@ class SharedCheckHelper {
     }
   }
 
+  static Future<void> clearAll() async {
+    await _prefs.clear();
+  }
 }

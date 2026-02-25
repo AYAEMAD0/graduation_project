@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/features/main/tabs/profile/widget/build_profile_logout_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../domain/entities/user/user_entity.dart';
-import '../../features/main/tabs/profile/widget/build_profile_card.dart';
-import '../../features/main/tabs/profile/widget/build_profile_edit_button.dart';
-import '../../features/main/tabs/profile/widget/build_profile_personal_info.dart';
-import 'custom_button.dart';
+import '../../../../../domain/entities/user/user_entity.dart';
+import 'build_profile_card.dart';
+import 'build_profile_edit_button.dart';
+import 'build_profile_personal_info.dart';
 
 class BuildProfileBody extends StatelessWidget {
-  final bool isLoading;
+  final bool isLoadingEdit;
+  final bool isLoadingLogout;
   final UserEntity? user;
   final ImageProvider? currentImage;
   final TextEditingController fullNameController;
@@ -18,7 +19,8 @@ class BuildProfileBody extends StatelessWidget {
 
   const BuildProfileBody({
     super.key,
-    required this.isLoading,
+    required this.isLoadingEdit,
+    required this.isLoadingLogout,
     required this.user,
     required this.currentImage,
     required this.fullNameController,
@@ -40,7 +42,7 @@ class BuildProfileBody extends StatelessWidget {
             children: [
               SizedBox(height: isMobile ? 20 : 70),
               BuildProfileCard(
-                isLoading: isLoading,
+                isLoading: isLoadingEdit,
                 displayName: user?.displayName ?? "No Name",
                 currentImage: currentImage,
                 onEditImageTap: onEditImageTap,
@@ -52,16 +54,15 @@ class BuildProfileBody extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               BuildProfileEditButton(
-                isLoading: isLoading,
+                isLoading: isLoadingEdit,
                 onPressed: onUpdatePressed,
               ),
-              const SizedBox(height: 30),
-              CustomButton(
-                widthBtn: isMobile ? 250 : 600,
+              SizedBox(height: isMobile ? 20 : 40),
+              BuildProfileLogoutButton(
+                isLoading: isLoadingLogout,
                 onPressed: onLogoutPressed,
-                text: "Logout",
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 110),
             ],
           ),
         ),

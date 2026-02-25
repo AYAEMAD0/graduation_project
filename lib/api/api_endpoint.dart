@@ -5,5 +5,6 @@ class ApiEndpoint {
   static const String refreshTokenApi = '/api/users/refresh';
   static const String updateProfileApi = '/api/users/profile';
   static const String getUserByIdApi = '/api/users';
+  static const String logoutApi = '/api/users/logout';
 
 }
