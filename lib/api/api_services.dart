@@ -22,12 +22,13 @@ class ApiServices {
     );
   }
 
-  Future<Response> put(String path, {dynamic data}) async {
+  Future<Response> put(String path,{dynamic data, Options? options}) async {
     return await dio.put(
-      path,
-      data: data,
-    );
+        path,
+        data: data,
+        options: options);
   }
+
 
   Future<Response> delete(String path) async {
     return await dio.delete(path);

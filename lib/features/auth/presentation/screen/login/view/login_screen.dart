@@ -8,6 +8,8 @@ import 'package:mock_mate_ai/core/widget/custom_dialog.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/viewModel/login_cubit.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/viewModel/login_state.dart';
+import '../../../../../../core/helper/jwt_helper.dart';
+import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../core/routes/app_routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -38,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                   maxWidth: isMobile ? double.infinity : 500,
                 ),
                 child: BlocConsumer<LoginCubit, LoginState>(
-                  listener: (context, state) {
+                  listener: (context, state) async{
                     if (state is LoginLoading) {
                       CustomDialog.showLoading(context: context);
                     } else if (state is LoginError) {
@@ -59,6 +61,12 @@ class LoginScreen extends StatelessWidget {
                         nagActionName: "Cancel",
                       );
                     } else if (state is LoginSuccess) {
+                      final token = state.data.accessToken;
+                      final userId = JwtHelper.getUserIdFromToken(token);
+                      await SharedCheckHelper.setValue(SharedCheckHelper.keyAccessToken, token);
+                      if (userId != null) {
+                        await SharedCheckHelper.setValue(SharedCheckHelper.keyUserId, userId);
+                      }
                       CustomDialog.hideLoading(context: context);
                       CustomDialog.showMessage(
                         context: context,
@@ -68,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                         posActionClick: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            AppRoutes.uploadCvJd,
+                            AppRoutes.home,
                             (route) => false,
                           );
                         },

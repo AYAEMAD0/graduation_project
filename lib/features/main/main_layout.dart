@@ -4,7 +4,7 @@ import 'package:mock_mate_ai/features/main/widget/navbar.dart';
 import 'tabs/faq/faq_tab.dart';
 import 'tabs/history/history_tab.dart';
 import 'tabs/home/home_tab.dart';
-import 'tabs/profile/profile_tab.dart';
+import 'tabs/profile/view/profile_tab.dart';
 import 'widget/build_mobile_dock.dart';
 
 class MainLayout extends StatefulWidget {

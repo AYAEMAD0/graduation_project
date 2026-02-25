@@ -4,14 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/viewModel/login_state.dart';
 import '../../../../../../core/exception/app_exception.dart';
+import '../../../../../../domain/repo/auth/token_storage.dart';
 import '../../../../../../domain/usecase/login/login_usecase.dart';
 
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
   final LoginUsecase loginUsecase;
-
-  LoginCubit(this.loginUsecase) : super(LoginInitial());
+  final TokenStorage tokenStorage;
+  LoginCubit(this.loginUsecase,this.tokenStorage) : super(LoginInitial());
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -27,7 +28,8 @@ class LoginCubit extends Cubit<LoginState> {
           email: emailController.text,
           password: passwordController.text,
         );
-
+        await tokenStorage.saveAccessToken(result.accessToken);
+        await tokenStorage.saveRefreshToken(result.refreshToken);
         emit(LoginSuccess(data: result));
       } on DioException catch (e) {
         if (e.error is ValidationException) {

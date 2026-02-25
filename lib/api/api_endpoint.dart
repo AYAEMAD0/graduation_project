@@ -3,4 +3,7 @@ class ApiEndpoint {
   static const String signupApi = '/api/users';
   static const String loginApi ="/api/users/login";
   static const String refreshTokenApi = '/api/users/refresh';
+  static const String updateProfileApi = '/api/users/profile';
+  static const String getUserByIdApi = '/api/users';
+
 }

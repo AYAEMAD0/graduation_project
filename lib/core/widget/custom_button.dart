@@ -4,7 +4,7 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? widthBtn;
   final Widget? child;
   final double? radius;
@@ -13,7 +13,8 @@ class CustomButton extends StatelessWidget {
     this.text,
     required this.onPressed,
     this.widthBtn,
-    this.child,  this.radius,
+    this.child,
+    this.radius,
   });
   @override
   Widget build(BuildContext context) {

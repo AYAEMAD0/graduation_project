@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/api/api_endpoint.dart';
 import 'package:mock_mate_ai/domain/repo/auth/token_storage.dart';
-
 import '../../core/exception/app_exception.dart';
 
 @LazySingleton()
@@ -24,7 +23,7 @@ class DioInterceptor extends Interceptor {
       ) async {
     final accessToken = await tokenStorage.getAccessToken();
 
-    if (accessToken != null) {
+    if (accessToken != null && accessToken.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
 
