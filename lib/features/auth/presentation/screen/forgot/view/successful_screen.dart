@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/widget/success_circle.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_style.dart';
 import '../../../../../../core/widget/arrow_button.dart';
 import '../../../../../../core/widget/custom_button.dart';
@@ -40,7 +41,7 @@ class SuccessfulScreen extends StatelessWidget {
                     constraints: BoxConstraints(maxWidth: maxWidth),
                     child: Column(
                       children: [
-                       SuccessCircle(),
+                        SuccessCircle(),
                         SizedBox(height: spacingBetween),
                         Text(
                           'Successful',
@@ -58,7 +59,16 @@ class SuccessfulScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: spacingLarge),
-                        CustomButton(text: "Continue", onPressed: () {}),
+                        CustomButton(
+                          text: "Continue",
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRoutes.login,
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

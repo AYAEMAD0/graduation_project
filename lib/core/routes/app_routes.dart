@@ -8,5 +8,10 @@ abstract class AppRoutes {
   static const String resetPassword = '/resetPassword';
   static const String newPassword = '/newPassword';
   static const String successful= '/successful';
-
+  static const String uploadCvJd= '/uploadCVJd';
+  static const String interviewSetup = '/interviewSetup';
+  static const String interviewSession= '/interviewSession';
+  static const String scoreScreen = '/scoreScreen';
+  static const String extractedSkill = '/extractedSkill';
+  static const String home = '/home';
 }

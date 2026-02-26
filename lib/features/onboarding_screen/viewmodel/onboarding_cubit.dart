@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../domain/entities/onboarding_entity.dart';
-import '../../../domain/usecase/onboarding_usecase.dart';
+import '../../../domain/entities/onboarding/onboarding_entity.dart';
+import '../../../domain/usecase/onboarding/onboarding_usecase.dart';
 
 @injectable
 class OnboardingCubit extends Cubit<int> {

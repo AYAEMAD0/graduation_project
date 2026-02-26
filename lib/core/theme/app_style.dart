@@ -4,7 +4,7 @@ import 'app_color.dart';
 import 'font_weight_helper.dart';
 
 class AppStyle {
-  static final TextStyle font34BlackSemiBold =  GoogleFonts.roboto(
+  static final TextStyle font34BlackSemiBold = GoogleFonts.roboto(
     fontSize: 34,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.semiBold,
@@ -100,7 +100,7 @@ class AppStyle {
     fontWeight: FontWeightHelper.bold,
   );
 
-    static final TextStyle font20BlackSemiBold = GoogleFonts.roboto(
+  static final TextStyle font20BlackSemiBold = GoogleFonts.roboto(
     fontSize: 20,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.semiBold,
@@ -123,19 +123,19 @@ class AppStyle {
     fontWeight: FontWeightHelper.medium,
   );
 
-  static final TextStyle font16BlackSemiBold= GoogleFonts.roboto(
+  static final TextStyle font16BlackSemiBold = GoogleFonts.roboto(
     fontSize: 16,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.semiBold,
   );
 
-  static final TextStyle font16GrayMediumSemiBold= GoogleFonts.roboto(
+  static final TextStyle font16GrayMediumSemiBold = GoogleFonts.roboto(
     fontSize: 16,
     color: AppColor.grayMediumColor,
     fontWeight: FontWeightHelper.semiBold,
   );
 
-  static final TextStyle font25GrayMediumSemiBold= GoogleFonts.roboto(
+  static final TextStyle font25GrayMediumSemiBold = GoogleFonts.roboto(
     fontSize: 25,
     color: AppColor.grayMediumColor,
     fontWeight: FontWeightHelper.semiBold,
@@ -145,6 +145,81 @@ class AppStyle {
     fontSize: 16,
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.medium,
+  );
+  static final TextStyle font31WhiteSemiBold = GoogleFonts.roboto(
+    fontSize: 31,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+  static final TextStyle font30BlackLight = GoogleFonts.roboto(
+    fontSize: 30,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.light,
+  );
+  static final TextStyle font25WhiteBold = GoogleFonts.roboto(
+    fontSize: 25,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeightHelper.bold,
+  );
+  static final TextStyle font48BlackBold = GoogleFonts.roboto(
+    fontSize: 48,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    height: 1.2,
+  );
+  static final TextStyle font36BlackBold = GoogleFonts.roboto(
+    fontSize: 36,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    height: 1.2,
+  );
+  static final TextStyle font20BlueDarkBold = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColor.blueDarkColor,
+    fontWeight: FontWeightHelper.bold,
+  );
+  static final TextStyle font20BlackBold = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.bold,
+  );
 
+  static final TextStyle font45WhiteBoldRounded = GoogleFonts.roboto(
+    fontSize: 45,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeight.w700,
+  );
+  static final TextStyle font45BlackBoldRounded = GoogleFonts.roboto(
+    fontSize: 45,
+    color: AppColor.blackColor,
+    fontWeight: FontWeight.w700,
+  );
+
+
+  static final TextStyle font34RoundedBold = GoogleFonts.roboto(
+    fontSize: 20.34,
+    color: AppColor.whiteColor,
+    fontWeight: FontWeight.w700,
+  );
+
+  static final TextStyle font154ExtraBold = GoogleFonts.roboto(
+    fontSize: 120.39,
+    fontWeight: FontWeight.w800,
+    color: AppColor.blackColor,
+    height: 192.98 / 154.39,
+    letterSpacing: 0,
+  );
+
+  static final TextStyle font58RegularSlate = GoogleFonts.roboto(
+    fontSize: 57.89,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF475569),
+    height: 94.1 / 57.89,
+    letterSpacing: 0,
+  );
+  static final TextStyle font18BlackSemiBold = GoogleFonts.roboto(
+    fontSize: 18,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.semiBold,
   );
 }

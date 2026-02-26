@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedCheckHelper {
   static late SharedPreferences _prefs;
   static const String keyIsOnBoarding= 'isOnBoarding';
+  static const String keyUserId ='userId';
+  static const String keyAccessToken='accessToken';
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -32,4 +34,7 @@ class SharedCheckHelper {
     }
   }
 
+  static Future<void> clearAll() async {
+    await _prefs.clear();
+  }
 }

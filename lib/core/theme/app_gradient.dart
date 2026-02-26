@@ -20,4 +20,5 @@ class AppGradient {
       Color(0xFFB87CF8),
     ],
   );
+
 }

@@ -5,7 +5,10 @@ import '../theme/app_color.dart';
 class CustomTextField extends StatelessWidget {
   final String hint;
   final String? label;
+  final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
 
+  final String? prefixText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
@@ -18,22 +21,29 @@ class CustomTextField extends StatelessWidget {
   final bool? obscure;
   final String? obscureCharacter;
   final void Function(String)? onChanged;
+  final Color? fillColor;
+  final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
     super.key,
     required this.hint,
-     this.controller,
-     this.borderColor,
+    this.controller,
+    this.borderColor,
     this.validator,
     this.maxLines = 1,
     this.keyboard,
     this.label,
+    this.prefixText,
     this.prefixIcon,
     this.suffixIcon,
     this.obscure = false,
     this.obscureCharacter,
     this.onChanged,
     this.onSuffixTap,
+    this.fillColor,
+    this.contentPadding,
+    this.hintStyle,
+    this.labelStyle,
   });
 
   @override
@@ -53,33 +63,34 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboard ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: AppStyle.font14GrayRegular,
+        hintStyle: hintStyle ?? AppStyle.font14GrayRegular,
         labelText: label,
-        labelStyle: AppStyle.font14GrayRegular,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 20,
-        ),
-        enabledBorder: builtBorder(AppColor.transparentColor),
+        labelStyle: labelStyle ?? AppStyle.font14GrayRegular,
+        contentPadding:
+            contentPadding ??
+            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        border: builtBorder(borderColor ?? AppColor.transparentColor),
+        enabledBorder: builtBorder(borderColor ?? AppColor.transparentColor),
         focusedBorder: builtBorder(AppColor.primaryBlueColor),
         errorBorder: builtBorder(),
         focusedErrorBorder: builtBorder(),
+        prefixText: prefixText,
+        prefixStyle: AppStyle.font18BlackRegular,
         prefixIcon: Icon(prefixIcon),
         prefixIconColor: AppColor.grayColor,
         suffixIcon: suffixIcon != null
-            ? GestureDetector(
-          onTap: onSuffixTap,
-          child: Icon(suffixIcon),
-        )
+            ? GestureDetector(onTap: onSuffixTap, child: Icon(suffixIcon))
             : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,
-        fillColor:AppColor.whiteDarkColor,
+        fillColor: fillColor ?? AppColor.whiteDarkColor,
       ),
     );
   }
 
-  OutlineInputBorder builtBorder([Color colorBorder = AppColor.primaryPurpleColor]) {
+  OutlineInputBorder builtBorder([
+    Color colorBorder = AppColor.primaryPurpleColor,
+  ]) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(color: colorBorder, width: 1.5),
