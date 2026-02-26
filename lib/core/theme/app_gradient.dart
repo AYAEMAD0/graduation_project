@@ -21,22 +21,4 @@ class AppGradient {
     ],
   );
 
-  static const LinearGradient gradientUploadCvJd = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [
-      Color(0xFF6F93C9),
-      Color(0xFFE9EEF3),
-      Color(0xFFF3F4F6),
-      Color(0xFFD7C8EC),
-      Color(0xFFA178D8),
-    ],
-    stops: [
-      0.0,
-      0.25,
-      0.45,
-      0.75,
-      1.0,
-    ],
-  );
 }

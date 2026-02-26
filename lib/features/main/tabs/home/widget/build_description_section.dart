@@ -12,7 +12,7 @@ class BuildDescriptionSection extends StatelessWidget {
     return  RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        style: AppStyle.font58InterRegularSlate.copyWith(
+        style: AppStyle.font58RegularSlate.copyWith(
           fontSize: isMobile ? 18 : 24,
           height: 1.5,
           color: Colors.grey[700],

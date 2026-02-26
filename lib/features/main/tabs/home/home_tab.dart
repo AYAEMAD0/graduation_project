@@ -74,7 +74,7 @@ class HomeTab extends StatelessWidget {
                         SizedBox(height: isMobile ? 40 : 80),
                         CustomButton(
                           widthBtn: isMobile ? 250 : 400,
-                          radius: 20,
+                          borderRadius: 20,
                           child: Center(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,

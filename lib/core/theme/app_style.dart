@@ -161,18 +161,18 @@ class AppStyle {
     color: AppColor.whiteColor,
     fontWeight: FontWeightHelper.bold,
   );
-  static const TextStyle font48BlackBold = TextStyle(
+  static final TextStyle font48BlackBold = GoogleFonts.roboto(
     fontSize: 48,
     fontWeight: FontWeight.bold,
     color: Colors.black,
     height: 1.2,
   );
-
-  static const TextStyle font36BlackBold = TextStyle(
+  static final TextStyle font36BlackBold = GoogleFonts.roboto(
     fontSize: 36,
     fontWeight: FontWeight.bold,
     color: Colors.black,
     height: 1.2,
+  );
   static final TextStyle font20BlueDarkBold = GoogleFonts.roboto(
     fontSize: 20,
     color: AppColor.blueDarkColor,
@@ -184,19 +184,25 @@ class AppStyle {
     fontWeight: FontWeightHelper.bold,
   );
 
-  static final TextStyle font45BlackBoldRounded = GoogleFonts.mPlusRounded1c(
+  static final TextStyle font45WhiteBoldRounded = GoogleFonts.roboto(
     fontSize: 45,
     color: AppColor.whiteColor,
     fontWeight: FontWeight.w700,
   );
+  static final TextStyle font45BlackBoldRounded = GoogleFonts.roboto(
+    fontSize: 45,
+    color: AppColor.blackColor,
+    fontWeight: FontWeight.w700,
+  );
 
-  static final TextStyle font34RoundedBold = GoogleFonts.mPlusRounded1c(
+
+  static final TextStyle font34RoundedBold = GoogleFonts.roboto(
     fontSize: 20.34,
     color: AppColor.whiteColor,
     fontWeight: FontWeight.w700,
   );
 
-  static final TextStyle font154InterExtraBold = GoogleFonts.inter(
+  static final TextStyle font154ExtraBold = GoogleFonts.roboto(
     fontSize: 120.39,
     fontWeight: FontWeight.w800,
     color: AppColor.blackColor,
@@ -204,11 +210,16 @@ class AppStyle {
     letterSpacing: 0,
   );
 
-  static final TextStyle font58InterRegularSlate = GoogleFonts.inter(
+  static final TextStyle font58RegularSlate = GoogleFonts.roboto(
     fontSize: 57.89,
     fontWeight: FontWeight.w400,
     color: const Color(0xFF475569),
     height: 94.1 / 57.89,
     letterSpacing: 0,
+  );
+  static final TextStyle font18BlackSemiBold = GoogleFonts.roboto(
+    fontSize: 18,
+    color: AppColor.blackColor,
+    fontWeight: FontWeightHelper.semiBold,
   );
 }
