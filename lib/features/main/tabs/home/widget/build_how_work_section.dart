@@ -16,7 +16,7 @@ class BuildHowWorkSection extends StatelessWidget {
       children: [
         Text(
           "How It Works?",
-          style: AppStyle.font154InterExtraBold.copyWith(
+          style: AppStyle.font154ExtraBold.copyWith(
             fontSize: isMobile ? 36 : 60,
           ),
         ),

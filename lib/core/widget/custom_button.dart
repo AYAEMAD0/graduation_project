@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+
 class CustomButton extends StatelessWidget {
   final String? text;
   final VoidCallback? onPressed;
@@ -11,7 +12,6 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
 
   final Widget? child;
-  final double? radius;
   const CustomButton({
     super.key,
     this.text,
@@ -22,41 +22,28 @@ class CustomButton extends StatelessWidget {
     this.hasShadow = false,
     this.icon,
     this.child,
-    this.radius,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double finalHeight = height ?? 54;
-    final double finalRadius = borderRadius ?? 36;
-
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(finalRadius),
-      borderRadius: BorderRadius.circular(radius ?? 36),
+      borderRadius: BorderRadius.circular(borderRadius ?? 36),
       child: Container(
-        height: finalHeight,
+        height: height ?? 54,
         width: widthBtn ?? 250,
         decoration: BoxDecoration(
           gradient: AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(finalRadius),
+          borderRadius: BorderRadius.circular(borderRadius ?? 36),
           boxShadow: hasShadow
               ? [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 18,
-              offset: const Offset(0, 8),
-            ),
-          ]
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ]
               : null,
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: AppStyle.font18WhiteBold,
-          ),
-        ),
-          borderRadius: BorderRadius.circular(radius ?? 36),
         ),
         child:
             child ??

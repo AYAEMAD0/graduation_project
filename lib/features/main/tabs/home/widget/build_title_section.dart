@@ -15,7 +15,7 @@ class BuildTitleSection extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        style: AppStyle.font154InterExtraBold.copyWith(
+        style: AppStyle.font154ExtraBold.copyWith(
           fontSize: fontSize,
           height: 1.1,
         ),
@@ -25,7 +25,7 @@ class BuildTitleSection extends StatelessWidget {
           const TextSpan(text: "Interview with "),
           TextSpan(
             text: "AI",
-            style: AppStyle.font154InterExtraBold.copyWith(
+            style: AppStyle.font154ExtraBold.copyWith(
               fontSize: fontSize,
               color: AppColor.purple,
               height: 1.1,
