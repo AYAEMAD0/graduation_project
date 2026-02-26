@@ -16,7 +16,6 @@ class LogoutCubit extends Cubit<LogoutState> {
       final response = await logoutUseCase();
       final message = response.message;
       emit(LogoutSuccess(message));
-      emit(LogoutSuccess(message));
     } catch (e) {
       emit(LogoutError(e.toString()));
     }

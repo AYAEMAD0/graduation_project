@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'nav_item.dart';
@@ -27,7 +28,7 @@ class Navbar extends StatelessWidget {
           Text(
             "MockMate.ai",
             overflow: TextOverflow.ellipsis,
-            style: AppStyle.font45BlackBoldRounded.copyWith(fontSize: 24),
+            style: AppStyle.font45BlackBoldRounded.copyWith(fontSize: 24,color: AppColor.whiteColor),
           ),
           const Spacer(),
           Row(

@@ -30,7 +30,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final logoWidth = isMobile ? 180.0 : 220.0;
+    final logoWidth = isMobile ? 180.0 : 320.0;
 
     return FutureBuilder<Widget>(
       future: _getNextScreen(),
