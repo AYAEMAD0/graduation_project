@@ -72,7 +72,7 @@ class SignupScreen extends StatelessWidget {
                         posActionClick: () {
                           Navigator.pushReplacementNamed(
                             context,
-                            AppRoutes.login,
+                            AppRoutes.home,
                           );
                         },
                       );

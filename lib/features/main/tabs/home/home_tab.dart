@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
@@ -91,7 +92,9 @@ class HomeTab extends StatelessWidget {
                               ],
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.uploadCvJd);
+                          },
                         ),
                         SizedBox(height: isMobile ? 20 : 30),
                         const BuildNoCreditCardSection(),

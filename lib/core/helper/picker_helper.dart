@@ -1,4 +1,3 @@
-// picker_helper.dart
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../widget/custom_toast.dart';
@@ -21,7 +20,7 @@ class PickerHelper {
         return null;
       }
     } catch (e) {
-      CustomToast.showToast(message: "Error picking Image", context: context);
+      CustomToast.showToast(message: "Error picking", context: context);
       return null;
     }
   }

@@ -42,34 +42,39 @@ class DioInterceptor extends Interceptor {
         final refreshToken = await tokenStorage.getRefreshToken();
 
         if (refreshToken == null) {
-          return handler.next(err);
+        //  return handler.next(err);
         }
+else {
+          final refreshResponse = await _dio.post(
+            ApiEndpoint.refreshTokenApi,
+            data: {"token": refreshToken},
+          );
 
-        final refreshResponse = await _dio.post(
-          ApiEndpoint.refreshTokenApi,
-          data: {"token": refreshToken},
-        );
+          // final refreshResponse = await _dio.post(
+          //   ApiEndpoint.refreshTokenApi,
+          //   data: {"token": refreshToken},
+          // );
 
-        final newAccessToken = refreshResponse.data['accessToken'];
-        final newRefreshToken = refreshResponse.data['refreshToken'];
+          final newAccessToken = refreshResponse.data['accessToken'];
+          final newRefreshToken = refreshResponse.data['refreshToken'];
 
-        await tokenStorage.saveAccessToken(newAccessToken);
-        await tokenStorage.saveRefreshToken(newRefreshToken);
+          await tokenStorage.saveAccessToken(newAccessToken);
+          await tokenStorage.saveRefreshToken(newRefreshToken);
 
-        final requestOptions = err.requestOptions.copyWith(
-          headers: {
-            ...err.requestOptions.headers,
-            'Authorization': 'Bearer $newAccessToken',
-          },
-        );
+          final requestOptions = err.requestOptions.copyWith(
+            headers: {
+              ...err.requestOptions.headers,
+              'Authorization': 'Bearer $newAccessToken',
+            },
+          );
 
-        final retryResponse = await _dio.fetch(requestOptions);
+          final retryResponse = await _dio.fetch(requestOptions);
 
-        return handler.resolve(retryResponse);
-
+          return handler.resolve(retryResponse);
+        }
       } catch (_) {
         await tokenStorage.clearTokens();
-        return handler.next(err);
+      //  return handler.next(err);
       }
     }
 
@@ -98,18 +103,17 @@ class DioInterceptor extends Interceptor {
       }
 
       final message =
-          responseData['message'] ?? "Unexpected error occurred";
+          responseData['message'] as String? ?? "Unexpected error occurred";
 
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,
           response: err.response,
           type: err.type,
-          error: message,
+          error: ServerException(message: message),
         ),
       );
     }
-
     return handler.next(err);
   }
 }
