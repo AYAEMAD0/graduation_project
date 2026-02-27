@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
+
 class JwtHelper {
   static int? getUserIdFromToken(String token) {
     try {
@@ -22,7 +25,7 @@ class JwtHelper {
       final id = json[claimKey];
       return id != null ? int.tryParse(id.toString()) : null;
     } catch (e) {
-      print('JwtHelper error: $e'); // ✅ اعرف الـ error بدل ما تخفيه
+      debugPrint('JwtHelper error: $e');
       return null;
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/domain/repo/auth/token_storage.dart';
 import '../../../../../../core/exception/app_exception.dart';
+import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../domain/entities/signup/signup_entity.dart';
 import '../../../../../../domain/usecase/signup/signup_usecase.dart';
 part 'signup_state.dart';
@@ -39,7 +40,11 @@ class SignupCubit extends Cubit<SignupState> {
         );
         await tokenStorage.saveAccessToken(result.accessToken ?? "");
         await tokenStorage.saveRefreshToken(result.refreshToken ?? "");
-
+        await SharedCheckHelper.setValue(SharedCheckHelper.keyUserId, result.userId);
+        await SharedCheckHelper.setValue(
+          SharedCheckHelper.keyDisplayName,
+          nameController.text,
+        );
         emit(SignupSuccess(data: result));
       } on DioException catch (e) {
         if (e.error is ValidationException) {

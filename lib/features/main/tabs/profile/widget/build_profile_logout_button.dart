@@ -17,7 +17,7 @@ class BuildProfileLogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return CustomButton(
-      widthBtn: isMobile ? 250 : 600,
+      widthBtn: isMobile ? 200 : 400,
       onPressed: isLoading ? null : onPressed,
       child: isLoading
           ? const Center(

@@ -9,18 +9,24 @@ class LoginRepoImpl implements LoginRepo {
 
   LoginRepoImpl(this.loginRemoteDataSource);
   @override
-  Future<LoginEntity> login({required String email, required String password})async {
+  Future<LoginEntity> login({
+    required String email,
+    required String password,
+  }) async {
     final dto = await loginRemoteDataSource.login({
       'email': email,
       'password': password,
     });
     return LoginEntity(
-        accessToken: dto.accessToken ?? '',
-        refreshToken: dto.refreshToken ?? '',
-        email: dto.profile?.email ??'',
+      accessToken: dto.accessToken ?? '',
+      refreshToken: dto.refreshToken ?? '',
+      role: dto.role ?? '',
+      profile: Profile(
+        email: dto.profile?.email ?? '',
         userName: dto.profile?.userName ?? '',
-        role: dto.role ?? '');
-
+        displayName: dto.profile?.displayName ?? '',
+        avatarPath: dto.profile?.avatarPath ?? '',
+      ),
+    );
   }
-
 }

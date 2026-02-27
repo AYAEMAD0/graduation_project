@@ -5,6 +5,7 @@ class SharedCheckHelper {
   static const String keyIsOnBoarding= 'isOnBoarding';
   static const String keyUserId ='userId';
   static const String keyAccessToken='accessToken';
+  static const String keyDisplayName='displayName';
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();

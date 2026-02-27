@@ -57,7 +57,7 @@ class Navbar extends StatelessWidget {
                 icon: CircleAvatar(
                   radius: 18,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.person,color: AppColor.blackColor,),
                 ),
                 index: 3,
                 currentIndex: currentIndex,

@@ -3,7 +3,8 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class GreetingSection extends StatelessWidget {
-  const GreetingSection({super.key});
+  final String displayName;
+  const GreetingSection({super.key, required this.displayName});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class GreetingSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Good Morning, Alex",
+            "Good Morning, $displayName",
             style: AppStyle.font16GrayRegular.copyWith(
               fontSize: isMobile ? 25 : 48,
             ),
