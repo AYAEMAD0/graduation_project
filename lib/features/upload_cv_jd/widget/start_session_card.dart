@@ -15,7 +15,7 @@ class StartSessionCard extends StatelessWidget {
 
     return Center(
       child: Container(
-        width: isMobile ? double.infinity : 1500,
+        width: isMobile ? double.infinity : 1200,
         padding: EdgeInsets.all(isMobile ? 32 : 50),
         margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 25),
         decoration: BoxDecoration(

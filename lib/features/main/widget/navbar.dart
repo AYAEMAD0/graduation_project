@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'nav_item.dart';
@@ -56,7 +57,7 @@ class Navbar extends StatelessWidget {
                 icon: CircleAvatar(
                   radius: 18,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.person,color: AppColor.blackColor,),
                 ),
                 index: 3,
                 currentIndex: currentIndex,

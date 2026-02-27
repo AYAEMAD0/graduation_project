@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../../core/exception/exception_handler.dart';
+import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../domain/entities/user/user_entity.dart';
 import '../../../../../../domain/usecase/profile/get_profile_usecase.dart';
 import '../../../../../../domain/usecase/profile/update_profile_usecase.dart';
@@ -64,6 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         imageBytes: _imageBytes,
       );
       _currentUser = user;
+      await SharedCheckHelper.setValue(SharedCheckHelper.keyDisplayName,displayName);
       emit(ProfileUpdateSuccess(user));
     } catch (e) {
       emit(ProfileError(
