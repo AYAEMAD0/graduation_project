@@ -7,6 +7,7 @@ import 'package:mock_mate_ai/features/extracted_skill/extracted_skill_screen.dar
 import 'package:mock_mate_ai/features/main/main_layout.dart';
 import 'package:mock_mate_ai/features/interview_session/interview_session.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
+import 'package:mock_mate_ai/features/question_overview_list/presentation/screens/question_overview_screen.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
 import 'package:mock_mate_ai/features/upload_cv_jd/upload_cv_jd.dart';
 import '../../features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
@@ -35,6 +36,7 @@ class AppRouter {
       AppRoutes.scoreScreen :(context)=> ScoreScreen(),
       AppRoutes.extractedSkill :(context)=> ExtractedSkillScreen(),
       AppRoutes.home :(context)=> MainLayout(),
+      AppRoutes.questionOverview :(context)=> QuestionOverviewScreen(),
     };
   }
 }

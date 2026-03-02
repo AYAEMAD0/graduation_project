@@ -10,8 +10,8 @@ class CustomButton extends StatelessWidget {
   final double? borderRadius;
   final bool hasShadow;
   final IconData? icon;
-
   final Widget? child;
+  final LinearGradient? gradient;
   const CustomButton({
     super.key,
     this.text,
@@ -21,9 +21,8 @@ class CustomButton extends StatelessWidget {
     this.borderRadius,
     this.hasShadow = false,
     this.icon,
-    this.child,
+    this.child, this.gradient,
   });
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,7 +32,7 @@ class CustomButton extends StatelessWidget {
         height: height ?? 54,
         width: widthBtn ?? 250,
         decoration: BoxDecoration(
-          gradient: AppGradient.primaryGradient,
+          gradient:gradient?? AppGradient.primaryGradient,
           borderRadius: BorderRadius.circular(borderRadius ?? 36),
           boxShadow: hasShadow
               ? [

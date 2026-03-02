@@ -21,5 +21,13 @@ class AppColor {
   static const Color purple = Color(0xffA855F7);
   static const Color homeEffectBlue = Color(0xff06B6D4);
   static const Color darkGray = Color(0XFF475569);
-  
+  static const Color active = Color(0XFFD5CDDD);
+  static const Color unactive = Color(0XFFf3f4f6);
+  static const Color gradientBlue = Color(0xFF48C6EF);
+  static const Color gradientPurple = Color(0xFFB97FF6);
+
+
+
+
+
 }
