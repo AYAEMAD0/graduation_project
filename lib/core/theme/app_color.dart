@@ -21,5 +21,7 @@ class AppColor {
   static const Color purple = Color(0xffA855F7);
   static const Color homeEffectBlue = Color(0xff06B6D4);
   static const Color darkGray = Color(0XFF475569);
-  
+  static const Color slate200 = Color(0xffE2E8F0);
+  static const Color slateGray = Color(0xFF64748B);
+  static const Color slateDark = Color(0xFF374151);
 }
