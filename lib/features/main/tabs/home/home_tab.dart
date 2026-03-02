@@ -1,14 +1,15 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
-import 'package:mock_mate_ai/core/widget/custom_button.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+import 'package:mock_mate_ai/core/widget/custom_button.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
 import 'widget/build_description_section.dart';
 import 'widget/build_how_work_section.dart';
-import 'widget/build_no_credit_card_section.dart';
 import 'widget/build_tech_section.dart';
 import 'widget/build_title_section.dart';
 import 'widget/copyright_section.dart';
@@ -61,58 +62,67 @@ class HomeTab extends StatelessWidget {
               ),
               Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile ? 20 : 40,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: isMobile ? 40 : 70),
-                        const BuildTitleSection(),
-                        SizedBox(height: isMobile ? 40 : 80),
-                        const BuildDescriptionSection(),
-                        SizedBox(height: isMobile ? 40 : 80),
-                        CustomButton(
-                          widthBtn: isMobile ? 250 : 400,
-                          borderRadius: 20,
-                          child: Center(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.video_camera_back,
-                                  color: Colors.white,
+                  constraints: const BoxConstraints(maxWidth: 2000), //1200
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 20 : 30,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: isMobile ? 20 : 30),
+                            const BuildTitleSection(),
+                            SizedBox(height: isMobile ? 20 : 10),
+                            const BuildDescriptionSection(),
+                            SizedBox(height: isMobile ? 30 : 30),
+                            CustomButton(
+                              height: isMobile ? 60 : 80,
+                              widthBtn: isMobile ? 270 : 600,
+                              child: Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.video_camera_back,
+                                      color: Colors.white,
+                                      size: isMobile ? 30 : 35,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "Start Mock Interview",
+                                      style:
+                                      isMobile ?
+                                      AppStyle.font18WhiteBold
+                                          :
+                                      AppStyle.font18WhiteBold.copyWith(
+                                          fontSize: 33),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  "Start Mock Interview",
-                                  style: AppStyle.font18WhiteBold,
-                                ),
-                              ],
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.uploadCvJd);
+                              },
                             ),
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, AppRoutes.uploadCvJd);
-                          },
+                            SizedBox(height: isMobile ? 0 : 30),
+                            Image.asset(
+                              AppAsset.person,
+                              width: 900,
+                              height: isMobile ? 320 : 600,
+                            ),
+                            SizedBox(height: isMobile ? 0 : 40),
+                          ],
                         ),
-                        SizedBox(height: isMobile ? 20 : 30),
-                        const BuildNoCreditCardSection(),
-                        SizedBox(height: isMobile ? 15 : 80),
-                        Image.asset(
-                          AppAsset.person,
-                          width: 800,
-                          height: isMobile ? 350 : 600,
-                        ),
-                        SizedBox(height: isMobile ? 10 : 80),
-                        const BuildTechSection(),
-                        SizedBox(height: isMobile ? 40 : 80),
-                        const BuildHowWorkSection(),
-                        SizedBox(height: isMobile ? 40 : 80),
-                        const StatsSection(),
-                        const CopyrightSection(),
-                      ],
-                    ),
+                      ),
+                      BuildTechSection(),
+                      SizedBox(height: isMobile ? 20 : 60),
+                      BuildHowWorkSection(),
+                      SizedBox(height: isMobile ? 40 : 80),
+                      StatsSection(),
+                      CopyrightSection(),
+                    ],
                   ),
                 ),
               ),

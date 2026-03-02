@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
 import '../widget/custom_toast.dart';
 
 class PickerHelper {
@@ -13,6 +14,9 @@ class PickerHelper {
         allowedExtensions: extensions,
         withData: true,
       );
+
+      if (!context.mounted) return null;
+
       if (result != null) {
         return result.files.first;
       } else {
@@ -20,6 +24,7 @@ class PickerHelper {
         return null;
       }
     } catch (e) {
+      if (!context.mounted) return null;
       CustomToast.showToast(message: "Error picking", context: context);
       return null;
     }

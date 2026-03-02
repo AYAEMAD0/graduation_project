@@ -14,7 +14,7 @@ class BuildFooterLink extends StatelessWidget {
         child: Text(
           label,
           style: GoogleFonts.inter(
-            fontSize: 16,
+            fontSize: 20,
             color: const Color(0xFF64748B),
             fontWeight: FontWeight.w500,
           ),

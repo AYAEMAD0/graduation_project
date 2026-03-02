@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import 'build_stat_item.dart';
 
 class StatsSection extends StatelessWidget {
@@ -13,11 +14,6 @@ class StatsSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: isMobile ? 10 : 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // alignment: WrapAlignment.center, // لمحاذاة العناصر في الوسط
-        // spacing: 50, // المسافة بين العناصر أفقي
-        // runSpacing: 30,
-        // direction: isMobile ? Axis.vertical : Axis.horizontal,
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
             child: BuildStatItem(

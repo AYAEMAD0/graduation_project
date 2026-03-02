@@ -1,15 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mock_mate_ai/core/constants/app_asset.dart';
-import 'package:mock_mate_ai/core/routes/app_routes.dart';
-import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../../core/config/di.dart';
-import '../../../../../../core/widget/custom_dialog.dart';
+import '../../../../../../core/theme/app_color.dart';
 import '../viewmodel/signup_cubit.dart';
-import '../widget/build_bottom_already.dart';
-import '../widget/build_form.dart';
+import '../widget/build_body_signup_section.dart';
+
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -17,104 +16,90 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
-    final horizontalPadding = isMobile ? 15.0 : 50.0;
-    final logoWidth = isMobile ? 150.0 : 188.0;
-    final logoHeight = isMobile ? 105.0 : 115.0;
-    final spacingSmall = isMobile ? 10.0 : 15.0;
-    final spacingMedium = isMobile ? 15.0 : 20.0;
-    final spacingLarge = isMobile ? 30.0 : 50.0;
-    final titleFontSize = isMobile ? 24.0 : 34.0;
-
     return BlocProvider(
       create: (_) => getIt<SignupCubit>(),
       child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-              vertical: spacingMedium,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: isMobile ? double.infinity : 500,
-                ),
-                child: BlocConsumer<SignupCubit, SignupState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                    if (state is SignupError) {
-                      CustomDialog.hideLoading(context: context);
-                      CustomDialog.showMessage(
-                        context: context,
-                        title: 'Error',
-                        message: state.messageError,
-                        nagActionName: 'Cancel',
-                      );
-                    } else if (state is SignupValidationError) {
-                      final firstError = state.errors.values.first.first;
-                      CustomDialog.hideLoading(context: context);
-                      CustomDialog.showMessage(
-                        context: context,
-                        title: 'Validation Error',
-                        message: firstError,
-                        nagActionName: 'Cancel',
-                      );
-                    } else if (state is SignupLoading) {
-                      CustomDialog.showLoading(context: context);
-                    } else if (state is SignupSuccess) {
-                      CustomDialog.hideLoading(context: context);
-                      CustomDialog.showMessage(
-                        context: context,
-                        title: 'Successfully',
-                        message: 'Signup Successfully',
-                        posActionName: 'Ok',
-                        posActionClick: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            AppRoutes.home,
-                          );
-                        },
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    final viewmodel = context.read<SignupCubit>();
-                    return Form(
-                      key: viewmodel.formKey,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            AppAsset.logoAppImage,
-                            width: logoWidth,
-                            height: logoHeight,
-                          ),
-                          SizedBox(height: spacingSmall),
-                          Text(
-                            "Let’s Get Started!",
-                            style: AppStyle.font24BlackBold.copyWith(
-                              fontSize: titleFontSize,
+        body: SizedBox(
+          height: double.infinity,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        top: isMobile ? -80 : -60,
+                        left: isMobile ? -120 : -300,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 100,
+                              sigmaY: 100),
+                          child: Container(
+                            width: isMobile ? 400 : 800,
+                            height: isMobile ? 550 : 700,
+                            decoration: BoxDecoration(
+                              color: AppColor.homeEffectBlue.withValues(
+                                alpha: 0.15,
+                              ),
+                              shape: BoxShape.circle,
                             ),
                           ),
-                          SizedBox(height: spacingMedium),
-                          BuildForm(viewmodel: viewmodel,),
-                          SizedBox(height: spacingMedium),
-                          CustomButton(
-                            text: "CREATE ACCOUNT",
-                            onPressed: () {
-                              viewmodel.signup();
-                            },
-                          ),
-                          SizedBox(height: spacingLarge),
-                          BuildBottomAlready(),
-                          SizedBox(height: spacingSmall),
-                        ],
+                        ),
                       ),
-                    );
-                  },
+                      Positioned(
+                        bottom: 0,
+                        left: -100,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 300,
+                              sigmaY: 100),
+                          child: Container(
+                            width: isMobile ? 300 : 600,
+                            height: isMobile ? 300 : 600,
+                            decoration: BoxDecoration(
+                              color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: -150,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 600,
+                              sigmaY: 400),
+                          child: Container(
+                            width: isMobile ? 300 : 1500,
+                            height: isMobile ? 300 : 900,
+                            decoration: BoxDecoration(
+                              color: AppColor.grayColor.withValues(alpha: 0.18),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: -150,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(sigmaX: 100,
+                              sigmaY: 100),
+                          child: Container(
+                            width: isMobile ? 400 : 900,
+                            height: isMobile ? 400 : 900,
+                            decoration: BoxDecoration(
+                              color: AppColor.purple.withValues(alpha: 0.16),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              BuildBodySignupSection()
+            ],
           ),
         ),
       ),

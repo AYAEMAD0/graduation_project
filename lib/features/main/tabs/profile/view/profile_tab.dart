@@ -1,18 +1,20 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/helper/picker_helper.dart';
 import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
+
 import '../../../../../core/config/di.dart';
 import '../../../../../core/routes/app_routes.dart';
 import '../../../../../core/theme/app_color.dart';
+import '../../../../../core/widget/custom_toast.dart';
 import '../viewmodel/logout/logout_cubit.dart';
 import '../viewmodel/logout/logout_state.dart';
-import '../widget/build_profile_body.dart';
-import '../../../../../core/widget/custom_toast.dart';
 import '../viewmodel/profile/profile_cubit.dart';
 import '../viewmodel/profile/profile_state.dart';
 import '../widget/build_profile_background_effect.dart';
+import '../widget/build_profile_body.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -102,9 +104,10 @@ class _ProfileTabState extends State<ProfileTab> {
               ProfileImageSelected s when s.imagePath != null => FileImage(
                 File(s.imagePath!),
               ),
-              _ when user?.avatarPath != null => NetworkImage(
-                user!.avatarPath!,
-              ),
+              _
+                  when (user?.avatarPath != null &&
+                      user!.avatarPath!.isNotEmpty) =>
+                NetworkImage(user.avatarPath!),
               _ => null,
             };
             return Scaffold(

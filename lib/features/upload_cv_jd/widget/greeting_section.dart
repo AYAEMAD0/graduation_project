@@ -10,14 +10,14 @@ class GreetingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isMobile?12:20),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 90),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Good Morning, $displayName",
             style: AppStyle.font16GrayRegular.copyWith(
-              fontSize: isMobile ? 25 : 48,
+              fontSize: isMobile ? 25 : 30, //48
             ),
           ),
           const SizedBox(height: 12),
@@ -25,16 +25,17 @@ class GreetingSection extends StatelessWidget {
             text: TextSpan(
               style: isMobile
                   ? AppStyle.font34BlackSemiBold
-                  : AppStyle.font48BlackBold.copyWith(fontSize: 80),
+                  : AppStyle.font48BlackBold.copyWith(fontSize: 50), //80
               children: const [
                 TextSpan(text: "Ready to ace your "),
                 TextSpan(
-                  text: "next\n",
-                  style: TextStyle(color: Color(0xffA855F7)),
+                  text: "next ",
+                  style: TextStyle(color: Color(0xff06B6D4)),
                 ),
                 TextSpan(
                   text: "interview?",
-                  style: TextStyle(color: Color(0xff06B6D4)),
+                  style: TextStyle(
+                      color: Color(0xff06B6D4)), //Color(0xff06B6D4))
                 ),
               ],
             ),

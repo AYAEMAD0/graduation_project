@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+
 import '../theme/app_color.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -76,10 +77,20 @@ class CustomTextField extends StatelessWidget {
         focusedErrorBorder: builtBorder(),
         prefixText: prefixText,
         prefixStyle: AppStyle.font18BlackRegular,
-        prefixIcon: Icon(prefixIcon),
+        prefixIcon: prefixIcon != null
+            ? Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Icon(prefixIcon),
+        )
+            : null,
+        isDense: true,
+        prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
         prefixIconColor: AppColor.grayColor,
         suffixIcon: suffixIcon != null
-            ? GestureDetector(onTap: onSuffixTap, child: Icon(suffixIcon))
+            ? GestureDetector(onTap: onSuffixTap, child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Icon(suffixIcon),
+        ))
             : null,
         suffixIconColor: AppColor.grayColor,
         filled: true,

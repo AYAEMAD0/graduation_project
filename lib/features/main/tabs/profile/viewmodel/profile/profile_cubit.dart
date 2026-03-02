@@ -1,6 +1,8 @@
 import 'dart:typed_data';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../../../core/exception/exception_handler.dart';
 import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../domain/entities/user/user_entity.dart';
@@ -58,20 +60,31 @@ class ProfileCubit extends Cubit<ProfileState> {
   }) async {
     emit(const ProfileLoading());
     try {
+      final finalName = displayName
+          .trim()
+          .isNotEmpty
+          ? displayName.trim()
+          : _currentUser?.displayName ?? '';
+
+      final finalPhone = phoneNumber
+          .trim()
+          .isNotEmpty
+          ? phoneNumber.trim()
+          : _currentUser?.phoneNumber ?? '';
+
       final user = await updateProfileUseCase(
-        displayName: displayName,
-        phoneNumber: phoneNumber,
+        displayName: finalName,
+        phoneNumber: finalPhone,
         imagePath: _imagePath,
         imageBytes: _imageBytes,
       );
       _currentUser = user;
-      await SharedCheckHelper.setValue(SharedCheckHelper.keyDisplayName,displayName);
+      await SharedCheckHelper.setValue(
+          SharedCheckHelper.keyDisplayName, finalName);
       emit(ProfileUpdateSuccess(user));
     } catch (e) {
-      emit(ProfileError(
-        ExceptionHandler.getMessage(e),
-        lastUser: _currentUser,
-      ));
+      emit(
+          ProfileError(ExceptionHandler.getMessage(e), lastUser: _currentUser));
     }
   }
 }

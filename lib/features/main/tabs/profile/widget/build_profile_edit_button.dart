@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../core/theme/app_style.dart';
 import '../../../../../core/widget/custom_button.dart';
 
@@ -17,7 +18,7 @@ class BuildProfileEditButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return CustomButton(
-      widthBtn: isMobile ? 200 : 400,
+      widthBtn: isMobile ? 150 : 300,
       onPressed: isLoading ? null : onPressed,
       child: isLoading
           ? const Center(
