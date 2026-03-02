@@ -3,6 +3,7 @@ import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
+import 'package:mock_mate_ai/features/coding_workspace/coding_workspace.dart';
 import 'package:mock_mate_ai/features/extracted_skill/extracted_skill_screen.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
 import 'package:mock_mate_ai/features/interview_session/interview_session.dart';
@@ -35,6 +36,7 @@ class AppRouter {
       AppRoutes.scoreScreen :(context)=> ScoreScreen(),
       AppRoutes.extractedSkill :(context)=> ExtractedSkillScreen(),
       AppRoutes.home :(context)=> MainLayout(),
+      AppRoutes.workspace :(context)=> CodingWorkspace(),
     };
   }
 }
