@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/features/main/widget/build_dock_avatar.dart';
 
+import '../tabs/profile/viewmodel/profile/profile_cubit.dart';
+import '../tabs/profile/viewmodel/profile/profile_state.dart';
 import 'nav_item.dart';
 
 class Navbar extends StatelessWidget {
@@ -20,7 +23,7 @@ class Navbar extends StatelessWidget {
       return Container();
     }
     return Container(
-      height: 60, //100
+      height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(gradient: AppGradient.primaryGradient),
       child: Row(
@@ -58,11 +61,27 @@ class Navbar extends StatelessWidget {
                 onTap: () => onTap(2),
               ),
               const SizedBox(width: 10),
-              BuildDockAvatar(
-                isWeb: true,
-                index: 3,
-                currentIndex: currentIndex,
-                onTap: onTap,
+              BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  String? imageUrl;
+                  List<int>? imageBytes;
+                  if (state is ProfileSuccess) {
+                    imageUrl = state.user.avatarPath;
+                  } else if (state is ProfileUpdateSuccess) {
+                    imageUrl = state.user.avatarPath;
+                  } else if (state is ProfileImageSelected) {
+                    imageBytes = state.imageBytes;
+                    imageUrl = state.user?.avatarPath;
+                  }
+                  return BuildDockAvatar(
+                    isWeb: true,
+                    index: 3,
+                    currentIndex: currentIndex,
+                    onTap: onTap,
+                    imageUrl: imageUrl,
+                    imageBytes: imageBytes,
+                  );
+                },
               ),
             ],
           ),

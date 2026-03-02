@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/features/main/widget/navbar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../core/helper/shared_check_helper.dart';
 import 'tabs/faq/faq_tab.dart';
 import 'tabs/history/history_tab.dart';
 import 'tabs/home/home_tab.dart';
 import 'tabs/profile/view/profile_tab.dart';
+import 'tabs/profile/viewmodel/profile/profile_cubit.dart';
 import 'widget/build_mobile_dock.dart';
 
 class MainLayout extends StatefulWidget {
@@ -19,6 +22,14 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int currentIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = SharedCheckHelper.getValue(SharedCheckHelper.keyUserId);
+      context.read<ProfileCubit>().getProfile(userId);
+    });
+  }
   final List<Widget> pages = const [
     HomeTab(),
     HistoryTab(),
