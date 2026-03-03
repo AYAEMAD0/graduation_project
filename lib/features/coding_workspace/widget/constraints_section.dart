@@ -15,22 +15,22 @@ class ConstraintsSection extends StatelessWidget {
           "FUNCTION DESCRIPTION",
           style: AppStyle.font16WhiteBold.copyWith(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 14,
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 12),
         RichText(
           text: TextSpan(
             style: AppStyle.font14GrayMedium.copyWith(
               color: AppColor.darkGray,
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
             children: [
               TextSpan(
-                text: "Complete the function ",
+                text: "Complete the function",
                 style: AppStyle.font16GrayRegular.copyWith(
-                  fontSize: 16,
+                  fontSize: 12,
                   color: AppColor.slateGray,
                 ),
               ),
@@ -38,16 +38,16 @@ class ConstraintsSection extends StatelessWidget {
                 text: "`isPrime`",
                 style: GoogleFonts.jetBrainsMono(
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: 12,
                   height: 20.57 / 12,
                   letterSpacing: 0,
                   color: AppColor.blackColor,
                 ),
               ),
               TextSpan(
-                text: " in the editor\nbelow.",
+                text: " in the editor below.",
                 style: AppStyle.font16GrayRegular.copyWith(
-                  fontSize: 16,
+                  fontSize: 12,
                   color: AppColor.slateGray,
                 ),
               ),
@@ -55,40 +55,46 @@ class ConstraintsSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "long n",
-              style: AppStyle.font14GrayMedium.copyWith(
-                color: AppColor.slateDark,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+        Padding(
+          padding: EdgeInsets.only(right: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "long n",
+                style: AppStyle.font14GrayMedium.copyWith(
+                  color: AppColor.slateDark,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            Text(
-              "a long integer to test",
-              style: AppStyle.font16GrayRegular.copyWith(
-                fontSize: 16,
-                color: AppColor.slateGray,
+              Text(
+                "a long integer to test",
+                style: AppStyle.font16GrayRegular.copyWith(
+                  fontSize: 12,
+                  color: AppColor.slateGray,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        Divider(height: 40),
+        Divider(height: 40, endIndent: 18,),
         Text(
           "CONSTRAINTS",
           style: AppStyle.font16WhiteBold.copyWith(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 14,
           ),
         ),
         SizedBox(height: 8),
-        Text(
-          "2 ≤ n ≤ 10¹²",
-          style: AppStyle.font16GrayRegular.copyWith(
-            fontSize: 16,
-            color: AppColor.slateGray,
+        Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: Text(
+            "2 ≤ n ≤ 10¹²",
+            style: AppStyle.font16GrayRegular.copyWith(
+              fontSize: 12,
+              color: AppColor.slateGray,
+            ),
           ),
         ),
       ],

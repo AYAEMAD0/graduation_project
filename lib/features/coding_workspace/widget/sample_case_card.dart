@@ -8,10 +8,11 @@ class SampleCaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      margin: EdgeInsets.only(right: 20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
@@ -22,8 +23,9 @@ class SampleCaseCard extends StatelessWidget {
               Text(
                 "SAMPLE CASE 0",
                 style: AppStyle.font16GrayRegular.copyWith(
-                  fontSize: 16,
+                    fontSize: 10,
                   color: AppColor.slateGray,
+                    fontWeight: FontWeight.bold
                 ),
               ),
               _buildSuccessBadge(),
@@ -51,13 +53,13 @@ class SampleCaseCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         color: AppColor.purple.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
-      child: const Text(
+      child: Text(
         "Success",
         style: TextStyle(
           color: Colors.purple,
-          fontSize: 16,
+          fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -77,8 +79,9 @@ class _IOBox extends StatelessWidget {
         Text(
           title,
           style: AppStyle.font16GrayRegular.copyWith(
-            fontSize: 16,
+              fontSize: 10,
             color: AppColor.slateGray,
+              fontWeight: FontWeight.bold
           ),
         ),
         const SizedBox(height: 6),
@@ -86,14 +89,14 @@ class _IOBox extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Color(0xFFF8F9FA),
+            color: Color(0xFFF8FAFC),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
             value,
             style: AppStyle.font16WhiteBold.copyWith(
               color: Colors.black,
-              fontSize: 20,
+              fontSize: 12,
             ),
           ),
         ),

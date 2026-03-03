@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../core/theme/app_color.dart';
 
@@ -26,7 +25,6 @@ class BuildDockAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSelected = currentIndex == index;
-    final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     ImageProvider? avatarImage;
     if (imageBytes != null) {

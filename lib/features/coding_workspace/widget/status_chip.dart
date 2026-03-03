@@ -15,7 +15,7 @@ class StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(22),
@@ -24,7 +24,7 @@ class StatusChip extends StatelessWidget {
         label,
         style: GoogleFonts.roboto(
           color: color,
-          fontSize: 16,
+          fontSize: 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 1.1,
         ),

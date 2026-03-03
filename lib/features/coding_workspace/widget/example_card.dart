@@ -16,15 +16,15 @@ class ExampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+      margin: EdgeInsets.only(top: 20, bottom: 20, right: 20),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -49,7 +49,7 @@ class ExampleCard extends StatelessWidget {
             inputExample,
             style: GoogleFonts.jetBrainsMono(
               fontWeight: FontWeight.w400,
-              fontSize: 20,
+                fontSize: 14,
               height: 20.57 / 12,
               letterSpacing: 0,
               color: AppColor.purple
@@ -60,7 +60,7 @@ class ExampleCard extends StatelessWidget {
           Text(
             explanation,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 14,
               height: 1.6,
               color: Color(0xFF37474F),
             ),

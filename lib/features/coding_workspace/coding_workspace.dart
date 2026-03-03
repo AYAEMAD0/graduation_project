@@ -14,8 +14,9 @@ class CodingWorkspace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffF8FAFC),
       body: Padding(
-        padding: const EdgeInsets.all(30),
+        padding: EdgeInsets.all(20),
         child: Row(
           children: [
             Expanded(
@@ -27,16 +28,16 @@ class CodingWorkspace extends StatelessWidget {
                     Text(
                       "Problem 02",
                       style: AppStyle.font16BlackBold.copyWith(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: AppColor.purple,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 5),
                     Text(
                       "Prime or Not?",
                       style: AppStyle.font32BlackBold.copyWith(fontSize: 25),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 8),
                     Row(
                       spacing: 8,
                       children: [
@@ -45,37 +46,18 @@ class CodingWorkspace extends StatelessWidget {
                           label: "Coding",
                           backgroundColor: AppColor.slate200,
                         ),
-                        StatusChip(
-                          color: AppColor.purple,
-                          label: "Easy",
-                          backgroundColor: AppColor.purple.withValues(
-                            alpha: 0.10,
-                          ),
-                        ),
-                        StatusChip(
-                          color: AppColor.darkGray,
-                          label: "Score: 20",
-                          backgroundColor: AppColor.slate200,
-                        ),
                       ],
                     ),
-                    SizedBox(height: 20),
-                    RichText(
-                      text: TextSpan(
+                    SizedBox(height: 30),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20.0),
+                      child: Text(
+                        "Given an integer, if the number is prime,return 1. Otherwise return its smallest divisor greater than 1.",
                         style: AppStyle.font14GrayMedium.copyWith(
                           color: AppColor.darkGray,
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
-                        children: [
-                          TextSpan(
-                            text: "Given an integer, if the number is prime,\n",
-                          ),
-                          TextSpan(
-                            text: "return 1. Otherwise return its smallest\n",
-                          ),
-                          TextSpan(text: "divisor greater than 1."),
-                        ],
                       ),
                     ),
                     ExampleCard(
@@ -92,7 +74,7 @@ class CodingWorkspace extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(flex: 8, child: CodeEditor()),
+            Expanded(flex: 6, child: CodeEditor()),
           ],
         ),
       ),

@@ -9,18 +9,19 @@ class CustomExpansionHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColor.slate200.withValues(alpha: 0.50),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(8),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: EdgeInsets.only(right: 20),
       child: Row(
         children: const [
           Expanded(
             child: Text(
               "Input Format for Custom Testing",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF111827),
+                color: Color(0xFF0F172A),
               ),
             ),
           ),
