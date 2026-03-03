@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/domain/entities/onboarding/onboarding_entity.dart';
+
 import '../../../domain/repo/onboarding/onboarding_repo.dart';
 import '../../data_source/local/onboarding/onboarding_local_data_source.dart';
 
@@ -12,5 +13,10 @@ class OnboardingRepoImpl implements OnboardingRepo {
   @override
   List<OnboardingEntity> getOnboardingPages() {
     return localDataSource.getPages();
+  }
+
+  @override
+  List<OnboardingEntity> getOnboardingPagesMobile() {
+    return localDataSource.getPagesMobile();
   }
 }

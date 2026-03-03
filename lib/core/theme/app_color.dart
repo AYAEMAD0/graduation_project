@@ -25,9 +25,7 @@ class AppColor {
   static const Color unactive = Color(0XFFf3f4f6);
   static const Color gradientBlue = Color(0xFF48C6EF);
   static const Color gradientPurple = Color(0xFFB97FF6);
-
-
-
-
-
+  static const Color slate200 = Color(0xffE2E8F0);
+  static const Color slateGray = Color(0xFF64748B);
+  static const Color slateDark = Color(0xFF374151);
 }

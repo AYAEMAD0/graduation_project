@@ -1,7 +1,9 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/features/upload_cv_jd/widget/Header.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../core/helper/shared_check_helper.dart';
 import '../../core/theme/app_color.dart';
 import 'widget/greeting_section.dart';
@@ -15,6 +17,7 @@ class UploadCvJd extends StatelessWidget {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final displayName =
         SharedCheckHelper.getValue(SharedCheckHelper.keyDisplayName) ?? "User";
+
     return Scaffold(
       backgroundColor: AppColor.whiteDarkColor,
       body: SafeArea(
@@ -102,7 +105,7 @@ class UploadCvJd extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GreetingSection(displayName: displayName),
-                              SizedBox(height: isMobile ? 30 : 80),
+                              SizedBox(height: isMobile ? 30 : 60),
                               StartSessionCard(),
                               SizedBox(height: 25),
                             ],

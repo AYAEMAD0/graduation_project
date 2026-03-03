@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+
 class NavItem extends StatelessWidget {
   final String? title;
   final Widget? icon;
@@ -23,23 +24,20 @@ class NavItem extends StatelessWidget {
     return GestureDetector(
       onTap: isActive ? null : onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 8,),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 👇 لو فيه title يعرض نص
             if (title != null)
               Text(title!, style: AppStyle.font34RoundedBold)
             else if (icon != null)
               icon!,
-
-            const SizedBox(height: 6),
-
+            SizedBox(height: 7),
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               height: 3,
-              width: isActive ? 40 : 0,
+              width: isActive ? 55 : 0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,

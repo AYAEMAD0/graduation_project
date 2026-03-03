@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+
 import '../../entities/onboarding/onboarding_entity.dart';
 import '../../repo/onboarding/onboarding_repo.dart';
 
@@ -10,5 +11,9 @@ class OnboardingUseCase {
 
   List<OnboardingEntity> call() {
     return onboardingRepo.getOnboardingPages();
+  }
+
+  List<OnboardingEntity> callMobile() {
+    return onboardingRepo.getOnboardingPagesMobile();
   }
 }

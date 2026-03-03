@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../domain/entities/onboarding/onboarding_entity.dart';
 import '../../../domain/usecase/onboarding/onboarding_usecase.dart';
 
@@ -7,6 +8,7 @@ import '../../../domain/usecase/onboarding/onboarding_usecase.dart';
 class OnboardingCubit extends Cubit<int> {
   final OnboardingUseCase onboardingUseCase;
   List<OnboardingEntity> pages = [];
+  List<OnboardingEntity> pagesMobile = [];
 
   OnboardingCubit({required this.onboardingUseCase}) : super(0) {
     loadPages();
@@ -14,6 +16,7 @@ class OnboardingCubit extends Cubit<int> {
 
   void loadPages() {
     pages = onboardingUseCase.call();
+    pagesMobile = onboardingUseCase.callMobile();
   }
 
   void setPage(int index) => emit(index);

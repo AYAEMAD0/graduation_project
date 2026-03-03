@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/theme/app_style.dart';
 
 class OnboardingSection extends StatelessWidget {
@@ -19,19 +20,19 @@ class OnboardingSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppStyle.font34BlackSemiBold,
+          style: AppStyle.font40BlackSemiBold, //font34BlackSemiBold.
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 30),
         Image.asset(
           image,
-          height: 300,
+          height: 350, //300
           fit: BoxFit.contain,
         ),
         SizedBox(height: 30),
         Text(
           description,
-          style: AppStyle.font22BlackLight,
+          style: AppStyle.font27BlackLight, //font22BlackLight
           textAlign: TextAlign.center,
         ),
       ],

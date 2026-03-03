@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/features/main/tabs/profile/widget/build_profile_logout_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../domain/entities/user/user_entity.dart';
 import 'build_profile_card.dart';
 import 'build_profile_edit_button.dart';
@@ -35,12 +36,12 @@ class BuildProfileBody extends StatelessWidget {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1200),
+        constraints: const BoxConstraints(maxWidth: 800),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 40),
           child: Column(
             children: [
-              SizedBox(height: isMobile ? 20 : 70),
+              SizedBox(height: isMobile ? 20 : 30),
               BuildProfileCard(
                 isLoading: isLoadingEdit,
                 displayName: user?.displayName ?? "No Name",
@@ -53,16 +54,21 @@ class BuildProfileBody extends StatelessWidget {
                 phoneController: phoneController,
               ),
               const SizedBox(height: 30),
-              BuildProfileEditButton(
-                isLoading: isLoadingEdit,
-                onPressed: onUpdatePressed,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  BuildProfileEditButton(
+                    isLoading: isLoadingEdit,
+                    onPressed: onUpdatePressed,
+                  ),
+                  SizedBox(width: isMobile ? 20 : 20),
+                  BuildProfileLogoutButton(
+                    isLoading: isLoadingLogout,
+                    onPressed: onLogoutPressed,
+                  ),
+                ],
               ),
-              SizedBox(height: isMobile ? 20 : 40),
-              BuildProfileLogoutButton(
-                isLoading: isLoadingLogout,
-                onPressed: onLogoutPressed,
-              ),
-              const SizedBox(height: 110),
+              SizedBox(height: 30),
             ],
           ),
         ),

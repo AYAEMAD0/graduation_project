@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../core/theme/app_color.dart';
 
 class BuildTitleSection extends StatelessWidget {
@@ -10,8 +11,7 @@ class BuildTitleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
-    double fontSize=isMobile?48:120;
-
+    double fontSize = isMobile ? 48 : 90;
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(

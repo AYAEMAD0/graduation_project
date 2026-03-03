@@ -22,18 +22,16 @@ class FeatureStepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
     return Container(
       width: isMobile ? double.infinity : 700,
-      
       padding: EdgeInsets.symmetric(
         vertical: 32,
         horizontal: isMobile ? 20 : 50,
       ),
-      margin: isMobile ? const EdgeInsets.symmetric(horizontal: 16) : EdgeInsets.zero,
-      
+      margin: isMobile
+          ? const EdgeInsets.symmetric(horizontal: 16)
+          : EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
@@ -45,14 +43,13 @@ class FeatureStepCard extends StatelessWidget {
           ),
         ],
       ),
-      
+
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        
           Container(
-            width: isMobile ? 48 : 52, 
+            width: isMobile ? 48 : 52,
             height: isMobile ? 48 : 52,
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -65,10 +62,7 @@ class FeatureStepCard extends StatelessWidget {
               height: isMobile ? 24 : 26,
             ),
           ),
-          
           const SizedBox(width: 24),
-          
-  
           Flexible(
             child: Column(
               mainAxisSize: MainAxisSize.min,

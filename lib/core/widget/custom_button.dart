@@ -4,6 +4,7 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
+  final TextStyle? styleText;
   final VoidCallback? onPressed;
   final double? widthBtn;
   final double? height;
@@ -21,19 +22,21 @@ class CustomButton extends StatelessWidget {
     this.borderRadius,
     this.hasShadow = false,
     this.icon,
-    this.child, this.gradient,
+    this.child,
+    this.gradient,
+    this.styleText
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(borderRadius ?? 36),
+      borderRadius: BorderRadius.circular(borderRadius ?? 20),
       child: Container(
         height: height ?? 54,
-        width: widthBtn ?? 250,
+        width: widthBtn ?? 380,
         decoration: BoxDecoration(
           gradient:gradient?? AppGradient.primaryGradient,
-          borderRadius: BorderRadius.circular(borderRadius ?? 36),
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
           boxShadow: hasShadow
               ? [
                   BoxShadow(
@@ -46,7 +49,8 @@ class CustomButton extends StatelessWidget {
         ),
         child:
             child ??
-            Center(child: Text(text ?? "", style: AppStyle.font18WhiteBold)),
+                Center(child: Text(
+                    text ?? "", style: styleText ?? AppStyle.font18WhiteBold)),
       ),
     );
   }

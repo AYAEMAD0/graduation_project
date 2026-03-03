@@ -10,28 +10,24 @@ class CopyrightSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: isMobile ? 40 : 60),
       child: Column(
         children: [
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                AppAsset.logoAppImage, 
-                height: isMobile ? 60 : 80, 
-                width: isMobile ? 88 : 118,
+                AppAsset.logoAppImage,
+                height: isMobile ? 60 : 100,
+                width: isMobile ? 88 : 150,
               ),
-              const SizedBox(width: 10),
               Text(
                 'MockMate.ai',
                 style: GoogleFonts.inter(
-                  fontSize: isMobile ? 20 : 24,
+                  fontSize: isMobile ? 20 : 34,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFF334155),
                 ),
@@ -39,34 +35,32 @@ class CopyrightSection extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 32),
-
+          const SizedBox(height: 20),
            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+             mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BuildFooterLink(label: 'Privacy'),
-                  const SizedBox(width: 40),
+                  SizedBox(width: 30),
                   BuildFooterLink(label:'Terms'),
-                  const SizedBox(width: 40),
+                  SizedBox(width: 30),
                   BuildFooterLink(label:'Support'),
                 ],
               ),
 
           const SizedBox(height: 32),
-
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(
-              '© 2026 MockMate.ai Inc. All rights reserved.',
+              '© 2026 MockMate.ai Inc.All rights reserved.',
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
-                fontSize: 14,
+                fontSize: 16,
                 color: const Color(0xFF94A3B8),
                 fontWeight: FontWeight.w400,
               ),
             ),
           ),
-          const SizedBox(height: 65),
+          SizedBox(height: isMobile ? 65 : 20)
         ],
       ),
     );

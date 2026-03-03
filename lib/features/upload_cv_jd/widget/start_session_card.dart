@@ -15,9 +15,9 @@ class StartSessionCard extends StatelessWidget {
 
     return Center(
       child: Container(
-        width: isMobile ? double.infinity : 1200,
-        padding: EdgeInsets.all(isMobile ? 32 : 50),
-        margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 25),
+        width: isMobile ? double.infinity : 1010,
+        padding: EdgeInsets.all(isMobile ? 28 : 40),
+        margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 20),
         decoration: BoxDecoration(
           color: AppColor.whiteDarkColor,
           borderRadius: BorderRadius.circular(32),
@@ -64,6 +64,7 @@ class StartSessionCard extends StatelessWidget {
             ),
             SizedBox(height: isMobile ? 12 : 20),
             CustomTextField(
+              //todo space icon prefix
               hint: "Paste the job description here to analyze gaps...",
               hintStyle: AppStyle.font14GrayRegular.copyWith(
                 fontSize: isMobile ? 14 : 22,
@@ -73,32 +74,32 @@ class StartSessionCard extends StatelessWidget {
               keyboard: TextInputType.multiline,
             ),
             SizedBox(height: isMobile ? 25 : 50),
-            CustomButton(
-              widthBtn: double.infinity,
-              height: isMobile ? 56 : 75,
-              borderRadius: 20,
-              hasShadow: true,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                spacing: isMobile?8:15,
-                children: [
-                  Flexible(
-                    child: Text(
-                      "Analyze Match",
-                      overflow: TextOverflow.ellipsis,
-                      style: AppStyle.font18WhiteBold.copyWith(
-                        fontSize: isMobile ? 18 : 30,
+            Center(
+              child: CustomButton(
+                height: isMobile ? 56 : 75,
+                hasShadow: true,
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: isMobile ? 8 : 15,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "Analyze Match",
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyle.font18WhiteBold.copyWith(
+                          fontSize: isMobile ? 18 : 30,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: AppColor.whiteColor,
-                    size: isMobile?20:30,
-                  ),
-                ],
+                    Icon(
+                      Icons.arrow_forward,
+                      color: AppColor.whiteColor,
+                      size: isMobile ? 20 : 30,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

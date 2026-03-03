@@ -15,7 +15,7 @@ class BuildStatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    double valueFontSize = isMobile ? 30 : 100;
+    double valueFontSize = isMobile ? 30 : 60;
     return Column(
       mainAxisSize: MainAxisSize.min,
       spacing: 6,
