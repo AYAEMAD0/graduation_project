@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/question_content.dart';
@@ -12,7 +13,6 @@ class QuestionOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
     return Scaffold(
       backgroundColor: AppColor.homeBackground,
       body: Stack(
@@ -33,7 +33,6 @@ class QuestionOverviewScreen extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 100,
             right: -150,
@@ -49,7 +48,6 @@ class QuestionOverviewScreen extends StatelessWidget {
               ),
             ),
           ),
-
           isMobile
               ? Column(
                   children: const [
@@ -67,7 +65,7 @@ class QuestionOverviewScreen extends StatelessWidget {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.65),
+                          color: Colors.white.withValues(alpha: 0.65),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

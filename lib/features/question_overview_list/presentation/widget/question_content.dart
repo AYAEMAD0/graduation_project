@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/question_item_card.dart';
 import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/submit_test_button.dart';
-import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class QuestionContent extends StatelessWidget {
   const QuestionContent({super.key});
@@ -14,7 +14,7 @@ class QuestionContent extends StatelessWidget {
         Expanded(
           child: ListView(
             padding: EdgeInsets.zero,
-            children: const [
+            children: [
               QuestionItemCard(
                 index: 1,
                 title: "Balanced Array",
@@ -45,18 +45,22 @@ class QuestionContent extends StatelessWidget {
                 type: "Multiple Choice",
                 isModified: false,
               ),
+
+              const SizedBox(height: 24),
+              Padding(
+                padding: EdgeInsets.only(left: 14.0),
+                child: Text(
+                  "All questions must be submitted before the timer runs out.",
+                  style: AppStyle.font16GrayMediumSemiBold,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const SubmitTestButton(),
+              const SizedBox(height: 40),
             ],
           ),
         ),
-
-        Text(
-          "All questions must be submitted before the timer runs out.",
-          style: AppStyle.font16GrayMediumSemiBold,
-          textAlign: TextAlign.start,
-        ),
-        const SizedBox(height: 24),
-        const SubmitTestButton(),
-        const SizedBox(height: 40),
       ],
     );
   }

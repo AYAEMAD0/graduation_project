@@ -23,13 +23,13 @@ class QuestionItemCard extends StatelessWidget {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.55),
+        color: Colors.white.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0xFFBBA6E8).withOpacity(0.6),
+          color: const Color(0xFFBBA6E8).withValues(alpha: 0.6),
           width: 1.2,
         ),
       ),

@@ -18,10 +18,7 @@ class QuestionSidebar extends StatelessWidget {
     return Container(
       width: 70,
       height: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xffF3F4F6),
-
-      ),
+      decoration: BoxDecoration(color: Color(0xffF3F4F6)),
       child: Column(
         children: [
           Image.asset(AppAsset.logoAppImage, width: 60, height: 60),
@@ -31,24 +28,18 @@ class QuestionSidebar extends StatelessWidget {
               color: AppColor.primaryPurpleColor,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           Expanded(
             child: ListView.builder(
               itemCount: totalQuestions,
               itemBuilder: (context, index) {
                 final number = index + 1;
                 final isActive = number == currentIndex;
-
                 return Container(
-                  margin:
-                  const EdgeInsets.symmetric(vertical: 5),
-
+                  margin: EdgeInsets.symmetric(vertical: 3),
                   height: 50,
                   decoration: BoxDecoration(
-                    color: isActive
-                        ? Color(0xffD5CDDD)
-                        : Colors.transparent,
-
+                    color: isActive ? Color(0xffD5CDDD) : Colors.transparent,
                   ),
                   alignment: Alignment.center,
                   child: Text(

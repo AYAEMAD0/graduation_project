@@ -15,23 +15,20 @@ class SubmitTestButton extends StatelessWidget {
       conditionalValues: [
         const Condition.smallerThan(name: MOBILE, value: 250),
       ],
-    ).value!;
+    ).value;
 
     return Center(
       child: CustomButton(
-gradient: AppGradient.secGradient,
+        gradient: AppGradient.primaryGradient,
         onPressed: () {},
         widthBtn: btnWidth,
         height: 60,
-        borderRadius: 40,
+        borderRadius: 20,
         hasShadow: true,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Submit Test",
-              style: AppStyle.font18WhiteBold,
-            ),
+            Text("Submit Test", style: AppStyle.font18WhiteBold),
             const SizedBox(width: 12),
             const Icon(Icons.check_circle, color: Colors.white, size: 24),
           ],

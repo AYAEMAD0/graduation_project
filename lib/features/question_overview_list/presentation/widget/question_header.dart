@@ -27,12 +27,8 @@ class QuestionHeader extends StatelessWidget {
               children: [
                 Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
                 const SizedBox(height: 16),
-
-                /// Timer لوحده
                 _timerWidget(),
-
                 const SizedBox(height: 16),
-
                 _progressWidget(isMobile),
               ],
             )
