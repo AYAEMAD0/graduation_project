@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final VoidCallback? onSuffixTap;
 
   final Color? borderColor;
+  final Color? borderFocuseColor;
   final int maxLines;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -45,6 +46,7 @@ class CustomTextField extends StatelessWidget {
     this.contentPadding,
     this.hintStyle,
     this.labelStyle,
+    this.borderFocuseColor,
   });
 
   @override
@@ -72,7 +74,8 @@ class CustomTextField extends StatelessWidget {
             EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         border: builtBorder(borderColor ?? AppColor.transparentColor),
         enabledBorder: builtBorder(borderColor ?? AppColor.transparentColor),
-        focusedBorder: builtBorder(AppColor.primaryBlueColor),
+        focusedBorder: builtBorder(
+            borderFocuseColor ?? AppColor.primaryBlueColor),
         errorBorder: builtBorder(),
         focusedErrorBorder: builtBorder(),
         prefixText: prefixText,

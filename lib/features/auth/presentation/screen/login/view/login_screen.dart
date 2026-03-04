@@ -1,11 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/config/di.dart';
 import 'package:mock_mate_ai/core/widget/custom_dialog.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../../../../core/helper/jwt_helper.dart';
 import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../core/routes/app_routes.dart';

@@ -2,17 +2,34 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
-import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/question_content.dart';
-import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/question_header.dart';
-import 'package:mock_mate_ai/features/question_overview_list/presentation/widget/question_sidebar.dart';
+import 'package:mock_mate_ai/features/session/widget/question_header.dart';
+import 'package:mock_mate_ai/features/session/widget/question_sidebar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class QuestionOverviewScreen extends StatelessWidget {
-  const QuestionOverviewScreen({super.key});
+class SessionLayout extends StatelessWidget {
+  final Widget body;
+  final String time;
+  final int currentQuestion;
+  final int totalQuestions;
+  final int remainingSeconds;
+  final List<SidebarQuestion> questions;
+  final void Function(int index) onQuestionSelected;
+
+  const SessionLayout({
+    super.key,
+    required this.body,
+    required this.time,
+    required this.currentQuestion,
+    required this.totalQuestions,
+    required this.remainingSeconds,
+    required this.questions,
+    required this.onQuestionSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
     return Scaffold(
       backgroundColor: AppColor.homeBackground,
       body: Stack(
@@ -50,32 +67,37 @@ class QuestionOverviewScreen extends StatelessWidget {
           ),
           isMobile
               ? Column(
-                  children: const [
+                  children: [
                     QuestionHeader(
-                      time: "24:52",
-                      currentQuestion: 2,
-                      totalQuestions: 5,
+                      time: time,
+                      currentQuestion: currentQuestion,
+                      totalQuestions: totalQuestions,
                     ),
-                    Expanded(child: QuestionContent()),
+                    Expanded(child: body),
                   ],
                 )
               : Row(
                   children: [
-                    const QuestionSidebar(currentIndex: 1, totalQuestions: 10),
+                    QuestionSidebar(
+                      currentIndex: currentQuestion,
+                      totalQuestions: totalQuestions,
+                      remainingSeconds: remainingSeconds,
+                      questions: questions,
+                      onQuestionSelected: onQuestionSelected,
+                    ),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.65),
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             QuestionHeader(
-                              time: "24:52",
-                              currentQuestion: 2,
-                              totalQuestions: 5,
+                              time: time,
+                              currentQuestion: currentQuestion,
+                              totalQuestions: totalQuestions,
                             ),
-                            Expanded(child: QuestionContent()),
+                            Expanded(child: body),
                           ],
                         ),
                       ),

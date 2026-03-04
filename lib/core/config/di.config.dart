@@ -18,6 +18,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import '../../api/api_services.dart' as _i394;
 import '../../api/data_source/local/onboarding/onboarding_local_data_source_impl.dart'
     as _i382;
+import '../../api/data_source/remote/interview_session/interview_session_remote_data_source_impl.dart'
+    as _i363;
 import '../../api/data_source/remote/login/login_remote_data_source_impl.dart'
     as _i226;
 import '../../api/data_source/remote/logout/logout_remote_data_source_impl.dart'
@@ -34,6 +36,8 @@ import '../../api/dio/dio_interceptor.dart' as _i600;
 import '../../api/dio/dio_module.dart' as _i67;
 import '../../data/data_source/local/onboarding/onboarding_local_data_source.dart'
     as _i697;
+import '../../data/data_source/remote/interview_session/interview_session_remote_data_source.dart'
+    as _i871;
 import '../../data/data_source/remote/login/login_remote_data_source.dart'
     as _i581;
 import '../../data/data_source/remote/logout/logout_remote_data_source.dart'
@@ -47,6 +51,8 @@ import '../../data/data_source/remote/refresh/refresh_remote_data_source.dart'
 import '../../data/data_source/remote/signup/signup_remote_data_source.dart'
     as _i912;
 import '../../data/repo_impl/auth/token_storage_impl.dart' as _i241;
+import '../../data/repo_impl/interview_session/interview_session_repo_impl.dart'
+    as _i1047;
 import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
 import '../../data/repo_impl/logout/logout_repo_impl.dart' as _i238;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
@@ -55,6 +61,8 @@ import '../../data/repo_impl/profile/update_profile_repo_impl.dart' as _i577;
 import '../../data/repo_impl/refresh/refresh_repo_impl.dart' as _i597;
 import '../../data/repo_impl/signup/signup_repo_impl.dart' as _i1018;
 import '../../domain/repo/auth/token_storage.dart' as _i232;
+import '../../domain/repo/interview_session/interview_session_repo.dart'
+    as _i838;
 import '../../domain/repo/login/login_repo.dart' as _i253;
 import '../../domain/repo/logout/logout_repo.dart' as _i425;
 import '../../domain/repo/onboarding/onboarding_repo.dart' as _i154;
@@ -62,6 +70,8 @@ import '../../domain/repo/profile/get_profile_repo.dart' as _i494;
 import '../../domain/repo/profile/update_profile_repo.dart' as _i884;
 import '../../domain/repo/refresh/refresh_repo.dart' as _i996;
 import '../../domain/repo/signup/signup_repo.dart' as _i671;
+import '../../domain/usecase/interview_session/interview_session_usecase.dart'
+    as _i837;
 import '../../domain/usecase/login/login_usecase.dart' as _i623;
 import '../../domain/usecase/logout/logout_usecase.dart' as _i238;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
@@ -79,6 +89,8 @@ import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart'
     as _i315;
 import '../../features/onboarding_screen/viewmodel/onboarding_cubit.dart'
     as _i1035;
+import '../../features/session/viewmodel/interview_session_cubit.dart'
+    as _i1032;
 import 'storage_module.dart' as _i371;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -146,6 +158,9 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i577.UpdateProfileRepoImpl(gh<_i26.UpdateProfileRemoteDataSource>()),
     );
+    gh.factory<_i871.InterviewSessionRemoteDataSource>(
+      () => _i363.InterviewSessionRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i1049.UpdateProfileUseCase>(
       () => _i1049.UpdateProfileUseCase(gh<_i884.UpdateProfileRepo>()),
     );
@@ -178,11 +193,19 @@ extension GetItInjectableX on _i174.GetIt {
         signupRemoteDataSource: gh<_i912.SignupRemoteDataSource>(),
       ),
     );
+    gh.factory<_i838.InterviewSessionRepo>(
+      () => _i1047.InterviewSessionRepoImpl(
+        gh<_i871.InterviewSessionRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i152.GetProfileUseCase>(
       () => _i152.GetProfileUseCase(gh<_i494.GetProfileRepo>()),
     );
     gh.factory<_i394.SignupUsecase>(
       () => _i394.SignupUsecase(signupRepo: gh<_i671.SignupRepo>()),
+    );
+    gh.factory<_i837.InterviewSessionUseCase>(
+      () => _i837.InterviewSessionUseCase(gh<_i838.InterviewSessionRepo>()),
     );
     gh.factory<_i623.LoginUsecase>(
       () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
@@ -201,6 +224,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i152.GetProfileUseCase>(),
         gh<_i1049.UpdateProfileUseCase>(),
       ),
+    );
+    gh.factory<_i1032.InterviewSessionCubit>(
+      () => _i1032.InterviewSessionCubit(gh<_i837.InterviewSessionUseCase>()),
     );
     gh.factory<_i407.LoginCubit>(
       () =>

@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final Widget? child;
   final LinearGradient? gradient;
+  final Color? colorBackGround;
   const CustomButton({
     super.key,
     this.text,
@@ -24,7 +25,8 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.child,
     this.gradient,
-    this.styleText
+    this.styleText,
+    this.colorBackGround
   });
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,9 @@ class CustomButton extends StatelessWidget {
         height: height ?? 54,
         width: widthBtn ?? 380,
         decoration: BoxDecoration(
-          gradient:gradient?? AppGradient.primaryGradient,
+          color: colorBackGround,
+          gradient: colorBackGround != null ? null : (gradient ??
+              AppGradient.primaryGradient),
           borderRadius: BorderRadius.circular(borderRadius ?? 20),
           boxShadow: hasShadow
               ? [

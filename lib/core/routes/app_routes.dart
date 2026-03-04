@@ -15,5 +15,5 @@ abstract class AppRoutes {
   static const String extractedSkill = '/extractedSkill';
   static const String home = '/home';
   static const String questionOverview = '/questionOverview';
-  static const String workspace = '/workspace';
+  static const String codeWorkspace = '/codeWorkspace';
 }
