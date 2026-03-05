@@ -7,7 +7,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../core/config/di.dart';
 import '../../../../core/helper/shared_check_helper.dart';
 import '../../../../core/theme/app_color.dart';
-import '../../viewmodel/interview_session_cubit.dart';
+import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../widget/greeting_section.dart';
 import '../widget/header.dart';
 import '../widget/start_session_card.dart';

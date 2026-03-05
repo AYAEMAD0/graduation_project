@@ -2,53 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+
 class SampleCaseCard extends StatelessWidget {
-  const SampleCaseCard({super.key});
+  final List<TestCaseEntity> testCases;
+
+  const SampleCaseCard({super.key, required this.testCases});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      margin: EdgeInsets.only(right: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: testCases
+          .asMap()
+          .entries
+          .map((entry) {
+        final index = entry.key;
+        final testCase = entry.value;
+        return Container(
+          margin: EdgeInsets.only(right: 15, bottom: 6, top: 6),
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Column(
             children: [
-              Text(
-                "SAMPLE CASE 0",
-                style: AppStyle.font16GrayRegular.copyWith(
-                    fontSize: 10,
-                  color: AppColor.slateGray,
-                    fontWeight: FontWeight.bold
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "SAMPLE CASE $index",
+                    style: AppStyle.font16GrayRegular.copyWith(
+                      fontSize: 10,
+                      color: AppColor.slateGray,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  _buildBadge(),
+                ],
               ),
-              _buildSuccessBadge(),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                      child: _IOBox(title: "INPUT", value: testCase.input)),
+                  const SizedBox(width: 15),
+                  Expanded(
+                      child: _IOBox(title: "OUTPUT", value: testCase.output)),
+                ],
+              ),
             ],
           ),
-          const SizedBox(height: 20),
-          const Row(
-            children: [
-              Expanded(
-                child: _IOBox(title: "INPUT", value: "2"),
-              ),
-              SizedBox(width: 15),
-              Expanded(
-                child: _IOBox(title: "OUTPUT", value: "1"),
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      }).toList(),
     );
   }
 
-  Widget _buildSuccessBadge() {
+  Widget _buildBadge() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
@@ -56,7 +67,7 @@ class SampleCaseCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        "Success",
+        "Sample",
         style: TextStyle(
           color: Colors.purple,
           fontSize: 10,

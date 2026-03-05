@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_style.dart';
 import '../../../../core/widget/custom_button.dart';
-import '../../viewmodel/interview_session_cubit.dart';
+import '../../viewmodel/interview_session/interview_session_state.dart';
 
 class BuildBtnUploadCv extends StatelessWidget {
   const BuildBtnUploadCv({
@@ -12,11 +14,9 @@ class BuildBtnUploadCv extends StatelessWidget {
     required this.state,
     required this.isLoading,
   });
-
   final void Function() onAnalyzePressed;
   final InterviewSessionState state;
   final bool isLoading;
-
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
@@ -79,7 +79,14 @@ class BuildBtnUploadCv extends StatelessWidget {
               height: isMobile ? 56 : 75,
               hasShadow: true,
               onPressed: () {
-                // TODO: navigate to question overview list
+                Navigator.pushReplacementNamed(
+                  context,
+                  AppRoutes.questionOverview,
+                  arguments: {
+                    'interviewSession':
+                        (state as InterviewSessionSuccess).interviewSession,
+                  },
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

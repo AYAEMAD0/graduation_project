@@ -14,6 +14,9 @@ class SessionLayout extends StatelessWidget {
   final int remainingSeconds;
   final List<SidebarQuestion> questions;
   final void Function(int index) onQuestionSelected;
+  final Map<int, int> selectedAnswers;
+  final void Function(int q, int a) onAnswerSelected;
+  final int sessionId;
 
   const SessionLayout({
     super.key,
@@ -24,6 +27,9 @@ class SessionLayout extends StatelessWidget {
     required this.remainingSeconds,
     required this.questions,
     required this.onQuestionSelected,
+    required this.selectedAnswers,
+    required this.onAnswerSelected,
+    required this.sessionId,
   });
 
   @override
@@ -84,6 +90,9 @@ class SessionLayout extends StatelessWidget {
                       remainingSeconds: remainingSeconds,
                       questions: questions,
                       onQuestionSelected: onQuestionSelected,
+                      selectedAnswers: selectedAnswers,
+                      onAnswerSelected: onAnswerSelected,
+                      sessionId: sessionId,
                     ),
                     Expanded(
                       child: Container(

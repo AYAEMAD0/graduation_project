@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mock_mate_ai/domain/repo/auth/token_storage.dart';
+import 'package:mock_mate_ai/domain/repo/auth/token/token_storage.dart';
+
 import '../../../../../../core/exception/app_exception.dart';
 import '../../../../../../core/helper/shared_check_helper.dart';
-import '../../../../../../domain/entities/signup/signup_entity.dart';
-import '../../../../../../domain/usecase/signup/signup_usecase.dart';
+import '../../../../../../domain/entities/auth/signup/signup_entity.dart';
+import '../../../../../../domain/usecase/auth/signup/signup_usecase.dart';
+
 part 'signup_state.dart';
 
 @injectable

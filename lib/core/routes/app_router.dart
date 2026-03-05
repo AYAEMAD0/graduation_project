@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
+import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
-import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
-import 'package:mock_mate_ai/features/extracted_skill/extracted_skill_screen.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
-import 'package:mock_mate_ai/features/interview_session/interview_session.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
+import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
-import '../../domain/entities/interview_session/interview_session_entity.dart';
+
+import '../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/successful_screen.dart';
-import '../../features/interview_setup/presentation/screens/interview_setup_screen.dart';
+import '../../features/score_screen/presentation/screens/score_screen.dart';
 import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
-import '../../features/score_screen/presentation/screens/score_screen.dart';
 import '../../features/session/upload_cv_jd/view/upload_cv_jd.dart';
 import '../../features/session/widget/question_sidebar.dart';
 
@@ -33,30 +32,58 @@ class AppRouter {
       AppRoutes.newPassword: (context) =>  NewPassword(),
       AppRoutes.successful: (context) =>  SuccessfulScreen(),
       AppRoutes.uploadCvJd: (context) =>  UploadCvJd(),
-      AppRoutes.interviewSetup : (context)=> InterviewSetupScreen(),
-      AppRoutes.interviewSession: (context) =>  InterviewSession(),
       AppRoutes.scoreScreen :(context)=> ScoreScreen(),
-      AppRoutes.extractedSkill :(context)=> ExtractedSkillScreen(),
       AppRoutes.home :(context)=> MainLayout(),
-      // AppRoutes.questionOverview: (context) => QuestionOverview(
-      //   interviewSession: ModalRoute.of(context)!.settings.arguments as InterviewSessionEntity,
-      // ),
       AppRoutes.questionOverview: (context) {
         final args =
-            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+            (ModalRoute.of(context)!.settings.arguments
+                as Map<String, dynamic>?) ??
+            {};
         return QuestionOverview(
           interviewSession: args['interviewSession'] as InterviewSessionEntity,
         );
       },
+
       AppRoutes.codeWorkspace: (context) {
         final args =
-            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        if (args == null) return const SizedBox.shrink();
         return CodingWorkspace(
           currentQuestion: args['currentQuestion'] as int,
           totalQuestions: args['totalQuestions'] as int,
           remainingSeconds: args['remainingSeconds'] as int,
           questions: (args['questions'] as List).cast<SidebarQuestion>(),
+          sessionId: args['sessionId'] as int,
+          questionId: args['questionId'] as int,
+          questionTitle: args['questionTitle'] as String,
+          questionText: args['questionText'] as String,
+          testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
+          templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
+          selectedAnswers: (args['selectedAnswers'] as Map).cast<int, int>(),
+          onAnswerSelected: args['onAnswerSelected'] as void Function(int, int),
           onQuestionSelected: (_) {},
+          savedCode: args['savedCode'] as Map<int, String>? ?? {},
+          onCodeChanged:
+              args['onCodeChanged'] as void Function(int, String)? ??
+              (_, __) {},
+        );
+      },
+      AppRoutes.mcqWorkspace: (context) {
+        final args =
+            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        if (args == null) return const SizedBox.shrink();
+        return McqWorkspace(
+          currentQuestion: args['currentQuestion'] as int,
+          totalQuestions: args['totalQuestions'] as int,
+          remainingSeconds: args['remainingSeconds'] as int,
+          questions: (args['questions'] as List).cast<SidebarQuestion>(),
+          questionText: args['questionText'] as String,
+          options: (args['options'] as List).cast<McqOptionEntity>(),
+          initialSelectedAnswer: args['initialSelectedAnswer'] as int?,
+          selectedAnswers: (args['selectedAnswers'] as Map).cast<int, int>(),
+          onAnswerSelected: args['onAnswerSelected'] as void Function(int, int),
+          onQuestionSelected: (_) {},
+          sessionId: args['sessionId'] as int,
         );
       },
     };

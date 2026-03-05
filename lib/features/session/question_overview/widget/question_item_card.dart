@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../../core/routes/app_routes.dart';
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../widget/question_sidebar.dart';
 import 'action_button.dart';
 
@@ -17,6 +18,16 @@ class QuestionItemCard extends StatelessWidget {
   final int totalQuestions;
   final int remainingSeconds;
   final List<SidebarQuestion> sidebarQuestions;
+  final List<McqOptionEntity> options;
+  final int sessionId;
+
+  // coding only
+  final int? questionId;
+  final String? questionText;
+  final List<TestCaseEntity>? testCases;
+  final List<CodeTemplateEntity>? templates;
+  final Map<int, int> selectedAnswers;
+  final void Function(int q, int a) onAnswerSelected;
 
   const QuestionItemCard({
     required this.index,
@@ -26,25 +37,56 @@ class QuestionItemCard extends StatelessWidget {
     required this.totalQuestions,
     required this.remainingSeconds,
     required this.sidebarQuestions,
+    required this.options,
+    required this.sessionId,
+    required this.selectedAnswers,
+    required this.onAnswerSelected,
     this.isActive = false,
     this.onTap,
+    this.questionId,
+    this.questionText,
+    this.testCases,
+    this.templates,
     super.key,
   });
 
   void _navigateToQuestion(BuildContext context) {
-    final args = {
+    final baseArgs = {
       'currentQuestion': index,
       'totalQuestions': totalQuestions,
       'remainingSeconds': remainingSeconds,
       'questions': sidebarQuestions,
+      'selectedAnswers': selectedAnswers,
+      'onAnswerSelected': onAnswerSelected,
+      'sessionId': sessionId,
     };
+
     if (type == "Coding") {
-      Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: args);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.codeWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': questionId ?? 0,
+          'questionTitle': title,
+          'questionText': questionText ?? '',
+          'testCases': testCases ?? [],
+          'templates': templates ?? [],
+        },
+      );
     } else {
-      // TODO: Navigator.pushNamed(context, AppRoutes.mcqQuestion, arguments: args);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.mcqWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionText': title,
+          'options': options,
+          'initialSelectedAnswer': selectedAnswers[index],
+        },
+      );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;

@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/viewModel/login_state.dart';
+
 import '../../../../../../core/exception/app_exception.dart';
-import '../../../../../../domain/repo/auth/token_storage.dart';
-import '../../../../../../domain/usecase/login/login_usecase.dart';
+import '../../../../../../domain/repo/auth/token/token_storage.dart';
+import '../../../../../../domain/usecase/auth/login/login_usecase.dart';
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
@@ -14,8 +15,8 @@ class LoginCubit extends Cubit<LoginState> {
   final TokenStorage tokenStorage;
   LoginCubit(this.loginUsecase, this.tokenStorage) : super(LoginInitial());
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final emailController = TextEditingController(text: "aya00@gmail.com");
+  final passwordController = TextEditingController(text: "Aya12345.");
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isShowPassword = false;
 

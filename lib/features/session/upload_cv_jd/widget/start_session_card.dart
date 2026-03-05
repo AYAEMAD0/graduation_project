@@ -1,15 +1,15 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_text_field.dart';
 import 'package:mock_mate_ai/core/widget/custom_toast.dart';
-import 'package:mock_mate_ai/features/session/upload_cv_jd/widget/build_btn_upload_cv.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../viewmodel/interview_session_cubit.dart';
+import '../../viewmodel/interview_session/interview_session_cubit.dart';
+import '../../viewmodel/interview_session/interview_session_state.dart';
+import 'build_btn_upload_cv.dart';
 import 'build_upload_cv_section.dart';
 
 class StartSessionCard extends StatefulWidget {
@@ -63,14 +63,6 @@ class _StartSessionCardState extends State<StartSessionCard> {
       listener: (context, state) {
         if (state is InterviewSessionError) {
           CustomToast.showToast(message: state.message, context: context);
-        }
-        if (state is InterviewSessionSuccess) {
-          // TODO: navigate to question overview list
-          Navigator.pushNamed(
-            context,
-            AppRoutes.questionOverview,
-            arguments: {'interviewSession': state.interviewSession},
-          );
         }
       },
       builder: (context, state) {
@@ -142,7 +134,7 @@ class _StartSessionCardState extends State<StartSessionCard> {
                 BuildBtnUploadCv(
                   isLoading: isLoading,
                   onAnalyzePressed: onAnalyzePressed,
-                  state: state,
+                    state: state
                 ),
               ],
             ),

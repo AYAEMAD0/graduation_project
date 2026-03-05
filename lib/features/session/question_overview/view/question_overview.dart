@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/entities/interview_session/interview_session_entity.dart';
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../session_layout.dart';
 import '../../widget/question_sidebar.dart';
 import '../widget/question_content.dart';
 
 class QuestionOverview extends StatefulWidget {
   final InterviewSessionEntity interviewSession;
-
   const QuestionOverview({super.key, required this.interviewSession});
 
   @override
@@ -23,15 +22,26 @@ class _QuestionOverviewState extends State<QuestionOverview> {
   Timer? _timer;
   final ScrollController _scrollController = ScrollController();
   static const double _cardHeight = 90.0;
+  final Map<int, int> _selectedAnswers = {};
 
   List<SidebarQuestion> get _sidebarQuestions => [
     ...widget.interviewSession.codingQuestions.asMap().entries.map(
-      (e) => SidebarQuestion(index: e.key + 1, type: "Coding"),
+      (e) => SidebarQuestion(
+        index: e.key + 1,
+        type: "Coding",
+        questionId: e.value.questionId,
+        questionText: e.value.questionText,
+        questionTitle: e.value.quesTitle,
+        testCases: e.value.testCases,
+        templates: e.value.templates,
+      ),
     ),
     ...widget.interviewSession.mcqQuestions.asMap().entries.map(
       (e) => SidebarQuestion(
         index: e.key + widget.interviewSession.codingQuestions.length + 1,
         type: "Multiple Choice",
+        questionText: e.value.questionText,
+        options: e.value.options,
       ),
     ),
   ];
@@ -92,6 +102,9 @@ class _QuestionOverviewState extends State<QuestionOverview> {
       remainingSeconds: _remainingSeconds,
       questions: _sidebarQuestions,
       onQuestionSelected: _onQuestionSelected,
+      selectedAnswers: _selectedAnswers,
+      onAnswerSelected: (q, a) => setState(() => _selectedAnswers[q] = a),
+      sessionId: widget.interviewSession.interviewSessionId,
       body: QuestionContent(
         interviewSession: widget.interviewSession,
         currentQuestion: _currentQuestion,
@@ -99,6 +112,8 @@ class _QuestionOverviewState extends State<QuestionOverview> {
         onQuestionSelected: _onQuestionSelected,
         scrollController: _scrollController,
         sidebarQuestions: _sidebarQuestions,
+        selectedAnswers: _selectedAnswers,
+        onAnswerSelected: (q, a) => setState(() => _selectedAnswers[q] = a),
       ),
     );
   }
