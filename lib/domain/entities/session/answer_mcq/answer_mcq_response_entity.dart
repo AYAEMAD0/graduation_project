@@ -1,9 +1,9 @@
 class AnswerMcqResponseEntity {
-  final bool isCorrect;
-  final int correctOptionId;
+  final int sessionAnswerId;
+  final bool success;
 
   const AnswerMcqResponseEntity({
-    required this.isCorrect,
-    required this.correctOptionId,
+    required this.sessionAnswerId,
+    required this.success,
   });
 }

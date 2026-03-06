@@ -1,4 +1,4 @@
-import '../../../../domain/entities/session/run_code/run_code_response_entity.dart';
+import '../../../../../domain/entities/session/run_code/run_code_response_entity.dart';
 
 abstract class RunCodeState {}
 

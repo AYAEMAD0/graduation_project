@@ -1,22 +1,22 @@
 import '../../../../domain/entities/session/answer_mcq/answer_mcq_response_entity.dart';
 
 class AnswerMcqResponseModelDto {
-  final bool isCorrect;
-  final int correctOptionId;
+  final int sessionAnswerId;
+  final bool success;
 
   const AnswerMcqResponseModelDto({
-    required this.isCorrect,
-    required this.correctOptionId,
+    required this.sessionAnswerId,
+    required this.success,
   });
 
   factory AnswerMcqResponseModelDto.fromJson(Map<String, dynamic> json) =>
       AnswerMcqResponseModelDto(
-        isCorrect: json['isCorrect'],
-        correctOptionId: json['correctOptionId'],
+        sessionAnswerId: json['sessionAnswerId'],
+        success: json['success'],
       );
 
   AnswerMcqResponseEntity toEntity() => AnswerMcqResponseEntity(
-    isCorrect: isCorrect,
-    correctOptionId: correctOptionId,
+    sessionAnswerId: sessionAnswerId,
+    success: success,
   );
 }

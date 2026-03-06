@@ -83,27 +83,6 @@ class QuestionHeader extends StatelessWidget {
             "Q$currentQuestion OF $totalQuestions",
             style: AppStyle.font16GrayMediumSemiBold,
           ),
-
-          //todo remove dots question
-          // const SizedBox(height: 8),
-          //
-          // Wrap(
-          //   spacing: 8,
-          //   runSpacing: 8,
-          //   children: List.generate(
-          //     totalQuestions,
-          //     (index) => Container(
-          //       width: 7,
-          //       height: 7,
-          //       decoration: BoxDecoration(
-          //         shape: BoxShape.circle,
-          //         color: index < currentQuestion
-          //             ? AppColor.primaryPurpleColor
-          //             : AppColor.grayLightColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

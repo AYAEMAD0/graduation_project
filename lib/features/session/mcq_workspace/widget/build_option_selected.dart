@@ -5,11 +5,12 @@ class BuildOptionSelected extends StatelessWidget {
     super.key,
     required this.isSelected,
     required this.optionText,
+    this.isDisabled = false,
   });
 
   final bool isSelected;
   final String optionText;
-
+  final bool isDisabled;
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -19,13 +20,23 @@ class BuildOptionSelected extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
         gradient: isSelected
-            ? const LinearGradient(
-                colors: [Color(0xffF3EDFF), Color(0xffE8DEFF)],
+            ? LinearGradient(
+                colors: isDisabled
+                    ? [Color(0xffF8F8F8), Color(0xffF0F0F0)] // ← فاتح ناعم
+                    : [Color(0xffF3EDFF), Color(0xffE8DEFF)],
               )
-            : const LinearGradient(colors: [Colors.white, Colors.white]),
+            : LinearGradient(
+                colors: isDisabled
+                    ? [Color(0xffFAFAFA), Color(0xffFAFAFA)] // ← أبيض شفاف
+                    : [Colors.white, Colors.white],
+              ),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: isSelected ? const Color(0xffAA88F5) : const Color(0x1AA806F9),
+          color: isDisabled
+              ? Color(0xffE0E0E0) // ← border رمادي فاتح للكل
+              : isSelected
+              ? Color(0xffAA88F5)
+              : const Color(0x1AA806F9),
           width: 2,
         ),
         boxShadow: [
@@ -41,18 +52,23 @@ class BuildOptionSelected extends StatelessWidget {
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            width: 49,
-            height: 49,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isSelected ? const Color(0xffAA88F5) : Colors.transparent,
-              border: Border.all(color: const Color(0xffAA88F5), width: 4.68),
+              color: isSelected
+                  ? (isDisabled ? Color(0xffCCCCCC) : Color(0xffAA88F5))
+                  : Colors.transparent,
+              border: Border.all(
+                color: isDisabled ? Color(0xffCCCCCC) : Color(0xffAA88F5),
+                width: 4.68,
+              ),
             ),
             child: isSelected
                 ? Center(
                     child: Container(
-                      width: 23,
-                      height: 23,
+                      width: 18,
+                      height: 18,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
@@ -68,20 +84,27 @@ class BuildOptionSelected extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: Color(0xff111827),
+                color: isDisabled ? Color(0xff9E9E9E) : Color(0xff111827),
               ),
             ),
           ),
           if (isSelected)
             Container(
-              width: 42.66,
-              height: 42.66,
+              width: 40.66,
+              height: 40.66,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xffAA88F5), width: 5),
+                border: Border.all(
+                  color: isDisabled ? Color(0xffCCCCCC) : Color(0xffAA88F5),
+                  width: 5,
+                ),
               ),
-              child: const Center(
-                child: Icon(Icons.check, size: 30, color: Color(0xffAA88F5)),
+              child: Center(
+                child: Icon(
+                  Icons.check,
+                  size: 25,
+                  color: isDisabled ? Color(0xffCCCCCC) : Color(0xffAA88F5),
+                ),
               ),
             ),
         ],

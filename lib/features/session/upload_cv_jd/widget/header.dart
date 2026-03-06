@@ -12,7 +12,7 @@ class Header extends StatelessWidget {
     final isMobile = screenWidth < 600;
     if (isMobile) return const SizedBox.shrink();
     return Container(
-      height: 60, //120
+      height: 60,
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: AppColor.whiteColor.withValues(alpha: 0.3),
@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
           Text(
             "MockMate.ai",
             overflow: TextOverflow.ellipsis,
-            style: AppStyle.font45BlackBoldRounded.copyWith(fontSize: 24), //50
+            style: AppStyle.font45BlackBoldRounded.copyWith(fontSize: 24),
           ),
         ],
       ),

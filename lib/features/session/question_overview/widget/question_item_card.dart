@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
-import '../../widget/question_sidebar.dart';
 import 'action_button.dart';
 
 class QuestionItemCard extends StatelessWidget {
@@ -15,81 +11,21 @@ class QuestionItemCard extends StatelessWidget {
   final bool isModified;
   final bool isActive;
   final VoidCallback? onTap;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> sidebarQuestions;
-  final List<McqOptionEntity> options;
-  final int sessionId;
-
-  // coding only
-  final int? questionId;
-  final String? questionText;
-  final List<TestCaseEntity>? testCases;
-  final List<CodeTemplateEntity>? templates;
-  final Map<int, int> selectedAnswers;
-  final void Function(int q, int a) onAnswerSelected;
+  final VoidCallback onNavigate;
 
   const QuestionItemCard({
+    super.key,
     required this.index,
     required this.title,
     required this.type,
     required this.isModified,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.sidebarQuestions,
-    required this.options,
-    required this.sessionId,
-    required this.selectedAnswers,
-    required this.onAnswerSelected,
+    required this.onNavigate,
     this.isActive = false,
     this.onTap,
-    this.questionId,
-    this.questionText,
-    this.testCases,
-    this.templates,
-    super.key,
   });
 
-  void _navigateToQuestion(BuildContext context) {
-    final baseArgs = {
-      'currentQuestion': index,
-      'totalQuestions': totalQuestions,
-      'remainingSeconds': remainingSeconds,
-      'questions': sidebarQuestions,
-      'selectedAnswers': selectedAnswers,
-      'onAnswerSelected': onAnswerSelected,
-      'sessionId': sessionId,
-    };
-
-    if (type == "Coding") {
-      Navigator.pushNamed(
-        context,
-        AppRoutes.codeWorkspace,
-        arguments: {
-          ...baseArgs,
-          'questionId': questionId ?? 0,
-          'questionTitle': title,
-          'questionText': questionText ?? '',
-          'testCases': testCases ?? [],
-          'templates': templates ?? [],
-        },
-      );
-    } else {
-      Navigator.pushNamed(
-        context,
-        AppRoutes.mcqWorkspace,
-        arguments: {
-          ...baseArgs,
-          'questionText': title,
-          'options': options,
-          'initialSelectedAnswer': selectedAnswers[index],
-        },
-      );
-    }
-  }
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -108,91 +44,55 @@ class QuestionItemCard extends StatelessWidget {
             width: isActive ? 1.8 : 1.2,
           ),
         ),
-        child: isMobile
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 4,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "$index.",
-                        style: AppStyle.font20BlackSemiBold.copyWith(
-                          color: AppColor.primaryPurpleColor,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(title, style: AppStyle.font20BlackSemiBold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
                   Text(
-                    type,
-                    style: AppStyle.font16GrayMediumMedium.copyWith(
+                    "$index.",
+                    style: AppStyle.font20BlackSemiBold.copyWith(
                       color: AppColor.primaryPurpleColor,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ActionButton(
-                      isModified: isModified,
-                      type: type,
-                      onTap: () => _navigateToQuestion(context),
-                    ),
-                  ),
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                  const SizedBox(width: 12),
                   Expanded(
-                    flex: 4,
-                    child: Row(
-                      children: [
-                        Text(
-                          "$index.",
-                          style: AppStyle.font20BlackSemiBold.copyWith(
-                            color: AppColor.primaryPurpleColor,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: AppStyle.font20BlackSemiBold,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 24),
-                      child: Text(
-                        type,
-                        style: AppStyle.font16GrayMediumMedium.copyWith(
-                          color: AppColor.primaryPurpleColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: ActionButton(
-                        isModified: isModified,
-                        type: type,
-                        onTap: () => _navigateToQuestion(context),
-                      ),
+                    child: Text(
+                      title,
+                      style: AppStyle.font20BlackSemiBold,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  type,
+                  style: AppStyle.font16GrayMediumMedium.copyWith(
+                    color: AppColor.primaryPurpleColor,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: ActionButton(
+                  isModified: isModified,
+                  type: type,
+                  onTap: onNavigate,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

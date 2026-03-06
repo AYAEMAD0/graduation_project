@@ -42,6 +42,8 @@ class QuestionSidebar extends StatelessWidget {
   final Map<int, int> selectedAnswers;
   final void Function(int q, int a) onAnswerSelected;
   final int sessionId;
+  final Set<int> savedQuestions;
+  final void Function(int) onQuestionSaved;
 
   const QuestionSidebar({
     required this.currentIndex,
@@ -52,6 +54,8 @@ class QuestionSidebar extends StatelessWidget {
     required this.selectedAnswers,
     required this.onAnswerSelected,
     required this.sessionId,
+    required this.savedQuestions,
+    required this.onQuestionSaved,
     super.key,
   });
 
@@ -60,23 +64,26 @@ class QuestionSidebar extends StatelessWidget {
           (q) => q.index == number,
       orElse: () => SidebarQuestion(index: number, type: "Coding"),
     );
-
+    final capturedOnAnswerSelected = onAnswerSelected;
+    final capturedOnQuestionSaved = onQuestionSaved;
+    final capturedSavedQuestions = savedQuestions;
     final baseArgs = {
       'currentQuestion': number,
       'totalQuestions': totalQuestions,
       'remainingSeconds': remainingSeconds,
       'questions': questions,
       'selectedAnswers': selectedAnswers,
-      'onAnswerSelected': onAnswerSelected,
+      'onAnswerSelected': (int q, int a) => capturedOnAnswerSelected(q, a),
       'sessionId': sessionId,
       'savedCode': question.savedCode,
       'savedLanguageId': question.savedLanguageId,
+      'savedQuestions': capturedSavedQuestions,
+      'onQuestionSaved': (int id) => capturedOnQuestionSaved(id),
       'onCodeChanged': (int langId, String code) {
         question.savedCode[langId] = code;
         question.savedLanguageId = langId;
       },
     };
-
 
     if (question.type == "Coding") {
       Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: {
@@ -90,9 +97,10 @@ class QuestionSidebar extends StatelessWidget {
     } else {
       Navigator.pushNamed(context, AppRoutes.mcqWorkspace, arguments: {
         ...baseArgs,
+        'questionId': question.questionId,
         'questionText': question.questionText,
         'options': question.options,
-        'initialSelectedAnswer': selectedAnswers[number],
+        'initialSelectedAnswer': selectedAnswers[question.questionId],
       });
     }
     onQuestionSelected(number);
