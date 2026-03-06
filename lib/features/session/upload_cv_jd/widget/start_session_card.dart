@@ -5,6 +5,8 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/widget/custom_toast.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/widget/custom_dialog.dart';
 import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../../viewmodel/interview_session/interview_session_state.dart';
 import 'build_btn_upload_cv.dart';
@@ -63,7 +65,18 @@ class _StartSessionCardState extends State<StartSessionCard> {
     return BlocConsumer<InterviewSessionCubit, InterviewSessionState>(
       listener: (context, state) {
         if (state is InterviewSessionError) {
+          CustomDialog.hideLoading(context: context);
           CustomToast.showToast(message: state.message, context: context);
+        }
+        if (state is InterviewSessionSuccess) {
+          CustomDialog.hideLoading(context: context);
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.questionOverview,
+            arguments: {
+              'interviewSession': state.interviewSession,
+            },
+          );
         }
       },
       builder: (context, state) {

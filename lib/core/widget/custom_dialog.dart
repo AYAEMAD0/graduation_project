@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
+
 import '../theme/app_color.dart';
 import '../theme/app_theme.dart';
 
@@ -72,6 +73,52 @@ class CustomDialog {
           title: Text(title, style: AppStyle.font20BlackBold),
           content: Text(message, style: AppStyle.font16BlackRegular,),
           actions: actions,
+        );
+      },
+    );
+  }
+
+  static void showGenerating({required BuildContext context}) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 6,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColor.primaryPurpleColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 28),
+                Text(
+                  "Generating Your Interview",
+                  style: AppStyle.font20BlackSemiBold,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "Please wait while we prepare your questions...",
+                  style: AppStyle.font16BlackRegular.copyWith(
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
