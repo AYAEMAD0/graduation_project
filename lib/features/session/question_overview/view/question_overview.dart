@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../model/session_arguments.dart';
 import '../../session_layout.dart';
 import '../../widget/question_sidebar.dart';
 import '../viewmodel/question_overview_cubit.dart';
@@ -47,8 +48,8 @@ class QuestionOverview extends StatelessWidget {
       child: BlocBuilder<QuestionOverviewCubit, QuestionOverviewState>(
         builder: (context, state) {
           final cubit = context.read<QuestionOverviewCubit>();
-          return SessionLayout(
-            time: cubit.formattedTime,
+
+          final sessionArgs = SessionArguments(
             currentQuestion: state.currentQuestion,
             totalQuestions: totalQuestions,
             remainingSeconds: state.remainingSeconds,
@@ -63,17 +64,15 @@ class QuestionOverview extends StatelessWidget {
             onRevertAnswer: () {},
             onRevertAnswerRaw: (q, prev) {},
             savedAnswers: cubit.savedAnswers,
+          );
+
+          return SessionLayout(
+            time: cubit.formattedTime,
+            args: sessionArgs,
             body: QuestionContent(
               interviewSession: interviewSession,
-              currentQuestion: state.currentQuestion,
-              remainingSeconds: state.remainingSeconds,
-              onQuestionSelected: cubit.selectQuestion,
+              sessionArgs: sessionArgs,
               scrollController: cubit.scrollController,
-              sidebarQuestions: sidebarQuestions,
-              selectedAnswers: cubit.answers,
-              onAnswerSelected: (q, a) => cubit.selectAnswer(q, a),
-              savedQuestions: cubit.savedQuestions,
-              onQuestionSaved: cubit.markQuestionSaved,
             ),
           );
         },

@@ -2,55 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
-import '../../widget/question_sidebar.dart';
+import '../../model/session_arguments.dart';
 import 'question_list.dart';
 
 
 class QuestionContent extends StatelessWidget {
   final InterviewSessionEntity interviewSession;
-  final int currentQuestion;
-  final int remainingSeconds;
-  final void Function(int index) onQuestionSelected;
+  final SessionArguments sessionArgs;
   final ScrollController scrollController;
-  final List<SidebarQuestion> sidebarQuestions;
-  final Map<int, int> selectedAnswers;
-  final void Function(int q, int a) onAnswerSelected;
-  final Set<int> savedQuestions;
-  final void Function(int) onQuestionSaved;
 
   const QuestionContent({
     super.key,
     required this.interviewSession,
-    required this.currentQuestion,
-    required this.remainingSeconds,
-    required this.onQuestionSelected,
+    required this.sessionArgs,
     required this.scrollController,
-    required this.sidebarQuestions,
-    required this.selectedAnswers,
-    required this.onAnswerSelected,
-    required this.savedQuestions,
-    required this.onQuestionSaved,
   });
 
   void _navigateToQuestion(BuildContext context, QuestionItem question,
       int index) {
-    final baseArgs = {
-      'currentQuestion': index,
-      'totalQuestions': interviewSession.codingQuestions.length +
-          interviewSession.mcqQuestions.length,
-      'remainingSeconds': remainingSeconds,
-      'questions': sidebarQuestions,
-      'selectedAnswers': selectedAnswers,
-      'onAnswerSelected': (int q, int a) => onAnswerSelected(q, a),
-      'onQuestionSelected': onQuestionSelected,
-      'sessionId': interviewSession.interviewSessionId,
-      'savedQuestions': savedQuestions,
-      'onQuestionSaved': (int id) => onQuestionSaved(id),
+    final args = {
+      'sessionArgs': sessionArgs.copyWith(currentQuestion: index),
     };
 
     if (question.type == "Coding") {
       Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: {
-        ...baseArgs,
+        ...args,
         'questionId': question.id,
         'questionTitle': question.title,
         'questionText': question.questionText ?? '',
@@ -59,11 +35,10 @@ class QuestionContent extends StatelessWidget {
       });
     } else {
       Navigator.pushNamed(context, AppRoutes.mcqWorkspace, arguments: {
-        ...baseArgs,
+        ...args,
         'questionId': question.id,
         'questionText': question.title,
         'options': question.options,
-        'initialSelectedAnswer': selectedAnswers[question.id],
       });
     }
   }
@@ -100,9 +75,9 @@ class QuestionContent extends StatelessWidget {
         Expanded(
           child: QuestionList(
             questions: questions,
-            currentQuestion: currentQuestion,
+            currentQuestion: sessionArgs.currentQuestion,
             scrollController: scrollController,
-            onQuestionSelected: onQuestionSelected,
+            onQuestionSelected: sessionArgs.onQuestionSelected,
             onNavigate: (q, i) => _navigateToQuestion(context, q, i),
           ),
         ),

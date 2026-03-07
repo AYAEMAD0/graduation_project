@@ -78,6 +78,34 @@ class CustomDialog {
     );
   }
 
+
+  static Future<bool?> showConfirm({
+    required BuildContext context,
+    required String title,
+    required String message,
+    String confirmText = "Yes",
+    String cancelText = "No",
+  }) {
+    return showDialog<bool>(
+      context: context,
+      builder: (ctx) =>
+          AlertDialog(
+            title: Text(title, style: AppStyle.font20BlackBold),
+            content: Text(message, style: AppStyle.font16BlackRegular),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(cancelText, style: AppStyle.font20BlueDarkBold),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(confirmText, style: AppStyle.font20BlueDarkBold),
+              ),
+            ],
+          ),
+    );
+  }
+
   static void showGenerating({required BuildContext context}) {
     showDialog(
       barrierDismissible: false,

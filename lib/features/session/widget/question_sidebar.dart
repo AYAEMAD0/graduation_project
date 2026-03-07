@@ -4,7 +4,9 @@ import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
+import '../../../core/widget/custom_dialog.dart';
 import '../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../model/session_arguments.dart';
 
 class SidebarQuestion {
   final int index;
@@ -34,87 +36,35 @@ class SidebarQuestion {
 
 
 class QuestionSidebar extends StatelessWidget {
-  final int currentIndex;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> questions;
-  final void Function(int index) onQuestionSelected;
-  final Map<int, int> selectedAnswers;
-  final void Function(int q, int a) onAnswerSelected;
-  final int sessionId;
-  final Set<int> savedQuestions;
-  final void Function(int) onQuestionSaved;
-  final bool hasUnsavedAnswer;
-  final void Function() onRevertAnswer;
-  final void Function(int, int?) onRevertAnswerRaw;
-  final Map<int, int> savedAnswers;
+  final SessionArguments args;
 
   const QuestionSidebar({
-    required this.currentIndex,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.questions,
-    required this.onQuestionSelected,
-    required this.selectedAnswers,
-    required this.onAnswerSelected,
-    required this.sessionId,
-    required this.savedQuestions,
-    required this.onQuestionSaved,
-    required this.hasUnsavedAnswer,
-    required this.onRevertAnswer,
-    required this.onRevertAnswerRaw,
-    required this.savedAnswers,
+    required this.args,
     super.key,
   });
 
   void _onTap(BuildContext context, int number) async {
-    if (hasUnsavedAnswer) {
-      final confirm = await showDialog<bool>(
+    if (args.hasUnsavedAnswer) {
+      final confirm = await CustomDialog.showConfirm(
         context: context,
-        builder: (ctx) =>
-            AlertDialog(
-              title: const Text("Leave without saving?"),
-              content: const Text(
-                  "You selected an answer but didn't save it yet."),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(ctx, false),
-                  child: const Text("No"),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(ctx, true),
-                  child: const Text("Yes"),
-                ),
-              ],
-            ),
+        title: "Leave without saving?",
+        message: "You selected an answer but didn't save it yet.",
       );
       if (confirm != true) return;
-      onRevertAnswer();
+      args.onRevertAnswer();
     }
-    final question = questions.firstWhere(
+
+    final question = args.questions.firstWhere(
           (q) => q.index == number,
       orElse: () => SidebarQuestion(index: number, type: "Coding"),
     );
-    final capturedOnAnswerSelected = onAnswerSelected;
-    final capturedOnQuestionSaved = onQuestionSaved;
-    final capturedSavedQuestions = savedQuestions;
-    final capturedOnRevertAnswerRaw = onRevertAnswerRaw;
+
+    final sessionArgs = args.copyWith(currentQuestion: number);
+
     final baseArgs = {
-      'currentQuestion': number,
-      'totalQuestions': totalQuestions,
-      'remainingSeconds': remainingSeconds,
-      'questions': questions,
-      'selectedAnswers': selectedAnswers,
-      'onAnswerSelected': (int q, int a) => capturedOnAnswerSelected(q, a),
-      'sessionId': sessionId,
+      'sessionArgs': sessionArgs,
       'savedCode': question.savedCode,
       'savedLanguageId': question.savedLanguageId,
-      'savedQuestions': capturedSavedQuestions,
-      'onQuestionSaved': (int id) => capturedOnQuestionSaved(id),
-      'initialOptionId': savedAnswers[question.questionId],
-      'onRevertAnswer': (int q, int? prev) =>
-          capturedOnRevertAnswerRaw(q, prev),
-      'savedAnswers': savedAnswers,
       'onCodeChanged': (int langId, String code) {
         question.savedCode[langId] = code;
         question.savedLanguageId = langId;
@@ -136,10 +86,9 @@ class QuestionSidebar extends StatelessWidget {
         'questionId': question.questionId,
         'questionText': question.questionText,
         'options': question.options,
-        'initialSelectedAnswer': savedAnswers[question.questionId],
       });
     }
-    onQuestionSelected(number);
+    args.onQuestionSelected(number);
   }
 
   @override
@@ -155,7 +104,7 @@ class QuestionSidebar extends StatelessWidget {
             onTap: () {
               Navigator.popUntil(
                   context, ModalRoute.withName(AppRoutes.questionOverview));
-              onQuestionSelected(0);
+              args.onQuestionSelected(0);
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
@@ -163,25 +112,28 @@ class QuestionSidebar extends StatelessWidget {
               height: 50,
               margin: const EdgeInsets.symmetric(vertical: 3),
               decoration: BoxDecoration(
-                color: currentIndex == 0 ? const Color(0xffD5CDDD) : Colors
-                    .transparent,
+                color: args.currentQuestion == 0
+                    ? const Color(0xffD5CDDD)
+                    : Colors.transparent,
               ),
               alignment: Alignment.center,
-              child: Text("All",
-                  style: AppStyle.font16BlackSemiBold.copyWith(
-                    color: currentIndex == 0
-                        ? AppColor.primaryPurpleColor
-                        : AppColor.grayMediumColor,
-                  )),
+              child: Text(
+                "All",
+                style: AppStyle.font16BlackSemiBold.copyWith(
+                  color: args.currentQuestion == 0
+                      ? AppColor.primaryPurpleColor
+                      : AppColor.grayMediumColor,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
-              itemCount: totalQuestions,
+              itemCount: args.totalQuestions,
               itemBuilder: (context, index) {
                 final number = index + 1;
-                final isActive = number == currentIndex;
+                final isActive = number == args.currentQuestion;
                 return GestureDetector(
                   onTap: () => _onTap(context, number),
                   child: AnimatedContainer(
@@ -189,16 +141,19 @@ class QuestionSidebar extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 3),
                     height: 50,
                     decoration: BoxDecoration(
-                      color: isActive ? const Color(0xffD5CDDD) : Colors
-                          .transparent,
+                      color: isActive
+                          ? const Color(0xffD5CDDD)
+                          : Colors.transparent,
                     ),
                     alignment: Alignment.center,
-                    child: Text("$number",
-                        style: AppStyle.font16BlackSemiBold.copyWith(
-                          color: isActive
-                              ? AppColor.primaryPurpleColor
-                              : AppColor.grayMediumColor,
-                        )),
+                    child: Text(
+                      "$number",
+                      style: AppStyle.font16BlackSemiBold.copyWith(
+                        color: isActive
+                            ? AppColor.primaryPurpleColor
+                            : AppColor.grayMediumColor,
+                      ),
+                    ),
                   ),
                 );
               },

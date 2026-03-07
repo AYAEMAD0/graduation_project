@@ -4,54 +4,31 @@ import 'package:mock_mate_ai/core/widget/custom_toast.dart';
 
 import '../../../../core/config/di.dart';
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../model/session_arguments.dart';
 import '../../session_layout.dart';
-import '../../widget/question_sidebar.dart';
 import '../viewmodel/mcq_workspace_cubit.dart';
 import '../widget/mcq_options_list.dart';
 import '../widget/mcq_save_button.dart';
 
 class McqWorkspace extends StatelessWidget {
-  final int currentQuestion;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> questions;
-  final void Function(int) onQuestionSelected;
+  final SessionArguments args;
   final String questionText;
   final int questionId;
   final List<McqOptionEntity> options;
-  final Map<int, int> selectedAnswers;
-  final void Function(int q, int a) onAnswerSelected;
-  final int sessionId;
   final bool isSaved;
-  final void Function(int) onQuestionSaved;
-  final Set<int> savedQuestions;
-  final int? initialOptionId;
-  final void Function(int, int?) onRevertAnswer;
-  final Map<int, int> savedAnswers;
 
   const McqWorkspace({
     super.key,
-    required this.currentQuestion,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.questions,
-    required this.onQuestionSelected,
+    required this.args,
     required this.questionText,
     required this.questionId,
     required this.options,
-    required this.selectedAnswers,
-    required this.onAnswerSelected,
-    required this.sessionId,
     required this.isSaved,
-    required this.onQuestionSaved,
-    required this.savedQuestions,
-    required this.initialOptionId,
-    required this.onRevertAnswer, required this.savedAnswers,
   });
 
   String get _formattedTime {
-    final minutes = remainingSeconds ~/ 60;
-    final seconds = remainingSeconds % 60;
+    final minutes = args.remainingSeconds ~/ 60;
+    final seconds = args.remainingSeconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
@@ -61,7 +38,7 @@ class McqWorkspace extends StatelessWidget {
       create: (_) {
         final cubit = getIt<McqWorkspaceCubit>();
         cubit.init(
-          initialOptionId: savedAnswers[questionId],
+          initialOptionId: args.savedAnswers[questionId],
           initialIsSaved: isSaved,
           options: options,
         );
@@ -84,32 +61,25 @@ class McqWorkspace extends StatelessWidget {
               state is McqWorkspaceError) {
             selectedIndex = (state as dynamic).selectedIndex;
           } else {
-            final savedOptionId = savedAnswers[questionId];
+            final savedOptionId = args.savedAnswers[questionId];
             if (savedOptionId != null) {
               selectedIndex = options.indexWhere(
                     (o) => o.optionId == savedOptionId,
               );
             }
           }
+
+          final initialOptionId = args.savedAnswers[questionId];
+
           return SessionLayout(
             time: _formattedTime,
-            currentQuestion: currentQuestion,
-            totalQuestions: totalQuestions,
-            remainingSeconds: remainingSeconds,
-            questions: questions,
-            onQuestionSelected: onQuestionSelected,
-            selectedAnswers: selectedAnswers,
-            onAnswerSelected: onAnswerSelected,
-            sessionId: sessionId,
-            onQuestionSaved: onQuestionSaved,
-            savedQuestions: savedQuestions,
-            hasUnsavedAnswer: hasUnsavedAnswer,
-            onRevertAnswerRaw: onRevertAnswer,
-            onRevertAnswer: () {
-              cubit.resetToInitial(initialOptionId, options);
-              onRevertAnswer(questionId, initialOptionId);
-            },
-            savedAnswers: savedAnswers,
+            args: args.copyWith(
+              hasUnsavedAnswer: hasUnsavedAnswer,
+              onRevertAnswer: () {
+                cubit.resetToInitial(initialOptionId, options);
+                args.onRevertAnswerRaw(questionId, initialOptionId);
+              },
+            ),
             body: Container(
               color: const Color(0xffF9FAFB),
               child: SafeArea(
@@ -133,7 +103,7 @@ class McqWorkspace extends StatelessWidget {
                           onSelect: ({required index, required optionId}) {
                             cubit.selectAnswer(
                                 index: index, optionId: optionId);
-                            onAnswerSelected(questionId, optionId);
+                            args.onAnswerSelected(questionId, optionId);
                           },
                         ),
                       ),
@@ -149,8 +119,9 @@ class McqWorkspace extends StatelessWidget {
                             return;
                           }
                           await cubit.saveAnswer(
-                              sessionId: sessionId, questionId: questionId);
-                          onQuestionSaved(questionId);
+                              sessionId: args.sessionId,
+                              questionId: questionId);
+                          args.onQuestionSaved(questionId);
                         },
                       ),
                       const SizedBox(height: 30),

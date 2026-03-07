@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
+import 'package:mock_mate_ai/features/session/model/session_arguments.dart';
 import 'package:mock_mate_ai/features/session/widget/question_header.dart';
 import 'package:mock_mate_ai/features/session/widget/question_sidebar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -9,39 +10,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 class SessionLayout extends StatelessWidget {
   final Widget body;
   final String time;
-  final int currentQuestion;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> questions;
-  final void Function(int index) onQuestionSelected;
-  final Map<int, int> selectedAnswers;
-  final void Function(int q, int a) onAnswerSelected;
-  final int sessionId;
-  final Set<int> savedQuestions;
-  final void Function(int) onQuestionSaved;
-  final bool hasUnsavedAnswer;
-  final void Function() onRevertAnswer;
-  final void Function(int, int?) onRevertAnswerRaw;
-  final Map<int, int> savedAnswers;
+  final SessionArguments args;
 
   const SessionLayout({
     super.key,
     required this.body,
     required this.time,
-    required this.currentQuestion,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.questions,
-    required this.onQuestionSelected,
-    required this.selectedAnswers,
-    required this.onAnswerSelected,
-    required this.sessionId,
-    required this.savedQuestions,
-    required this.onQuestionSaved,
-    required this.hasUnsavedAnswer,
-    required this.onRevertAnswer,
-    required this.onRevertAnswerRaw,
-    required this.savedAnswers,
+    required this.args,
   });
 
   @override
@@ -88,30 +63,15 @@ class SessionLayout extends StatelessWidget {
                   children: [
                     QuestionHeader(
                       time: time,
-                      currentQuestion: currentQuestion,
-                      totalQuestions: totalQuestions,
+                      currentQuestion: args.currentQuestion,
+                      totalQuestions: args.totalQuestions,
                     ),
                     Expanded(child: body),
                   ],
                 )
               : Row(
                   children: [
-                    QuestionSidebar(
-                      currentIndex: currentQuestion,
-                      totalQuestions: totalQuestions,
-                      remainingSeconds: remainingSeconds,
-                      questions: questions,
-                      onQuestionSelected: onQuestionSelected,
-                      selectedAnswers: selectedAnswers,
-                      onAnswerSelected: onAnswerSelected,
-                      sessionId: sessionId,
-                      savedQuestions: savedQuestions,
-                      onQuestionSaved: onQuestionSaved,
-                      hasUnsavedAnswer: hasUnsavedAnswer,
-                      onRevertAnswer: onRevertAnswer,
-                      onRevertAnswerRaw: onRevertAnswerRaw,
-                      savedAnswers: savedAnswers,
-                    ),
+                    QuestionSidebar(args: args),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
@@ -121,8 +81,8 @@ class SessionLayout extends StatelessWidget {
                           children: [
                             QuestionHeader(
                               time: time,
-                              currentQuestion: currentQuestion,
-                              totalQuestions: totalQuestions,
+                              currentQuestion: args.currentQuestion,
+                              totalQuestions: args.totalQuestions,
                             ),
                             Expanded(child: body),
                           ],
