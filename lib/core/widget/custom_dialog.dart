@@ -90,6 +90,7 @@ class CustomDialog {
       context: context,
       builder: (ctx) =>
           AlertDialog(
+            backgroundColor: AppColor.whiteColor,
             title: Text(title, style: AppStyle.font20BlackBold),
             content: Text(message, style: AppStyle.font16BlackRegular),
             actions: [

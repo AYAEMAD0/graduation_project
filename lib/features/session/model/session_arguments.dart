@@ -14,6 +14,8 @@ class SessionArguments {
   final bool hasUnsavedAnswer;
   final void Function(int questionId, int? previousOptionId) onRevertAnswer;
   final Map<int, int> savedAnswers;
+  final Set<int> savedCodeQuestions;
+  final void Function(int questionId) onCodeSaved;
 
   const SessionArguments({
     required this.currentQuestion,
@@ -29,6 +31,8 @@ class SessionArguments {
     required this.hasUnsavedAnswer,
     required this.onRevertAnswer,
     required this.savedAnswers,
+    required this.savedCodeQuestions,
+    required this.onCodeSaved,
   });
 
   SessionArguments copyWith({
@@ -45,6 +49,8 @@ class SessionArguments {
     bool? hasUnsavedAnswer,
     void Function(int, int?)? onRevertAnswer,
     Map<int, int>? savedAnswers,
+    Set<int>? savedCodeQuestions,
+    void Function(int)? onCodeSaved,
   }) {
     return SessionArguments(
       currentQuestion: currentQuestion ?? this.currentQuestion,
@@ -60,6 +66,8 @@ class SessionArguments {
       hasUnsavedAnswer: hasUnsavedAnswer ?? this.hasUnsavedAnswer,
       onRevertAnswer: onRevertAnswer ?? this.onRevertAnswer,
       savedAnswers: savedAnswers ?? this.savedAnswers,
+      savedCodeQuestions: savedCodeQuestions ?? this.savedCodeQuestions,
+      onCodeSaved: onCodeSaved ?? this.onCodeSaved,
     );
   }
 }

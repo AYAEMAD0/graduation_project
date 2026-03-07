@@ -32,6 +32,9 @@ class QuestionContent extends StatelessWidget {
         'questionText': question.questionText ?? '',
         'testCases': question.testCases ?? [],
         'templates': question.templates ?? [],
+        'onCodeSaved': (int langId, String code) {
+          sessionArgs.onCodeSaved(question.id);
+        },
       });
     } else {
       Navigator.pushNamed(context, AppRoutes.mcqWorkspace, arguments: {
@@ -78,6 +81,7 @@ class QuestionContent extends StatelessWidget {
             currentQuestion: sessionArgs.currentQuestion,
             scrollController: scrollController,
             onQuestionSelected: sessionArgs.onQuestionSelected,
+            sessionArgs: sessionArgs,
             onNavigate: (q, i) => _navigateToQuestion(context, q, i),
           ),
         ),

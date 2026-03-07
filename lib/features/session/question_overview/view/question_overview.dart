@@ -63,6 +63,8 @@ class QuestionOverview extends StatelessWidget {
             hasUnsavedAnswer: false,
             onRevertAnswer: cubit.revertAnswer,
             savedAnswers: cubit.savedAnswers,
+            savedCodeQuestions: cubit.savedCodeQuestions,
+            onCodeSaved: cubit.markCodeSaved,
           );
 
           return SessionLayout(

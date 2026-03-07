@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../model/session_arguments.dart';
 import 'question_content.dart';
 import 'question_item_card.dart';
 
@@ -9,6 +10,7 @@ class QuestionList extends StatelessWidget {
   final ScrollController scrollController;
   final void Function(int index) onQuestionSelected;
   final void Function(QuestionItem question, int index) onNavigate;
+  final SessionArguments sessionArgs;
 
   const QuestionList({
     super.key,
@@ -17,6 +19,7 @@ class QuestionList extends StatelessWidget {
     required this.scrollController,
     required this.onQuestionSelected,
     required this.onNavigate,
+    required this.sessionArgs,
   });
 
   @override
@@ -32,7 +35,9 @@ class QuestionList extends StatelessWidget {
             index: index,
             title: question.title,
             type: question.type,
-            isModified: false,
+            isModified: question.type == "Coding"
+                ? sessionArgs.savedCodeQuestions.contains(question.id)
+                : sessionArgs.savedAnswers.containsKey(question.id),
             isActive: index == currentQuestion,
             onTap: () => onQuestionSelected(index),
             onNavigate: () => onNavigate(question, index),

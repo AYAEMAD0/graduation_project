@@ -71,6 +71,15 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
     }
   }
 
+  static final Set<int> _savedCodeQuestions = {};
+
+  Set<int> get savedCodeQuestions => _savedCodeQuestions;
+
+  void markCodeSaved(int questionId) {
+    _savedCodeQuestions.add(questionId);
+    emit(state.copyWith());
+  }
+
   void revertAnswer(int questionId, int? previousOptionId) {
     if (previousOptionId == null) {
       _selectedAnswers.remove(questionId);
@@ -87,6 +96,7 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
     _savedQuestions.clear();
     _savedAnswers.clear();
     scrollController.dispose();
+    _savedCodeQuestions.clear();
     return super.close();
   }
 }
