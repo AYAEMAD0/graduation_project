@@ -59,11 +59,25 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
   }
 
   static final Set<int> _savedQuestions = {};
-
   Set<int> get savedQuestions => _savedQuestions;
+  static final Map<int, int> _savedAnswers = {};
+
+  Map<int, int> get savedAnswers => _savedAnswers;
 
   void markQuestionSaved(int questionId) {
     _savedQuestions.add(questionId);
+    if (_selectedAnswers.containsKey(questionId)) {
+      _savedAnswers[questionId] = _selectedAnswers[questionId]!;
+    }
+  }
+
+  void revertAnswer(int questionId, int? previousOptionId) {
+    if (previousOptionId == null) {
+      _selectedAnswers.remove(questionId);
+    } else {
+      _selectedAnswers[questionId] = previousOptionId;
+    }
+    emit(state.copyWith(selectedAnswers: _selectedAnswers));
   }
 
   @override
@@ -71,6 +85,7 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
     _timer?.cancel();
     _selectedAnswers.clear();
     _savedQuestions.clear();
+    _savedAnswers.clear();
     scrollController.dispose();
     return super.close();
   }

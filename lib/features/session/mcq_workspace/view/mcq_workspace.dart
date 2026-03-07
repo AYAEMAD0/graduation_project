@@ -25,6 +25,9 @@ class McqWorkspace extends StatelessWidget {
   final bool isSaved;
   final void Function(int) onQuestionSaved;
   final Set<int> savedQuestions;
+  final int? initialOptionId;
+  final void Function(int, int?) onRevertAnswer;
+  final Map<int, int> savedAnswers;
 
   const McqWorkspace({
     super.key,
@@ -42,6 +45,8 @@ class McqWorkspace extends StatelessWidget {
     required this.isSaved,
     required this.onQuestionSaved,
     required this.savedQuestions,
+    required this.initialOptionId,
+    required this.onRevertAnswer, required this.savedAnswers,
   });
 
   String get _formattedTime {
@@ -56,7 +61,7 @@ class McqWorkspace extends StatelessWidget {
       create: (_) {
         final cubit = getIt<McqWorkspaceCubit>();
         cubit.init(
-          initialOptionId: selectedAnswers[questionId],
+          initialOptionId: savedAnswers[questionId],
           initialIsSaved: isSaved,
           options: options,
         );
@@ -70,7 +75,7 @@ class McqWorkspace extends StatelessWidget {
         },
         builder: (context, state) {
           final cubit = context.read<McqWorkspaceCubit>();
-
+          final hasUnsavedAnswer = state is McqWorkspaceAnswerSelected;
           int? selectedIndex;
 
           if (state is McqWorkspaceAnswerSelected ||
@@ -79,7 +84,7 @@ class McqWorkspace extends StatelessWidget {
               state is McqWorkspaceError) {
             selectedIndex = (state as dynamic).selectedIndex;
           } else {
-            final savedOptionId = selectedAnswers[questionId];
+            final savedOptionId = savedAnswers[questionId];
             if (savedOptionId != null) {
               selectedIndex = options.indexWhere(
                     (o) => o.optionId == savedOptionId,
@@ -98,6 +103,13 @@ class McqWorkspace extends StatelessWidget {
             sessionId: sessionId,
             onQuestionSaved: onQuestionSaved,
             savedQuestions: savedQuestions,
+            hasUnsavedAnswer: hasUnsavedAnswer,
+            onRevertAnswerRaw: onRevertAnswer,
+            onRevertAnswer: () {
+              cubit.resetToInitial(initialOptionId, options);
+              onRevertAnswer(questionId, initialOptionId);
+            },
+            savedAnswers: savedAnswers,
             body: Container(
               color: const Color(0xffF9FAFB),
               child: SafeArea(
@@ -118,7 +130,6 @@ class McqWorkspace extends StatelessWidget {
                         child: McqOptionsList(
                           options: options,
                           selectedIndex: selectedIndex,
-                          isDisabled: state is McqWorkspaceSaved || isSaved,
                           onSelect: ({required index, required optionId}) {
                             cubit.selectAnswer(
                                 index: index, optionId: optionId);
@@ -129,8 +140,14 @@ class McqWorkspace extends StatelessWidget {
                       const SizedBox(height: 30),
                       McqSaveButton(
                         isSaving: state is McqWorkspaceSaving,
-                        isSaved: state is McqWorkspaceSaved || isSaved,
+                        isSaved: state is McqWorkspaceSaved,
                         onPressed: () async {
+                          if (state is McqWorkspaceInitial) {
+                            CustomToast.showToast(
+                                message: "Please select an option first",
+                                context: context);
+                            return;
+                          }
                           await cubit.saveAnswer(
                               sessionId: sessionId, questionId: questionId);
                           onQuestionSaved(questionId);

@@ -44,7 +44,6 @@ class McqWorkspaceCubit extends Cubit<McqWorkspaceState> {
   }
 
   void selectAnswer({required int index, required int optionId}) {
-    if (state is McqWorkspaceSaved) return;
     emit(McqWorkspaceAnswerSelected(selectedIndex: index, optionId: optionId));
   }
 
@@ -93,5 +92,17 @@ class McqWorkspaceCubit extends Cubit<McqWorkspaceState> {
     if (s is McqWorkspaceSaved) return s.optionId;
     if (s is McqWorkspaceError) return s.optionId;
     return null;
+  }
+
+  void resetToInitial(int? previousOptionId, List<McqOptionEntity> options) {
+    if (previousOptionId == null) {
+      emit(McqWorkspaceInitial());
+      return;
+    }
+    final index = options.indexWhere((o) => o.optionId == previousOptionId);
+    emit(McqWorkspaceAnswerSelected(
+      selectedIndex: index == -1 ? 0 : index,
+      optionId: previousOptionId,
+    ));
   }
 }

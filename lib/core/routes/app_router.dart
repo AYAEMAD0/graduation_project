@@ -78,7 +78,10 @@ class AppRouter {
         final savedQuestions = args['savedQuestions'] as Set<int>;
         final onQuestionSavedFn = args['onQuestionSaved'] as void Function(int);
         final questionId = args['questionId'] as int? ?? 0;
-
+        final initialOptionId = args['initialOptionId'] as int?;
+        final onRevertAnswerFn =
+            args['onRevertAnswer'] as void Function(int, int?);
+        final savedAnswers = args['savedAnswers'] as Map<int, int>;
         return McqWorkspace(
           currentQuestion: currentQuestion,
           totalQuestions: args['totalQuestions'] as int,
@@ -95,6 +98,9 @@ class AppRouter {
           isSaved: savedQuestions.contains(questionId),
           onQuestionSaved: (id) => onQuestionSavedFn(id),
           savedQuestions: savedQuestions,
+          initialOptionId: initialOptionId,
+          onRevertAnswer: (q, prev) => onRevertAnswerFn(q, prev),
+          savedAnswers: savedAnswers,
         );
       },
     };

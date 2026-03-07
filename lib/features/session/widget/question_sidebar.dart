@@ -44,6 +44,10 @@ class QuestionSidebar extends StatelessWidget {
   final int sessionId;
   final Set<int> savedQuestions;
   final void Function(int) onQuestionSaved;
+  final bool hasUnsavedAnswer;
+  final void Function() onRevertAnswer;
+  final void Function(int, int?) onRevertAnswerRaw;
+  final Map<int, int> savedAnswers;
 
   const QuestionSidebar({
     required this.currentIndex,
@@ -56,10 +60,37 @@ class QuestionSidebar extends StatelessWidget {
     required this.sessionId,
     required this.savedQuestions,
     required this.onQuestionSaved,
+    required this.hasUnsavedAnswer,
+    required this.onRevertAnswer,
+    required this.onRevertAnswerRaw,
+    required this.savedAnswers,
     super.key,
   });
 
-  void _onTap(BuildContext context, int number) {
+  void _onTap(BuildContext context, int number) async {
+    if (hasUnsavedAnswer) {
+      final confirm = await showDialog<bool>(
+        context: context,
+        builder: (ctx) =>
+            AlertDialog(
+              title: const Text("Leave without saving?"),
+              content: const Text(
+                  "You selected an answer but didn't save it yet."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: const Text("No"),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: const Text("Yes"),
+                ),
+              ],
+            ),
+      );
+      if (confirm != true) return;
+      onRevertAnswer();
+    }
     final question = questions.firstWhere(
           (q) => q.index == number,
       orElse: () => SidebarQuestion(index: number, type: "Coding"),
@@ -67,6 +98,7 @@ class QuestionSidebar extends StatelessWidget {
     final capturedOnAnswerSelected = onAnswerSelected;
     final capturedOnQuestionSaved = onQuestionSaved;
     final capturedSavedQuestions = savedQuestions;
+    final capturedOnRevertAnswerRaw = onRevertAnswerRaw;
     final baseArgs = {
       'currentQuestion': number,
       'totalQuestions': totalQuestions,
@@ -79,6 +111,10 @@ class QuestionSidebar extends StatelessWidget {
       'savedLanguageId': question.savedLanguageId,
       'savedQuestions': capturedSavedQuestions,
       'onQuestionSaved': (int id) => capturedOnQuestionSaved(id),
+      'initialOptionId': savedAnswers[question.questionId],
+      'onRevertAnswer': (int q, int? prev) =>
+          capturedOnRevertAnswerRaw(q, prev),
+      'savedAnswers': savedAnswers,
       'onCodeChanged': (int langId, String code) {
         question.savedCode[langId] = code;
         question.savedLanguageId = langId;
@@ -100,7 +136,7 @@ class QuestionSidebar extends StatelessWidget {
         'questionId': question.questionId,
         'questionText': question.questionText,
         'options': question.options,
-        'initialSelectedAnswer': selectedAnswers[question.questionId],
+        'initialSelectedAnswer': savedAnswers[question.questionId],
       });
     }
     onQuestionSelected(number);

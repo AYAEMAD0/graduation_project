@@ -19,6 +19,10 @@ class SessionLayout extends StatelessWidget {
   final int sessionId;
   final Set<int> savedQuestions;
   final void Function(int) onQuestionSaved;
+  final bool hasUnsavedAnswer;
+  final void Function() onRevertAnswer;
+  final void Function(int, int?) onRevertAnswerRaw;
+  final Map<int, int> savedAnswers;
 
   const SessionLayout({
     super.key,
@@ -34,6 +38,10 @@ class SessionLayout extends StatelessWidget {
     required this.sessionId,
     required this.savedQuestions,
     required this.onQuestionSaved,
+    required this.hasUnsavedAnswer,
+    required this.onRevertAnswer,
+    required this.onRevertAnswerRaw,
+    required this.savedAnswers,
   });
 
   @override
@@ -99,6 +107,10 @@ class SessionLayout extends StatelessWidget {
                       sessionId: sessionId,
                       savedQuestions: savedQuestions,
                       onQuestionSaved: onQuestionSaved,
+                      hasUnsavedAnswer: hasUnsavedAnswer,
+                      onRevertAnswer: onRevertAnswer,
+                      onRevertAnswerRaw: onRevertAnswerRaw,
+                      savedAnswers: savedAnswers,
                     ),
                     Expanded(
                       child: Container(

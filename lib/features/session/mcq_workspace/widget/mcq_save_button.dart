@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mock_mate_ai/core/theme/app_color.dart';
 
 import '../../../../../core/widget/custom_button.dart';
 import '../../../../core/theme/app_style.dart';
@@ -26,11 +25,7 @@ class McqSaveButton extends StatelessWidget {
             : isSaved
             ? () {}
             : onPressed,
-        gradient: isSaved
-            ? const LinearGradient(
-                colors: [Color(0xffF0F0F0), Color(0xffE0E0E0)],
-              )
-            : null,
+
         child: isSaving
             ? Center(
                 child: const SizedBox(
@@ -49,17 +44,13 @@ class McqSaveButton extends StatelessWidget {
                   if (isSaved)
                     Icon(
                       Icons.check_circle,
-                      color: isSaved ? Color(0xffAAAAAA) : Colors.white,
+                      color: Colors.white,
                       size: 20,
                     ),
                   const SizedBox(width: 8),
                   Text(
                     isSaved ? "Saved!" : "Save Option",
-                    style: isSaved
-                        ? AppStyle.font18WhiteBold.copyWith(
-                            color: AppColor.blackColor,
-                          )
-                        : AppStyle.font18WhiteBold,
+                    style: AppStyle.font18WhiteBold,
                   ),
                 ],
               ),
