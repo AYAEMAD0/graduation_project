@@ -57,12 +57,11 @@ class QuestionOverview extends StatelessWidget {
             sessionId: interviewSession.interviewSessionId,
             onQuestionSelected: cubit.selectQuestion,
             selectedAnswers: cubit.answers,
-            onAnswerSelected: (q, a) => cubit.selectAnswer(q, a),
+            onAnswerSelected: cubit.selectAnswer,
             savedQuestions: cubit.savedQuestions,
             onQuestionSaved: cubit.markQuestionSaved,
             hasUnsavedAnswer: false,
-            onRevertAnswer: () {},
-            onRevertAnswerRaw: (q, prev) {},
+            onRevertAnswer: cubit.revertAnswer,
             savedAnswers: cubit.savedAnswers,
           );
 

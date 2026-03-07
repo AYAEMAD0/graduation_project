@@ -20,17 +20,17 @@ class RunCodeRequestModelDto {
 
 class TestCaseResultDto {
   final int testCaseId;
-  final String input;
-  final String expectedOutput;
-  final String actualOutput;
+  final String? input; // ← nullable
+  final String? expectedOutput; // ← nullable
+  final String? actualOutput; // ← nullable
   final String? compileOutput;
   final String status;
 
   const TestCaseResultDto({
     required this.testCaseId,
-    required this.input,
-    required this.expectedOutput,
-    required this.actualOutput,
+    this.input,
+    this.expectedOutput,
+    this.actualOutput,
     this.compileOutput,
     required this.status,
   });
@@ -38,10 +38,10 @@ class TestCaseResultDto {
   factory TestCaseResultDto.fromJson(Map<String, dynamic> json) =>
       TestCaseResultDto(
         testCaseId: json['testCaseId'],
-        input: json['input'],
-        expectedOutput: json['expectedOutput'],
-        actualOutput: json['actualOutput'],
-        compileOutput: json['compileOutput'],
+        input: json['input'] as String?,
+        expectedOutput: json['expectedOutput'] as String?,
+        actualOutput: json['actualOutput'] as String?,
+        compileOutput: json['compileOutput'] as String?,
         status: json['status'],
       );
 

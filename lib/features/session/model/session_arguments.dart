@@ -12,8 +12,7 @@ class SessionArguments {
   final Set<int> savedQuestions;
   final void Function(int) onQuestionSaved;
   final bool hasUnsavedAnswer;
-  final void Function() onRevertAnswer;
-  final void Function(int, int?) onRevertAnswerRaw;
+  final void Function(int questionId, int? previousOptionId) onRevertAnswer;
   final Map<int, int> savedAnswers;
 
   const SessionArguments({
@@ -29,7 +28,6 @@ class SessionArguments {
     required this.onQuestionSaved,
     required this.hasUnsavedAnswer,
     required this.onRevertAnswer,
-    required this.onRevertAnswerRaw,
     required this.savedAnswers,
   });
 
@@ -45,8 +43,7 @@ class SessionArguments {
     Set<int>? savedQuestions,
     void Function(int)? onQuestionSaved,
     bool? hasUnsavedAnswer,
-    void Function()? onRevertAnswer,
-    void Function(int, int?)? onRevertAnswerRaw,
+    void Function(int, int?)? onRevertAnswer,
     Map<int, int>? savedAnswers,
   }) {
     return SessionArguments(
@@ -62,7 +59,6 @@ class SessionArguments {
       onQuestionSaved: onQuestionSaved ?? this.onQuestionSaved,
       hasUnsavedAnswer: hasUnsavedAnswer ?? this.hasUnsavedAnswer,
       onRevertAnswer: onRevertAnswer ?? this.onRevertAnswer,
-      onRevertAnswerRaw: onRevertAnswerRaw ?? this.onRevertAnswerRaw,
       savedAnswers: savedAnswers ?? this.savedAnswers,
     );
   }

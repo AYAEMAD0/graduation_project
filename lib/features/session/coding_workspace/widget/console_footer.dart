@@ -29,6 +29,7 @@ class ConsoleFooter extends StatelessWidget {
           builder: (context, submitState) {
             final isRunning = runState is RunCodeLoading;
             final isSaving = submitState is SubmitCodeLoading;
+            final isSaved = submitState is SubmitCodeSuccess;
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -68,8 +69,8 @@ class ConsoleFooter extends StatelessWidget {
                         onPressed: isRunning ? null : onRunCode,
                         widthBtn: 170,
                         child: isRunning
-                            ? Center(
-                                child: const SizedBox(
+                            ? const Center(
+                                child: SizedBox(
                                   height: 18,
                                   width: 18,
                                   child: CircularProgressIndicator(
@@ -87,17 +88,39 @@ class ConsoleFooter extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       CustomButton(
-                        onPressed: isSaving ? null : onSaveCode,
+                        onPressed: isSaving || isSaved ? null : onSaveCode,
                         widthBtn: 170,
                         child: isSaving
-                            ? Center(
-                                child: const SizedBox(
+                            ? const Center(
+                                child: SizedBox(
                                   height: 18,
                                   width: 18,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     color: Colors.white,
                                   ),
+                                ),
+                              )
+                            : isSaved
+                            ? const Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      "Saved!",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                             : Center(

@@ -5,17 +5,14 @@ import 'package:highlight/languages/cpp.dart';
 import 'package:highlight/languages/cs.dart';
 import 'package:highlight/languages/java.dart';
 import 'package:highlight/languages/python.dart';
-import 'package:mock_mate_ai/core/widget/custom_toast.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../../../domain/entities/session/run_code/run_code_request_entity.dart';
 import '../../../../domain/entities/session/submit_code/submit_code_request_entity.dart';
 import '../viewmodel/code_editor/code_editor_cubit.dart';
-import '../viewmodel/code_editor/code_editor_state.dart';
 import '../viewmodel/run_code/run_code_cubit.dart';
-import '../viewmodel/run_code/run_code_state.dart';
 import '../viewmodel/submit_code/submit_code_cubit.dart';
-import 'build_body_code.dart';
+import 'code_editor_listeners.dart';
 
 class CodeEditor extends StatefulWidget {
   final List<CodeTemplateEntity> templates;
@@ -23,8 +20,10 @@ class CodeEditor extends StatefulWidget {
   final int sessionId;
   final int questionId;
   final Map<int, String> savedCode;
-  final void Function(int, String) onCodeChanged;
   final int? savedLanguageId;
+  final void Function(int langId, String code) onCodeChanged;
+  final void Function(int langId, String code) onCodeSaved;
+  final void Function(int langId) onCodeReverted;
 
   const CodeEditor({
     super.key,
@@ -34,6 +33,8 @@ class CodeEditor extends StatefulWidget {
     required this.questionId,
     required this.savedCode,
     required this.onCodeChanged,
+    required this.onCodeSaved,
+    required this.onCodeReverted,
     this.savedLanguageId,
   });
 
@@ -57,13 +58,19 @@ class _CodeEditorState extends State<CodeEditor> {
   }
 
   void _initController(CodeTemplateEntity template) {
-    final code = widget.savedCode[template.languageId] ?? template.defaultCode;
+    final initialCode =
+        widget.savedCode[template.languageId] ?? template.defaultCode;
     _codeController = CodeController(
-      text: code,
+      text: initialCode,
       language: _langMap[template.languageId] ?? python,
     );
     _codeController.addListener(() {
-      widget.onCodeChanged(template.languageId, _codeController.fullText);
+      final current = _codeController.fullText;
+      if (current == initialCode) {
+        widget.onCodeReverted(template.languageId);
+        return;
+      }
+      widget.onCodeChanged(template.languageId, current);
     });
   }
 
@@ -104,45 +111,13 @@ class _CodeEditorState extends State<CodeEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<RunCodeCubit, RunCodeState>(
-          listener: (context, state) {
-            if (state is RunCodeError) {
-              CustomToast.showToast(message: state.message, context: context);
-            }
-          },
-        ),
-        BlocListener<SubmitCodeCubit, SubmitCodeState>(
-          listener: (context, state) {
-            if (state is SubmitCodeSuccess) {
-              CustomToast.showToast(
-                message: 'Saved! Score: ${state.response.score}%',
-                context: context,
-              );
-            } else if (state is SubmitCodeError) {
-              CustomToast.showToast(message: state.message, context: context);
-            }
-          },
-        ),
-      ],
-      child: BlocBuilder<CodeEditorCubit, CodeEditorState>(
-        builder: (context, editorState) {
-          if (editorState is! CodeEditorReady) return const SizedBox();
-          final template = editorState.selectedTemplate;
-          return BuildBodyCode(
-            template: template,
-            onLanguageChanged: _onLanguageChanged,
-            codeController: _codeController,
-            templates: widget.templates,
-            showConsole: editorState.showConsole,
-            onToggleConsole: () =>
-                context.read<CodeEditorCubit>().toggleConsole(),
-            onRunCode: () => _runCode(template),
-            onSaveCode: () => _saveCode(template),
-          );
-        },
-      ),
+    return CodeEditorListeners(
+      codeController: _codeController,
+      templates: widget.templates,
+      onLanguageChanged: _onLanguageChanged,
+      onRunCode: _runCode,
+      onSaveCode: _saveCode,
+      onCodeSaved: widget.onCodeSaved,
     );
   }
 }

@@ -133,6 +133,8 @@ import '../../features/session/mcq_workspace/viewmodel/mcq_workspace_cubit.dart'
     as _i244;
 import '../../features/session/question_overview/viewmodel/question_overview_cubit.dart'
     as _i715;
+import '../../features/session/upload_cv_jd/viewmodel/upload_cv_cubit.dart'
+    as _i369;
 import '../../features/session/viewmodel/get_session/get_session_cubit.dart'
     as _i122;
 import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
@@ -152,6 +154,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i715.QuestionOverviewCubit>(
       () => _i715.QuestionOverviewCubit(),
     );
+    gh.factory<_i369.UploadCvCubit>(() => _i369.UploadCvCubit());
     gh.singleton<_i361.BaseOptions>(() => dioModule.provideBaseOption());
     gh.singleton<_i528.PrettyDioLogger>(() => dioModule.providePrettyLogger());
     gh.singleton<_i558.FlutterSecureStorage>(

@@ -57,12 +57,16 @@ class AppRouter {
           testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
           templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
           savedCode: args['savedCode'] as Map<int, String>? ?? {},
+          savedLanguageId: args['savedLanguageId'] as int?,
           onCodeChanged:
               args['onCodeChanged'] as void Function(int, String)? ??
               (_, __) {},
+          onCodeSaved:
+              args['onCodeSaved'] as void Function(int, String)? ?? (_, __) {},
+          onCodeReverted:
+              args['onCodeReverted'] as void Function(int)? ?? (_) {},
         );
       },
-
       AppRoutes.mcqWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;

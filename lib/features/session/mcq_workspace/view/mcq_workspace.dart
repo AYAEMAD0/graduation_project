@@ -69,16 +69,10 @@ class McqWorkspace extends StatelessWidget {
             }
           }
 
-          final initialOptionId = args.savedAnswers[questionId];
-
           return SessionLayout(
             time: _formattedTime,
             args: args.copyWith(
               hasUnsavedAnswer: hasUnsavedAnswer,
-              onRevertAnswer: () {
-                cubit.resetToInitial(initialOptionId, options);
-                args.onRevertAnswerRaw(questionId, initialOptionId);
-              },
             ),
             body: Container(
               color: const Color(0xffF9FAFB),
