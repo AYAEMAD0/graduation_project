@@ -8,5 +8,18 @@ class CodeEditorReady extends CodeEditorState {
   final CodeTemplateEntity selectedTemplate;
   final bool showConsole;
 
-  CodeEditorReady({required this.selectedTemplate, this.showConsole = false});
+  CodeEditorReady({
+    required this.selectedTemplate,
+    this.showConsole = false,
+  });
+
+  CodeEditorReady copyWith({
+    CodeTemplateEntity? selectedTemplate,
+    bool? showConsole,
+  }) {
+    return CodeEditorReady(
+      selectedTemplate: selectedTemplate ?? this.selectedTemplate,
+      showConsole: showConsole ?? this.showConsole,
+    );
+  }
 }

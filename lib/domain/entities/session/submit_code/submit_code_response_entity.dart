@@ -1,9 +1,12 @@
+import '../run_code/run_code_response_entity.dart';
+
 class SubmitCodeResponseEntity {
   final int sessionAnswerId;
   final String status;
-  final int score;
+  final double score;
   final int passedTestCases;
   final int totalTestCases;
+  final List<TestCaseResultEntity> testCaseResults;
 
   const SubmitCodeResponseEntity({
     required this.sessionAnswerId,
@@ -11,5 +14,8 @@ class SubmitCodeResponseEntity {
     required this.score,
     required this.passedTestCases,
     required this.totalTestCases,
+    required this.testCaseResults,
   });
+
+  bool get isPassed => status == 'Passed';
 }

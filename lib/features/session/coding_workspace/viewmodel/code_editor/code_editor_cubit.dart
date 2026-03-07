@@ -8,37 +8,16 @@ import 'code_editor_state.dart';
 class CodeEditorCubit extends Cubit<CodeEditorState> {
   CodeEditorCubit() : super(CodeEditorInitial());
 
-  void init(CodeTemplateEntity template) {
-    emit(CodeEditorReady(selectedTemplate: template));
-  }
+  CodeEditorReady get _ready => state as CodeEditorReady;
 
-  void changeTemplate(CodeTemplateEntity template) {
-    final current = state as CodeEditorReady;
-    emit(
-      CodeEditorReady(
-        selectedTemplate: template,
-        showConsole: current.showConsole,
-      ),
-    );
-  }
+  void init(CodeTemplateEntity template) =>
+      emit(CodeEditorReady(selectedTemplate: template));
 
-  void toggleConsole() {
-    final current = state as CodeEditorReady;
-    emit(
-      CodeEditorReady(
-        selectedTemplate: current.selectedTemplate,
-        showConsole: !current.showConsole,
-      ),
-    );
-  }
+  void changeTemplate(CodeTemplateEntity template) =>
+      emit(_ready.copyWith(selectedTemplate: template));
 
-  void showConsolePanel() {
-    final current = state as CodeEditorReady;
-    emit(
-      CodeEditorReady(
-        selectedTemplate: current.selectedTemplate,
-        showConsole: true,
-      ),
-    );
-  }
+  void toggleConsole() =>
+      emit(_ready.copyWith(showConsole: !_ready.showConsole));
+
+  void showConsolePanel() => emit(_ready.copyWith(showConsole: true));
 }

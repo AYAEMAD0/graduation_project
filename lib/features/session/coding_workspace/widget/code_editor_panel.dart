@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
-import 'package:flutter_highlight/themes/monokai-sublime.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:highlight/languages/cpp.dart';
 import 'package:highlight/languages/cs.dart';
 import 'package:highlight/languages/java.dart';
@@ -17,9 +15,7 @@ import '../viewmodel/code_editor/code_editor_state.dart';
 import '../viewmodel/run_code/run_code_cubit.dart';
 import '../viewmodel/run_code/run_code_state.dart';
 import '../viewmodel/submit_code/submit_code_cubit.dart';
-import 'code_toolbar.dart';
-import 'console_footer.dart';
-import 'console_panel.dart';
+import 'build_body_code.dart';
 
 class CodeEditor extends StatefulWidget {
   final List<CodeTemplateEntity> templates;
@@ -47,7 +43,6 @@ class CodeEditor extends StatefulWidget {
 
 class _CodeEditorState extends State<CodeEditor> {
   late CodeController _codeController;
-  final Color backgroundColor = const Color(0xFF0E141E);
   final _langMap = {51: cs, 54: cpp, 62: java, 71: python};
 
   @override
@@ -135,47 +130,16 @@ class _CodeEditorState extends State<CodeEditor> {
         builder: (context, editorState) {
           if (editorState is! CodeEditorReady) return const SizedBox();
           final template = editorState.selectedTemplate;
-
-          return Container(
-            color: backgroundColor,
-            child: Column(
-              children: [
-                CodeToolbar(
-                  templates: widget.templates,
-                  selectedTemplate: template,
-                  onChanged: _onLanguageChanged,
-                ),
-                Expanded(
-                  child: CodeTheme(
-                    data: CodeThemeData(styles: monokaiSublimeTheme),
-                    child: SingleChildScrollView(
-                      child: CodeField(
-                        controller: _codeController,
-                        textStyle: GoogleFonts.firaCode(
-                          fontSize: 14,
-                          height: 1.5,
-                        ),
-                        gutterStyle: GutterStyle(
-                          background: backgroundColor,
-                          textStyle: const TextStyle(color: Color(0xFF455A64)),
-                          showLineNumbers: true,
-                          margin: 12,
-                        ),
-                        background: backgroundColor,
-                      ),
-                    ),
-                  ),
-                ),
-                if (editorState.showConsole) ConsolePanel(),
-                ConsoleFooter(
-                  showConsole: editorState.showConsole,
-                  onToggleConsole: () =>
-                      context.read<CodeEditorCubit>().toggleConsole(),
-                  onRunCode: () => _runCode(template),
-                  onSaveCode: () => _saveCode(template),
-                ),
-              ],
-            ),
+          return BuildBodyCode(
+            template: template,
+            onLanguageChanged: _onLanguageChanged,
+            codeController: _codeController,
+            templates: widget.templates,
+            showConsole: editorState.showConsole,
+            onToggleConsole: () =>
+                context.read<CodeEditorCubit>().toggleConsole(),
+            onRunCode: () => _runCode(template),
+            onSaveCode: () => _saveCode(template),
           );
         },
       ),
