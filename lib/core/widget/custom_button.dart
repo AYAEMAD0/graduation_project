@@ -14,6 +14,10 @@ class CustomButton extends StatelessWidget {
   final Widget? child;
   final LinearGradient? gradient;
   final Color? colorBackGround;
+  final bool isOutline;
+  final Color? outlineColor;
+  final double outlineWidth;
+
   const CustomButton({
     super.key,
     this.text,
@@ -26,22 +30,39 @@ class CustomButton extends StatelessWidget {
     this.child,
     this.gradient,
     this.styleText,
-    this.colorBackGround
+    this.colorBackGround,
+    this.isOutline = false,
+    this.outlineColor,
+    this.outlineWidth = 1.5,
   });
+
   @override
   Widget build(BuildContext context) {
+    final effectiveBorderRadius = borderRadius ?? 20.0;
+    final borderRadiusGeometry = BorderRadius.circular(effectiveBorderRadius);
+
     return InkWell(
       onTap: onPressed,
-      borderRadius: BorderRadius.circular(borderRadius ?? 20),
+      borderRadius: borderRadiusGeometry,
       child: Container(
         height: height ?? 54,
         width: widthBtn ?? 380,
         decoration: BoxDecoration(
-          color: colorBackGround,
-          gradient: colorBackGround != null ? null : (gradient ??
-              AppGradient.primaryGradient),
-          borderRadius: BorderRadius.circular(borderRadius ?? 20),
-          boxShadow: hasShadow
+          color: isOutline ? Colors.transparent : colorBackGround,
+          gradient: isOutline
+              ? null
+              : (colorBackGround != null
+                    ? null
+                    : (gradient ?? AppGradient.primaryGradient)),
+          borderRadius: borderRadiusGeometry,
+          border: isOutline
+              ? Border.all(
+                  color:
+                      outlineColor ?? AppGradient.primaryGradient.colors.first,
+                  width: outlineWidth,
+                )
+              : null,
+          boxShadow: hasShadow && !isOutline
               ? [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.15),
@@ -53,8 +74,20 @@ class CustomButton extends StatelessWidget {
         ),
         child:
             child ??
-                Center(child: Text(
-                    text ?? "", style: styleText ?? AppStyle.font18WhiteBold)),
+            Center(
+              child: Text(
+                text ?? "",
+                style:
+                    styleText ??
+                    (isOutline
+                        ? AppStyle.font18WhiteBold.copyWith(
+                            color:
+                                outlineColor ??
+                                AppGradient.primaryGradient.colors.first,
+                          )
+                        : AppStyle.font18WhiteBold),
+              ),
+            ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class GreetingSection extends StatelessWidget {
           Text(
             "Good Morning, $displayName",
             style: AppStyle.font16GrayRegular.copyWith(
-              fontSize: isMobile ? 25 : 30, //48
+              fontSize: isMobile ? 25 : 30,
             ),
           ),
           const SizedBox(height: 12),
@@ -34,8 +34,7 @@ class GreetingSection extends StatelessWidget {
                 ),
                 TextSpan(
                   text: "interview?",
-                  style: TextStyle(
-                      color: Color(0xff06B6D4)), //Color(0xff06B6D4))
+                  style: TextStyle(color: Color(0xff06B6D4)),
                 ),
               ],
             ),

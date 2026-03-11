@@ -1,34 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:mock_mate_ai/core/theme/app_color.dart';
-import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:mock_mate_ai/features/session/coding_workspace/widget/code_editor_panel.dart';
-import 'package:mock_mate_ai/features/session/coding_workspace/widget/constraints_section.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/config/di.dart';
+
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../model/session_arguments.dart';
 import '../../session_layout.dart';
-import '../../widget/question_sidebar.dart';
-import '../widget/custom_expansion_header.dart';
-import '../widget/example_card.dart';
-import '../widget/sample_case_card.dart';
-import '../widget/status_chip.dart';
+import '../viewmodel/code_editor/code_editor_cubit.dart';
+import '../viewmodel/run_code/run_code_cubit.dart';
+import '../viewmodel/submit_code/submit_code_cubit.dart';
+import '../widget/code_editor_panel.dart';
+import '../widget/question_panel.dart';
 
 class CodingWorkspace extends StatelessWidget {
-  final int currentQuestion;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> questions;
-  final void Function(int) onQuestionSelected;
+  final SessionArguments args;
+  final String questionTitle;
+  final String questionText;
+  final List<TestCaseEntity> testCases;
+  final List<CodeTemplateEntity> templates;
+  final int questionId;
+  final Map<int, String> savedCode;
+  final int? savedLanguageId;
+  final void Function(int langId, String code) onCodeChanged;
+  final void Function(int langId, String code) onCodeSaved;
+  final void Function(int langId) onCodeReverted;
 
   const CodingWorkspace({
     super.key,
-    required this.currentQuestion,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.questions,
-    required this.onQuestionSelected,
+    required this.args,
+    required this.questionTitle,
+    required this.questionText,
+    required this.testCases,
+    required this.templates,
+    required this.questionId,
+    required this.savedCode,
+    required this.onCodeChanged,
+    required this.onCodeSaved,
+    required this.onCodeReverted,
+    this.savedLanguageId,
   });
 
   String get _formattedTime {
-    final minutes = remainingSeconds ~/ 60;
-    final seconds = remainingSeconds % 60;
+    final minutes = args.remainingSeconds ~/ 60;
+    final seconds = args.remainingSeconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
@@ -36,74 +49,44 @@ class CodingWorkspace extends StatelessWidget {
   Widget build(BuildContext context) {
     return SessionLayout(
       time: _formattedTime,
-      currentQuestion: currentQuestion,
-      totalQuestions: totalQuestions,
-      remainingSeconds: remainingSeconds,
-      questions: questions,
-      onQuestionSelected: onQuestionSelected,
-      body: Container(
-        color: const Color(0xffF8FAFC),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Problem 02",
-                        style: AppStyle.font16BlackBold.copyWith(
-                          fontSize: 12,
-                          color: AppColor.purple,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "Prime or Not?",
-                        style: AppStyle.font32BlackBold.copyWith(fontSize: 25),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        spacing: 8,
-                        children: [
-                          StatusChip(
-                            color: AppColor.darkGray,
-                            label: "Coding",
-                            backgroundColor: AppColor.slate200,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: Text(
-                          "Given an integer, if the number is prime, return 1. Otherwise return its smallest divisor greater than 1.",
-                          style: AppStyle.font14GrayMedium.copyWith(
-                            color: AppColor.darkGray,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      ExampleCard(
-                        inputExample: "`n = 24`",
-                        explanation:
-                            "The number 24 is not prime: its divisors are\n [1, 2, 3, 4, 6, 8, 12, 24]. The smallest divisor\n greater than 1 is 2.",
-                      ),
-                      const ConstraintsSection(),
-                      const SizedBox(height: 20),
-                      const CustomExpansionHeader(),
-                      const SizedBox(height: 20),
-                      const SampleCaseCard(),
-                    ],
+      args: args,
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => getIt<CodeEditorCubit>()),
+          BlocProvider(create: (_) => getIt<RunCodeCubit>()),
+          BlocProvider(create: (_) => getIt<SubmitCodeCubit>()),
+        ],
+        child: Container(
+          color: const Color(0xffF8FAFC),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: QuestionPanel(
+                    questionNumber: args.currentQuestion,
+                    questionTitle: questionTitle,
+                    questionText: questionText,
+                    testCases: testCases,
                   ),
                 ),
-              ),
-              const Expanded(flex: 6, child: CodeEditor()),
-            ],
+                Expanded(
+                  flex: 7,
+                  child: CodeEditor(
+                    templates: templates,
+                    testCases: testCases,
+                    sessionId: args.sessionId,
+                    questionId: questionId,
+                    savedCode: savedCode,
+                    savedLanguageId: savedLanguageId,
+                    onCodeChanged: onCodeChanged,
+                    onCodeSaved: onCodeSaved,
+                    onCodeReverted: onCodeReverted,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

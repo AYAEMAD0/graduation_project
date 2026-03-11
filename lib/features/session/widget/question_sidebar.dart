@@ -1,130 +1,194 @@
 import 'package:flutter/material.dart';
-import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
-import 'package:mock_mate_ai/core/theme/app_color.dart';
-import 'package:mock_mate_ai/core/theme/app_style.dart';
+import 'package:mock_mate_ai/features/session/widget/build_sidebar.dart';
+
+import '../../../core/widget/custom_dialog.dart';
+import '../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../model/session_arguments.dart';
 
 class SidebarQuestion {
   final int index;
   final String type;
+  final String questionTitle;
+  final String questionText;
+  final List<McqOptionEntity> options;
+  final List<TestCaseEntity> testCases;
+  final List<CodeTemplateEntity> templates;
+  final int questionId;
+  Map<int, String> savedCode;
+  int? savedLanguageId;
+  Map<int, String> tempCode;
+  int? tempLanguageId;
 
-  const SidebarQuestion({required this.index, required this.type});
+  SidebarQuestion({
+    required this.index,
+    required this.type,
+    this.questionTitle = '',
+    this.questionText = '',
+    this.options = const [],
+    this.testCases = const [],
+    this.templates = const [],
+    this.questionId = 0,
+    Map<int, String>? savedCode,
+    this.savedLanguageId,
+  })
+      : savedCode = savedCode ?? {},
+        tempCode = {};
+
+  bool get hasUnsavedChanges => tempCode.isNotEmpty;
 }
 
 class QuestionSidebar extends StatelessWidget {
-  final int currentIndex;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> questions;
-  final void Function(int index) onQuestionSelected;
+  final SessionArguments args;
 
-  const QuestionSidebar({
-    required this.currentIndex,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.questions,
-    required this.onQuestionSelected,
-    super.key,
-  });
+  const QuestionSidebar({required this.args, super.key});
 
-  void _onTap(BuildContext context, int number) {
-    final question = questions.firstWhere(
-      (q) => q.index == number,
+  Future<bool> _confirmLeave(BuildContext context) async {
+    final confirm = await CustomDialog.showConfirm(
+      context: context,
+      title: "Leave without saving?",
+      message: "Your changes won't be saved if you leave.",
+    );
+    return confirm == true;
+  }
+
+  bool _hasUnsaved(SidebarQuestion current) {
+    if (current.type == "Coding") return current.hasUnsavedChanges;
+    return args.hasUnsavedAnswer;
+  }
+
+  void _clearUnsaved(SidebarQuestion current) {
+    if (current.type == "Coding") {
+      current.tempCode.clear();
+      current.tempLanguageId = null;
+    } else {
+      args.onRevertAnswer(
+        current.questionId,
+        args.savedAnswers[current.questionId],
+      );
+    }
+  }
+
+  SidebarQuestion _currentQuestion() {
+    return args.questions.firstWhere(
+          (q) => q.index == args.currentQuestion,
+      orElse: () => SidebarQuestion(index: args.currentQuestion, type: ''),
+    );
+  }
+
+  void _onAllTap(BuildContext context) async {
+    final current = _currentQuestion();
+
+    if (_hasUnsaved(current)) {
+      final confirmed = await _confirmLeave(context);
+      if (!context.mounted) return;
+      if (!confirmed) return;
+      _clearUnsaved(current);
+    }
+    args.onQuestionSelected(0);
+
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(AppRoutes.questionOverview),
+    );
+  }
+
+  void _onTap(BuildContext context, int number) async {
+    final current = _currentQuestion();
+
+    if (_hasUnsaved(current)) {
+      final confirmed = await _confirmLeave(context);
+      if (!confirmed) return;
+      _clearUnsaved(current);
+    }
+
+    final question = args.questions.firstWhere(
+          (q) => q.index == number,
       orElse: () => SidebarQuestion(index: number, type: "Coding"),
     );
 
-    final args = {
-      'currentQuestion': number,
-      'totalQuestions': totalQuestions,
-      'remainingSeconds': remainingSeconds,
-      'questions': questions,
-    };
+    final sessionArgs = args.copyWith(currentQuestion: number);
 
+    final baseArgs = {
+      'sessionArgs': sessionArgs,
+      'savedCode': question.savedCode,
+      'savedLanguageId': question.savedLanguageId,
+      'onCodeChanged': (int langId, String code) {
+        question.tempCode[langId] = code;
+        question.tempLanguageId = langId;
+      },
+      'onCodeSaved': (int langId, String code) {
+        question.savedCode[langId] = code;
+        question.savedLanguageId = langId;
+        question.tempCode.clear();
+        question.tempLanguageId = null;
+        args.onCodeSaved(question.questionId);
+      },
+      'onCodeReverted': (int langId) {
+        question.tempCode.remove(langId);
+      },
+    };
+    args.onQuestionSelected(number);
+    final fromOverview = args.currentQuestion == 0;
+
+    if (!context.mounted) return;
     if (question.type == "Coding") {
-      Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: args);
+      fromOverview
+          ? Navigator.pushNamed(
+        context,
+        AppRoutes.codeWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionTitle': question.questionTitle,
+          'questionText': question.questionText,
+          'testCases': question.testCases,
+          'templates': question.templates,
+        },
+      )
+          : Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.codeWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionTitle': question.questionTitle,
+          'questionText': question.questionText,
+          'testCases': question.testCases,
+          'templates': question.templates,
+        },
+      );
     } else {
-      //todo Navigator.pushNamed(context, AppRoutes.mcqQuestion, arguments: args);
+      fromOverview
+          ? Navigator.pushNamed(
+        context,
+        AppRoutes.mcqWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionText': question.questionText,
+          'options': question.options,
+        },
+      )
+          : Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.mcqWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionText': question.questionText,
+          'options': question.options,
+        },
+      );
     }
-    onQuestionSelected(number);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 70,
-      height: double.infinity,
-      decoration: const BoxDecoration(color: Color(0xffF3F4F6)),
-      child: Column(
-        children: [
-          Image.asset(AppAsset.logoAppImage, width: 60, height: 60),
-
-          // ── All ────────────────────────────────────────────────
-          GestureDetector(
-            onTap: () {
-              Navigator.popUntil(
-                context,
-                ModalRoute.withName(AppRoutes.questionOverview),
-              );
-              onQuestionSelected(0);
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: double.infinity,
-              height: 50,
-              margin: const EdgeInsets.symmetric(vertical: 3),
-              decoration: BoxDecoration(
-                color: currentIndex == 0
-                    ? const Color(0xffD5CDDD)
-                    : Colors.transparent,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "All",
-                style: AppStyle.font16BlackSemiBold.copyWith(
-                  color: currentIndex == 0
-                      ? AppColor.primaryPurpleColor
-                      : AppColor.grayMediumColor,
-                ),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
-          // ── Question numbers ───────────────────────────────────
-          Expanded(
-            child: ListView.builder(
-              itemCount: totalQuestions,
-              itemBuilder: (context, index) {
-                final number = index + 1;
-                final isActive = number == currentIndex;
-                return GestureDetector(
-                  onTap: () => _onTap(context, number),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    margin: const EdgeInsets.symmetric(vertical: 3),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: isActive
-                          ? const Color(0xffD5CDDD)
-                          : Colors.transparent,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "$number",
-                      style: AppStyle.font16BlackSemiBold.copyWith(
-                        color: isActive
-                            ? AppColor.primaryPurpleColor
-                            : AppColor.grayMediumColor,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+    return BuildSidebar(
+      args: args,
+      onTap: _onTap,
+      onAllTap: _onAllTap,
     );
   }
 }

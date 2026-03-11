@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../../core/routes/app_routes.dart';
-import '../../widget/question_sidebar.dart';
 import 'action_button.dart';
 
 class QuestionItemCard extends StatelessWidget {
@@ -14,40 +11,21 @@ class QuestionItemCard extends StatelessWidget {
   final bool isModified;
   final bool isActive;
   final VoidCallback? onTap;
-  final int totalQuestions;
-  final int remainingSeconds;
-  final List<SidebarQuestion> sidebarQuestions;
+  final VoidCallback onNavigate;
 
   const QuestionItemCard({
+    super.key,
     required this.index,
     required this.title,
     required this.type,
     required this.isModified,
-    required this.totalQuestions,
-    required this.remainingSeconds,
-    required this.sidebarQuestions,
+    required this.onNavigate,
     this.isActive = false,
     this.onTap,
-    super.key,
   });
-
-  void _navigateToQuestion(BuildContext context) {
-    final args = {
-      'currentQuestion': index,
-      'totalQuestions': totalQuestions,
-      'remainingSeconds': remainingSeconds,
-      'questions': sidebarQuestions,
-    };
-    if (type == "Coding") {
-      Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: args);
-    } else {
-      // TODO: Navigator.pushNamed(context, AppRoutes.mcqQuestion, arguments: args);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -66,91 +44,55 @@ class QuestionItemCard extends StatelessWidget {
             width: isActive ? 1.8 : 1.2,
           ),
         ),
-        child: isMobile
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 4,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "$index.",
-                        style: AppStyle.font20BlackSemiBold.copyWith(
-                          color: AppColor.primaryPurpleColor,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(title, style: AppStyle.font20BlackSemiBold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
                   Text(
-                    type,
-                    style: AppStyle.font16GrayMediumMedium.copyWith(
+                    "$index.",
+                    style: AppStyle.font20BlackSemiBold.copyWith(
                       color: AppColor.primaryPurpleColor,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ActionButton(
-                      isModified: isModified,
-                      type: type,
-                      onTap: () => _navigateToQuestion(context),
-                    ),
-                  ),
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                  const SizedBox(width: 12),
                   Expanded(
-                    flex: 4,
-                    child: Row(
-                      children: [
-                        Text(
-                          "$index.",
-                          style: AppStyle.font20BlackSemiBold.copyWith(
-                            color: AppColor.primaryPurpleColor,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: AppStyle.font20BlackSemiBold,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 24),
-                      child: Text(
-                        type,
-                        style: AppStyle.font16GrayMediumMedium.copyWith(
-                          color: AppColor.primaryPurpleColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: ActionButton(
-                        isModified: isModified,
-                        type: type,
-                        onTap: () => _navigateToQuestion(context),
-                      ),
+                    child: Text(
+                      title,
+                      style: AppStyle.font20BlackSemiBold,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
               ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  type,
+                  style: AppStyle.font16GrayMediumMedium.copyWith(
+                    color: AppColor.primaryPurpleColor,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: ActionButton(
+                  isModified: isModified,
+                  type: type,
+                  onTap: onNavigate,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

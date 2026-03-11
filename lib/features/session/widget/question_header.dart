@@ -3,53 +3,92 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class QuestionHeader extends StatelessWidget {
+import '../../../core/widget/custom_dialog.dart';
+import '../model/session_arguments.dart';
+import '../question_overview/viewmodel/question_overview_cubit.dart';
+
+class QuestionHeader extends StatefulWidget {
   final String time;
   final int currentQuestion;
   final int totalQuestions;
+  final SessionArguments args;
 
   const QuestionHeader({
+    super.key,
     required this.time,
     required this.currentQuestion,
     required this.totalQuestions,
-    super.key,
+    required this.args,
   });
+
+  @override
+  State<QuestionHeader> createState() => _QuestionHeaderState();
+}
+
+class _QuestionHeaderState extends State<QuestionHeader> {
+  bool _dialogShown = false;
+
+  void _onTimeUp() {
+    if (_dialogShown) return;
+    _dialogShown = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      CustomDialog.showTimeExpired(
+        context: context,
+        onSubmit: () {
+          // todo end submit
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    return StreamBuilder<int>(
+      stream: widget.args.timerStream,
+      initialData: widget.args.remainingSeconds,
+      builder: (context, snapshot) {
+        final seconds = snapshot.data ?? widget.args.remainingSeconds;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: isMobile
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
-                const SizedBox(height: 16),
-                _timerWidget(),
-                const SizedBox(height: 16),
-                _progressWidget(isMobile),
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
-                Row(
+        if (seconds <= 0) _onTimeUp();
+
+        final timeText = QuestionOverviewCubit.formatTime(seconds);
+        final isLow = seconds <= 60;
+
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _timerWidget(),
-                    const SizedBox(width: 24),
+                    Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
+                    const SizedBox(height: 16),
+                    _timerWidget(timeText, isLow),
+                    const SizedBox(height: 16),
                     _progressWidget(isMobile),
                   ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
+                    Row(
+                      children: [
+                        _timerWidget(timeText, isLow),
+                        const SizedBox(width: 24),
+                        _progressWidget(isMobile),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+        );
+      },
     );
   }
 
-  Widget _timerWidget() {
+  Widget _timerWidget(String timeText, bool isLow) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -59,13 +98,18 @@ class QuestionHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.access_time,
             size: 16,
-            color: AppColor.primaryPurpleColor,
+            color: isLow ? Colors.red : AppColor.primaryPurpleColor,
           ),
           const SizedBox(width: 8),
-          Text(time, style: AppStyle.font16BlackMedium),
+          Text(
+            timeText,
+            style: AppStyle.font16BlackMedium.copyWith(
+              color: isLow ? Colors.red : null,
+            ),
+          ),
         ],
       ),
     );
@@ -80,27 +124,8 @@ class QuestionHeader extends StatelessWidget {
             : CrossAxisAlignment.end,
         children: [
           Text(
-            "Q$currentQuestion OF $totalQuestions",
+            "Q${widget.currentQuestion} OF ${widget.totalQuestions}",
             style: AppStyle.font16GrayMediumSemiBold,
-          ),
-          const SizedBox(height: 8),
-
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: List.generate(
-              totalQuestions,
-              (index) => Container(
-                width: 7,
-                height: 7,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: index < currentQuestion
-                      ? AppColor.primaryPurpleColor
-                      : AppColor.grayLightColor,
-                ),
-              ),
-            ),
           ),
         ],
       ),

@@ -1,11 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:highlight/languages/cpp.dart';
+import 'package:highlight/languages/cs.dart';
+import 'package:highlight/languages/java.dart';
 import 'package:highlight/languages/python.dart';
-import 'package:flutter_highlight/themes/monokai-sublime.dart';
+
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../../../domain/entities/session/run_code/run_code_request_entity.dart';
+import '../../../../domain/entities/session/submit_code/submit_code_request_entity.dart';
+import '../viewmodel/code_editor/code_editor_cubit.dart';
+import '../viewmodel/run_code/run_code_cubit.dart';
+import '../viewmodel/submit_code/submit_code_cubit.dart';
+import 'code_editor_listeners.dart';
 
 class CodeEditor extends StatefulWidget {
-  const CodeEditor({super.key});
+  final List<CodeTemplateEntity> templates;
+  final List<TestCaseEntity> testCases;
+  final int sessionId;
+  final int questionId;
+  final Map<int, String> savedCode;
+  final int? savedLanguageId;
+  final void Function(int langId, String code) onCodeChanged;
+  final void Function(int langId, String code) onCodeSaved;
+  final void Function(int langId) onCodeReverted;
+
+  const CodeEditor({
+    super.key,
+    required this.templates,
+    required this.testCases,
+    required this.sessionId,
+    required this.questionId,
+    required this.savedCode,
+    required this.onCodeChanged,
+    required this.onCodeSaved,
+    required this.onCodeReverted,
+    this.savedLanguageId,
+  });
 
   @override
   State<CodeEditor> createState() => _CodeEditorState();
@@ -13,124 +44,61 @@ class CodeEditor extends StatefulWidget {
 
 class _CodeEditorState extends State<CodeEditor> {
   late CodeController _codeController;
-  final Color backgroundColor = const Color(0xFF0E141E);
+  final _langMap = {51: cs, 54: cpp, 62: java, 71: python};
 
   @override
   void initState() {
     super.initState();
+    final initial = widget.templates.firstWhere(
+      (t) => t.languageId == widget.savedLanguageId,
+      orElse: () => widget.templates.first,
+    );
+    context.read<CodeEditorCubit>().init(initial);
+    _initController(initial);
+  }
+
+  void _initController(CodeTemplateEntity template) {
+    final initialCode =
+        widget.savedCode[template.languageId] ?? template.defaultCode;
     _codeController = CodeController(
-      text:"# write the code here\ndef solve():\n    print('Hello World')",
-      language: python,
+      text: initialCode,
+      language: _langMap[template.languageId] ?? python,
     );
+    _codeController.addListener(() {
+      final current = _codeController.fullText;
+      if (current == initialCode) {
+        widget.onCodeReverted(template.languageId);
+        return;
+      }
+      widget.onCodeChanged(template.languageId, current);
+    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: backgroundColor,
-      child: Column(
-        children: [
-          _buildToolbar(),
-          Expanded(
-            child: CodeTheme(
-              data: CodeThemeData(styles: monokaiSublimeTheme),
-              child: Container(
-                decoration: BoxDecoration(color: backgroundColor),
-                child: SingleChildScrollView(
-                  child: CodeField(
-                    controller: _codeController,
-                    textStyle: GoogleFonts.firaCode(fontSize: 14, height: 1.5),
-                    gutterStyle: GutterStyle(
-                      background: backgroundColor,
-                      textStyle: const TextStyle(color: Color(0xFF455A64)),
-                      showLineNumbers: true,
-                      margin: 12,
-                    ),
-                    background: backgroundColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
+  void _onLanguageChanged(CodeTemplateEntity template) {
+    _codeController.dispose();
+    _initController(template);
+    context.read<CodeEditorCubit>().changeTemplate(template);
+  }
 
-          _buildConsoleFooter(),
-        ],
+  void _runCode(CodeTemplateEntity template) {
+    context.read<CodeEditorCubit>().showConsolePanel();
+    context.read<RunCodeCubit>().runCode(
+      sessionId: widget.sessionId,
+      entity: RunCodeRequestEntity(
+        questionId: widget.questionId,
+        languageId: template.languageId,
+        sourceCode: _codeController.fullText,
       ),
     );
   }
 
-  Widget _buildToolbar() {
-    return Container(
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: const Color(0xFF1C2333),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Icon(Icons.settings_outlined, color: Colors.white54, size: 18),
-          const SizedBox(width: 10),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: 'Python',
-              dropdownColor: const Color(0xFF1C2333),
-              icon: const Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.white54,
-                size: 16,
-              ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-              onChanged: (newLang) {},
-              items: const ['Python'].map((String lang) {
-                return DropdownMenuItem<String>(value: lang, child: Text(lang));
-              }).toList(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildConsoleFooter() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      decoration: const BoxDecoration(
-        color: Color(0xFF0E141E),
-        border: Border(top: BorderSide(color: Colors.white10)),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.keyboard_arrow_up, color: Colors.white54, size: 18),
-          const SizedBox(width: 8),
-          const Text(
-            "Console",
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2ECC71),
-              foregroundColor: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            ),
-            child: const Text(
-              "Run Code",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
+  void _saveCode(CodeTemplateEntity template) {
+    context.read<SubmitCodeCubit>().submitCode(
+      sessionId: widget.sessionId,
+      entity: SubmitCodeRequestEntity(
+        questionId: widget.questionId,
+        languageId: template.languageId,
+        sourceCode: _codeController.fullText,
       ),
     );
   }
@@ -139,5 +107,17 @@ class _CodeEditorState extends State<CodeEditor> {
   void dispose() {
     _codeController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CodeEditorListeners(
+      codeController: _codeController,
+      templates: widget.templates,
+      onLanguageChanged: _onLanguageChanged,
+      onRunCode: _runCode,
+      onSaveCode: _saveCode,
+      onCodeSaved: widget.onCodeSaved,
+    );
   }
 }

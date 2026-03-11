@@ -1,10 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/entities/interview_session/interview_session_entity.dart';
+import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../model/session_arguments.dart';
 import '../../session_layout.dart';
 import '../../widget/question_sidebar.dart';
+import '../viewmodel/question_overview_cubit.dart';
 import '../widget/question_content.dart';
 
 class QuestionOverview extends StatefulWidget {
@@ -17,88 +18,91 @@ class QuestionOverview extends StatefulWidget {
 }
 
 class _QuestionOverviewState extends State<QuestionOverview> {
-  late int _currentQuestion;
-  late int _totalQuestions;
-  late int _remainingSeconds;
-  Timer? _timer;
-  final ScrollController _scrollController = ScrollController();
-  static const double _cardHeight = 90.0;
+  late final List<SidebarQuestion> _sidebarQuestions = _buildSidebarQuestions();
 
-  List<SidebarQuestion> get _sidebarQuestions => [
+  List<SidebarQuestion> _buildSidebarQuestions() => [
     ...widget.interviewSession.codingQuestions.asMap().entries.map(
-      (e) => SidebarQuestion(index: e.key + 1, type: "Coding"),
+      (e) => SidebarQuestion(
+        index: e.key + 1,
+        type: "Coding",
+        questionId: e.value.questionId,
+        questionText: e.value.questionText,
+        questionTitle: e.value.quesTitle,
+        testCases: e.value.testCases,
+        templates: e.value.templates,
+      ),
     ),
     ...widget.interviewSession.mcqQuestions.asMap().entries.map(
       (e) => SidebarQuestion(
         index: e.key + widget.interviewSession.codingQuestions.length + 1,
         type: "Multiple Choice",
+        questionId: e.value.questionId,
+        questionText: e.value.questionText,
+        options: e.value.options,
       ),
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _currentQuestion = 0;
-    _totalQuestions =
-        widget.interviewSession.codingQuestions.length +
-        widget.interviewSession.mcqQuestions.length;
-    _remainingSeconds = _totalQuestions * 5 * 60;
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (_remainingSeconds <= 0) {
-        _timer?.cancel();
-      } else {
-        setState(() => _remainingSeconds--);
-      }
-    });
-  }
-
-  String get _formattedTime {
-    final minutes = _remainingSeconds ~/ 60;
-    final seconds = _remainingSeconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
-  void _onQuestionSelected(int index) {
-    setState(() => _currentQuestion = index);
-    if (index == 0) return;
-    final offset = (index - 1) * _cardHeight;
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        offset.clamp(0.0, _scrollController.position.maxScrollExtent),
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    _scrollController.dispose();
-    super.dispose();
+  bool _computeHasUnsavedAnswer(
+    QuestionOverviewState state,
+    Map<int, int> savedAnswers,
+    int currentQuestion,
+  ) {
+    final question = _sidebarQuestions.firstWhere(
+      (q) => q.index == currentQuestion,
+      orElse: () => SidebarQuestion(index: 0, type: ''),
+    );
+    if (question.type == "Coding") return false;
+    final qId = question.questionId;
+    if (!state.selectedAnswers.containsKey(qId)) return false;
+    return state.selectedAnswers[qId] != savedAnswers[qId];
   }
 
   @override
   Widget build(BuildContext context) {
-    return SessionLayout(
-      time: _formattedTime,
-      currentQuestion: _currentQuestion,
-      totalQuestions: _totalQuestions,
-      remainingSeconds: _remainingSeconds,
-      questions: _sidebarQuestions,
-      onQuestionSelected: _onQuestionSelected,
-      body: QuestionContent(
-        interviewSession: widget.interviewSession,
-        currentQuestion: _currentQuestion,
-        remainingSeconds: _remainingSeconds,
-        onQuestionSelected: _onQuestionSelected,
-        scrollController: _scrollController,
-        sidebarQuestions: _sidebarQuestions,
+    final totalQuestions =
+        widget.interviewSession.codingQuestions.length +
+        widget.interviewSession.mcqQuestions.length;
+
+    return BlocProvider(
+      create: (context) => QuestionOverviewCubit()..init(totalQuestions),
+      child: BlocBuilder<QuestionOverviewCubit, QuestionOverviewState>(
+        builder: (context, state) {
+          final cubit = context.read<QuestionOverviewCubit>();
+
+          final sessionArgs = SessionArguments(
+            currentQuestion: state.currentQuestion,
+            totalQuestions: totalQuestions,
+            remainingSeconds: state.remainingSeconds,
+            questions: _sidebarQuestions,
+            sessionId: widget.interviewSession.interviewSessionId,
+            onQuestionSelected: cubit.selectQuestion,
+            selectedAnswers: cubit.answers,
+            onAnswerSelected: cubit.selectAnswer,
+            savedQuestions: cubit.savedQuestions,
+            onQuestionSaved: cubit.markQuestionSaved,
+            hasUnsavedAnswer: _computeHasUnsavedAnswer(
+              state,
+              cubit.savedAnswers,
+              state.currentQuestion,
+            ),
+            onRevertAnswer: cubit.revertAnswer,
+            savedAnswers: cubit.savedAnswers,
+            savedCodeQuestions: cubit.savedCodeQuestions,
+            onCodeSaved: cubit.markCodeSaved,
+            timerStream: cubit.timerStream,
+          );
+
+          return SessionLayout(
+            time: cubit.formattedTime,
+            args: sessionArgs,
+            body: QuestionContent(
+              interviewSession: widget.interviewSession,
+              sessionArgs: sessionArgs,
+              scrollController: cubit.scrollController,
+            ),
+          );
+        },
       ),
     );
   }

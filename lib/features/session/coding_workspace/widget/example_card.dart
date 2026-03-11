@@ -4,20 +4,20 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 
 class ExampleCard extends StatelessWidget {
   final String inputExample;
-  final String explanation;
+  final String outputExample;
 
   const ExampleCard({
     super.key,
     required this.inputExample,
-    required this.explanation,
+    required this.outputExample,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 20, bottom: 20, right: 20),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+      margin: EdgeInsets.only(top: 18, bottom: 18, right: 15),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(22),
@@ -58,7 +58,7 @@ class ExampleCard extends StatelessWidget {
           const SizedBox(height: 12),
 
           Text(
-            explanation,
+            outputExample,
             style: const TextStyle(
               fontSize: 14,
               height: 1.6,
