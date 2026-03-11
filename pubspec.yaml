@@ -51,7 +51,10 @@ dependencies:
   dio: ^5.9.0
   flutter_secure_storage: ^10.0.0
   dotted_border: ^3.1.0
-
+  flutter_code_editor: ^0.3.5
+  highlight: ^0.7.0
+  flutter_highlight: ^0.7.0
+  visibility_detector: ^0.4.0+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

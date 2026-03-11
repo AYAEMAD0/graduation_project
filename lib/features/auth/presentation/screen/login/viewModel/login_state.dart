@@ -1,4 +1,4 @@
-import 'package:mock_mate_ai/domain/entities/login/login_entity.dart';
+import 'package:mock_mate_ai/domain/entities/auth/login/login_entity.dart';
 
 sealed class LoginState {}
 
