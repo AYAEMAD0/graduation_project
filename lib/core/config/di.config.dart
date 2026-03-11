@@ -18,57 +18,101 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import '../../api/api_services.dart' as _i394;
 import '../../api/data_source/local/onboarding/onboarding_local_data_source_impl.dart'
     as _i382;
-import '../../api/data_source/remote/login/login_remote_data_source_impl.dart'
-    as _i226;
-import '../../api/data_source/remote/logout/logout_remote_data_source_impl.dart'
-    as _i12;
+import '../../api/data_source/remote/auth/login/login_remote_data_source_impl.dart'
+    as _i1021;
+import '../../api/data_source/remote/auth/logout/logout_remote_data_source_impl.dart'
+    as _i487;
+import '../../api/data_source/remote/auth/refresh/refresh_remote_data_source_impl.dart'
+    as _i259;
+import '../../api/data_source/remote/auth/signup/signup_remote_data_source_impl.dart'
+    as _i368;
 import '../../api/data_source/remote/profile/get_profile_remote_data_source_impl.dart'
     as _i130;
 import '../../api/data_source/remote/profile/update_profile_remote_data_source_impl.dart'
     as _i299;
-import '../../api/data_source/remote/refresh/refresh_remote_data_source_impl.dart'
-    as _i775;
-import '../../api/data_source/remote/signup/signup_remote_data_source_impl.dart'
-    as _i85;
+import '../../api/data_source/remote/session/answer_mcq/answer_mcq_remote_data_source_impl.dart'
+    as _i974;
+import '../../api/data_source/remote/session/get_session/get_session_remote_data_source_impl.dart'
+    as _i550;
+import '../../api/data_source/remote/session/interview_session/interview_session_remote_data_source_impl.dart'
+    as _i332;
+import '../../api/data_source/remote/session/run_code/run_code_remote_data_source_impl.dart'
+    as _i328;
+import '../../api/data_source/remote/session/submit_code/submit_code_remote_data_source_impl.dart'
+    as _i243;
 import '../../api/dio/dio_interceptor.dart' as _i600;
 import '../../api/dio/dio_module.dart' as _i67;
 import '../../data/data_source/local/onboarding/onboarding_local_data_source.dart'
     as _i697;
-import '../../data/data_source/remote/login/login_remote_data_source.dart'
-    as _i581;
-import '../../data/data_source/remote/logout/logout_remote_data_source.dart'
-    as _i887;
+import '../../data/data_source/remote/auth/login/login_remote_data_source.dart'
+    as _i49;
+import '../../data/data_source/remote/auth/logout/logout_remote_data_source.dart'
+    as _i225;
+import '../../data/data_source/remote/auth/refresh/refresh_remote_data_source.dart'
+    as _i1004;
+import '../../data/data_source/remote/auth/signup/signup_remote_data_source.dart'
+    as _i224;
 import '../../data/data_source/remote/profile/get_profile_remote_data_source.dart'
     as _i1011;
 import '../../data/data_source/remote/profile/update_profile_remote_data_source.dart'
     as _i26;
-import '../../data/data_source/remote/refresh/refresh_remote_data_source.dart'
-    as _i394;
-import '../../data/data_source/remote/signup/signup_remote_data_source.dart'
-    as _i912;
-import '../../data/repo_impl/auth/token_storage_impl.dart' as _i241;
-import '../../data/repo_impl/login/login_repo_impl.dart' as _i274;
-import '../../data/repo_impl/logout/logout_repo_impl.dart' as _i238;
+import '../../data/data_source/remote/session/answer_mcq/answer_mcq_remote_data_source.dart'
+    as _i386;
+import '../../data/data_source/remote/session/get_session/get_session_remote_data_source.dart'
+    as _i722;
+import '../../data/data_source/remote/session/interview_session/interview_session_remote_data_source.dart'
+    as _i291;
+import '../../data/data_source/remote/session/run_code/run_code_remote_data_source.dart'
+    as _i441;
+import '../../data/data_source/remote/session/submit_code/submit_code_remote_data_source.dart'
+    as _i343;
+import '../../data/repo_impl/auth/login/login_repo_impl.dart' as _i612;
+import '../../data/repo_impl/auth/logout/logout_repo_impl.dart' as _i377;
+import '../../data/repo_impl/auth/refresh/refresh_repo_impl.dart' as _i462;
+import '../../data/repo_impl/auth/signup/signup_repo_impl.dart' as _i820;
+import '../../data/repo_impl/auth/token/token_storage_impl.dart' as _i144;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
 import '../../data/repo_impl/profile/get_profile_repo_impl.dart' as _i904;
 import '../../data/repo_impl/profile/update_profile_repo_impl.dart' as _i577;
-import '../../data/repo_impl/refresh/refresh_repo_impl.dart' as _i597;
-import '../../data/repo_impl/signup/signup_repo_impl.dart' as _i1018;
-import '../../domain/repo/auth/token_storage.dart' as _i232;
-import '../../domain/repo/login/login_repo.dart' as _i253;
-import '../../domain/repo/logout/logout_repo.dart' as _i425;
+import '../../data/repo_impl/session/answer_mcq/answer_mcq_repo_impl.dart'
+    as _i933;
+import '../../data/repo_impl/session/get_session/get_session_repo_impl.dart'
+    as _i788;
+import '../../data/repo_impl/session/interview_session/interview_session_repo_impl.dart'
+    as _i816;
+import '../../data/repo_impl/session/run_code/run_code_repo_impl.dart' as _i372;
+import '../../data/repo_impl/session/submit_code/submit_code_repo_impl.dart'
+    as _i654;
+import '../../domain/repo/auth/login/login_repo.dart' as _i308;
+import '../../domain/repo/auth/logout/logout_repo.dart' as _i81;
+import '../../domain/repo/auth/refresh/refresh_repo.dart' as _i737;
+import '../../domain/repo/auth/signup/signup_repo.dart' as _i788;
+import '../../domain/repo/auth/token/token_storage.dart' as _i589;
 import '../../domain/repo/onboarding/onboarding_repo.dart' as _i154;
 import '../../domain/repo/profile/get_profile_repo.dart' as _i494;
 import '../../domain/repo/profile/update_profile_repo.dart' as _i884;
-import '../../domain/repo/refresh/refresh_repo.dart' as _i996;
-import '../../domain/repo/signup/signup_repo.dart' as _i671;
-import '../../domain/usecase/login/login_usecase.dart' as _i623;
-import '../../domain/usecase/logout/logout_usecase.dart' as _i238;
+import '../../domain/repo/session/answer_mcq/answer_mcq_repo.dart' as _i969;
+import '../../domain/repo/session/get_session/get_session_repo.dart' as _i839;
+import '../../domain/repo/session/interview_session/interview_session_repo.dart'
+    as _i750;
+import '../../domain/repo/session/run_code/run_code_repo.dart' as _i410;
+import '../../domain/repo/session/submit_code/submit_code_repo.dart' as _i344;
+import '../../domain/usecase/auth/login/login_usecase.dart' as _i863;
+import '../../domain/usecase/auth/logout/logout_usecase.dart' as _i976;
+import '../../domain/usecase/auth/refresh/refresh_usecase.dart' as _i387;
+import '../../domain/usecase/auth/signup/signup_usecase.dart' as _i375;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
 import '../../domain/usecase/profile/get_profile_usecase.dart' as _i152;
 import '../../domain/usecase/profile/update_profile_usecase.dart' as _i1049;
-import '../../domain/usecase/refresh/refresh_usecase.dart' as _i811;
-import '../../domain/usecase/signup/signup_usecase.dart' as _i394;
+import '../../domain/usecase/session/answer_mcq/answer_mcq_usecase.dart'
+    as _i917;
+import '../../domain/usecase/session/get_session/get_session_usecase.dart'
+    as _i1040;
+import '../../domain/usecase/session/interview_session/interview_session_usecase.dart'
+    as _i196;
+import '../../domain/usecase/session/run_code/run_code_usecase.dart' as _i372;
+import '../../domain/usecase/session/submit_code/submit_code_usecase.dart'
+    as _i473;
 import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart'
     as _i407;
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
@@ -79,6 +123,22 @@ import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart'
     as _i315;
 import '../../features/onboarding_screen/viewmodel/onboarding_cubit.dart'
     as _i1035;
+import '../../features/session/coding_workspace/viewmodel/code_editor/code_editor_cubit.dart'
+    as _i941;
+import '../../features/session/coding_workspace/viewmodel/run_code/run_code_cubit.dart'
+    as _i1051;
+import '../../features/session/coding_workspace/viewmodel/submit_code/submit_code_cubit.dart'
+    as _i316;
+import '../../features/session/mcq_workspace/viewmodel/mcq_workspace_cubit.dart'
+    as _i244;
+import '../../features/session/question_overview/viewmodel/question_overview_cubit.dart'
+    as _i715;
+import '../../features/session/upload_cv_jd/viewmodel/upload_cv_cubit.dart'
+    as _i369;
+import '../../features/session/viewmodel/get_session/get_session_cubit.dart'
+    as _i122;
+import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
+    as _i220;
 import 'storage_module.dart' as _i371;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -90,6 +150,11 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     final storageModule = _$StorageModule();
+    gh.factory<_i941.CodeEditorCubit>(() => _i941.CodeEditorCubit());
+    gh.factory<_i715.QuestionOverviewCubit>(
+      () => _i715.QuestionOverviewCubit(),
+    );
+    gh.factory<_i369.UploadCvCubit>(() => _i369.UploadCvCubit());
     gh.singleton<_i361.BaseOptions>(() => dioModule.provideBaseOption());
     gh.singleton<_i528.PrettyDioLogger>(() => dioModule.providePrettyLogger());
     gh.singleton<_i558.FlutterSecureStorage>(
@@ -103,19 +168,19 @@ extension GetItInjectableX on _i174.GetIt {
         localDataSource: gh<_i697.OnboardingLocalDataSource>(),
       ),
     );
+    gh.lazySingleton<_i589.TokenStorage>(
+      () => _i144.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()),
+    );
     gh.factory<_i645.OnboardingUseCase>(
       () => _i645.OnboardingUseCase(onboardingRepo: gh<_i154.OnboardingRepo>()),
-    );
-    gh.lazySingleton<_i232.TokenStorage>(
-      () => _i241.TokenStorageImpl(gh<_i558.FlutterSecureStorage>()),
-    );
-    gh.lazySingleton<_i600.DioInterceptor>(
-      () => _i600.DioInterceptor(gh<_i232.TokenStorage>()),
     );
     gh.factory<_i1035.OnboardingCubit>(
       () => _i1035.OnboardingCubit(
         onboardingUseCase: gh<_i645.OnboardingUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i600.DioInterceptor>(
+      () => _i600.DioInterceptor(gh<_i589.TokenStorage>()),
     );
     gh.singleton<_i361.Dio>(
       () => dioModule.provideDio(
@@ -124,76 +189,136 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i528.PrettyDioLogger>(),
       ),
     );
+    gh.lazySingleton<_i1004.RefreshRemoteDataSource>(
+      () => _i259.RefreshRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
     gh.singleton<_i394.ApiServices>(
       () => dioModule.provideApiServices(gh<_i361.Dio>()),
     );
-    gh.lazySingleton<_i394.RefreshRemoteDataSource>(
-      () => _i775.RefreshRemoteDataSourceImpl(gh<_i361.Dio>()),
-    );
-    gh.factory<_i887.LogoutRemoteDataSource>(
-      () => _i12.LogoutRemoteDataSourceImpl(gh<_i394.ApiServices>()),
-    );
-    gh.factory<_i996.RefreshRepo>(
-      () => _i597.RefreshRepoImpl(gh<_i394.RefreshRemoteDataSource>()),
-    );
-    gh.factory<_i811.RefreshUsecase>(
-      () => _i811.RefreshUsecase(gh<_i996.RefreshRepo>()),
+    gh.factory<_i225.LogoutRemoteDataSource>(
+      () => _i487.LogoutRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
     gh.factory<_i26.UpdateProfileRemoteDataSource>(
       () => _i299.UpdateProfileRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i441.RunCodeRemoteDataSource>(
+      () => _i328.RunCodeRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i386.AnswerMcqRemoteDataSource>(
+      () => _i974.AnswerMcqRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i722.GetSessionRemoteDataSource>(
+      () => _i550.GetSessionRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
     gh.factory<_i884.UpdateProfileRepo>(
       () =>
           _i577.UpdateProfileRepoImpl(gh<_i26.UpdateProfileRemoteDataSource>()),
     );
+    gh.factory<_i224.SignupRemoteDataSource>(
+      () => _i368.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i737.RefreshRepo>(
+      () => _i462.RefreshRepoImpl(gh<_i1004.RefreshRemoteDataSource>()),
+    );
     gh.factory<_i1049.UpdateProfileUseCase>(
       () => _i1049.UpdateProfileUseCase(gh<_i884.UpdateProfileRepo>()),
     );
-    gh.factory<_i581.LoginRemoteDataSource>(
-      () => _i226.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    gh.factory<_i343.SubmitCodeRemoteDataSource>(
+      () => _i243.SubmitCodeRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i291.InterviewSessionRemoteDataSource>(
+      () => _i332.InterviewSessionRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i344.SubmitCodeRepo>(
+      () => _i654.SubmitCodeRepoImpl(gh<_i343.SubmitCodeRemoteDataSource>()),
     );
     gh.factory<_i1011.GetProfileRemoteDataSource>(
       () => _i130.GetProfileRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
-    gh.factory<_i912.SignupRemoteDataSource>(
-      () => _i85.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    gh.factory<_i49.LoginRemoteDataSource>(
+      () => _i1021.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
-    gh.factory<_i425.LogoutRepo>(
-      () => _i238.LogoutRepoImpl(
-        gh<_i887.LogoutRemoteDataSource>(),
-        gh<_i232.TokenStorage>(),
+    gh.factory<_i969.AnswerMcqRepo>(
+      () => _i933.AnswerMcqRepoImpl(gh<_i386.AnswerMcqRemoteDataSource>()),
+    );
+    gh.factory<_i81.LogoutRepo>(
+      () => _i377.LogoutRepoImpl(
+        gh<_i225.LogoutRemoteDataSource>(),
+        gh<_i589.TokenStorage>(),
       ),
+    );
+    gh.factory<_i839.GetSessionRepo>(
+      () => _i788.GetSessionRepoImpl(gh<_i722.GetSessionRemoteDataSource>()),
+    );
+    gh.factory<_i410.RunCodeRepo>(
+      () => _i372.RunCodeRepoImpl(gh<_i441.RunCodeRemoteDataSource>()),
     );
     gh.factory<_i494.GetProfileRepo>(
       () => _i904.GetProfileRepoImpl(gh<_i1011.GetProfileRemoteDataSource>()),
     );
-    gh.factory<_i253.LoginRepo>(
-      () => _i274.LoginRepoImpl(gh<_i581.LoginRemoteDataSource>()),
+    gh.factory<_i1040.GetSessionUseCase>(
+      () => _i1040.GetSessionUseCase(gh<_i839.GetSessionRepo>()),
     );
-    gh.factory<_i238.LogoutUseCase>(
-      () => _i238.LogoutUseCase(gh<_i425.LogoutRepo>()),
-    );
-    gh.factory<_i671.SignupRepo>(
-      () => _i1018.SignupRepoImpl(
-        signupRemoteDataSource: gh<_i912.SignupRemoteDataSource>(),
+    gh.factory<_i788.SignupRepo>(
+      () => _i820.SignupRepoImpl(
+        signupRemoteDataSource: gh<_i224.SignupRemoteDataSource>(),
       ),
+    );
+    gh.factory<_i976.LogoutUseCase>(
+      () => _i976.LogoutUseCase(gh<_i81.LogoutRepo>()),
+    );
+    gh.factory<_i387.RefreshUsecase>(
+      () => _i387.RefreshUsecase(gh<_i737.RefreshRepo>()),
+    );
+    gh.factory<_i473.SubmitCodeUseCase>(
+      () => _i473.SubmitCodeUseCase(gh<_i344.SubmitCodeRepo>()),
+    );
+    gh.factory<_i540.LogoutCubit>(
+      () => _i540.LogoutCubit(gh<_i976.LogoutUseCase>()),
+    );
+    gh.factory<_i372.RunCodeUseCase>(
+      () => _i372.RunCodeUseCase(gh<_i410.RunCodeRepo>()),
+    );
+    gh.factory<_i917.AnswerMcqUseCase>(
+      () => _i917.AnswerMcqUseCase(gh<_i969.AnswerMcqRepo>()),
+    );
+    gh.factory<_i1051.RunCodeCubit>(
+      () => _i1051.RunCodeCubit(gh<_i372.RunCodeUseCase>()),
+    );
+    gh.factory<_i750.InterviewSessionRepo>(
+      () => _i816.InterviewSessionRepoImpl(
+        gh<_i291.InterviewSessionRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i308.LoginRepo>(
+      () => _i612.LoginRepoImpl(gh<_i49.LoginRemoteDataSource>()),
+    );
+    gh.factory<_i244.McqWorkspaceCubit>(
+      () => _i244.McqWorkspaceCubit(gh<_i917.AnswerMcqUseCase>()),
+    );
+    gh.factory<_i863.LoginUsecase>(
+      () => _i863.LoginUsecase(gh<_i308.LoginRepo>()),
+    );
+    gh.factory<_i375.SignupUsecase>(
+      () => _i375.SignupUsecase(signupRepo: gh<_i788.SignupRepo>()),
+    );
+    gh.factory<_i122.GetSessionCubit>(
+      () => _i122.GetSessionCubit(gh<_i1040.GetSessionUseCase>()),
     );
     gh.factory<_i152.GetProfileUseCase>(
       () => _i152.GetProfileUseCase(gh<_i494.GetProfileRepo>()),
     );
-    gh.factory<_i394.SignupUsecase>(
-      () => _i394.SignupUsecase(signupRepo: gh<_i671.SignupRepo>()),
+    gh.factory<_i316.SubmitCodeCubit>(
+      () => _i316.SubmitCodeCubit(gh<_i473.SubmitCodeUseCase>()),
     );
-    gh.factory<_i623.LoginUsecase>(
-      () => _i623.LoginUsecase(gh<_i253.LoginRepo>()),
-    );
-    gh.factory<_i540.LogoutCubit>(
-      () => _i540.LogoutCubit(gh<_i238.LogoutUseCase>()),
+    gh.factory<_i407.LoginCubit>(
+      () =>
+          _i407.LoginCubit(gh<_i863.LoginUsecase>(), gh<_i589.TokenStorage>()),
     );
     gh.factory<_i461.SignupCubit>(
       () => _i461.SignupCubit(
-        gh<_i394.SignupUsecase>(),
-        gh<_i232.TokenStorage>(),
+        gh<_i375.SignupUsecase>(),
+        gh<_i589.TokenStorage>(),
       ),
     );
     gh.factory<_i315.ProfileCubit>(
@@ -202,9 +327,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1049.UpdateProfileUseCase>(),
       ),
     );
-    gh.factory<_i407.LoginCubit>(
-      () =>
-          _i407.LoginCubit(gh<_i623.LoginUsecase>(), gh<_i232.TokenStorage>()),
+    gh.factory<_i196.InterviewSessionUseCase>(
+      () => _i196.InterviewSessionUseCase(gh<_i750.InterviewSessionRepo>()),
+    );
+    gh.factory<_i220.InterviewSessionCubit>(
+      () => _i220.InterviewSessionCubit(gh<_i196.InterviewSessionUseCase>()),
     );
     return this;
   }

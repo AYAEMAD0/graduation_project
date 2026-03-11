@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mock_mate_ai/domain/usecase/logout/logout_usecase.dart';
+import 'package:mock_mate_ai/domain/usecase/auth/logout/logout_usecase.dart';
+
 import 'logout_state.dart';
 
 @injectable

@@ -21,4 +21,13 @@ class AppGradient {
     ],
   );
 
+  static const LinearGradient secGradient = LinearGradient(
+    colors: [
+      AppColor.gradientBlue,
+      AppColor.gradientPurple,
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
 }

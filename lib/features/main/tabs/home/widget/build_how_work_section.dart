@@ -4,6 +4,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../core/constants/app_asset.dart';
 import '../../../../../core/theme/app_style.dart';
+import '../../../../../core/widget/scroll_animate.dart';
 import 'feature_step_card.dart';
 
 class BuildHowWorkSection extends StatelessWidget {
@@ -33,40 +34,56 @@ class BuildHowWorkSection extends StatelessWidget {
         SizedBox(height: isMobile ? 40 : 60),
         Column(
           children: [
-            FeatureStepCard(
-              stepNumber: "1",
-              title: " Upload CV",
-              description:
-                  "Our AI scans your resume to tailor questions specifically to your experience.",
-              icon: AppAsset.upload,
-              iconBackgroundColor: const Color(0xffDBEAFE),
+            ScrollAnimate(
+              direction: SlideDirection.left,
+              delay: const Duration(milliseconds: 100),
+              child: FeatureStepCard(
+                stepNumber: "1",
+                title: " Upload CV",
+                description:
+                    "Our AI scans your resume to tailor questions specifically to your experience.",
+                icon: AppAsset.upload,
+                iconBackgroundColor: const Color(0xffDBEAFE),
+              ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
-            FeatureStepCard(
-              stepNumber: "2",
-              title: " Analyze Gap",
-              description:
-                  "Identify missing keywords and skills compared to the job description.",
-              icon: AppAsset.analyze,
-              iconBackgroundColor: const Color(0xffF3E8FF),
+            ScrollAnimate(
+              direction: SlideDirection.right, // ✅ من اليمين
+              delay: const Duration(milliseconds: 100),
+              child: FeatureStepCard(
+                stepNumber: "2",
+                title: " Analyze Gap",
+                description:
+                    "Identify missing keywords and skills compared to the job description.",
+                icon: AppAsset.analyze,
+                iconBackgroundColor: const Color(0xffF3E8FF),
+              ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
-            FeatureStepCard(
-              stepNumber: "3",
-              title: "Live AI Interview",
-              description:
-                  "Interactive voice session with our AI avatar simulating a real HR manager.",
-              icon: AppAsset.live,
-              iconBackgroundColor: const Color(0xffFCE7F3),
+            ScrollAnimate(
+              direction: SlideDirection.left,
+              delay: const Duration(milliseconds: 100),
+              child: FeatureStepCard(
+                stepNumber: "3",
+                title: "Live AI Interview",
+                description:
+                    "Interactive voice session with our AI avatar simulating a real HR manager.",
+                icon: AppAsset.live,
+                iconBackgroundColor: const Color(0xffFCE7F3),
+              ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
-            FeatureStepCard(
-              stepNumber: "4",
-              title: "Instant Feedback",
-              description:
-                  "Get a detailed score, transcripts, and actionable advice to improve.",
-              icon: AppAsset.feedBack,
-              iconBackgroundColor: const Color(0xffDCFCE7),
+            ScrollAnimate(
+              direction: SlideDirection.right,
+              delay: const Duration(milliseconds: 100),
+              child: FeatureStepCard(
+                stepNumber: "4",
+                title: "Instant Feedback",
+                description:
+                    "Get a detailed score, transcripts, and actionable advice to improve.",
+                icon: AppAsset.feedBack,
+                iconBackgroundColor: const Color(0xffDCFCE7),
+              ),
             ),
           ],
         ),
