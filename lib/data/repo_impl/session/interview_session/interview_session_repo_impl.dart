@@ -24,8 +24,6 @@ class InterviewSessionRepoImpl implements InterviewSessionRepo {
 
     return InterviewSessionEntity(
       interviewSessionId: dto.interviewSessionId ?? 0,
-
-      // ── Coding questions ───────────────────────────────────────
       codingQuestions: (dto.codingQuestions ?? []).map((q) {
         return CodingQuestionEntity(
           questionId: q.questionId ?? 0,
@@ -42,7 +40,7 @@ class InterviewSessionRepoImpl implements InterviewSessionRepo {
             return CodeTemplateEntity(
               languageId: t.languageId ?? 0,
               languageName: t.languageName ?? '',
-              defaultCode: t.defualtCode ?? '', // typo kept from API
+              defaultCode: t.defualtCode ?? '',
             );
           }).toList(),
         );

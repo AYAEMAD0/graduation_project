@@ -37,6 +37,7 @@ class JobDescriptionField extends StatelessWidget {
             fontSize: isMobile ? 14 : 22,
           ),
           maxLines: isMobile ? 3 : 5,
+          cursorColor: AppColor.purple,
           borderColor: const Color(0xffCBD5E1),
           borderFocuseColor: AppColor.purple,
           keyboard: TextInputType.multiline,

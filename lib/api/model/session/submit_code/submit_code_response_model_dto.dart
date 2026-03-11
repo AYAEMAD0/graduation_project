@@ -1,5 +1,5 @@
 import '../../../../domain/entities/session/submit_code/submit_code_response_entity.dart';
-import '../run_code/run_code_ request_model_dto.dart';
+import '../run_code/run_code_request_model_dto.dart';
 
 class SubmitCodeResponseModelDto {
   final int sessionAnswerId;

@@ -152,4 +152,42 @@ class CustomDialog {
       },
     );
   }
+
+  static void showTimeExpired({
+    required BuildContext context,
+    required VoidCallback onSubmit,
+  }) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppTheme.theme.scaffoldBackgroundColor,
+          title: Row(
+            spacing: 12,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.timer_off, color: Colors.red),
+              Text("Time's Up!", style: AppStyle.font20BlackBold),
+            ],
+          ),
+          content: Text(
+            "Your time has expired.\nYou will be redirected to the submit page.",
+            style: AppStyle.font16BlackRegular,
+            textAlign: TextAlign.center,
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onSubmit();
+              },
+              child: Text("Submit Now", style: AppStyle.font20BlueDarkBold),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/domain/entities/session/run_code/run_code_request_entity.dart';
 
-import '../../../../api/model/session/run_code/run_code_ request_model_dto.dart';
+import '../../../../api/model/session/run_code/run_code_request_model_dto.dart';
 import '../../../../domain/entities/session/run_code/run_code_response_entity.dart';
 import '../../../../domain/repo/session/run_code/run_code_repo.dart';
 import '../../../data_source/remote/session/run_code/run_code_remote_data_source.dart';

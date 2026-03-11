@@ -18,10 +18,8 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onRequest(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+  void onRequest(RequestOptions options,
+      RequestInterceptorHandler handler,) async {
     final accessToken = await tokenStorage.getAccessToken();
 
     if (accessToken != null && accessToken.isNotEmpty) {
@@ -33,7 +31,6 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-
     if (err.requestOptions.path.contains('/refresh')) {
       return handler.next(err);
     }
@@ -43,18 +40,12 @@ class DioInterceptor extends Interceptor {
         final refreshToken = await tokenStorage.getRefreshToken();
 
         if (refreshToken == null) {
-        //  return handler.next(err);
-        }
-else {
+          //  return handler.next(err);
+        } else {
           final refreshResponse = await _dio.post(
             ApiEndpoint.refreshTokenApi,
             data: {"token": refreshToken},
           );
-
-          // final refreshResponse = await _dio.post(
-          //   ApiEndpoint.refreshTokenApi,
-          //   data: {"token": refreshToken},
-          // );
 
           final newAccessToken = refreshResponse.data['accessToken'];
           final newRefreshToken = refreshResponse.data['refreshToken'];
@@ -75,7 +66,6 @@ else {
         }
       } catch (_) {
         await tokenStorage.clearTokens();
-      //  return handler.next(err);
       }
     }
 
@@ -83,7 +73,7 @@ else {
     if (responseData is Map<String, dynamic>) {
       if (responseData['validationErrors'] != null) {
         final validationErrors =
-        responseData['validationErrors'] as Map<String, dynamic>;
+            responseData['validationErrors'] as Map<String, dynamic>;
 
         final Map<String, List<String>> errors = {};
         validationErrors.forEach((key, value) {

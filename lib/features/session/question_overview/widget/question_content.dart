@@ -3,8 +3,8 @@ import 'package:mock_mate_ai/core/routes/app_routes.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../model/session_arguments.dart';
-import 'question_list.dart';
-
+import 'question_content_footer.dart';
+import 'question_item_card.dart';
 
 class QuestionContent extends StatelessWidget {
   final InterviewSessionEntity interviewSession;
@@ -18,31 +18,40 @@ class QuestionContent extends StatelessWidget {
     required this.scrollController,
   });
 
-  void _navigateToQuestion(BuildContext context, QuestionItem question,
-      int index) {
-    final args = {
-      'sessionArgs': sessionArgs.copyWith(currentQuestion: index),
-    };
+  void _navigateToQuestion(
+    BuildContext context,
+    QuestionItem question,
+    int index,
+  ) {
+    final args = {'sessionArgs': sessionArgs.copyWith(currentQuestion: index)};
 
     if (question.type == "Coding") {
-      Navigator.pushNamed(context, AppRoutes.codeWorkspace, arguments: {
-        ...args,
-        'questionId': question.id,
-        'questionTitle': question.title,
-        'questionText': question.questionText ?? '',
-        'testCases': question.testCases ?? [],
-        'templates': question.templates ?? [],
-        'onCodeSaved': (int langId, String code) {
-          sessionArgs.onCodeSaved(question.id);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.codeWorkspace,
+        arguments: {
+          ...args,
+          'questionId': question.id,
+          'questionTitle': question.title,
+          'questionText': question.questionText ?? '',
+          'testCases': question.testCases ?? [],
+          'templates': question.templates ?? [],
+          'onCodeSaved': (int langId, String code) {
+            sessionArgs.onCodeSaved(question.id);
+          },
         },
-      });
+      );
     } else {
-      Navigator.pushNamed(context, AppRoutes.mcqWorkspace, arguments: {
-        ...args,
-        'questionId': question.id,
-        'questionText': question.title,
-        'options': question.options,
-      });
+      Navigator.pushNamed(
+        context,
+        AppRoutes.mcqWorkspace,
+        arguments: {
+          ...args,
+          'questionId': question.id,
+          'questionText': question.title,
+          'options': question.options,
+        },
+      );
     }
   }
 
@@ -76,13 +85,29 @@ class QuestionContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: QuestionList(
-            questions: questions,
-            currentQuestion: sessionArgs.currentQuestion,
-            scrollController: scrollController,
-            onQuestionSelected: sessionArgs.onQuestionSelected,
-            sessionArgs: sessionArgs,
-            onNavigate: (q, i) => _navigateToQuestion(context, q, i),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              children: [
+                ...questions.asMap().entries.map((entry) {
+                  final index = entry.key + 1;
+                  final question = entry.value;
+                  return QuestionItemCard(
+                    index: index,
+                    title: question.title,
+                    type: question.type,
+                    isModified: question.type == "Coding"
+                        ? sessionArgs.savedCodeQuestions.contains(question.id)
+                        : sessionArgs.savedAnswers.containsKey(question.id),
+                    isActive: index == sessionArgs.currentQuestion,
+                    onTap: () => sessionArgs.onQuestionSelected(index),
+                    onNavigate: () =>
+                        _navigateToQuestion(context, question, index),
+                  );
+                }),
+                QuestionContentFooter(),
+              ],
+            ),
           ),
         ),
       ],

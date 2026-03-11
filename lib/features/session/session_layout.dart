@@ -63,6 +63,7 @@ class SessionLayout extends StatelessWidget {
                   children: [
                     QuestionHeader(
                       time: time,
+                      args: args,
                       currentQuestion: args.currentQuestion,
                       totalQuestions: args.totalQuestions,
                     ),
@@ -81,6 +82,7 @@ class SessionLayout extends StatelessWidget {
                           children: [
                             QuestionHeader(
                               time: time,
+                              args: args,
                               currentQuestion: args.currentQuestion,
                               totalQuestions: args.totalQuestions,
                             ),

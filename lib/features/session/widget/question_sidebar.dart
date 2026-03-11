@@ -31,8 +31,9 @@ class SidebarQuestion {
     this.questionId = 0,
     Map<int, String>? savedCode,
     this.savedLanguageId,
-  }) : savedCode = savedCode ?? {},
-       tempCode = {};
+  })
+      : savedCode = savedCode ?? {},
+        tempCode = {};
 
   bool get hasUnsavedChanges => tempCode.isNotEmpty;
 }
@@ -42,39 +43,67 @@ class QuestionSidebar extends StatelessWidget {
 
   const QuestionSidebar({required this.args, super.key});
 
-  void _onTap(BuildContext context, int number) async {
-    final current = args.questions.firstWhere(
-      (q) => q.index == args.currentQuestion,
-      orElse: () => SidebarQuestion(index: args.currentQuestion, type: ''),
+  Future<bool> _confirmLeave(BuildContext context) async {
+    final confirm = await CustomDialog.showConfirm(
+      context: context,
+      title: "Leave without saving?",
+      message: "Your changes won't be saved if you leave.",
     );
+    return confirm == true;
+  }
 
+  bool _hasUnsaved(SidebarQuestion current) {
+    if (current.type == "Coding") return current.hasUnsavedChanges;
+    return args.hasUnsavedAnswer;
+  }
+
+  void _clearUnsaved(SidebarQuestion current) {
     if (current.type == "Coding") {
-      if (current.hasUnsavedChanges) {
-        final confirm = await CustomDialog.showConfirm(
-          context: context,
-          title: "Leave without saving?",
-          message: "Your changes won't be saved if you leave.",
-        );
-        if (confirm != true) return;
-        current.tempCode.clear();
-        current.tempLanguageId = null;
-      }
-    } else if (args.hasUnsavedAnswer) {
-      final confirm = await CustomDialog.showConfirm(
-        context: context,
-        title: "Leave without saving?",
-        message: "You selected an answer but didn't save it yet.",
-      );
-      if (confirm != true) return;
-
+      current.tempCode.clear();
+      current.tempLanguageId = null;
+    } else {
       args.onRevertAnswer(
         current.questionId,
         args.savedAnswers[current.questionId],
       );
     }
+  }
+
+  SidebarQuestion _currentQuestion() {
+    return args.questions.firstWhere(
+          (q) => q.index == args.currentQuestion,
+      orElse: () => SidebarQuestion(index: args.currentQuestion, type: ''),
+    );
+  }
+
+  void _onAllTap(BuildContext context) async {
+    final current = _currentQuestion();
+
+    if (_hasUnsaved(current)) {
+      final confirmed = await _confirmLeave(context);
+      if (!context.mounted) return;
+      if (!confirmed) return;
+      _clearUnsaved(current);
+    }
+    args.onQuestionSelected(0);
+
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(AppRoutes.questionOverview),
+    );
+  }
+
+  void _onTap(BuildContext context, int number) async {
+    final current = _currentQuestion();
+
+    if (_hasUnsaved(current)) {
+      final confirmed = await _confirmLeave(context);
+      if (!confirmed) return;
+      _clearUnsaved(current);
+    }
 
     final question = args.questions.firstWhere(
-      (q) => q.index == number,
+          (q) => q.index == number,
       orElse: () => SidebarQuestion(index: number, type: "Coding"),
     );
 
@@ -93,14 +122,31 @@ class QuestionSidebar extends StatelessWidget {
         question.savedLanguageId = langId;
         question.tempCode.clear();
         question.tempLanguageId = null;
+        args.onCodeSaved(question.questionId);
       },
       'onCodeReverted': (int langId) {
         question.tempCode.remove(langId);
       },
     };
+    args.onQuestionSelected(number);
+    final fromOverview = args.currentQuestion == 0;
 
+    if (!context.mounted) return;
     if (question.type == "Coding") {
-      Navigator.pushNamed(
+      fromOverview
+          ? Navigator.pushNamed(
+        context,
+        AppRoutes.codeWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionTitle': question.questionTitle,
+          'questionText': question.questionText,
+          'testCases': question.testCases,
+          'templates': question.templates,
+        },
+      )
+          : Navigator.pushReplacementNamed(
         context,
         AppRoutes.codeWorkspace,
         arguments: {
@@ -113,7 +159,18 @@ class QuestionSidebar extends StatelessWidget {
         },
       );
     } else {
-      Navigator.pushNamed(
+      fromOverview
+          ? Navigator.pushNamed(
+        context,
+        AppRoutes.mcqWorkspace,
+        arguments: {
+          ...baseArgs,
+          'questionId': question.questionId,
+          'questionText': question.questionText,
+          'options': question.options,
+        },
+      )
+          : Navigator.pushReplacementNamed(
         context,
         AppRoutes.mcqWorkspace,
         arguments: {
@@ -124,12 +181,14 @@ class QuestionSidebar extends StatelessWidget {
         },
       );
     }
-
-    args.onQuestionSelected(number);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BuildSidebar(args: args, onTap: _onTap);
+    return BuildSidebar(
+      args: args,
+      onTap: _onTap,
+      onAllTap: _onAllTap,
+    );
   }
 }

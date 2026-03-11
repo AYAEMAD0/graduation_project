@@ -11,16 +11,30 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
   Timer? _timer;
   final ScrollController scrollController = ScrollController();
   static const double cardHeight = 90.0;
-  static final Map<int, int> _selectedAnswers = {};
+  final StreamController<int> _timerStreamController =
+      StreamController<int>.broadcast();
+
+  Stream<int> get timerStream => _timerStreamController.stream;
+
+  final Map<int, int> _selectedAnswers = {};
+  final Set<int> _savedQuestions = {};
+  final Map<int, int> _savedAnswers = {};
+  final Set<int> _savedCodeQuestions = {};
 
   Map<int, int> get answers => _selectedAnswers;
 
-  QuestionOverviewCubit()
-    : super(QuestionOverviewState(selectedAnswers: _selectedAnswers));
+  Set<int> get savedQuestions => _savedQuestions;
+
+  Map<int, int> get savedAnswers => _savedAnswers;
+
+  Set<int> get savedCodeQuestions => _savedCodeQuestions;
+
+  QuestionOverviewCubit() : super(QuestionOverviewState(selectedAnswers: {}));
 
   void init(int totalQuestions) {
-    final seconds = totalQuestions * 5 * 60;
-    emit(state.copyWith(remainingSeconds: seconds));
+    final seconds = totalQuestions * 2 * 60;
+    _safeEmit(state.copyWith(remainingSeconds: seconds));
+    _addToStream(seconds);
     _startTimer();
   }
 
@@ -28,20 +42,31 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (state.remainingSeconds <= 0) {
         _timer?.cancel();
+        _addToStream(0);
       } else {
-        emit(state.copyWith(remainingSeconds: state.remainingSeconds - 1));
+        final newSeconds = state.remainingSeconds - 1;
+        _safeEmit(state.copyWith(remainingSeconds: newSeconds));
+        _addToStream(newSeconds);
       }
     });
   }
 
-  String get formattedTime {
-    final minutes = state.remainingSeconds ~/ 60;
-    final seconds = state.remainingSeconds % 60;
+  void _addToStream(int seconds) {
+    if (!_timerStreamController.isClosed) {
+      _timerStreamController.add(seconds);
+    }
+  }
+
+  static String formatTime(int remainingSeconds) {
+    final minutes = remainingSeconds ~/ 60;
+    final seconds = remainingSeconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
+  String get formattedTime => formatTime(state.remainingSeconds);
+
   void selectQuestion(int index) {
-    emit(state.copyWith(currentQuestion: index));
+    _safeEmit(state.copyWith(currentQuestion: index));
     if (index == 0) return;
     final offset = (index - 1) * cardHeight;
     if (scrollController.hasClients) {
@@ -55,29 +80,20 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
 
   void selectAnswer(int questionId, int answerId) {
     _selectedAnswers[questionId] = answerId;
-    emit(state.copyWith(selectedAnswers: _selectedAnswers));
+    _safeEmit(state.copyWith(selectedAnswers: Map.from(_selectedAnswers)));
   }
-
-  static final Set<int> _savedQuestions = {};
-  Set<int> get savedQuestions => _savedQuestions;
-  static final Map<int, int> _savedAnswers = {};
-
-  Map<int, int> get savedAnswers => _savedAnswers;
 
   void markQuestionSaved(int questionId) {
     _savedQuestions.add(questionId);
     if (_selectedAnswers.containsKey(questionId)) {
       _savedAnswers[questionId] = _selectedAnswers[questionId]!;
     }
+    _safeEmit(state.copyWith());
   }
-
-  static final Set<int> _savedCodeQuestions = {};
-
-  Set<int> get savedCodeQuestions => _savedCodeQuestions;
 
   void markCodeSaved(int questionId) {
     _savedCodeQuestions.add(questionId);
-    emit(state.copyWith());
+    _safeEmit(state.copyWith());
   }
 
   void revertAnswer(int questionId, int? previousOptionId) {
@@ -86,17 +102,23 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
     } else {
       _selectedAnswers[questionId] = previousOptionId;
     }
-    emit(state.copyWith(selectedAnswers: _selectedAnswers));
+    _safeEmit(state.copyWith(selectedAnswers: Map.from(_selectedAnswers)));
+  }
+
+  void _safeEmit(QuestionOverviewState newState) {
+    if (isClosed) return;
+    emit(newState);
   }
 
   @override
   Future<void> close() {
     _timer?.cancel();
+    _timerStreamController.close();
     _selectedAnswers.clear();
     _savedQuestions.clear();
     _savedAnswers.clear();
-    scrollController.dispose();
     _savedCodeQuestions.clear();
+    scrollController.dispose();
     return super.close();
   }
 }

@@ -8,13 +8,20 @@ import '../../widget/question_sidebar.dart';
 import '../viewmodel/question_overview_cubit.dart';
 import '../widget/question_content.dart';
 
-class QuestionOverview extends StatelessWidget {
+class QuestionOverview extends StatefulWidget {
   final InterviewSessionEntity interviewSession;
 
   const QuestionOverview({super.key, required this.interviewSession});
 
+  @override
+  State<QuestionOverview> createState() => _QuestionOverviewState();
+}
+
+class _QuestionOverviewState extends State<QuestionOverview> {
+  late final List<SidebarQuestion> _sidebarQuestions = _buildSidebarQuestions();
+
   List<SidebarQuestion> _buildSidebarQuestions() => [
-    ...interviewSession.codingQuestions.asMap().entries.map(
+    ...widget.interviewSession.codingQuestions.asMap().entries.map(
       (e) => SidebarQuestion(
         index: e.key + 1,
         type: "Coding",
@@ -25,9 +32,9 @@ class QuestionOverview extends StatelessWidget {
         templates: e.value.templates,
       ),
     ),
-    ...interviewSession.mcqQuestions.asMap().entries.map(
+    ...widget.interviewSession.mcqQuestions.asMap().entries.map(
       (e) => SidebarQuestion(
-        index: e.key + interviewSession.codingQuestions.length + 1,
+        index: e.key + widget.interviewSession.codingQuestions.length + 1,
         type: "Multiple Choice",
         questionId: e.value.questionId,
         questionText: e.value.questionText,
@@ -36,12 +43,26 @@ class QuestionOverview extends StatelessWidget {
     ),
   ];
 
+  bool _computeHasUnsavedAnswer(
+    QuestionOverviewState state,
+    Map<int, int> savedAnswers,
+    int currentQuestion,
+  ) {
+    final question = _sidebarQuestions.firstWhere(
+      (q) => q.index == currentQuestion,
+      orElse: () => SidebarQuestion(index: 0, type: ''),
+    );
+    if (question.type == "Coding") return false;
+    final qId = question.questionId;
+    if (!state.selectedAnswers.containsKey(qId)) return false;
+    return state.selectedAnswers[qId] != savedAnswers[qId];
+  }
+
   @override
   Widget build(BuildContext context) {
     final totalQuestions =
-        interviewSession.codingQuestions.length +
-        interviewSession.mcqQuestions.length;
-    final sidebarQuestions = _buildSidebarQuestions();
+        widget.interviewSession.codingQuestions.length +
+        widget.interviewSession.mcqQuestions.length;
 
     return BlocProvider(
       create: (context) => QuestionOverviewCubit()..init(totalQuestions),
@@ -53,25 +74,30 @@ class QuestionOverview extends StatelessWidget {
             currentQuestion: state.currentQuestion,
             totalQuestions: totalQuestions,
             remainingSeconds: state.remainingSeconds,
-            questions: sidebarQuestions,
-            sessionId: interviewSession.interviewSessionId,
+            questions: _sidebarQuestions,
+            sessionId: widget.interviewSession.interviewSessionId,
             onQuestionSelected: cubit.selectQuestion,
             selectedAnswers: cubit.answers,
             onAnswerSelected: cubit.selectAnswer,
             savedQuestions: cubit.savedQuestions,
             onQuestionSaved: cubit.markQuestionSaved,
-            hasUnsavedAnswer: false,
+            hasUnsavedAnswer: _computeHasUnsavedAnswer(
+              state,
+              cubit.savedAnswers,
+              state.currentQuestion,
+            ),
             onRevertAnswer: cubit.revertAnswer,
             savedAnswers: cubit.savedAnswers,
             savedCodeQuestions: cubit.savedCodeQuestions,
             onCodeSaved: cubit.markCodeSaved,
+            timerStream: cubit.timerStream,
           );
 
           return SessionLayout(
             time: cubit.formattedTime,
             args: sessionArgs,
             body: QuestionContent(
-              interviewSession: interviewSession,
+              interviewSession: widget.interviewSession,
               sessionArgs: sessionArgs,
               scrollController: cubit.scrollController,
             ),

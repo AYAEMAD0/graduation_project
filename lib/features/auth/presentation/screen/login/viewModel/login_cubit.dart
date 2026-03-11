@@ -15,7 +15,7 @@ class LoginCubit extends Cubit<LoginState> {
   final TokenStorage tokenStorage;
   LoginCubit(this.loginUsecase, this.tokenStorage) : super(LoginInitial());
 
-  final emailController = TextEditingController(text: "aya00@gmail.com");
+  final emailController = TextEditingController(text: "aya01@gmail.com");
   final passwordController = TextEditingController(text: "Aya12345.");
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isShowPassword = false;

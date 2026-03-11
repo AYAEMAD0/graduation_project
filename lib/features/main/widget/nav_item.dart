@@ -27,6 +27,7 @@ class NavItem extends StatelessWidget {
         padding: const EdgeInsets.only(left: 25, right: 25, top: 8,),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (title != null)
               Text(title!, style: AppStyle.font34RoundedBold)

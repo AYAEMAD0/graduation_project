@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mock_mate_ai/features/session/widget/question_sidebar.dart';
 
 class SessionArguments {
@@ -17,6 +19,8 @@ class SessionArguments {
   final Set<int> savedCodeQuestions;
   final void Function(int questionId) onCodeSaved;
 
+  final Stream<int> timerStream;
+
   const SessionArguments({
     required this.currentQuestion,
     required this.totalQuestions,
@@ -33,6 +37,7 @@ class SessionArguments {
     required this.savedAnswers,
     required this.savedCodeQuestions,
     required this.onCodeSaved,
+    required this.timerStream,
   });
 
   SessionArguments copyWith({
@@ -51,6 +56,7 @@ class SessionArguments {
     Map<int, int>? savedAnswers,
     Set<int>? savedCodeQuestions,
     void Function(int)? onCodeSaved,
+    Stream<int>? timerStream,
   }) {
     return SessionArguments(
       currentQuestion: currentQuestion ?? this.currentQuestion,
@@ -68,6 +74,7 @@ class SessionArguments {
       savedAnswers: savedAnswers ?? this.savedAnswers,
       savedCodeQuestions: savedCodeQuestions ?? this.savedCodeQuestions,
       onCodeSaved: onCodeSaved ?? this.onCodeSaved,
+      timerStream: timerStream ?? this.timerStream,
     );
   }
 }

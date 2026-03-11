@@ -18,30 +18,33 @@ import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
 import '../../features/session/upload_cv_jd/view/upload_cv_jd.dart';
+import '../widget/session_expired.dart';
 
 class AppRouter {
   static Map<String, Widget Function(BuildContext)> get routes {
     return {
       AppRoutes.splash: (context) => const SplashScreen(),
-      AppRoutes.onBoarding: (context) =>  OnboardingScreen(),
-      AppRoutes.login: (context) =>  LoginScreen(),
-      AppRoutes.signup: (context) =>  SignupScreen(),
-      AppRoutes.forgotPassword : (context) =>  ForgotPasswordScreen(),
-      AppRoutes.forgotOtp: (context) =>  ForgotOtp(),
-      AppRoutes.resetPassword: (context) =>  ResetPassword(),
-      AppRoutes.newPassword: (context) =>  NewPassword(),
-      AppRoutes.successful: (context) =>  SuccessfulScreen(),
-      AppRoutes.uploadCvJd: (context) =>  UploadCvJd(),
-      AppRoutes.scoreScreen :(context)=> ScoreScreen(),
-      AppRoutes.home :(context)=> MainLayout(),
+      AppRoutes.onBoarding: (context) => OnboardingScreen(),
+      AppRoutes.login: (context) => LoginScreen(),
+      AppRoutes.signup: (context) => SignupScreen(),
+      AppRoutes.forgotPassword: (context) => ForgotPasswordScreen(),
+      AppRoutes.forgotOtp: (context) => ForgotOtp(),
+      AppRoutes.resetPassword: (context) => ResetPassword(),
+      AppRoutes.newPassword: (context) => NewPassword(),
+      AppRoutes.successful: (context) => SuccessfulScreen(),
+      AppRoutes.uploadCvJd: (context) => UploadCvJd(),
+      AppRoutes.scoreScreen: (context) => ScoreScreen(),
+      AppRoutes.home: (context) => MainLayout(),
+
       AppRoutes.questionOverview: (context) {
         final args =
-            (ModalRoute.of(context)!.settings.arguments
-                as Map<String, dynamic>?) ??
-            {};
-        return QuestionOverview(
-          interviewSession: args['interviewSession'] as InterviewSessionEntity,
-        );
+            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        final interviewSession =
+            args?['interviewSession'] as InterviewSessionEntity?;
+        if (interviewSession == null) {
+          return const SessionExpired();
+        }
+        return QuestionOverview(interviewSession: interviewSession);
       },
 
       AppRoutes.codeWorkspace: (context) {
@@ -67,6 +70,7 @@ class AppRouter {
               args['onCodeReverted'] as void Function(int)? ?? (_) {},
         );
       },
+
       AppRoutes.mcqWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;

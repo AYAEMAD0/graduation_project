@@ -42,7 +42,7 @@ class BuildUploadCvSection extends StatelessWidget {
               child: state.hasFile
                   ? BuildSuccessContent(
                       text: state.selectedFile!.name,
-                      onRemove: () => cubit.removeFile,
+                      onRemove: cubit.removeFile,
                     )
                   : BuildUploadContent(),
             ),
