@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme,
-          initialRoute: AppRoutes.workspace,
+          initialRoute: AppRoutes.splash,
           routes: AppRouter.routes,
           builder: (context, child) => ResponsiveBreakpoints.builder(
             child: child!,

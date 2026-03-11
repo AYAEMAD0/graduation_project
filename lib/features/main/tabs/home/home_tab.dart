@@ -8,6 +8,7 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../../core/widget/scroll_animate.dart';
 import 'widget/build_description_section.dart';
 import 'widget/build_how_work_section.dart';
 import 'widget/build_tech_section.dart';
@@ -22,6 +23,7 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
+
     return Scaffold(
       backgroundColor: AppColor.homeBackground,
       body: SafeArea(
@@ -62,7 +64,7 @@ class HomeTab extends StatelessWidget {
               ),
               Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 2000), //1200
+                  constraints: const BoxConstraints(maxWidth: 2000),
                   child: Column(
                     children: [
                       Padding(
@@ -71,57 +73,82 @@ class HomeTab extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: isMobile ? 20 : 30),
-                            const BuildTitleSection(),
-                            SizedBox(height: isMobile ? 20 : 10),
-                            const BuildDescriptionSection(),
+                            SizedBox(height: isMobile ? 20 : 35),
+                            ScrollAnimate(
+                              delay: const Duration(milliseconds: 100),
+                              direction: SlideDirection.up,
+                              child: const BuildTitleSection(),
+                            ),
+                            SizedBox(height: isMobile ? 20 : 20),
+                            ScrollAnimate(
+                              delay: const Duration(milliseconds: 200),
+                              direction: SlideDirection.left,
+                              child: const BuildDescriptionSection(),
+                            ),
                             SizedBox(height: isMobile ? 30 : 30),
-                            CustomButton(
-                              height: isMobile ? 60 : 80,
-                              widthBtn: isMobile ? 270 : 600,
-                              child: Center(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.video_camera_back,
-                                      color: Colors.white,
-                                      size: isMobile ? 30 : 35,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "Start Mock Interview",
-                                      style:
-                                      isMobile ?
-                                      AppStyle.font18WhiteBold
-                                          :
-                                      AppStyle.font18WhiteBold.copyWith(
-                                          fontSize: 33),
-                                    ),
-                                  ],
+                            ScrollAnimate(
+                              delay: const Duration(milliseconds: 300),
+                              direction: SlideDirection.right,
+                              child: CustomButton(
+                                height: isMobile ? 60 : 80,
+                                widthBtn: isMobile ? 270 : 600,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.video_camera_back,
+                                        color: Colors.white,
+                                        size: isMobile ? 30 : 35,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        "Start Mock Interview",
+                                        style: isMobile
+                                            ? AppStyle.font18WhiteBold
+                                            : AppStyle.font18WhiteBold
+                                            .copyWith(fontSize: 33),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.uploadCvJd);
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.uploadCvJd);
-                              },
                             ),
                             SizedBox(height: isMobile ? 0 : 30),
-                            Image.asset(
-                              AppAsset.person,
-                              width: 900,
-                              height: isMobile ? 320 : 600,
+                            ScrollAnimate(
+                              delay: const Duration(milliseconds: 400),
+                              direction: SlideDirection.up,
+                              child: Image.asset(
+                                AppAsset.person,
+                                width: 900,
+                                height: isMobile ? 320 : 600,
+                              ),
                             ),
                             SizedBox(height: isMobile ? 0 : 40),
                           ],
                         ),
                       ),
-                      BuildTechSection(),
+
+                      ScrollAnimate(
+                        direction: SlideDirection.left,
+                        child: BuildTechSection(),
+                      ),
                       SizedBox(height: isMobile ? 20 : 60),
-                      BuildHowWorkSection(),
+
+                      ScrollAnimate(
+                        direction: SlideDirection.right,
+                        child: BuildHowWorkSection(),
+                      ),
                       SizedBox(height: isMobile ? 40 : 80),
-                      StatsSection(),
-                      CopyrightSection(),
+                      ScrollAnimate(
+                        direction: SlideDirection.left,
+                        child: StatsSection(),
+                      ),
+                      const CopyrightSection(),
                     ],
                   ),
                 ),
