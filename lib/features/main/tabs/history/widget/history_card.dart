@@ -1,31 +1,19 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 
+import '../../../../../core/helper/format_date.dart';
+import '../../../../../domain/entities/history/history_entity.dart';
+
 class HistoryCard extends StatelessWidget {
-  final String title;
-  final String company;
-  final String type;
-  final String score;
-  final String time;
-  final IconData icon;
   final int notifications;
   final Color scoreColor;
-  final Color iconColor;
-  final Color iconBackgroundColor;
+  final DataEntity data;
 
   const HistoryCard({
     super.key,
-    required this.title,
-    required this.company,
-    required this.type,
-    required this.score,
-    required this.time,
-    required this.icon,
+    required this.data,
     required this.notifications,
     required this.scoreColor,
-    required this.iconColor,
-    required this.iconBackgroundColor,
   });
 
   @override
@@ -33,12 +21,12 @@ class HistoryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColor.whiteColor.withOpacity(0.9),
+        color: AppColor.whiteColor.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: AppColor.whiteColor, width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             spreadRadius: 2,
             offset: const Offset(0, 8),
@@ -56,10 +44,14 @@ class HistoryCard extends StatelessWidget {
                   width: 52,
                   height: 52,
                   decoration: BoxDecoration(
-                    color: iconBackgroundColor,
+                    color: const Color(0xFFE8F0FE),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Icon(icon, color: iconColor, size: 26),
+                  child: Icon(
+                    Icons.mic,
+                    color: AppColor.primaryBlueColor,
+                    size: 26,
+                  ),
                 ),
                 if (notifications > 0)
                   Positioned(
@@ -90,7 +82,7 @@ class HistoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    data.trackName ?? "Unknow",
                     style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
@@ -99,7 +91,8 @@ class HistoryCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "$company • $type",
+                    "Mock Mate AI"
+                    "  • ${data.seniorityLevel ?? ""}",
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -113,7 +106,7 @@ class HistoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  score,
+                  "${data.score}%",
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w900,
@@ -122,7 +115,7 @@ class HistoryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  time,
+                  FormatDate.formatDate(data.startDate ?? ""),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,

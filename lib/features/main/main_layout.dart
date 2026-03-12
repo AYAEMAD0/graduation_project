@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mock_mate_ai/features/main/tabs/history/view/history_screen.dart';
+import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/main/widget/navbar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../core/helper/shared_check_helper.dart';
 import 'tabs/faq/faq_tab.dart';
+import 'tabs/history/viewModel/history_cubit.dart';
 import 'tabs/home/home_tab.dart';
 import 'tabs/profile/view/profile_tab.dart';
 import 'tabs/profile/viewmodel/profile/profile_cubit.dart';
@@ -29,12 +30,13 @@ class _MainLayoutState extends State<MainLayout> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userId = SharedCheckHelper.getValue(SharedCheckHelper.keyUserId);
       context.read<ProfileCubit>().getProfile(userId);
+      context.read<HistoryCubit>().fetchHistory();
     });
   }
 
   final List<Widget> pages = const [
     HomeTab(),
-    HistoryTap(),
+    HistoryTab(),
     FaqTab(),
     ProfileTab(),
   ];

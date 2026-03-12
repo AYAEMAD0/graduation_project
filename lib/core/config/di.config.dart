@@ -26,8 +26,8 @@ import '../../api/data_source/remote/auth/refresh/refresh_remote_data_source_imp
     as _i259;
 import '../../api/data_source/remote/auth/signup/signup_remote_data_source_impl.dart'
     as _i368;
-import '../../api/data_source/remote/history/history_remot_data_source_impl.dart'
-    as _i1063;
+import '../../api/data_source/remote/history/history_remote_data_source_impl.dart'
+    as _i330;
 import '../../api/data_source/remote/profile/get_profile_remote_data_source_impl.dart'
     as _i130;
 import '../../api/data_source/remote/profile/update_profile_remote_data_source_impl.dart'
@@ -54,8 +54,8 @@ import '../../data/data_source/remote/auth/refresh/refresh_remote_data_source.da
     as _i1004;
 import '../../data/data_source/remote/auth/signup/signup_remote_data_source.dart'
     as _i224;
-import '../../data/data_source/remote/history/history_remot_data_source.dart'
-    as _i947;
+import '../../data/data_source/remote/history/history_remote_data_source.dart'
+    as _i748;
 import '../../data/data_source/remote/profile/get_profile_remote_data_source.dart'
     as _i1011;
 import '../../data/data_source/remote/profile/update_profile_remote_data_source.dart'
@@ -107,7 +107,7 @@ import '../../domain/usecase/auth/login/login_usecase.dart' as _i863;
 import '../../domain/usecase/auth/logout/logout_usecase.dart' as _i976;
 import '../../domain/usecase/auth/refresh/refresh_usecase.dart' as _i387;
 import '../../domain/usecase/auth/signup/signup_usecase.dart' as _i375;
-import '../../domain/usecase/history/history_useCase.dart' as _i299;
+import '../../domain/usecase/history/history_usecase.dart' as _i558;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
 import '../../domain/usecase/profile/get_profile_usecase.dart' as _i152;
 import '../../domain/usecase/profile/update_profile_usecase.dart' as _i1049;
@@ -225,17 +225,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i224.SignupRemoteDataSource>(
       () => _i368.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
-    gh.factory<_i947.HistoryRemoteDataSource>(
-      () => _i1063.HistoryRemotDataSourceImpl(gh<_i394.ApiServices>()),
-    );
     gh.factory<_i737.RefreshRepo>(
       () => _i462.RefreshRepoImpl(gh<_i1004.RefreshRemoteDataSource>()),
     );
     gh.factory<_i1049.UpdateProfileUseCase>(
       () => _i1049.UpdateProfileUseCase(gh<_i884.UpdateProfileRepo>()),
-    );
-    gh.factory<_i1044.HistoryRepo>(
-      () => _i633.HistoryRepoImpl(gh<_i947.HistoryRemoteDataSource>()),
     );
     gh.factory<_i343.SubmitCodeRemoteDataSource>(
       () => _i243.SubmitCodeRemoteDataSourceImpl(gh<_i394.ApiServices>()),
@@ -252,11 +246,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i49.LoginRemoteDataSource>(
       () => _i1021.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
-    gh.factory<_i299.GetHistoryUseCase>(
-      () => _i299.GetHistoryUseCase(gh<_i1044.HistoryRepo>()),
+    gh.factory<_i748.HistoryRemoteDataSource>(
+      () => _i330.HistoryRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
-    gh.factory<_i234.HistoryCubit>(
-      () => _i234.HistoryCubit(gh<_i299.GetHistoryUseCase>()),
+    gh.factory<_i1044.HistoryRepo>(
+      () => _i633.HistoryRepoImpl(gh<_i748.HistoryRemoteDataSource>()),
     );
     gh.factory<_i969.AnswerMcqRepo>(
       () => _i933.AnswerMcqRepoImpl(gh<_i386.AnswerMcqRemoteDataSource>()),
@@ -319,6 +313,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i863.LoginUsecase>(
       () => _i863.LoginUsecase(gh<_i308.LoginRepo>()),
     );
+    gh.factory<_i558.GetHistoryUsecase>(
+      () => _i558.GetHistoryUsecase(gh<_i1044.HistoryRepo>()),
+    );
     gh.factory<_i375.SignupUsecase>(
       () => _i375.SignupUsecase(signupRepo: gh<_i788.SignupRepo>()),
     );
@@ -349,6 +346,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i196.InterviewSessionUseCase>(
       () => _i196.InterviewSessionUseCase(gh<_i750.InterviewSessionRepo>()),
+    );
+    gh.factory<_i234.HistoryCubit>(
+      () => _i234.HistoryCubit(gh<_i558.GetHistoryUsecase>()),
     );
     gh.factory<_i220.InterviewSessionCubit>(
       () => _i220.InterviewSessionCubit(gh<_i196.InterviewSessionUseCase>()),

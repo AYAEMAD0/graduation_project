@@ -52,7 +52,7 @@ class BuildProfileAvatar extends StatelessWidget {
                             Icons.person,
                             color: AppColor.blackColor,
                             size: isMobile ? 60 : 50,
-                          ) //100
+                          )
                         : null,
                   ),
                 ),

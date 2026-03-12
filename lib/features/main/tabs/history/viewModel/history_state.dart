@@ -1,5 +1,4 @@
-import 'package:mock_mate_ai/domain/entities/history/history_Interview_entity.dart';
-
+import '../../../../../domain/entities/history/history_entity.dart';
 
 abstract class HistoryState {}
 
@@ -8,9 +7,12 @@ class HistoryInitial extends HistoryState {}
 class HistoryLoading extends HistoryState {}
 
 class HistorySuccess extends HistoryState {
-  final List<HistoryInterviewEntity> interviews;
-  HistorySuccess(this.interviews);
+  final HistoryEntity historyEntity;
+
+  HistorySuccess(this.historyEntity);
 }
+
+class HistoryEmpty extends HistoryState {}
 
 class HistoryError extends HistoryState {
   final String message;
