@@ -4,6 +4,7 @@ import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgo
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
+import 'package:mock_mate_ai/features/main/tabs/history/view/history_screen.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
@@ -35,6 +36,7 @@ class AppRouter {
       AppRoutes.uploadCvJd: (context) => UploadCvJd(),
       AppRoutes.scoreScreen: (context) => ScoreScreen(),
       AppRoutes.home: (context) => MainLayout(),
+      AppRoutes.history: (context) => HistoryTap(),
 
       AppRoutes.questionOverview: (context) {
         final args =

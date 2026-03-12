@@ -7,7 +7,7 @@ class ApiEndpoint {
   static const String getUserByIdApi = '/api/users';
   static const String logoutApi = '/api/users/logout';
   static const String startInterviewSessionApi = '/interview-sessions';
-
+  static const String historyApi = "/users/me/interview-sessions";
   static String getSessionApi(int sessionId) =>
       '/interview-sessions/$sessionId';
 

@@ -26,6 +26,8 @@ import '../../api/data_source/remote/auth/refresh/refresh_remote_data_source_imp
     as _i259;
 import '../../api/data_source/remote/auth/signup/signup_remote_data_source_impl.dart'
     as _i368;
+import '../../api/data_source/remote/history/history_remot_data_source_impl.dart'
+    as _i1063;
 import '../../api/data_source/remote/profile/get_profile_remote_data_source_impl.dart'
     as _i130;
 import '../../api/data_source/remote/profile/update_profile_remote_data_source_impl.dart'
@@ -52,6 +54,8 @@ import '../../data/data_source/remote/auth/refresh/refresh_remote_data_source.da
     as _i1004;
 import '../../data/data_source/remote/auth/signup/signup_remote_data_source.dart'
     as _i224;
+import '../../data/data_source/remote/history/history_remot_data_source.dart'
+    as _i947;
 import '../../data/data_source/remote/profile/get_profile_remote_data_source.dart'
     as _i1011;
 import '../../data/data_source/remote/profile/update_profile_remote_data_source.dart'
@@ -71,6 +75,7 @@ import '../../data/repo_impl/auth/logout/logout_repo_impl.dart' as _i377;
 import '../../data/repo_impl/auth/refresh/refresh_repo_impl.dart' as _i462;
 import '../../data/repo_impl/auth/signup/signup_repo_impl.dart' as _i820;
 import '../../data/repo_impl/auth/token/token_storage_impl.dart' as _i144;
+import '../../data/repo_impl/history/history_repo_impl.dart' as _i633;
 import '../../data/repo_impl/onboarding/onboarding_repo_impl.dart' as _i209;
 import '../../data/repo_impl/profile/get_profile_repo_impl.dart' as _i904;
 import '../../data/repo_impl/profile/update_profile_repo_impl.dart' as _i577;
@@ -88,6 +93,7 @@ import '../../domain/repo/auth/logout/logout_repo.dart' as _i81;
 import '../../domain/repo/auth/refresh/refresh_repo.dart' as _i737;
 import '../../domain/repo/auth/signup/signup_repo.dart' as _i788;
 import '../../domain/repo/auth/token/token_storage.dart' as _i589;
+import '../../domain/repo/history/history_repo.dart' as _i1044;
 import '../../domain/repo/onboarding/onboarding_repo.dart' as _i154;
 import '../../domain/repo/profile/get_profile_repo.dart' as _i494;
 import '../../domain/repo/profile/update_profile_repo.dart' as _i884;
@@ -101,6 +107,7 @@ import '../../domain/usecase/auth/login/login_usecase.dart' as _i863;
 import '../../domain/usecase/auth/logout/logout_usecase.dart' as _i976;
 import '../../domain/usecase/auth/refresh/refresh_usecase.dart' as _i387;
 import '../../domain/usecase/auth/signup/signup_usecase.dart' as _i375;
+import '../../domain/usecase/history/history_useCase.dart' as _i299;
 import '../../domain/usecase/onboarding/onboarding_usecase.dart' as _i645;
 import '../../domain/usecase/profile/get_profile_usecase.dart' as _i152;
 import '../../domain/usecase/profile/update_profile_usecase.dart' as _i1049;
@@ -117,6 +124,7 @@ import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart
     as _i407;
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
     as _i461;
+import '../../features/main/tabs/history/viewModel/history_cubit.dart' as _i234;
 import '../../features/main/tabs/profile/viewmodel/logout/logout_cubit.dart'
     as _i540;
 import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart'
@@ -217,11 +225,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i224.SignupRemoteDataSource>(
       () => _i368.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i947.HistoryRemoteDataSource>(
+      () => _i1063.HistoryRemotDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i737.RefreshRepo>(
       () => _i462.RefreshRepoImpl(gh<_i1004.RefreshRemoteDataSource>()),
     );
     gh.factory<_i1049.UpdateProfileUseCase>(
       () => _i1049.UpdateProfileUseCase(gh<_i884.UpdateProfileRepo>()),
+    );
+    gh.factory<_i1044.HistoryRepo>(
+      () => _i633.HistoryRepoImpl(gh<_i947.HistoryRemoteDataSource>()),
     );
     gh.factory<_i343.SubmitCodeRemoteDataSource>(
       () => _i243.SubmitCodeRemoteDataSourceImpl(gh<_i394.ApiServices>()),
@@ -237,6 +251,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i49.LoginRemoteDataSource>(
       () => _i1021.LoginRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i299.GetHistoryUseCase>(
+      () => _i299.GetHistoryUseCase(gh<_i1044.HistoryRepo>()),
+    );
+    gh.factory<_i234.HistoryCubit>(
+      () => _i234.HistoryCubit(gh<_i299.GetHistoryUseCase>()),
     );
     gh.factory<_i969.AnswerMcqRepo>(
       () => _i933.AnswerMcqRepoImpl(gh<_i386.AnswerMcqRemoteDataSource>()),

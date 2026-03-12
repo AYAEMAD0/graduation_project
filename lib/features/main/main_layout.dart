@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/features/main/tabs/history/view/history_screen.dart';
 import 'package:mock_mate_ai/features/main/widget/navbar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../core/helper/shared_check_helper.dart';
 import 'tabs/faq/faq_tab.dart';
-import 'tabs/history/history_tab.dart';
 import 'tabs/home/home_tab.dart';
 import 'tabs/profile/view/profile_tab.dart';
 import 'tabs/profile/viewmodel/profile/profile_cubit.dart';
@@ -34,7 +34,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   final List<Widget> pages = const [
     HomeTab(),
-    HistoryTab(),
+    HistoryTap(),
     FaqTab(),
     ProfileTab(),
   ];
