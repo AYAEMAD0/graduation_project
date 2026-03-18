@@ -29,4 +29,12 @@ class AppAsset {
   static const String feedBack = 'assets/images/svgs/feedBack_icn.svg';
   static const String analyze = 'assets/images/svgs/analyze_icn.svg';
   static const String live = 'assets/images/svgs/live_icn.svg';
+
+  static const String strength = 'assets/images/svgs/Strengt_icn.svg';
+  static const String doubleTrue = 'assets/images/svgs/double_true.svg';
+  static const String error = 'assets/images/svgs/error_icn.svg';
+  static const String warning = 'assets/images/svgs/warning_icn.svg';
+  static const String menu = 'assets/images/svgs/menu_icn.svg';
+  static const String suggestion = 'assets/images/svgs/Suggestion_icn.svg';
+
 }

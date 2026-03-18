@@ -3,6 +3,7 @@ import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
+import 'package:mock_mate_ai/features/feedback/view/feedback.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
 import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
@@ -21,6 +22,7 @@ import '../../features/session/question_overview/view/question_overview.dart';
 import '../../features/session/upload_cv_jd/view/upload_cv_jd.dart';
 import '../widget/session_expired.dart';
 
+
 class AppRouter {
   static Map<String, Widget Function(BuildContext)> get routes {
     return {
@@ -37,6 +39,7 @@ class AppRouter {
       AppRoutes.scoreScreen: (context) => ScoreScreen(),
       AppRoutes.home: (context) => MainLayout(),
       AppRoutes.history: (context) => HistoryTab(),
+      AppRoutes.feedback: (context) => FeedbackScreen(),
 
       AppRoutes.questionOverview: (context) {
         final args =
