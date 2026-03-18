@@ -39,7 +39,6 @@ class FeedbackScreen extends StatelessWidget {
               }
               return Stack(
                 children: [
-                  /// 🔥 الخلفية الجديدة
                   Positioned.fill(
                     child: IgnorePointer(
                       child: Stack(

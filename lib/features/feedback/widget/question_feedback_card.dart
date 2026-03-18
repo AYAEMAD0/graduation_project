@@ -35,7 +35,6 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      //  height: 382,
       padding: const EdgeInsets.all(33.14),
       decoration: BoxDecoration(
         color: const Color(0xffA806F9).withValues(alpha: 0.05),
