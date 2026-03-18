@@ -122,7 +122,7 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: const Color(0xFFA806F9).withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(8),
                 border: const Border(
                   left: BorderSide(color: Color(0xffA806F9), width: 4),
                 ),
