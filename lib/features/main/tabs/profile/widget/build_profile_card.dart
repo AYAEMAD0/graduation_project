@@ -67,13 +67,6 @@ class BuildProfileCard extends StatelessWidget {
                       ),
                     ),
               const SizedBox(height: 8),
-              Text(
-                "Frontend Engineer",
-                style: AppStyle.font24BlackBold.copyWith(
-                  fontSize: isMobile ? 20 : 24,
-                  color: Color(0xFFA806F9),
-                ),
-              ),
             ],
           ),
         ],
