@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/routes/app_routes.dart';
 import '../viewModel/history_cubit.dart';
 import '../viewModel/history_state.dart';
 import 'history_card.dart';
@@ -37,10 +38,17 @@ class HistoryListView extends StatelessWidget {
                 return const Color(0xffA855F7);
               }();
 
-              return HistoryCard(
-                data: interview,
-                notifications: 0,
-                scoreColor: scoreColor,
+              return GestureDetector(
+                onTap: () {
+                  //todo nav into feedback
+                  Navigator.pushNamed(context, AppRoutes.feedback,
+                      arguments: interview.interviewSessionId);
+                },
+                child: HistoryCard(
+                  data: interview,
+                  notifications: 0,
+                  scoreColor: scoreColor,
+                ),
               );
             },
           );

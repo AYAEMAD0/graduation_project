@@ -15,7 +15,6 @@ import '../../features/auth/presentation/screen/forgot/view/forgot_password_scre
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/successful_screen.dart';
-import '../../features/score_screen/presentation/screens/score_screen.dart';
 import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
@@ -36,10 +35,12 @@ class AppRouter {
       AppRoutes.newPassword: (context) => NewPassword(),
       AppRoutes.successful: (context) => SuccessfulScreen(),
       AppRoutes.uploadCvJd: (context) => UploadCvJd(),
-      AppRoutes.scoreScreen: (context) => ScoreScreen(),
       AppRoutes.home: (context) => MainLayout(),
       AppRoutes.history: (context) => HistoryTab(),
-      AppRoutes.feedback: (context) => FeedbackScreen(),
+      AppRoutes.feedback: (context) {
+        final sessionId = ModalRoute.of(context)!.settings.arguments as int;
+        return FeedbackScreen(sessionId: sessionId);
+      },
 
       AppRoutes.questionOverview: (context) {
         final args =
@@ -51,7 +52,6 @@ class AppRouter {
         }
         return QuestionOverview(interviewSession: interviewSession);
       },
-
       AppRoutes.codeWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -75,7 +75,6 @@ class AppRouter {
               args['onCodeReverted'] as void Function(int)? ?? (_) {},
         );
       },
-
       AppRoutes.mcqWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;

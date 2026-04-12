@@ -1,10 +1,16 @@
 class FormatDate {
   static String formatDate(String dateStr) {
-    if (dateStr.isEmpty) return "";
+    if (dateStr.isEmpty) return "-";
+
     try {
-      final date = DateTime.parse(dateStr);
+      final date = DateTime.parse(dateStr).add(const Duration(hours: 2));
+
       final now = DateTime.now();
       final difference = now.difference(date);
+
+      if (difference.isNegative) {
+        return "${date.day}/${date.month}/${date.year}";
+      }
 
       if (difference.inMinutes < 1) {
         return "Just now";
@@ -18,7 +24,7 @@ class FormatDate {
         return "${date.day}/${date.month}/${date.year}";
       }
     } catch (e) {
-      return dateStr;
+      return "-";
     }
   }
 }

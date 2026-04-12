@@ -124,6 +124,8 @@ import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart
     as _i407;
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
     as _i461;
+import '../../features/feedback/viewmodel/get_session/get_session_cubit.dart'
+    as _i122;
 import '../../features/main/tabs/history/viewModel/history_cubit.dart' as _i234;
 import '../../features/main/tabs/profile/viewmodel/logout/logout_cubit.dart'
     as _i540;
@@ -143,8 +145,6 @@ import '../../features/session/question_overview/viewmodel/question_overview_cub
     as _i715;
 import '../../features/session/upload_cv_jd/viewmodel/upload_cv_cubit.dart'
     as _i369;
-import '../../features/session/viewmodel/get_session/get_session_cubit.dart'
-    as _i122;
 import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
     as _i220;
 import 'storage_module.dart' as _i371;
