@@ -10,9 +10,14 @@ import '../viewModel/login_cubit.dart';
 import 'build_have_account_section.dart';
 
 class BuildBodySection extends StatelessWidget {
-  const BuildBodySection({super.key, required this.viewmodel});
+  const BuildBodySection({
+    super.key,
+    required this.viewmodel,
+    required this.isLoading,
+  });
 
   final LoginCubit viewmodel;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +79,22 @@ class BuildBodySection extends StatelessWidget {
           SizedBox(height: spacingMedium),
           CustomButton(
             widthBtn: isMobile ? 250 : 380,
-            text: "LOG IN",
-            onPressed: () {
-              viewmodel.login();
-            },
+            child: isLoading
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : null,
+            text: isLoading ? "" : "LOG IN",
+            onPressed: isLoading
+                ? null
+                : () {
+                    viewmodel.login();
+                  },
           ),
           SizedBox(height: spacingMedium),
           BuildHaveAccountSection(),
