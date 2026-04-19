@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/config/di.dart';
+import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_cubit.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../model/session_arguments.dart';
@@ -64,8 +66,15 @@ class _QuestionOverviewState extends State<QuestionOverview> {
         widget.interviewSession.codingQuestions.length +
         widget.interviewSession.mcqQuestions.length;
 
-    return BlocProvider(
-      create: (context) => QuestionOverviewCubit()..init(totalQuestions),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => QuestionOverviewCubit()..init(totalQuestions),
+        ),
+
+        BlocProvider(create: (context) => getIt<SubmitAnswerCubit>()),
+      ],
+
       child: BlocBuilder<QuestionOverviewCubit, QuestionOverviewState>(
         builder: (context, state) {
           final cubit = context.read<QuestionOverviewCubit>();

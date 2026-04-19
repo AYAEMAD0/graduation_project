@@ -40,6 +40,8 @@ import '../../api/data_source/remote/session/interview_session/interview_session
     as _i332;
 import '../../api/data_source/remote/session/run_code/run_code_remote_data_source_impl.dart'
     as _i328;
+import '../../api/data_source/remote/session/submit_answer/submit_answer_remote_data_source_impl.dart'
+    as _i725;
 import '../../api/data_source/remote/session/submit_code/submit_code_remote_data_source_impl.dart'
     as _i243;
 import '../../api/dio/dio_interceptor.dart' as _i600;
@@ -68,6 +70,8 @@ import '../../data/data_source/remote/session/interview_session/interview_sessio
     as _i291;
 import '../../data/data_source/remote/session/run_code/run_code_remote_data_source.dart'
     as _i441;
+import '../../data/data_source/remote/session/submit_answer/submit_answer_remote_data_source.dart'
+    as _i335;
 import '../../data/data_source/remote/session/submit_code/submit_code_remote_data_source.dart'
     as _i343;
 import '../../data/repo_impl/auth/login/login_repo_impl.dart' as _i612;
@@ -86,6 +90,8 @@ import '../../data/repo_impl/session/get_session/get_session_repo_impl.dart'
 import '../../data/repo_impl/session/interview_session/interview_session_repo_impl.dart'
     as _i816;
 import '../../data/repo_impl/session/run_code/run_code_repo_impl.dart' as _i372;
+import '../../data/repo_impl/session/submit_answer/submit_answer_repo_impl.dart'
+    as _i1020;
 import '../../data/repo_impl/session/submit_code/submit_code_repo_impl.dart'
     as _i654;
 import '../../domain/repo/auth/login/login_repo.dart' as _i308;
@@ -102,6 +108,8 @@ import '../../domain/repo/session/get_session/get_session_repo.dart' as _i839;
 import '../../domain/repo/session/interview_session/interview_session_repo.dart'
     as _i750;
 import '../../domain/repo/session/run_code/run_code_repo.dart' as _i410;
+import '../../domain/repo/session/submit_answer/submit_answer_repo.dart'
+    as _i134;
 import '../../domain/repo/session/submit_code/submit_code_repo.dart' as _i344;
 import '../../domain/usecase/auth/login/login_usecase.dart' as _i863;
 import '../../domain/usecase/auth/logout/logout_usecase.dart' as _i976;
@@ -118,6 +126,8 @@ import '../../domain/usecase/session/get_session/get_session_usecase.dart'
 import '../../domain/usecase/session/interview_session/interview_session_usecase.dart'
     as _i196;
 import '../../domain/usecase/session/run_code/run_code_usecase.dart' as _i372;
+import '../../domain/usecase/session/submit_answer/submit_answer_usecase.dart'
+    as _i271;
 import '../../domain/usecase/session/submit_code/submit_code_usecase.dart'
     as _i473;
 import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart'
@@ -125,7 +135,7 @@ import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
     as _i461;
 import '../../features/feedback/viewmodel/get_session/get_session_cubit.dart'
-    as _i122;
+    as _i846;
 import '../../features/main/tabs/history/viewModel/history_cubit.dart' as _i234;
 import '../../features/main/tabs/profile/viewmodel/logout/logout_cubit.dart'
     as _i540;
@@ -143,6 +153,8 @@ import '../../features/session/mcq_workspace/viewmodel/mcq_workspace_cubit.dart'
     as _i244;
 import '../../features/session/question_overview/viewmodel/question_overview_cubit.dart'
     as _i715;
+import '../../features/session/question_overview/viewmodel/submit_answer_cubit.dart'
+    as _i65;
 import '../../features/session/upload_cv_jd/viewmodel/upload_cv_cubit.dart'
     as _i369;
 import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
@@ -218,6 +230,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i722.GetSessionRemoteDataSource>(
       () => _i550.GetSessionRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i335.SubmitAnswerRemoteDataSource>(
+      () => _i725.SubmitAnswerRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i884.UpdateProfileRepo>(
       () =>
           _i577.UpdateProfileRepoImpl(gh<_i26.UpdateProfileRemoteDataSource>()),
@@ -270,6 +285,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i494.GetProfileRepo>(
       () => _i904.GetProfileRepoImpl(gh<_i1011.GetProfileRemoteDataSource>()),
     );
+    gh.factory<_i134.SubmitAnswerRepo>(
+      () =>
+          _i1020.SubmitAnswerRepoImpl(gh<_i335.SubmitAnswerRemoteDataSource>()),
+    );
     gh.factory<_i1040.GetSessionUseCase>(
       () => _i1040.GetSessionUseCase(gh<_i839.GetSessionRepo>()),
     );
@@ -299,6 +318,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1051.RunCodeCubit>(
       () => _i1051.RunCodeCubit(gh<_i372.RunCodeUseCase>()),
     );
+    gh.factory<_i271.SubmitAnswerUsecase>(
+      () => _i271.SubmitAnswerUsecase(gh<_i134.SubmitAnswerRepo>()),
+    );
     gh.factory<_i750.InterviewSessionRepo>(
       () => _i816.InterviewSessionRepoImpl(
         gh<_i291.InterviewSessionRemoteDataSource>(),
@@ -319,8 +341,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i375.SignupUsecase>(
       () => _i375.SignupUsecase(signupRepo: gh<_i788.SignupRepo>()),
     );
-    gh.factory<_i122.GetSessionCubit>(
-      () => _i122.GetSessionCubit(gh<_i1040.GetSessionUseCase>()),
+    gh.factory<_i846.GetSessionCubit>(
+      () => _i846.GetSessionCubit(gh<_i1040.GetSessionUseCase>()),
     );
     gh.factory<_i152.GetProfileUseCase>(
       () => _i152.GetProfileUseCase(gh<_i494.GetProfileRepo>()),
@@ -331,6 +353,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i407.LoginCubit>(
       () =>
           _i407.LoginCubit(gh<_i863.LoginUsecase>(), gh<_i589.TokenStorage>()),
+    );
+    gh.factory<_i65.SubmitAnswerCubit>(
+      () => _i65.SubmitAnswerCubit(gh<_i271.SubmitAnswerUsecase>()),
     );
     gh.factory<_i461.SignupCubit>(
       () => _i461.SignupCubit(
