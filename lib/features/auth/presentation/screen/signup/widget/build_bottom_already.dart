@@ -5,13 +5,16 @@ import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_style.dart';
 
 class BuildBottomAlready extends StatelessWidget {
-  const BuildBottomAlready({super.key});
+  const BuildBottomAlready({super.key, this.isLoading = false});
+
+  final bool isLoading;
+
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final textFontSize = isMobile ? 15.0 : 18.0;
 
-    return   Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Flexible(
@@ -24,7 +27,9 @@ class BuildBottomAlready extends StatelessWidget {
         ),
         Flexible(
           child: TextButton(
-            onPressed: () {
+            onPressed: isLoading
+                ? null
+                : () {
               Navigator.pushReplacementNamed(
                 context,
                 AppRoutes.login,
@@ -34,6 +39,7 @@ class BuildBottomAlready extends StatelessWidget {
               "Login here",
               style: AppStyle.font16BlackBold.copyWith(
                 fontSize: textFontSize,
+                color: isLoading ? Colors.grey : null,
               ),
               overflow: TextOverflow.ellipsis,
             ),
