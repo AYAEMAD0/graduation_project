@@ -34,9 +34,7 @@ class BuildBodySignupSection extends StatelessWidget {
             ),
             child: BlocConsumer<SignupCubit, SignupState>(
               listener: (context, state) {
-                // TODO: implement listener
                 if (state is SignupError) {
-                  CustomDialog.hideLoading(context: context);
                   CustomDialog.showMessage(
                     context: context,
                     title: 'Error',
@@ -45,26 +43,14 @@ class BuildBodySignupSection extends StatelessWidget {
                   );
                 } else if (state is SignupValidationError) {
                   final firstError = state.errors.values.first.first;
-                  CustomDialog.hideLoading(context: context);
                   CustomDialog.showMessage(
                     context: context,
                     title: 'Validation Error',
                     message: firstError,
                     nagActionName: 'Cancel',
                   );
-                } else if (state is SignupLoading) {
-                  CustomDialog.showLoading(context: context);
                 } else if (state is SignupSuccess) {
-                  CustomDialog.hideLoading(context: context);
-                  CustomDialog.showMessage(
-                    context: context,
-                    title: 'Successfully',
-                    message: 'Signup Successfully',
-                    posActionName: 'Ok',
-                    posActionClick: () {
-                      Navigator.pushReplacementNamed(context, AppRoutes.home);
-                    },
-                  );
+                  Navigator.pushReplacementNamed(context, AppRoutes.home);
                 }
               },
               builder: (context, state) {
@@ -88,15 +74,29 @@ class BuildBodySignupSection extends StatelessWidget {
                       SizedBox(height: spacingMedium),
                       BuildForm(viewmodel: viewmodel),
                       SizedBox(height: spacingLarge),
-                      CustomButton(
-                        text: "CREATE ACCOUNT",
-                        widthBtn: isMobile ? 250 : 380,
-                        onPressed: () {
-                          viewmodel.signup();
-                        },
-                      ),
+                    CustomButton(
+                      text: state is SignupLoading ? "" : "CREATE ACCOUNT",
+                      widthBtn: isMobile ? 250 : 380,
+                      child: state is SignupLoading
+                          ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      )
+                          : null,
+                      onPressed: state is SignupLoading
+                          ? null
+                          : () {
+                        viewmodel.signup();
+                      },
+                    ),
                       SizedBox(height: spacingMedium),
-                      BuildBottomAlready(),
+                      BuildBottomAlready(isLoading: state is SignupLoading),
                       SizedBox(height: spacingMedium),
                     ],
                   ),
