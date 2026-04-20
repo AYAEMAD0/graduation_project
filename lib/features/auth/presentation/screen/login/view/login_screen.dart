@@ -112,10 +112,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) async {
-                          if (state is LoginLoading) {
-                            CustomDialog.showLoading(context: context);
-                          } else if (state is LoginError) {
-                            CustomDialog.hideLoading(context: context);
+                           if (state is LoginError) {
                             CustomDialog.showMessage(
                               context: context,
                               message: state.messageError,
@@ -123,7 +120,6 @@ class LoginScreen extends StatelessWidget {
                               nagActionName: "Cancel",
                             );
                           } else if (state is LoginValidationError) {
-                            CustomDialog.hideLoading(context: context);
                             final firstError = state.errors.values.first.first;
                             CustomDialog.showMessage(
                               context: context,
@@ -141,25 +137,18 @@ class LoginScreen extends StatelessWidget {
                                   SharedCheckHelper.keyUserId, userId);
                             }
                             if (!context.mounted) return;
-                            CustomDialog.hideLoading(context: context);
-                            CustomDialog.showMessage(
-                              context: context,
-                              title: "Successfully",
-                              message: "Login Successfully",
-                              posActionName: "Ok",
-                              posActionClick: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  AppRoutes.home,
-                                      (route) => false,
-                                );
-                              },
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRoutes.home,
+                                  (route) => false,
                             );
                           }
                         },
                         builder: (context, state) {
                           final viewmodel = context.read<LoginCubit>();
-                          return BuildBodySection(viewmodel: viewmodel,);
+                          return BuildBodySection(viewmodel: viewmodel,
+                          isLoading: state is LoginLoading,
+                          );
                         },
                       ),
                     ),
