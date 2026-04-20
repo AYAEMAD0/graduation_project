@@ -19,4 +19,8 @@ class ApiEndpoint {
 
   static String submitCodeApi(int sessionId) =>
       '/interview-sessions/$sessionId/submit-code';
+
+  static String submitAnswerApi(int sessionId) =>
+      '/interviews/$sessionId/submit';
+    
 }

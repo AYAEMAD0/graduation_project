@@ -105,7 +105,7 @@ class QuestionContent extends StatelessWidget {
                         _navigateToQuestion(context, question, index),
                   );
                 }),
-                QuestionContentFooter(),
+                QuestionContentFooter(sessionId: sessionArgs.sessionId),
               ],
             ),
           ),
