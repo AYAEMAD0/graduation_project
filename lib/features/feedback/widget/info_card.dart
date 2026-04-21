@@ -28,7 +28,7 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(33.14),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(16.57),
@@ -45,33 +45,33 @@ class InfoCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset(headerIcon, width: 23, height: 23),
-                const SizedBox(width: 11.05),
+                SvgPicture.asset(headerIcon, width: 18, height: 18),
+                const SizedBox(width: 8),
                 Text(
                   title,
                   style: const TextStyle(
                     fontFamily: "Roboto",
                     fontWeight: FontWeight.w700,
-                    fontSize: 27.62,
+                    fontSize: 18,
                     height: 1.4,
                     color: Colors.black,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 33.14),
+            const SizedBox(height: 12),
             ...List.generate(
               descriptions.length,
-              (i) => Column(
-                children: [
-                  _InfoCardListItem(
-                    iconColor: descriptionIconColor,
-                    icon: descriptionIcon,
-                    text: descriptions[i], size: descriptionIconSize,
-                  ),
-                  if (i != descriptions.length - 1)
-                    const SizedBox(height: 22.09),
-                ],
+                  (i) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: i != descriptions.length - 1 ? 6 : 0,
+                ),
+                child: _InfoCardListItem(
+                  iconColor: descriptionIconColor,
+                  icon: descriptionIcon,
+                  text: descriptions[i],
+                  size: 14,
+                ),
               ),
             ),
           ],
@@ -98,14 +98,14 @@ class _InfoCardListItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, size: size, color: iconColor),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
             style: const TextStyle(
               fontFamily: "Roboto",
-              fontSize: 22.09,
-              height: 1.5,
+              fontSize: 13,
+              height: 1.2,
               color: Color(0xff3C473F),
             ),
           ),

@@ -132,11 +132,9 @@ class FeedbackScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Container(
                         width: 1414,
-                        padding: const EdgeInsets.fromLTRB(
-                          22.09,
-                          66.28,
-                          22.09,
-                          66.28,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 15,
                         ),
                         child: BuildBodyFeedback(
                           feedback: feedback, session: session,),

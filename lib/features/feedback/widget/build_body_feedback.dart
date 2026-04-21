@@ -28,16 +28,16 @@ class BuildBodyFeedback extends StatelessWidget {
           "Performance Feedback",
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.w900,
-            fontSize: 66.28,
+            fontSize: 40,
             color: const Color(0xff000000),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
         OverallSummaryCard(
           summary: feedback.overallSummary,
           score: session.score.toString(),
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 16),
         IntrinsicHeight(
           child: Row(
             children: [
@@ -51,7 +51,7 @@ class BuildBodyFeedback extends StatelessWidget {
                 descriptionIconSize: 15,
               ),
 
-              const SizedBox(width: 33.14),
+              const SizedBox(width: 20),
 
               InfoCard(
                 backgroundColor: const Color(0x0DF937A6),
@@ -66,11 +66,11 @@ class BuildBodyFeedback extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 90),
+        const SizedBox(height: 24),
 
         const SectionHeader(title: "Detailed Feedback per Question"),
 
-        const SizedBox(height: 50),
+        const SizedBox(height: 12),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -85,7 +85,7 @@ class BuildBodyFeedback extends StatelessWidget {
             ];
 
             return Padding(
-              padding: const EdgeInsets.only(bottom: 40),
+              padding: const EdgeInsets.only(bottom: 12),
               child: QuestionFeedbackCard(
                 number: index + 1,
                 title: item.questionTitle,

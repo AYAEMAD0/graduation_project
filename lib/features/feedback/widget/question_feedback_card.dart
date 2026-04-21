@@ -12,7 +12,6 @@ class QuestionFeedbackCard extends StatefulWidget {
   final String suggestion;
   final Color baseColor;
 
-
   const QuestionFeedbackCard({
     super.key,
     required this.number,
@@ -21,7 +20,6 @@ class QuestionFeedbackCard extends StatefulWidget {
     required this.feedback,
     required this.suggestion,
     required this.baseColor,
-  
   });
 
   @override
@@ -35,7 +33,7 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(33.14),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: const Color(0xffA806F9).withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16.57),
@@ -50,8 +48,8 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
           Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
                   color: widget.baseColor.withValues(alpha: 0.20),
                   borderRadius: BorderRadius.circular(50),
@@ -71,7 +69,7 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
                 child: Text(
                   widget.title,
                   style: GoogleFonts.roboto(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: const Color(0xff1A1A2E),
                   ),
@@ -106,19 +104,19 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
             ],
           ),
           if (_expanded) ...[
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             Text(
               widget.feedback,
               style: GoogleFonts.roboto(
                 fontWeight: FontWeight.w400,
-                fontSize: 22.09,
-                height: 33.14 / 22.09,
+                fontSize: 13,
+                height: 1.3,
                 color: const Color(0xff3C473F),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: const Color(0xFFA806F9).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
@@ -132,11 +130,11 @@ class _QuestionFeedbackCardState extends State<QuestionFeedbackCard> {
                   Row(
                     children: [
                       SvgPicture.asset(AppAsset.suggestion),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 4),
                       Text(
                         "SUGGESTION",
                         style: GoogleFonts.roboto(
-                          fontSize: 20,
+                          fontSize: 12,
                           fontWeight: FontWeightHelper.bold,
                           letterSpacing: 1.5,
                           color: const Color(0xffA806F9),

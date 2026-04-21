@@ -37,7 +37,7 @@ class OverallSummaryCard extends StatelessWidget {
         ),
         Container(
           width: 1369.81,
-          padding: const EdgeInsets.fromLTRB(44.19, 44.19, 44.19, 33.14),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
             color: const Color(0x0DA806F9),
             borderRadius: BorderRadius.circular(16.57),
@@ -58,23 +58,23 @@ class OverallSummaryCard extends StatelessWidget {
                           size: 30.33,
                           color: Color(0xffA806F9),
                         ),
-                        const SizedBox(width: 16.57),
+                        const SizedBox(width: 8),
                         Text(
                           "Overall Summary",
                           style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w700,
-                            fontSize: 33.14,
+                            fontSize: 22,
                             height: 1.33,
                             color: Colors.black,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
                     Text(
                       summary,
                       style: GoogleFonts.roboto(
-                        fontSize: 24,
+                        fontSize: 16,
                         letterSpacing: 0,
                         fontWeight: FontWeightHelper.regular,
                         color: AppColor.blackColor,
@@ -83,13 +83,10 @@ class OverallSummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 44.19),
+              const SizedBox(width: 24),
               Container(
-                width: 218.20,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 33.14,
-                  vertical: 40,
-                ),
+                width: 130,
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: const Color(0x1AA806F9),
                   borderRadius: BorderRadius.circular(16.57),
@@ -116,7 +113,7 @@ class OverallSummaryCard extends StatelessWidget {
                             text: "%",
                             style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w900,
-                              fontSize: 52,
+                              fontSize: 32,
                               color: const Color(0xffA806F9),
                             ),
                           ),
@@ -128,7 +125,7 @@ class OverallSummaryCard extends StatelessWidget {
                       "OVERALL SCORE",
                       style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w700,
-                        fontSize: 15,
+                        fontSize: 9,
                         letterSpacing: 1.66,
                         color: const Color(0xB2A806F9),
                       ),
