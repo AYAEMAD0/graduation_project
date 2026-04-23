@@ -5,7 +5,7 @@ import 'package:mock_mate_ai/features/main/widget/navbar.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../core/helper/shared_check_helper.dart';
-import 'tabs/faq/faq_tab.dart';
+import 'tabs/faq/view/faq_tab.dart';
 import 'tabs/history/viewModel/history_cubit.dart';
 import 'tabs/home/home_tab.dart';
 import 'tabs/profile/view/profile_tab.dart';
