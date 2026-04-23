@@ -4,7 +4,12 @@ import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'submit_test_button.dart';
 
 class QuestionContentFooter extends StatelessWidget {
-  const QuestionContentFooter({super.key});
+  final int sessionId;
+
+  const QuestionContentFooter({
+    super.key,
+    required this.sessionId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,9 @@ class QuestionContentFooter extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 24),
-        const SubmitTestButton(),
+         SubmitTestButton(
+          sessionId: sessionId,
+        ),
         const SizedBox(height: 40),
       ],
     );

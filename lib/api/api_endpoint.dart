@@ -1,5 +1,5 @@
 class ApiEndpoint {
-  static const String baseUrl =  'http://mockmate-001-site1.mtempurl.com';
+  static const String baseUrl = 'http://mockmate-001-site1.mtempurl.com';
   static const String signupApi = '/api/users';
   static const String loginApi = "/api/users/login";
   static const String refreshTokenApi = '/api/users/refresh';
@@ -19,4 +19,8 @@ class ApiEndpoint {
 
   static String submitCodeApi(int sessionId) =>
       '/interview-sessions/$sessionId/submit-code';
+
+  static String submitAnswerApi(int sessionId) =>
+      '/interviews/$sessionId/submit';
+    
 }
