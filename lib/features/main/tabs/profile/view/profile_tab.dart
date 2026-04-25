@@ -32,7 +32,7 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   void initState() {
     super.initState();
-    cubitProfile = getIt<ProfileCubit>();
+    cubitProfile = context.read<ProfileCubit>();
     cubitLogout = getIt<LogoutCubit>();
     final userId = SharedCheckHelper.getValue(SharedCheckHelper.keyUserId);
     if (userId != null) cubitProfile.getProfile(userId);
@@ -42,7 +42,6 @@ class _ProfileTabState extends State<ProfileTab> {
   void dispose() {
     fullNameController.dispose();
     phoneController.dispose();
-    cubitProfile.close();
     cubitLogout.close();
     super.dispose();
   }

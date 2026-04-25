@@ -55,6 +55,7 @@ dependencies:
   highlight: ^0.7.0
   flutter_highlight: ^0.7.0
   visibility_detector: ^0.4.0+2
+  rxdart: ^0.28.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

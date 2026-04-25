@@ -24,6 +24,7 @@ class CodeEditor extends StatefulWidget {
   final void Function(int langId, String code) onCodeChanged;
   final void Function(int langId, String code) onCodeSaved;
   final void Function(int langId) onCodeReverted;
+  final Set<int> savedCodeQuestions;
 
   const CodeEditor({
     super.key,
@@ -35,6 +36,7 @@ class CodeEditor extends StatefulWidget {
     required this.onCodeChanged,
     required this.onCodeSaved,
     required this.onCodeReverted,
+    required this.savedCodeQuestions,
     this.savedLanguageId,
   });
 
@@ -118,6 +120,8 @@ class _CodeEditorState extends State<CodeEditor> {
       onRunCode: _runCode,
       onSaveCode: _saveCode,
       onCodeSaved: widget.onCodeSaved,
+        questionId: widget.questionId,
+        savedCodeQuestions: widget.savedCodeQuestions
     );
   }
 }

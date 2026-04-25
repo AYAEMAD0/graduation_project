@@ -74,27 +74,27 @@ class BuildBodySignupSection extends StatelessWidget {
                       SizedBox(height: spacingMedium),
                       BuildForm(viewmodel: viewmodel),
                       SizedBox(height: spacingLarge),
-                    CustomButton(
-                      text: state is SignupLoading ? "" : "CREATE ACCOUNT",
-                      widthBtn: isMobile ? 250 : 380,
-                      child: state is SignupLoading
-                          ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        ),
-                      )
-                          : null,
-                      onPressed: state is SignupLoading
-                          ? null
-                          : () {
-                        viewmodel.signup();
-                      },
-                    ),
+                      CustomButton(
+                        text: state is SignupLoading ? "" : "CREATE ACCOUNT",
+                        widthBtn: isMobile ? 250 : 380,
+                        onPressed: state is SignupLoading
+                            ? null
+                            : () {
+                                viewmodel.signup();
+                              },
+                        child: state is SignupLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                ),
+                              )
+                            : null,
+                      ),
                       SizedBox(height: spacingMedium),
                       BuildBottomAlready(isLoading: state is SignupLoading),
                       SizedBox(height: spacingMedium),

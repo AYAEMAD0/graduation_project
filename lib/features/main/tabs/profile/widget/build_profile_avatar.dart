@@ -28,21 +28,13 @@ class BuildProfileAvatar extends StatelessWidget {
               Container(
                 width: size,
                 height: size,
-                padding: const EdgeInsets.all(6.62),
+                padding: const EdgeInsets.all(5.62),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isMobile
                       ? AppColor.transparentColor
                       : const Color(0xA6A806F9),
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xA6A806F9),
-                      width: size * 0.001,
-                    ),
-                  ),
                   child: CircleAvatar(
                     radius: 10,
                     backgroundColor: AppColor.whiteColor,
@@ -56,7 +48,6 @@ class BuildProfileAvatar extends StatelessWidget {
                         : null,
                   ),
                 ),
-              ),
               Positioned(
                 bottom: size * 0.07,
                 right: size * 0.040,

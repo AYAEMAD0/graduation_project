@@ -12,6 +12,7 @@ class ConsoleFooter extends StatelessWidget {
   final VoidCallback onToggleConsole;
   final VoidCallback onRunCode;
   final VoidCallback onSaveCode;
+  final bool isAlreadySaved;
 
   const ConsoleFooter({
     super.key,
@@ -19,6 +20,7 @@ class ConsoleFooter extends StatelessWidget {
     required this.onToggleConsole,
     required this.onRunCode,
     required this.onSaveCode,
+    this.isAlreadySaved = false,
   });
 
   @override
@@ -29,7 +31,7 @@ class ConsoleFooter extends StatelessWidget {
           builder: (context, submitState) {
             final isRunning = runState is RunCodeLoading;
             final isSaving = submitState is SubmitCodeLoading;
-            final isSaved = submitState is SubmitCodeSuccess;
+            final isSaved = submitState is SubmitCodeSuccess || isAlreadySaved;
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

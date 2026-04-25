@@ -79,6 +79,12 @@ class BuildBodySection extends StatelessWidget {
           SizedBox(height: spacingMedium),
           CustomButton(
             widthBtn: isMobile ? 250 : 380,
+            text: isLoading ? "" : "LOG IN",
+            onPressed: isLoading
+                ? null
+                : () {
+                    viewmodel.login();
+                  },
             child: isLoading
                 ? const SizedBox(
                     height: 20,
@@ -91,12 +97,6 @@ class BuildBodySection extends StatelessWidget {
                     ),
                   )
                 : null,
-            text: isLoading ? "" : "LOG IN",
-            onPressed: isLoading
-                ? null
-                : () {
-                    viewmodel.login();
-                  },
           ),
           SizedBox(height: spacingMedium),
           BuildHaveAccountSection(),

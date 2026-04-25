@@ -41,8 +41,12 @@ class HistoryListView extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   //todo nav into feedback
-                  Navigator.pushNamed(context, AppRoutes.feedback,
-                      arguments: interview.interviewSessionId);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.feedback,
+                    (route) => route.settings.name == AppRoutes.home,
+                    arguments: interview.interviewSessionId,
+                  );
                 },
                 child: HistoryCard(
                   data: interview,

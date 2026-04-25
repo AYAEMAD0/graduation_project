@@ -43,13 +43,11 @@ class BuildNavTab extends StatelessWidget {
         BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             String? imageUrl;
-            List<int>? imageBytes;
             if (state is ProfileSuccess) {
               imageUrl = state.user.avatarPath;
             } else if (state is ProfileUpdateSuccess) {
               imageUrl = state.user.avatarPath;
             } else if (state is ProfileImageSelected) {
-              imageBytes = state.imageBytes;
               imageUrl = state.user?.avatarPath;
             }
             return BuildDockAvatar(
@@ -58,7 +56,7 @@ class BuildNavTab extends StatelessWidget {
               currentIndex: currentIndex,
               onTap: onTap,
               imageUrl: imageUrl,
-              imageBytes: imageBytes,
+              imageBytes: null,
             );
           },
         ),

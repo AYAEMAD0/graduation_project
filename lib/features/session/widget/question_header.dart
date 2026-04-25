@@ -12,6 +12,7 @@ class QuestionHeader extends StatefulWidget {
   final int currentQuestion;
   final int totalQuestions;
   final SessionArguments args;
+  final VoidCallback? onTimeUp;
 
   const QuestionHeader({
     super.key,
@@ -19,6 +20,7 @@ class QuestionHeader extends StatefulWidget {
     required this.currentQuestion,
     required this.totalQuestions,
     required this.args,
+    this.onTimeUp,
   });
 
   @override
@@ -35,9 +37,7 @@ class _QuestionHeaderState extends State<QuestionHeader> {
       if (!mounted) return;
       CustomDialog.showTimeExpired(
         context: context,
-        onSubmit: () {
-          // todo end submit
-        },
+        onSubmit: () => widget.onTimeUp?.call(),
       );
     });
   }

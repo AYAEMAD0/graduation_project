@@ -3,7 +3,7 @@ class FormatDate {
     if (dateStr.isEmpty) return "-";
 
     try {
-      final date = DateTime.parse(dateStr).add(const Duration(hours: 2));
+      final date = DateTime.parse("${dateStr}Z").toLocal();
 
       final now = DateTime.now();
       final difference = now.difference(date);

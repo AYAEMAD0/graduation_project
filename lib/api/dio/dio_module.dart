@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
 import '../api_endpoint.dart';
 import '../api_services.dart';
 import 'dio_interceptor.dart';
@@ -13,8 +15,9 @@ abstract class DioModule {
     return BaseOptions(
       baseUrl: ApiEndpoint.baseUrl,
       receiveDataWhenStatusError: true,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
+      connectTimeout: const Duration(seconds: 120),
+      receiveTimeout: const Duration(seconds: 120),
+      sendTimeout: kIsWeb ? null : const Duration(seconds: 120),
     );
   }
 

@@ -19,6 +19,8 @@ class BuildBodyCode extends StatelessWidget {
     required this.onToggleConsole,
     required this.showConsole,
     required this.templates,
+    required this.questionId,
+    required this.savedCodeQuestions,
   });
 
   final CodeTemplateEntity template;
@@ -29,6 +31,8 @@ class BuildBodyCode extends StatelessWidget {
   final void Function() onToggleConsole;
   final bool showConsole;
   final List<CodeTemplateEntity> templates;
+  final int questionId;
+  final Set<int> savedCodeQuestions;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,7 @@ class BuildBodyCode extends StatelessWidget {
             onToggleConsole: onToggleConsole,
             onRunCode: onRunCode,
             onSaveCode: onSaveCode,
+            isAlreadySaved: savedCodeQuestions.contains(questionId),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
+import 'package:mock_mate_ai/core/widget/custom_toast.dart';
 import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_cubit.dart';
 import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_state.dart';
 
@@ -25,9 +26,7 @@ class SubmitTestButton extends StatelessWidget {
           );
         }
         if (state is SubmitAnswerError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          CustomToast.showToast(message: state.message, context: context);
         }
       },
 

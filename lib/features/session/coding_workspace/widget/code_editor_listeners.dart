@@ -18,6 +18,8 @@ class CodeEditorListeners extends StatelessWidget {
   final void Function(CodeTemplateEntity) onRunCode;
   final void Function(CodeTemplateEntity) onSaveCode;
   final void Function(int langId, String code) onCodeSaved;
+  final int questionId;
+  final Set<int> savedCodeQuestions;
 
   const CodeEditorListeners({
     super.key,
@@ -27,6 +29,8 @@ class CodeEditorListeners extends StatelessWidget {
     required this.onRunCode,
     required this.onSaveCode,
     required this.onCodeSaved,
+    required this.questionId,
+    required this.savedCodeQuestions,
   });
 
   @override
@@ -74,6 +78,8 @@ class CodeEditorListeners extends StatelessWidget {
                 context.read<CodeEditorCubit>().toggleConsole(),
             onRunCode: () => onRunCode(template),
             onSaveCode: () => onSaveCode(template),
+              questionId: questionId,
+              savedCodeQuestions: savedCodeQuestions
           );
         },
       ),

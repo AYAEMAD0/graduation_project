@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'question_overview_state.dart';
 
@@ -11,8 +12,7 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
   Timer? _timer;
   final ScrollController scrollController = ScrollController();
   static const double cardHeight = 90.0;
-  final StreamController<int> _timerStreamController =
-      StreamController<int>.broadcast();
+  final BehaviorSubject<int> _timerStreamController = BehaviorSubject<int>();
 
   Stream<int> get timerStream => _timerStreamController.stream;
 
@@ -32,7 +32,7 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
   QuestionOverviewCubit() : super(QuestionOverviewState(selectedAnswers: {}));
 
   void init(int totalQuestions) {
-    final seconds = totalQuestions * 2 * 60;
+    final seconds = totalQuestions * 1 * 60;
     _safeEmit(state.copyWith(remainingSeconds: seconds));
     _addToStream(seconds);
     _startTimer();
