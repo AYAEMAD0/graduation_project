@@ -18,11 +18,10 @@ class SubmitTestButton extends StatelessWidget {
     return BlocConsumer<SubmitAnswerCubit, SubmitAnswerState>(
       listener: (context, state) {
         if (state is SubmitAnswerSuccess) {
-          //todo edit user click back button ==> Navigator.pushNamed(context, AppRoutes.history);
-          Navigator.pushNamedAndRemoveUntil(
+          Navigator.pushReplacementNamed(
             context,
-            AppRoutes.history,
-                (route) => route.settings.name == AppRoutes.home,
+            AppRoutes.feedback,
+            arguments: sessionId, 
           );
         }
         if (state is SubmitAnswerError) {

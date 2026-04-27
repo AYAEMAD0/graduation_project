@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../../../core/routes/app_routes.dart';
 import '../../../core/widget/custom_dialog.dart';
 import '../model/session_arguments.dart';
 import '../question_overview/viewmodel/question_overview_cubit.dart';
+import '../question_overview/viewmodel/submit_answer_cubit.dart';
 
 class QuestionHeader extends StatefulWidget {
   final String time;
@@ -37,7 +40,18 @@ class _QuestionHeaderState extends State<QuestionHeader> {
       if (!mounted) return;
       CustomDialog.showTimeExpired(
         context: context,
-        onSubmit: () => widget.onTimeUp?.call(),
+        onSubmit: () async {
+          final cubit = context.read<SubmitAnswerCubit>();
+          final sessionId = widget.args.sessionId;
+          await cubit.submitAnswer(sessionId);
+          if (!mounted) return;
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.feedback,
+            (route) => route.settings.name == AppRoutes.home,
+            arguments: sessionId,
+          );
+        },
       );
     });
   }
