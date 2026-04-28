@@ -12,6 +12,7 @@ class ConsoleFooter extends StatelessWidget {
   final VoidCallback onToggleConsole;
   final VoidCallback onRunCode;
   final VoidCallback onSaveCode;
+  final VoidCallback onSubmit;
   final bool isAlreadySaved;
 
   const ConsoleFooter({
@@ -20,6 +21,7 @@ class ConsoleFooter extends StatelessWidget {
     required this.onToggleConsole,
     required this.onRunCode,
     required this.onSaveCode,
+    required this.onSubmit,
     this.isAlreadySaved = false,
   });
 
@@ -89,8 +91,13 @@ class ConsoleFooter extends StatelessWidget {
                               ),
                       ),
                       const SizedBox(width: 12),
+
                       CustomButton(
-                        onPressed: isSaving || isSaved ? null : onSaveCode,
+                        onPressed: isSaving
+                            ? null
+                            : isSaved
+                            ? onSubmit
+                            : onSaveCode,
                         widthBtn: 170,
                         child: isSaving
                             ? const Center(
@@ -103,32 +110,22 @@ class ConsoleFooter extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : isSaved
-                            ? const Center(
+                            : Center(
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      "Saved!",
-                                      style: TextStyle(
+                                    if (isSaved)
+                                      const Icon(
+                                        Icons.check_circle_outline,
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                        size: 18,
                                       ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      "Submit",
+                                      style: AppStyle.font18WhiteBold,
                                     ),
                                   ],
-                                ),
-                              )
-                            : Center(
-                                child: Text(
-                                  "Save Code",
-                                  style: AppStyle.font18WhiteBold,
                                 ),
                               ),
                       ),

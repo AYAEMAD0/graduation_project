@@ -20,6 +20,7 @@ class CodeEditorListeners extends StatelessWidget {
   final void Function(int langId, String code) onCodeSaved;
   final int questionId;
   final Set<int> savedCodeQuestions;
+   final VoidCallback onSubmit;
 
   const CodeEditorListeners({
     super.key,
@@ -30,7 +31,7 @@ class CodeEditorListeners extends StatelessWidget {
     required this.onSaveCode,
     required this.onCodeSaved,
     required this.questionId,
-    required this.savedCodeQuestions,
+    required this.savedCodeQuestions, required this.onSubmit,
   });
 
   @override
@@ -58,6 +59,7 @@ class CodeEditorListeners extends StatelessWidget {
                 message: 'Saved! Score: ${state.response.score}%',
                 context: context,
               );
+              onSubmit();
             } else if (state is SubmitCodeError) {
               CustomToast.showToast(message: state.message, context: context);
             }
@@ -79,7 +81,7 @@ class CodeEditorListeners extends StatelessWidget {
             onRunCode: () => onRunCode(template),
             onSaveCode: () => onSaveCode(template),
               questionId: questionId,
-              savedCodeQuestions: savedCodeQuestions
+              savedCodeQuestions: savedCodeQuestions, onSubmit: onSubmit,
           );
         },
       ),

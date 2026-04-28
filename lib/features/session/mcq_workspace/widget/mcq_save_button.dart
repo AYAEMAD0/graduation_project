@@ -20,15 +20,10 @@ class McqSaveButton extends StatelessWidget {
     return Center(
       child: CustomButton(
         widthBtn: 300,
-        onPressed: isSaving
-            ? null
-            : isSaved
-            ? () {}
-            : onPressed,
-
+        onPressed: isSaving ? null : onPressed, // ✅ شيلنا الـ isSaved block
         child: isSaving
-            ? Center(
-                child: const SizedBox(
+            ? const Center(
+                child: SizedBox(
                   width: 24,
                   height: 24,
                   child: CircularProgressIndicator(
@@ -42,14 +37,14 @@ class McqSaveButton extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (isSaved)
-                    Icon(
+                    const Icon(
                       Icons.check_circle,
                       color: Colors.white,
                       size: 20,
                     ),
                   const SizedBox(width: 8),
                   Text(
-                    isSaved ? "Saved!" : "Save Option",
+                    "Submit",
                     style: AppStyle.font18WhiteBold,
                   ),
                 ],

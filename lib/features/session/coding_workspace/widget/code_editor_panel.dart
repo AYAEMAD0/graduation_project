@@ -25,6 +25,7 @@ class CodeEditor extends StatefulWidget {
   final void Function(int langId, String code) onCodeSaved;
   final void Function(int langId) onCodeReverted;
   final Set<int> savedCodeQuestions;
+    final VoidCallback onSubmit;
 
   const CodeEditor({
     super.key,
@@ -37,7 +38,7 @@ class CodeEditor extends StatefulWidget {
     required this.onCodeSaved,
     required this.onCodeReverted,
     required this.savedCodeQuestions,
-    this.savedLanguageId,
+    this.savedLanguageId, required this.onSubmit,
   });
 
   @override
@@ -120,8 +121,9 @@ class _CodeEditorState extends State<CodeEditor> {
       onRunCode: _runCode,
       onSaveCode: _saveCode,
       onCodeSaved: widget.onCodeSaved,
-        questionId: widget.questionId,
-        savedCodeQuestions: widget.savedCodeQuestions
+      questionId: widget.questionId,
+      savedCodeQuestions: widget.savedCodeQuestions,
+      onSubmit: widget.onSubmit,
     );
   }
 }

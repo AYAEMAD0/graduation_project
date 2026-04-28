@@ -4,6 +4,7 @@ import '../../../core/constants/app_asset.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_style.dart';
 import '../model/session_arguments.dart';
+import 'question_sidebar.dart';
 
 class BuildSidebar extends StatefulWidget {
   const BuildSidebar({
@@ -100,24 +101,58 @@ class _BuildSidebarState extends State<BuildSidebar> {
               itemBuilder: (context, index) {
                 final number = index + 1;
                 final isActive = number == widget.args.currentQuestion;
+
+                final question = widget.args.questions.firstWhere(
+                  (q) => q.index == number,
+                  orElse: () => SidebarQuestion(index: number, type: ''),
+                );
+                final isSaved = question.type == "Coding"
+                    ? widget.args.savedCodeQuestions
+                        .contains(question.questionId)
+                    : widget.args.savedAnswers
+                        .containsKey(question.questionId);
+
+                // ✅ تحديد اللون
+                final bgColor = isSaved
+                    ? const Color(0xFF22C55E) // أخضر
+                    : isActive
+                        ? AppColor.primaryPurpleColor // بنفسجي
+                        : const Color(0xFFE5E7EB); // رمادي فاتح
+
+                final textColor = isSaved || isActive
+                    ? Colors.white
+                    : AppColor.grayMediumColor;
+
                 return GestureDetector(
                   onTap: () => widget.onTap(context, number),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    margin: const EdgeInsets.symmetric(vertical: 3),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 6),
                     height: 50,
-                    decoration: BoxDecoration(
-                      color: isActive
-                          ? const Color(0xffD5CDDD)
-                          : Colors.transparent,
-                    ),
                     alignment: Alignment.center,
-                    child: Text(
-                      "$number",
-                      style: AppStyle.font16BlackSemiBold.copyWith(
-                        color: isActive
-                            ? AppColor.primaryPurpleColor
-                            : AppColor.grayMediumColor,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        shape: BoxShape.circle,
+                        boxShadow: isActive || isSaved
+                            ? [
+                                BoxShadow(
+                                  color: bgColor.withValues(alpha: 0.4),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : [],
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "$number",
+                        style: AppStyle.font16BlackSemiBold.copyWith(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
