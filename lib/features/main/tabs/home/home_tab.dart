@@ -5,6 +5,7 @@ import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/main_background.dart';
+import 'package:mock_mate_ai/features/main/tabs/home/widget/interview_options_dialog.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/widget/scroll_animate.dart';
@@ -81,9 +82,9 @@ class HomeTab extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.uploadCvJd,
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const InterviewOptionsDialog(),
                                 );
                               },
                             ),
