@@ -4,7 +4,7 @@ class FormatDate {
 
     try {
       final date = DateTime.parse("${dateStr}Z").toLocal();
-
+      //todo final date = DateTime.parse(dateStr);
       final now = DateTime.now();
       final difference = now.difference(date);
 

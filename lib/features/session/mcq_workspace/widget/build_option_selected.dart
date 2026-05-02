@@ -16,7 +16,7 @@ class BuildOptionSelected extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
         gradient: isSelected
             ? LinearGradient(
@@ -75,7 +75,7 @@ class BuildOptionSelected extends StatelessWidget {
             child: Text(
               optionText,
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 color: Color(0xff111827),
               ),
