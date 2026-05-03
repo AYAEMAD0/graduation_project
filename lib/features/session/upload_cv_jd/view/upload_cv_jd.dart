@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/features/session/viewmodel/interview_session/ai_interview_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/config/di.dart';
@@ -17,14 +18,18 @@ class UploadCvJd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String mode = ModalRoute.of(context)?.settings.arguments as String? ?? 'db';
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final displayName =
         SharedCheckHelper.getValue(SharedCheckHelper.keyDisplayName) ?? "User";
 
     return Scaffold(
       backgroundColor: AppColor.whiteDarkColor,
-      body: BlocProvider(
-        create: (context) => getIt<InterviewSessionCubit>(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<InterviewSessionCubit>()),
+          BlocProvider(create: (context) => getIt<AiInterviewCubit>()),
+        ],
         child: SafeArea(
           child: Stack(
             children: [
@@ -111,7 +116,7 @@ class UploadCvJd extends StatelessWidget {
                               children: [
                                 GreetingSection(displayName: displayName),
                                 SizedBox(height: isMobile ? 30 : 60),
-                                StartSessionCard(),
+                                StartSessionCard(mode: mode),
                                 SizedBox(height: 25),
                               ],
                             ),
