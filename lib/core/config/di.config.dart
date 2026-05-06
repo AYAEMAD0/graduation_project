@@ -36,6 +36,8 @@ import '../../api/data_source/remote/session/answer_mcq/answer_mcq_remote_data_s
     as _i974;
 import '../../api/data_source/remote/session/get_session/get_session_remote_data_source_impl.dart'
     as _i550;
+import '../../api/data_source/remote/session/interview_session/ai_interview_remote_data_source_impl.dart'
+    as _i208;
 import '../../api/data_source/remote/session/interview_session/interview_session_remote_data_source_impl.dart'
     as _i332;
 import '../../api/data_source/remote/session/run_code/run_code_remote_data_source_impl.dart'
@@ -66,6 +68,8 @@ import '../../data/data_source/remote/session/answer_mcq/answer_mcq_remote_data_
     as _i386;
 import '../../data/data_source/remote/session/get_session/get_session_remote_data_source.dart'
     as _i722;
+import '../../data/data_source/remote/session/interview_session/ai_interview_remote_data_source.dart'
+    as _i202;
 import '../../data/data_source/remote/session/interview_session/interview_session_remote_data_source.dart'
     as _i291;
 import '../../data/data_source/remote/session/run_code/run_code_remote_data_source.dart'
@@ -87,6 +91,8 @@ import '../../data/repo_impl/session/answer_mcq/answer_mcq_repo_impl.dart'
     as _i933;
 import '../../data/repo_impl/session/get_session/get_session_repo_impl.dart'
     as _i788;
+import '../../data/repo_impl/session/interview_session/ai_interview_repo_impl.dart'
+    as _i175;
 import '../../data/repo_impl/session/interview_session/interview_session_repo_impl.dart'
     as _i816;
 import '../../data/repo_impl/session/run_code/run_code_repo_impl.dart' as _i372;
@@ -105,6 +111,8 @@ import '../../domain/repo/profile/get_profile_repo.dart' as _i494;
 import '../../domain/repo/profile/update_profile_repo.dart' as _i884;
 import '../../domain/repo/session/answer_mcq/answer_mcq_repo.dart' as _i969;
 import '../../domain/repo/session/get_session/get_session_repo.dart' as _i839;
+import '../../domain/repo/session/interview_session/ai_interview_repo.dart'
+    as _i427;
 import '../../domain/repo/session/interview_session/interview_session_repo.dart'
     as _i750;
 import '../../domain/repo/session/run_code/run_code_repo.dart' as _i410;
@@ -125,6 +133,8 @@ import '../../domain/usecase/session/get_session/get_session_usecase.dart'
     as _i1040;
 import '../../domain/usecase/session/interview_session/interview_session_usecase.dart'
     as _i196;
+import '../../domain/usecase/session/interview_session/start_ai_interview_use_case.dart'
+    as _i214;
 import '../../domain/usecase/session/run_code/run_code_usecase.dart' as _i372;
 import '../../domain/usecase/session/submit_answer/submit_answer_usecase.dart'
     as _i271;
@@ -157,6 +167,8 @@ import '../../features/session/question_overview/viewmodel/submit_answer_cubit.d
     as _i65;
 import '../../features/session/upload_cv_jd/viewmodel/upload_cv_cubit.dart'
     as _i369;
+import '../../features/session/viewmodel/interview_session/ai_interview_cubit.dart'
+    as _i608;
 import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
     as _i220;
 import 'storage_module.dart' as _i371;
@@ -240,6 +252,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i224.SignupRemoteDataSource>(
       () => _i368.SignupRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i202.AiInterviewRemoteDataSource>(
+      () => _i208.AiInterviewRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i737.RefreshRepo>(
       () => _i462.RefreshRepoImpl(gh<_i1004.RefreshRemoteDataSource>()),
     );
@@ -300,6 +315,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i976.LogoutUseCase>(
       () => _i976.LogoutUseCase(gh<_i81.LogoutRepo>()),
     );
+    gh.factory<_i427.AiInterviewRepo>(
+      () => _i175.AiInterviewRepoImpl(gh<_i202.AiInterviewRemoteDataSource>()),
+    );
     gh.factory<_i387.RefreshUsecase>(
       () => _i387.RefreshUsecase(gh<_i737.RefreshRepo>()),
     );
@@ -311,6 +329,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i372.RunCodeUseCase>(
       () => _i372.RunCodeUseCase(gh<_i410.RunCodeRepo>()),
+    );
+    gh.factory<_i214.StartAiInterviewUseCase>(
+      () => _i214.StartAiInterviewUseCase(gh<_i427.AiInterviewRepo>()),
     );
     gh.factory<_i917.AnswerMcqUseCase>(
       () => _i917.AnswerMcqUseCase(gh<_i969.AnswerMcqRepo>()),
@@ -328,6 +349,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i308.LoginRepo>(
       () => _i612.LoginRepoImpl(gh<_i49.LoginRemoteDataSource>()),
+    );
+    gh.factory<_i608.AiInterviewCubit>(
+      () => _i608.AiInterviewCubit(gh<_i214.StartAiInterviewUseCase>()),
     );
     gh.factory<_i244.McqWorkspaceCubit>(
       () => _i244.McqWorkspaceCubit(gh<_i917.AnswerMcqUseCase>()),
