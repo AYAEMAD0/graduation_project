@@ -4,13 +4,10 @@ class FormatDate {
 
     try {
       final date = DateTime.parse("${dateStr}Z").toLocal();
-      //todo final date = DateTime.parse(dateStr);
-      final now = DateTime.now();
-      final difference = now.difference(date);
 
-      if (difference.isNegative) {
-        return "${date.day}/${date.month}/${date.year}";
-      }
+      final now = DateTime.now();
+
+      final difference = now.difference(date);
 
       if (difference.inMinutes < 1) {
         return "Just now";

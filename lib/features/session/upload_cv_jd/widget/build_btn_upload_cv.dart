@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_style.dart';
-import '../../../../core/widget/custom_button.dart';
-import '../../viewmodel/interview_session/interview_session_state.dart';
+
 class BuildBtnUploadCv extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onAnalyzePressed;
@@ -23,7 +21,7 @@ class BuildBtnUploadCv extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.purple,
-          disabledBackgroundColor: AppColor.purple.withOpacity(0.6),
+          disabledBackgroundColor: AppColor.purple.withValues(alpha: 0.6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

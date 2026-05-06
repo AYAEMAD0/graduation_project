@@ -60,8 +60,8 @@ class BuildOptionSelected extends StatelessWidget {
             child: isSelected
                 ? Center(
                     child: Container(
-                      width: 18,
-                      height: 18,
+                      width: 16,
+                      height: 16,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
@@ -75,7 +75,7 @@ class BuildOptionSelected extends StatelessWidget {
             child: Text(
               optionText,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                 color: Color(0xff111827),
               ),
@@ -83,8 +83,8 @@ class BuildOptionSelected extends StatelessWidget {
           ),
           if (isSelected)
             Container(
-              width: 40.66,
-              height: 40.66,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
@@ -95,7 +95,7 @@ class BuildOptionSelected extends StatelessWidget {
               child: Center(
                 child: Icon(
                   Icons.check,
-                  size: 25,
+                  size: 22,
                   color: Color(0xffAA88F5),
                 ),
               ),

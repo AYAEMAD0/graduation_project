@@ -43,7 +43,7 @@ class CodingWorkspace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _goToNextQuestion(BuildContext context) {
+    void goToNextQuestion(BuildContext context) {
       final nextIndex = args.currentQuestion + 1;
 
       if (nextIndex > args.totalQuestions) {
@@ -157,7 +157,7 @@ class CodingWorkspace extends StatelessWidget {
                         onCodeSaved: onCodeSaved,
                         onCodeReverted: onCodeReverted,
                         savedCodeQuestions: args.savedCodeQuestions,
-                        onSubmit: () => _goToNextQuestion(context),
+                        onSubmit: () => goToNextQuestion(context),
                       ),
                     ),
                   ],

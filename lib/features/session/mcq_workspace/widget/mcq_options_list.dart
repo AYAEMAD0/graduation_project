@@ -17,19 +17,24 @@ class McqOptionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(options.length, (index) {
-        return Expanded(
-          child: GestureDetector(
-            onTap: () =>
-                onSelect(index: index, optionId: options[index].optionId),
-            child: BuildOptionSelected(
-              isSelected: selectedIndex == index,
-              optionText: options[index].optionText,
-            ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: options.length,
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () =>
+              onSelect(
+                index: index,
+                optionId: options[index].optionId,
+              ),
+          child: BuildOptionSelected(
+            isSelected: selectedIndex == index,
+            optionText: options[index].optionText,
           ),
         );
-      }),
+      },
     );
   }
 }

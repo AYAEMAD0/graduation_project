@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
-import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'package:mock_mate_ai/core/widget/custom_button.dart';

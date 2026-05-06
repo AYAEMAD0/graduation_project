@@ -109,7 +109,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColor.purple.withOpacity(0.15),
+                    color: AppColor.purple.withValues(alpha: 0.15),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -122,7 +122,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColor.purple.withOpacity(0.1)
+                    ? AppColor.purple.withValues(alpha: 0.1)
                     : AppColor.whiteDarkColor,
                 shape: BoxShape.circle,
               ),

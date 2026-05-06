@@ -71,7 +71,23 @@ class _InfoRow extends StatelessWidget {
   final String value;
   final Color? valueColor;
 
-  const _InfoRow({required this.label, required this.value, this.valueColor});
+  const _InfoRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+  });
+
+  String formatValue(String text) {
+    return text
+        .replaceAll(r'\"', '"')
+        .replaceAll(r'\n', '\n')
+        .replaceAllMapped(
+      RegExp(r'([{[]|[}\]])'),
+          (m) => '${m.group(0)}\n',
+    )
+        .replaceAll(RegExp(r'^"|"$'), '')
+        .trim();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,18 +100,29 @@ class _InfoRow extends StatelessWidget {
             width: 65,
             child: Text(
               '$label:',
-              style: const TextStyle(color: Colors.white38, fontSize: 12),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                color: valueColor ?? Colors.white70,
+              style: const TextStyle(
+                color: Colors.white38,
                 fontSize: 12,
               ),
             ),
           ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: SelectableText(
+                formatValue(value),
+                style: TextStyle(
+                  color: valueColor ?? Colors.white70,
+                  fontSize: 12,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

@@ -20,7 +20,7 @@ class McqSaveButton extends StatelessWidget {
     return Center(
       child: CustomButton(
         widthBtn: 300,
-        onPressed: isSaving ? null : onPressed, // ✅ شيلنا الـ isSaved block
+        onPressed: isSaving ? null : onPressed,
         child: isSaving
             ? const Center(
                 child: SizedBox(

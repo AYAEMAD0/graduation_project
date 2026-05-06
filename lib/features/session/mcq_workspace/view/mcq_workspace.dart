@@ -152,19 +152,19 @@ class McqWorkspace extends StatelessWidget {
                   child: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            questionText,
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              questionText,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          Expanded(
-                            child: McqOptionsList(
+                            const SizedBox(height: 15),
+                            McqOptionsList(
                               options: options,
                               selectedIndex: selectedIndex,
                               onSelect: ({
@@ -176,38 +176,38 @@ class McqWorkspace extends StatelessWidget {
                                 args.onAnswerSelected(questionId, optionId);
                               },
                             ),
-                          ),
-                          const SizedBox(height: 30),
-                          McqSaveButton(
-                            isSaving: state is McqWorkspaceSaving,
-                            isSaved: state is McqWorkspaceSaved,
-                            onPressed: () async {
-                              if (state is McqWorkspaceInitial) {
-                                CustomToast.showToast(
-                                    message: "Please select an option first",
-                                    context: context);
-                                return;
-                              }
+                            const SizedBox(height: 15),
+                            McqSaveButton(
+                              isSaving: state is McqWorkspaceSaving,
+                              isSaved: state is McqWorkspaceSaved,
+                              onPressed: () async {
+                                if (state is McqWorkspaceInitial) {
+                                  CustomToast.showToast(
+                                      message: "Please select an option first",
+                                      context: context);
+                                  return;
+                                }
 
-                              if (state is McqWorkspaceSaved) {
+                                if (state is McqWorkspaceSaved) {
+                                  if (context.mounted) {
+                                    _goToNextQuestion(context);
+                                  }
+                                  return;
+                                }
+
+                                await cubit.saveAnswer(
+                                    sessionId: args.sessionId,
+                                    questionId: questionId);
+                                args.onQuestionSaved(questionId);
+
                                 if (context.mounted) {
                                   _goToNextQuestion(context);
                                 }
-                                return;
-                              }
-
-                              await cubit.saveAnswer(
-                                  sessionId: args.sessionId,
-                                  questionId: questionId);
-                              args.onQuestionSaved(questionId);
-
-                              if (context.mounted) {
-                                _goToNextQuestion(context);
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 30),
-                        ],
+                              },
+                            ),
+                            const SizedBox(height: 15),
+                          ],
+                        ),
                       ),
                     ),
                   ),
