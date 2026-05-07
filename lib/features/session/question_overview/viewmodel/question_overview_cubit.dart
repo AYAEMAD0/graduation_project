@@ -32,7 +32,7 @@ class QuestionOverviewCubit extends Cubit<QuestionOverviewState> {
   QuestionOverviewCubit() : super(QuestionOverviewState(selectedAnswers: {}));
 
   void init(int totalQuestions) {
-    final seconds = totalQuestions * 2 * 60;
+    final seconds = totalQuestions * 3 * 60;
     _safeEmit(state.copyWith(remainingSeconds: seconds));
     _addToStream(seconds);
     _startTimer();

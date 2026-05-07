@@ -38,19 +38,18 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginSuccess(data: result));
       } on DioException catch (e) {
         if (e.error is ValidationException) {
-          emit(LoginValidationError(
-              errors: (e.error as ValidationException).errors));
+          emit(
+            LoginValidationError(
+              errors: (e.error as ValidationException).errors,
+            ),
+          );
         } else if (e.error is AppException) {
           emit(LoginError(messageError: (e.error as AppException).message));
         } else {
-          // غير السطر ده مؤقتاً عشان تشوف الـ error الحقيقي
-          emit(LoginError(
-            messageError: "Type: ${e.type} | Error: ${e.error} | Msg: ${e
-                .message}",
-          ));
+          emit(LoginError(messageError: "Unexpected error occurred"));
         }
       } catch (e) {
-        emit(LoginError(messageError: "Catch: ${e.toString()}"));
+        emit(LoginError(messageError: e.toString()));
       }
     }
   }

@@ -9,7 +9,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/widget/custom_dialog.dart';
-
 import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../../viewmodel/interview_session/interview_session_state.dart';
 import '../viewmodel/upload_cv_cubit.dart';
@@ -79,10 +78,6 @@ class StartSessionCard extends StatelessWidget {
       builder: (context, dbState) {
         return BlocBuilder<AiInterviewCubit, AiInterviewState>(
           builder: (context, aiState) {
-
-            bool isLoading = (mode == 'ai')
-                ? aiState is AiInterviewLoading
-                : dbState is InterviewSessionLoading;
 
             return Center(
               child: Container(
