@@ -21,7 +21,7 @@ class BuildDescriptionSection extends StatelessWidget {
         children: [
           const TextSpan(
             text:
-            "Practice with our lifelike AI interviewer",
+            "Practice with our lifelike AI interviewer ",
           ),
           TextSpan(
             text: "Get real-time feedback on your\n",
