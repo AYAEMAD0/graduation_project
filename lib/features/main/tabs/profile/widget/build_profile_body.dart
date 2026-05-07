@@ -45,6 +45,7 @@ class BuildProfileBody extends StatelessWidget {
               BuildProfileCard(
                 isLoading: isLoadingEdit,
                 displayName: user?.displayName ?? "No Name",
+                phone: user?.phoneNumber ?? "No Phone",
                 currentImage: currentImage,
                 onEditImageTap: onEditImageTap,
               ),

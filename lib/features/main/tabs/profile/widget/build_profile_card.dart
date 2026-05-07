@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../core/theme/app_style.dart';
+import 'build_loading_line.dart';
 import 'build_profile_avatar.dart';
 
 class BuildProfileCard extends StatelessWidget {
   final bool isLoading;
   final String? displayName;
+  final String? phone;
   final ImageProvider? currentImage;
   final VoidCallback onEditImageTap;
 
@@ -14,6 +16,7 @@ class BuildProfileCard extends StatelessWidget {
     super.key,
     required this.isLoading,
     required this.displayName,
+    required this.phone,
     required this.currentImage,
     required this.onEditImageTap,
   });
@@ -49,21 +52,22 @@ class BuildProfileCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               isLoading
-                  ? SizedBox(
-                      width: 150,
-                      height: 15,
-                      child: LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xFFA806F9),
-                        backgroundColor: Color(
-                          0xFFA806F9,
-                        ).withValues(alpha: 0.2),
-                      ),
-                    )
+                  ? const LoadingLine()
                   : Text(
                       displayName ?? "No Name",
                       style: AppStyle.font24BlackBold.copyWith(
-                        fontSize: isMobile ? 24 : 30, //60
+                        fontSize: isMobile ? 24 : 30,
+                      ),
+                    ),
+
+              const SizedBox(height: 8),
+
+              isLoading
+                  ? const LoadingLine()
+                  : Text(
+                      phone ?? "No phone",
+                      style: AppStyle.font15GrayDarkRegular.copyWith(
+                        fontSize: isMobile ? 14 : 16,
                       ),
                     ),
               const SizedBox(height: 8),
