@@ -1,9 +1,11 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/config/di.dart';
 import 'package:mock_mate_ai/core/widget/custom_dialog.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../../core/helper/jwt_helper.dart';
 import '../../../../../../core/helper/shared_check_helper.dart';
 import '../../../../../../core/routes/app_routes.dart';
@@ -36,8 +38,10 @@ class LoginScreen extends StatelessWidget {
                         top: isMobile ? -80 : -60,
                         left: isMobile ? -120 : -300,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 100,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 100,
+                            sigmaY: 100,
+                          ),
                           child: Container(
                             width: isMobile ? 400 : 800,
                             height: isMobile ? 500 : 700,
@@ -54,8 +58,10 @@ class LoginScreen extends StatelessWidget {
                         bottom: 0,
                         left: -100,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 300,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 300,
+                            sigmaY: 100,
+                          ),
                           child: Container(
                             width: isMobile ? 300 : 600,
                             height: isMobile ? 300 : 600,
@@ -70,8 +76,10 @@ class LoginScreen extends StatelessWidget {
                         top: 10,
                         right: -150,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 600,
-                              sigmaY: 400),
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 600,
+                            sigmaY: 400,
+                          ),
                           child: Container(
                             width: isMobile ? 300 : 1500,
                             height: isMobile ? 300 : 900,
@@ -86,8 +94,10 @@ class LoginScreen extends StatelessWidget {
                         bottom: 0,
                         right: -150,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 100,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(
+                            sigmaX: 100,
+                            sigmaY: 100,
+                          ),
                           child: Container(
                             width: isMobile ? 400 : 900,
                             height: isMobile ? 400 : 900,
@@ -112,7 +122,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) async {
-                           if (state is LoginError) {
+                          if (state is LoginError) {
                             CustomDialog.showMessage(
                               context: context,
                               message: state.messageError,
@@ -131,23 +141,28 @@ class LoginScreen extends StatelessWidget {
                             final token = state.data.accessToken;
                             final userId = JwtHelper.getUserIdFromToken(token);
                             await SharedCheckHelper.setValue(
-                                SharedCheckHelper.keyAccessToken, token);
+                              SharedCheckHelper.keyAccessToken,
+                              token,
+                            );
                             if (userId != null) {
                               await SharedCheckHelper.setValue(
-                                  SharedCheckHelper.keyUserId, userId);
+                                SharedCheckHelper.keyUserId,
+                                userId,
+                              );
                             }
                             if (!context.mounted) return;
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               AppRoutes.home,
-                                  (route) => false,
+                              (route) => false,
                             );
                           }
                         },
                         builder: (context, state) {
                           final viewmodel = context.read<LoginCubit>();
-                          return BuildBodySection(viewmodel: viewmodel,
-                          isLoading: state is LoginLoading,
+                          return BuildBodySection(
+                            viewmodel: viewmodel,
+                            isLoading: state is LoginLoading,
                           );
                         },
                       ),
