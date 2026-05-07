@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'core/config/di.dart';
@@ -12,6 +13,7 @@ import 'features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   await SharedCheckHelper.init();

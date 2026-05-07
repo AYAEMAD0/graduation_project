@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/repo/auth/token/token_storage.dart';
 
@@ -12,35 +14,49 @@ class TokenStorageImpl implements TokenStorage {
   static const _accessTokenKey = 'ACCESS_TOKEN';
   static const _refreshTokenKey = 'REFRESH_TOKEN';
 
-  @override
-  Future<void> saveAccessToken(String token) async {
-    await secureStorage.write(
-      key: _accessTokenKey,
-      value: token,
-    );
+  Future<void> _write(String key, String value) async {
+    if (kIsWeb) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(key, value);
+    } else {
+      await secureStorage.write(key: key, value: value);
+    }
+  }
+
+  Future<String?> _read(String key) async {
+    if (kIsWeb) {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getString(key);
+    } else {
+      return await secureStorage.read(key: key);
+    }
+  }
+
+  Future<void> _delete(String key) async {
+    if (kIsWeb) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(key);
+    } else {
+      await secureStorage.delete(key: key);
+    }
   }
 
   @override
-  Future<void> saveRefreshToken(String token) async {
-    await secureStorage.write(
-      key: _refreshTokenKey,
-      value: token,
-    );
-  }
+  Future<void> saveAccessToken(String token) => _write(_accessTokenKey, token);
 
   @override
-  Future<String?> getAccessToken() async {
-    return await secureStorage.read(key: _accessTokenKey);
-  }
+  Future<void> saveRefreshToken(String token) =>
+      _write(_refreshTokenKey, token);
 
   @override
-  Future<String?> getRefreshToken() async {
-    return await secureStorage.read(key: _refreshTokenKey);
-  }
+  Future<String?> getAccessToken() => _read(_accessTokenKey);
+
+  @override
+  Future<String?> getRefreshToken() => _read(_refreshTokenKey);
 
   @override
   Future<void> clearTokens() async {
-    await secureStorage.delete(key: _accessTokenKey);
-    await secureStorage.delete(key: _refreshTokenKey);
+    await _delete(_accessTokenKey);
+    await _delete(_refreshTokenKey);
   }
 }
