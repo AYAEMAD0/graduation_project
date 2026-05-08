@@ -17,6 +17,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: AppColor.whiteColor,
       child: Container(
         padding: const EdgeInsets.all(32),
         width: 600,
@@ -35,19 +36,28 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               children: [
                 Expanded(
                   child: _buildOptionCard(
-                    title: "Standard Mode",
-                    desc: "Questions from database",
-                    icon: Icons.storage_rounded,
+                    title: "Standard",
+                    desc: "Curated industry questions",
+                    icon: Icons.library_books_rounded,
                     mode: 'db',
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 Expanded(
                   child: _buildOptionCard(
                     title: "AI Power",
-                    desc: "Tailored to your CV",
+                    desc: "Tailored to your experience",
                     icon: Icons.auto_awesome,
                     mode: 'ai',
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _buildOptionCard(
+                    title: "Live Interview",
+                    desc: "Real-time conversational AI",
+                    icon: Icons.video_camera_front_rounded,
+                    mode: 'voice',
                   ),
                 ),
               ],
@@ -64,13 +74,17 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               onPressed: selectedMode == null
                   ? null
                   : () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.uploadCvJd,
-                        arguments: selectedMode,
-                      );
-                    },
+                Navigator.pop(context);
+                if (selectedMode == 'voice') {
+                  Navigator.pushNamed(context, AppRoutes.voicePreInterview);
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.uploadCvJd,
+                    arguments: selectedMode,
+                  );
+                }
+              },
               child: const Text(
                 "Confirm Selection",
                 style: TextStyle(color: Colors.white),
@@ -137,7 +151,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               title,
               style: AppStyle.font18WhiteBold.copyWith(
                 color: isSelected ? AppColor.purple : AppColor.grayDarkColor,
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),

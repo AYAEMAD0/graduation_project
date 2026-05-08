@@ -20,4 +20,6 @@ abstract class AppRoutes {
   static const String history = '/history';
   static const String feedback = '/feedback';
   static const String interViewOptionDialog = '/interViewOptionDialog';
+  static const String voicePreInterview = '/voicePreInterview';
+  static const String voiceInterview = '/voiceInterview';
 }

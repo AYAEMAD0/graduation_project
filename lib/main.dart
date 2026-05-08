@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import 'core/config/di.dart';
 import 'core/config/my_bloc_observer.dart';
 import 'core/helper/shared_check_helper.dart';

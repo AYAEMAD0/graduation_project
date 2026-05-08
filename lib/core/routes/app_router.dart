@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
@@ -9,8 +10,9 @@ import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
-
 import '../../domain/entities/session/interview_session/interview_session_entity.dart';
+import '../../domain/repo/auth/token/token_storage.dart';
+import '../../domain/repo/session/voice/voice_interview_repo.dart';
 import '../../features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
@@ -19,6 +21,10 @@ import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
 import '../../features/session/upload_cv_jd/view/upload_cv_jd.dart';
+import '../../features/session/voice_interview/view/voice_interview_view.dart';
+import '../../features/session/voice_interview/view/voice_pre_interview_view.dart';
+import '../../features/session/voice_interview/viewmodel/voice_interview_cubit.dart';
+import '../config/di.dart';
 import '../widget/session_expired.dart';
 
 
@@ -36,6 +42,18 @@ class AppRouter {
       AppRoutes.successful: (context) => SuccessfulScreen(),
       AppRoutes.uploadCvJd: (context) => UploadCvJd(),
       AppRoutes.home: (context) => MainLayout(),
+      AppRoutes.voicePreInterview: (context) => const VoicePreInterviewView(),
+      AppRoutes.voiceInterview: (context) {
+        final track = ModalRoute.of(context)!.settings.arguments as String;
+        return BlocProvider(
+          create: (_) => VoiceInterviewCubit(
+            repo: getIt<VoiceInterviewRepo>(),
+            tokenStorage: getIt<TokenStorage>(),
+          ),
+          child: VoiceInterviewView(track: track),
+        );
+      },
+
       AppRoutes.history: (context) => HistoryTab(),
       AppRoutes.feedback: (context) {
         final sessionId = ModalRoute.of(context)!.settings.arguments as int;

@@ -39,6 +39,7 @@ class InterviewItemModelDto {
   int? interviewSessionId;
   String? trackName;
   String? seniorityLevel;
+  String? interviewType;
   double? score;
   String? startDate;
   dynamic endDate;
@@ -48,6 +49,7 @@ class InterviewItemModelDto {
     this.interviewSessionId,
     this.trackName,
     this.seniorityLevel,
+    this.interviewType,
     this.score,
     this.startDate,
     this.endDate,
@@ -58,6 +60,7 @@ class InterviewItemModelDto {
     interviewSessionId = json['interviewSessionId'];
     trackName = json['trackName'];
     seniorityLevel = json['seniorityLevel'];
+    interviewType = json['interviewType'];
     score = (json['score'] as num?)?.toDouble();
     startDate = json['startDate'];
     endDate = json['endDate'];
@@ -69,6 +72,7 @@ class InterviewItemModelDto {
       interviewSessionId: interviewSessionId,
       trackName: trackName,
       seniorityLevel: seniorityLevel,
+      interviewType: interviewType,
       score: score,
       startDate: startDate,
       endDate: endDate,

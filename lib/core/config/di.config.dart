@@ -46,6 +46,8 @@ import '../../api/data_source/remote/session/submit_answer/submit_answer_remote_
     as _i725;
 import '../../api/data_source/remote/session/submit_code/submit_code_remote_data_source_impl.dart'
     as _i243;
+import '../../api/data_source/remote/session/voice/voice_interview_remote_data_source_impl.dart'
+    as _i234;
 import '../../api/dio/dio_interceptor.dart' as _i600;
 import '../../api/dio/dio_module.dart' as _i67;
 import '../../data/data_source/local/onboarding/onboarding_local_data_source.dart'
@@ -78,6 +80,8 @@ import '../../data/data_source/remote/session/submit_answer/submit_answer_remote
     as _i335;
 import '../../data/data_source/remote/session/submit_code/submit_code_remote_data_source.dart'
     as _i343;
+import '../../data/data_source/remote/session/voice/voice_interview_remote_data_source.dart'
+    as _i624;
 import '../../data/repo_impl/auth/login/login_repo_impl.dart' as _i612;
 import '../../data/repo_impl/auth/logout/logout_repo_impl.dart' as _i377;
 import '../../data/repo_impl/auth/refresh/refresh_repo_impl.dart' as _i462;
@@ -100,6 +104,8 @@ import '../../data/repo_impl/session/submit_answer/submit_answer_repo_impl.dart'
     as _i1020;
 import '../../data/repo_impl/session/submit_code/submit_code_repo_impl.dart'
     as _i654;
+import '../../data/repo_impl/session/voice/voice_interview_repo_impl.dart'
+    as _i383;
 import '../../domain/repo/auth/login/login_repo.dart' as _i308;
 import '../../domain/repo/auth/logout/logout_repo.dart' as _i81;
 import '../../domain/repo/auth/refresh/refresh_repo.dart' as _i737;
@@ -119,6 +125,7 @@ import '../../domain/repo/session/run_code/run_code_repo.dart' as _i410;
 import '../../domain/repo/session/submit_answer/submit_answer_repo.dart'
     as _i134;
 import '../../domain/repo/session/submit_code/submit_code_repo.dart' as _i344;
+import '../../domain/repo/session/voice/voice_interview_repo.dart' as _i1033;
 import '../../domain/usecase/auth/login/login_usecase.dart' as _i863;
 import '../../domain/usecase/auth/logout/logout_usecase.dart' as _i976;
 import '../../domain/usecase/auth/refresh/refresh_usecase.dart' as _i387;
@@ -140,6 +147,10 @@ import '../../domain/usecase/session/submit_answer/submit_answer_usecase.dart'
     as _i271;
 import '../../domain/usecase/session/submit_code/submit_code_usecase.dart'
     as _i473;
+import '../../domain/usecase/session/voice/start_live_interview_usecase.dart'
+    as _i849;
+import '../../domain/usecase/session/voice/submit_live_interview_usecase.dart'
+    as _i841;
 import '../../features/auth/presentation/screen/login/viewModel/login_cubit.dart'
     as _i407;
 import '../../features/auth/presentation/screen/signup/viewmodel/signup_cubit.dart'
@@ -229,6 +240,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i225.LogoutRemoteDataSource>(
       () => _i487.LogoutRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i624.VoiceInterviewRemoteDataSource>(
+      () => _i234.VoiceInterviewRemoteDataSourceImpl(
+        apiServices: gh<_i394.ApiServices>(),
+      ),
     );
     gh.factory<_i26.UpdateProfileRemoteDataSource>(
       () => _i299.UpdateProfileRemoteDataSourceImpl(gh<_i394.ApiServices>()),
@@ -327,6 +343,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i540.LogoutCubit>(
       () => _i540.LogoutCubit(gh<_i976.LogoutUseCase>()),
     );
+    gh.factory<_i1033.VoiceInterviewRepo>(
+      () => _i383.VoiceInterviewRepoImpl(
+        dataSource: gh<_i624.VoiceInterviewRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i372.RunCodeUseCase>(
       () => _i372.RunCodeUseCase(gh<_i410.RunCodeRepo>()),
     );
@@ -373,6 +394,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i316.SubmitCodeCubit>(
       () => _i316.SubmitCodeCubit(gh<_i473.SubmitCodeUseCase>()),
+    );
+    gh.factory<_i849.StartLiveInterviewUseCase>(
+      () => _i849.StartLiveInterviewUseCase(gh<_i1033.VoiceInterviewRepo>()),
+    );
+    gh.factory<_i841.SubmitLiveInterviewUseCase>(
+      () => _i841.SubmitLiveInterviewUseCase(gh<_i1033.VoiceInterviewRepo>()),
     );
     gh.factory<_i407.LoginCubit>(
       () =>

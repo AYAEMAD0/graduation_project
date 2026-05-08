@@ -6,7 +6,6 @@ import 'package:mock_mate_ai/core/widget/custom_button.dart';
 import 'package:mock_mate_ai/core/widget/main_background.dart';
 import 'package:mock_mate_ai/features/main/tabs/home/widget/interview_options_dialog.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../../core/widget/scroll_animate.dart';
 import 'widget/build_description_section.dart';
 import 'widget/build_how_work_section.dart';

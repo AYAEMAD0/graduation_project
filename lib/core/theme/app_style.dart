@@ -222,4 +222,13 @@ class AppStyle {
     color: AppColor.blackColor,
     fontWeight: FontWeightHelper.semiBold,
   );
+  static final TextStyle font12White70 = GoogleFonts.roboto(
+    fontSize: 12,
+    color: Colors.white,
+  );
+  static final TextStyle font18BlackMedium = GoogleFonts.roboto(
+      fontSize: 18,
+      color: AppColor.blackColor,
+      fontWeight: FontWeightHelper.medium
+  );
 }

@@ -92,7 +92,8 @@ class HistoryCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     "Mock Mate AI"
-                    "  • ${data.seniorityLevel ?? ""}",
+                    "   • ${data.seniorityLevel ?? ""}"
+                    "   • ${data.interviewType ?? ""}",
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

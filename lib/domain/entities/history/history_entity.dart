@@ -23,6 +23,7 @@ class DataEntity {
     this.interviewSessionId,
     this.trackName,
     this.seniorityLevel,
+    this.interviewType,
     this.score,
     this.startDate,
     this.endDate,
@@ -32,6 +33,7 @@ class DataEntity {
   int? interviewSessionId;
   String? trackName;
   String? seniorityLevel;
+  String? interviewType;
   double? score;
   String? startDate;
   dynamic endDate;

@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/api/api_endpoint.dart';
 import 'package:mock_mate_ai/api/api_services.dart';
 import 'package:mock_mate_ai/data/data_source/remote/session/interview_session/ai_interview_remote_data_source.dart';
-import 'package:mock_mate_ai/data/model/session/ai_interview_session_model.dart';
+import 'package:mock_mate_ai/api/model/session/ai_interview/ai_interview_session_model.dart';
 
 @Injectable(as:AiInterviewRemoteDataSource )
 class AiInterviewRemoteDataSourceImpl implements AiInterviewRemoteDataSource{

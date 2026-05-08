@@ -1,4 +1,4 @@
-import 'package:mock_mate_ai/data/model/session/ai_interview_session_model.dart';
+import 'package:mock_mate_ai/api/model/session/ai_interview/ai_interview_session_model.dart';
 
 abstract class AiInterviewRemoteDataSource {
   Future<AiInterviewSessionModel> startAiInterviewSession({

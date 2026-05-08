@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 class ApiEndpoint {
-  static const String baseUrl = '';
+  static String baseUrl = kDebugMode
+      ? 'http://mockmate-001-site1.mtempurl.com'
+      : '';
   static const String signupApi = '/api/users';
   static const String loginApi = '/api/users/login';
   static const String refreshTokenApi = '/api/users/refresh';
@@ -10,6 +14,7 @@ class ApiEndpoint {
   static const String startInterviewSessionApi = '/interview-sessions';
   static const String startAiInterviewApi = '/interview-sessions/ai';
   static const String historyApi = '/users/me/interview-sessions';
+  static const String startLiveInterviewApi = '/interview-sessions/live';
 
   static String getSessionApi(int sessionId) =>
       '/interview-sessions/$sessionId';
@@ -21,4 +26,7 @@ class ApiEndpoint {
       '/interview-sessions/$sessionId/submit-code';
   static String submitAnswerApi(int sessionId) =>
       '/interviews/$sessionId/submit';
+
+  static String submitLiveInterviewApi(int id) =>
+      '/interview-sessions/$id/live/submit';
 }
