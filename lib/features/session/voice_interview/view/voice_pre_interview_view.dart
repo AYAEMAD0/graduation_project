@@ -1,7 +1,9 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../core/theme/app_color.dart';
 import '../../upload_cv_jd/widget/header.dart';
 import '../viewmodel/voice_pre_interview_cubit.dart';
@@ -98,18 +100,14 @@ class _VoicePreInterviewView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: isMobile ? 8 : 20,
                     ),
-                    child: SingleChildScrollView(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      child: Center(
-                        child: Container(
-                          constraints: const BoxConstraints(maxWidth: 1200),
-                          padding: EdgeInsets.only(
-                            top: isMobile ? 20 : 30,
-                            bottom: 20,
-                          ),
-                          child: PreInterviewCard(isMobile: isMobile),
+                    child: Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          bottom: 15,
                         ),
+                        child: PreInterviewCard(isMobile: isMobile),
                       ),
                     ),
                   ),

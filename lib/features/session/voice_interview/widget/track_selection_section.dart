@@ -20,16 +20,17 @@ class TrackSelectionSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('1. Select Your Track', style: AppStyle.font24BlackBold),
-        const SizedBox(height: 20),
+        Text('1. Select Your Track',
+            style: AppStyle.font24BlackBold.copyWith(fontSize: 20)),
+        const SizedBox(height: 8),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 4.5,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 6.5,
           ),
           itemCount: tracks.length,
           itemBuilder: (context, index) {

@@ -16,15 +16,19 @@ class VoicePreInterviewState {
   bool get canProceed =>
       selectedTrack != null && isMicAllowed && isCameraAllowed;
 
+  static const _clear = Object();
+
   VoicePreInterviewState copyWith({
-    String? selectedTrack,
+    Object? selectedTrack = _clear,
     bool? isMicAllowed,
     bool? isCheckingMic,
     bool? isCameraAllowed,
     bool? isCheckingCamera,
   }) {
     return VoicePreInterviewState(
-      selectedTrack: selectedTrack ?? this.selectedTrack,
+      selectedTrack: selectedTrack == _clear
+          ? this.selectedTrack
+          : selectedTrack as String?,
       isMicAllowed: isMicAllowed ?? this.isMicAllowed,
       isCheckingMic: isCheckingMic ?? this.isCheckingMic,
       isCameraAllowed: isCameraAllowed ?? this.isCameraAllowed,
