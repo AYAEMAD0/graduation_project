@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 
+import '../../../../core/theme/app_gradient.dart';
 import '../viewmodel/voice_interview_state.dart';
 
 class ControlBar extends StatelessWidget {
@@ -38,25 +39,32 @@ class ControlBar extends StatelessWidget {
         ],
       ),
       child: !state.isConnected
-          ? ElevatedButton.icon(
-              onPressed: onStart,
-              icon: const Icon(Icons.play_arrow_rounded),
-              label: const Text("Start Interview"),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 18,
+          ? Container(
+              decoration: BoxDecoration(
+                gradient: AppGradient.primaryGradient,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: ElevatedButton.icon(
+                onPressed: onStart,
+                icon: const Icon(Icons.play_arrow_rounded),
+                label: const Text("Start Interview"),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 18,
+                  ),
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 0,
                 ),
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                elevation: 0,
               ),
             )
           : Row(

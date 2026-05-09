@@ -1,6 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 
 import '../viewmodel/voice_interview_state.dart';
@@ -40,13 +40,9 @@ class AiPanel extends StatelessWidget {
               duration: const Duration(milliseconds: 2000),
               repeat: true,
               child: CircleAvatar(
-                radius: 70,
+                radius: 60,
                 backgroundColor: Colors.blueAccent.withValues(alpha: 0.15),
-                child: const FaIcon(
-                  FontAwesomeIcons.robot,
-                  size: 70,
-                  color: Colors.blueAccent,
-                ),
+                backgroundImage: const AssetImage(AppAsset.aiImage),
               ),
             ),
           ),

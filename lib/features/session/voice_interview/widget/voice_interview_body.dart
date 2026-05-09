@@ -35,14 +35,14 @@ class VoiceInterviewBody extends StatelessWidget {
         if (state.isEvaluating) return const EvaluatingOverlay();
 
         return Padding(
-          padding: const EdgeInsets.only(top: 12.0),
+          padding: const EdgeInsets.only(top: 16.0),
           child: Column(
             children: [
               Text(
                   '$track Interview',
                   style: AppStyle.font20BlackBold
               ),
-              const SizedBox(height: 10,),
+              SizedBox(height: 20,),
               if (state.isConnected)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),

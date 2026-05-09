@@ -36,5 +36,5 @@ class AppAsset {
   static const String warning = 'assets/images/svgs/warning_icn.svg';
   static const String menu = 'assets/images/svgs/menu_icn.svg';
   static const String suggestion = 'assets/images/svgs/Suggestion_icn.svg';
-
+  static const String aiImage = 'assets/images/pngs/ai.jpeg';
 }
