@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 class EvaluatingOverlay extends StatelessWidget {
   const EvaluatingOverlay({super.key});
@@ -9,26 +10,19 @@ class EvaluatingOverlay extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(
+          CircularProgressIndicator(
             color: Colors.blueAccent,
-            strokeWidth: 3,
+            strokeWidth: 4,
           ),
           const SizedBox(height: 24),
-          const Text(
+          Text(
             "Evaluating your performance...",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
+              style: AppStyle.font18BlackSemiBold
           ),
           const SizedBox(height: 8),
           Text(
             "The AI is generating your score and feedback.",
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.5),
-              fontSize: 14,
-            ),
+              style: AppStyle.font12Black87.copyWith(fontSize: 14)
           ),
         ],
       ),

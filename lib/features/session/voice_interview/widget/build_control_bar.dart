@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
+
 import '../viewmodel/voice_interview_state.dart';
 
 class ControlBar extends StatelessWidget {
@@ -21,11 +23,15 @@ class ControlBar extends StatelessWidget {
       margin: const EdgeInsets.only(top: 24, bottom: 32),
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E2C),
+        color: !state.isConnected
+            ? AppColor.transparentColor
+            : AppColor.blueDark,
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: !state.isConnected
+                ? AppColor.transparentColor
+                : Colors.black.withValues(alpha: 0.3),
             blurRadius: 20,
             spreadRadius: 5,
           ),
@@ -39,7 +45,7 @@ class ControlBar extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 32,
-                  vertical: 16,
+                  vertical: 18,
                 ),
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,

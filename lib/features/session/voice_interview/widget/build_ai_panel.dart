@@ -1,5 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
+
 import '../viewmodel/voice_interview_state.dart';
 
 class AiPanel extends StatelessWidget {
@@ -11,7 +13,7 @@ class AiPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E2C),
+        color: AppColor.blueDark,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: state.isAiSpeaking

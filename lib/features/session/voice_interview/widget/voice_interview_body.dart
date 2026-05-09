@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
+
 import '../viewmodel/voice_interview_cubit.dart';
 import '../viewmodel/voice_interview_state.dart';
 import 'build_control_bar.dart';
@@ -32,29 +34,38 @@ class VoiceInterviewBody extends StatelessWidget {
       builder: (context, state) {
         if (state.isEvaluating) return const EvaluatingOverlay();
 
-        return Column(
-          children: [
-            if (state.isConnected)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TimerBadge(remainingSeconds: state.remainingSeconds),
+        return Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Column(
+            children: [
+              Text(
+                  '$track Interview',
+                  style: AppStyle.font20BlackBold
               ),
-            Expanded(
-              child: VoiceInterviewPanels(
+              const SizedBox(height: 10,),
+              if (state.isConnected)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TimerBadge(remainingSeconds: state.remainingSeconds),
+                ),
+              Expanded(
+                child: VoiceInterviewPanels(
+                  state: state,
+                  isCameraInitialized: isCameraInitialized,
+                  cameraController: cameraController,
+                ),
+              ),
+              ControlBar(
                 state: state,
-                isCameraInitialized: isCameraInitialized,
-                cameraController: cameraController,
+                onStart: onStart,
+                onToggleMic: () =>
+                state.isListening
+                    ? cubit.stopListening()
+                    : cubit.startListening(),
+                onEnd: onEnd,
               ),
-            ),
-            ControlBar(
-              state: state,
-              onStart: onStart,
-              onToggleMic: () => state.isListening
-                  ? cubit.stopListening()
-                  : cubit.startListening(),
-              onEnd: onEnd,
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_style.dart';
 
 class PermissionCheckTile extends StatelessWidget {
@@ -59,7 +60,7 @@ class PermissionCheckTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   isAllowed ? allowedSubtitle : deniedSubtitle,
-                  style: AppStyle.font12White70,
+                  style: AppStyle.font12Black87,
                 ),
               ],
             ),

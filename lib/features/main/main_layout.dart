@@ -6,7 +6,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../core/helper/shared_check_helper.dart';
 import 'tabs/faq/view/faq_tab.dart';
-import 'tabs/history/viewModel/history_cubit.dart';
 import 'tabs/home/home_tab.dart';
 import 'tabs/profile/view/profile_tab.dart';
 import 'tabs/profile/viewmodel/profile/profile_cubit.dart';
@@ -30,7 +29,6 @@ class _MainLayoutState extends State<MainLayout> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userId = SharedCheckHelper.getValue(SharedCheckHelper.keyUserId);
       context.read<ProfileCubit>().getProfile(userId);
-      context.read<HistoryCubit>().fetchHistory();
     });
   }
 

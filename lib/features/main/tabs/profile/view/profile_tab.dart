@@ -34,15 +34,12 @@ class _ProfileTabState extends State<ProfileTab> {
     super.initState();
     cubitProfile = context.read<ProfileCubit>();
     cubitLogout = getIt<LogoutCubit>();
-    final userId = SharedCheckHelper.getValue(SharedCheckHelper.keyUserId);
-    if (userId != null) cubitProfile.getProfile(userId);
   }
 
   @override
   void dispose() {
     fullNameController.dispose();
     phoneController.dispose();
-    cubitLogout.close();
     super.dispose();
   }
 
@@ -109,6 +106,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 NetworkImage(user.avatarPath!),
               _ => null,
             };
+
             return Scaffold(
               backgroundColor: AppColor.homeBackground,
               body: SafeArea(

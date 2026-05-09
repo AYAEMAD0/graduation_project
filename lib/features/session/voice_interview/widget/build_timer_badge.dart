@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
 
 class TimerBadge extends StatelessWidget {
   final int remainingSeconds;
@@ -19,7 +20,7 @@ class TimerBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: isWarning
             ? Colors.redAccent.withValues(alpha: 0.2)
-            : Colors.white10,
+            : AppColor.blueDark,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isWarning

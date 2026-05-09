@@ -28,4 +28,5 @@ class AppColor {
   static const Color slate200 = Color(0xffE2E8F0);
   static const Color slateGray = Color(0xFF64748B);
   static const Color slateDark = Color(0xFF374151);
+  static const Color blueDark = Color(0xFF1E1E2C);
 }

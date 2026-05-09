@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:mock_mate_ai/domain/repo/auth/token/token_storage.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+
 import '../../../../domain/entities/session/voice/voice_interview_entity.dart';
 import '../../../../domain/repo/session/voice/voice_interview_repo.dart';
 import '../../../../domain/usecase/session/voice/start_live_interview_usecase.dart';
@@ -138,8 +140,9 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
   }
 
   void startListening() {
-    if (!state.isConnected || state.isAiSpeaking || !_aiFinishedGenerating)
+    if (!state.isConnected || state.isAiSpeaking || !_aiFinishedGenerating) {
       return;
+    }
     _lastRecognizedWords = '';
     _lastRawRecognizedWords = '';
     _cancelTimer();
@@ -149,8 +152,9 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
         onResult: (result) {
           if (!state.isListening ||
               state.isAiSpeaking ||
-              !_aiFinishedGenerating)
+              !_aiFinishedGenerating) {
             return;
+          }
           if (result.recognizedWords.isEmpty) return;
 
           _lastRawRecognizedWords = result.recognizedWords;

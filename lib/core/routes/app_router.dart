@@ -10,6 +10,7 @@ import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
+
 import '../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../domain/repo/auth/token/token_storage.dart';
 import '../../domain/repo/session/voice/voice_interview_repo.dart';
@@ -17,6 +18,8 @@ import '../../features/auth/presentation/screen/forgot/view/forgot_password_scre
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/successful_screen.dart';
+import '../../features/main/tabs/history/viewModel/history_cubit.dart';
+import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
 import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
@@ -41,7 +44,20 @@ class AppRouter {
       AppRoutes.newPassword: (context) => NewPassword(),
       AppRoutes.successful: (context) => SuccessfulScreen(),
       AppRoutes.uploadCvJd: (context) => UploadCvJd(),
-      AppRoutes.home: (context) => MainLayout(),
+      AppRoutes.home: (context) =>
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) =>
+                getIt<HistoryCubit>()
+                  ..fetchHistory(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<ProfileCubit>(),
+              ),
+            ],
+            child: const MainLayout(),
+          ),
       AppRoutes.voicePreInterview: (context) => const VoicePreInterviewView(),
       AppRoutes.voiceInterview: (context) {
         final track = ModalRoute.of(context)!.settings.arguments as String;
