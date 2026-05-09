@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_style.dart';
 import 'permission_check_tile.dart';
 
@@ -25,8 +26,9 @@ class HardwareCheckSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('2. Hardware Check', style: AppStyle.font24BlackBold),
-        const SizedBox(height: 16),
+        Text('2. Hardware Check',
+            style: AppStyle.font24BlackBold.copyWith(fontSize: 20)),
+        const SizedBox(height: 8),
         PermissionCheckTile(
           isAllowed: isMicAllowed,
           isChecking: isCheckingMic,
@@ -38,7 +40,7 @@ class HardwareCheckSection extends StatelessWidget {
           accentColor: Colors.blueAccent,
           onAllow: onAllowMic,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 8),
         PermissionCheckTile(
           isAllowed: isCameraAllowed,
           isChecking: isCheckingCamera,

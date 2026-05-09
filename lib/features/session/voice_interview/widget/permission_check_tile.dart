@@ -27,7 +27,7 @@ class PermissionCheckTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.black12,
         borderRadius: BorderRadius.circular(16),
@@ -55,7 +55,7 @@ class PermissionCheckTile extends StatelessWidget {
               children: [
                 Text(
                   isAllowed ? '$title Ready' : '$title Access Required',
-                  style: AppStyle.font18BlackSemiBold,
+                  style: AppStyle.font18BlackSemiBold.copyWith(fontSize: 16),
                 ),
                 const SizedBox(height: 2),
                 Text(

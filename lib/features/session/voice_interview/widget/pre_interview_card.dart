@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
+
 import '../viewmodel/voice_pre_interview_cubit.dart';
 import '../viewmodel/voice_pre_interview_state.dart';
 import 'hardware_check_section.dart';
@@ -33,8 +34,8 @@ class PreInterviewCard extends StatelessWidget {
         return Center(
           child: Container(
             width: isMobile ? double.infinity : 1010,
-            padding: EdgeInsets.all(isMobile ? 28 : 30),
-            margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 20),
+            padding: EdgeInsets.only(top: 20, bottom: 15, right: 20, left: 20),
+            margin: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               color: AppColor.whiteDarkColor,
               borderRadius: BorderRadius.circular(32),
@@ -54,7 +55,7 @@ class PreInterviewCard extends StatelessWidget {
                   selectedTrack: state.selectedTrack,
                   onTrackSelected: cubit.selectTrack,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
                 HardwareCheckSection(
                   isMicAllowed: state.isMicAllowed,
                   isCheckingMic: state.isCheckingMic,
@@ -63,7 +64,7 @@ class PreInterviewCard extends StatelessWidget {
                   onAllowMic: () => cubit.requestMicPermission(),
                   onAllowCamera: () => cubit.requestCameraPermission(),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 ProceedButton(
                   isEnabled: state.canProceed,
                   onPressed: () => Navigator.pushNamed(
