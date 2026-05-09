@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:mock_mate_ai/api/api_endpoint.dart';
 import 'package:mock_mate_ai/api/api_services.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 import '../../../../../data/data_source/remote/session/voice/voice_interview_remote_data_source.dart';
 import '../../../../../domain/entities/session/voice/voice_interview_entity.dart';
 import '../../../../model/session/voice/voice_interview_model_dto.dart';
@@ -47,7 +49,8 @@ class VoiceInterviewRemoteDataSourceImpl
 
   @override
   void connectWebSocket({required String token, required String track}) {
-    final wsUrl = Uri.parse('ws://127.0.0.1:8000/ws/voice-interview');
+    final wsUrl = Uri.parse(
+        'wss://mock-mate-ai-kho8.vercel.app/ws/voice-interview');
     _channel = WebSocketChannel.connect(wsUrl);
 
     _channel!.sink.add(jsonEncode({'token': token}));
