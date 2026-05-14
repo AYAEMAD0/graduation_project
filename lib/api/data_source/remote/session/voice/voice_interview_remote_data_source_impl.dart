@@ -50,7 +50,8 @@ class VoiceInterviewRemoteDataSourceImpl
   @override
   void connectWebSocket({required String token, required String track}) {
     final wsUrl = Uri.parse(
-        'wss://mock-mate-ai-kho8.vercel.app/ws/voice-interview');
+      'wss://mockmate-ai-5caj.onrender.com/ws/voice-interview',
+    );
     _channel = WebSocketChannel.connect(wsUrl);
 
     _channel!.sink.add(jsonEncode({'token': token}));

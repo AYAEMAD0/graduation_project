@@ -102,7 +102,7 @@ class _VoicePreInterviewView extends StatelessWidget {
                     ),
                     child: Center(
                       child: Container(
-                        constraints: const BoxConstraints(maxWidth: 1200),
+                        constraints: const BoxConstraints(maxWidth: 800),
                         padding: EdgeInsets.only(
                           top: 15,
                           bottom: 15,
