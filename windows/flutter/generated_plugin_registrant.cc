@@ -15,12 +15,12 @@
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
-    FlutterTtsPluginRegisterWithRegistrar(
-            registry->GetRegistrarForPlugin("FlutterTtsPlugin"));
-    PermissionHandlerWindowsPluginRegisterWithRegistrar(
-            registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
-    SpeechToTextWindowsRegisterWithRegistrar(
-            registry->GetRegistrarForPlugin("SpeechToTextWindows"));
+  FlutterTtsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterTtsPlugin"));
+  PermissionHandlerWindowsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
+  SpeechToTextWindowsRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("SpeechToTextWindows"));
   UrlLauncherWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("UrlLauncherWindows"));
 }

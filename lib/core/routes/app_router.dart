@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
+import 'package:mock_mate_ai/core/routes/protected_route.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_screen.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
@@ -30,97 +31,184 @@ import '../../features/session/voice_interview/viewmodel/voice_interview_cubit.d
 import '../config/di.dart';
 import '../widget/session_expired.dart';
 
-
 class AppRouter {
   static Map<String, Widget Function(BuildContext)> get routes {
     return {
       AppRoutes.splash: (context) => const SplashScreen(),
+
       AppRoutes.onBoarding: (context) => OnboardingScreen(),
+
       AppRoutes.login: (context) => LoginScreen(),
+
       AppRoutes.signup: (context) => SignupScreen(),
+
       AppRoutes.forgotPassword: (context) => ForgotPasswordScreen(),
+
       AppRoutes.forgotOtp: (context) => ForgotOtp(),
+
       AppRoutes.resetPassword: (context) => ResetPassword(),
+
       AppRoutes.newPassword: (context) => NewPassword(),
+
       AppRoutes.successful: (context) => SuccessfulScreen(),
-      AppRoutes.uploadCvJd: (context) => UploadCvJd(),
-      AppRoutes.home: (context) =>
-          MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (_) =>
-                getIt<HistoryCubit>()
-                  ..fetchHistory(),
-              ),
-              BlocProvider(
-                create: (_) => getIt<ProfileCubit>(),
-              ),
-            ],
-            child: const MainLayout(),
-          ),
-      AppRoutes.voicePreInterview: (context) => const VoicePreInterviewView(),
+
+      AppRoutes.uploadCvJd: (context) =>
+          const ProtectedRoute(child: UploadCvJd()),
+
+      AppRoutes.home: (context) => ProtectedRoute(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
+
+            BlocProvider(create: (_) => getIt<ProfileCubit>()),
+          ],
+
+          child: const MainLayout(initialIndex: 0),
+        ),
+      ),
+
+      AppRoutes.voicePreInterview: (context) =>
+          const ProtectedRoute(child: VoicePreInterviewView()),
+
       AppRoutes.voiceInterview: (context) {
         final track = ModalRoute.of(context)!.settings.arguments as String;
-        return BlocProvider(
-          create: (_) => VoiceInterviewCubit(
-            repo: getIt<VoiceInterviewRepo>(),
-            tokenStorage: getIt<TokenStorage>(),
+
+        return ProtectedRoute(
+          child: BlocProvider(
+            create: (_) => VoiceInterviewCubit(
+              repo: getIt<VoiceInterviewRepo>(),
+
+              tokenStorage: getIt<TokenStorage>(),
+            ),
+
+            child: VoiceInterviewView(track: track),
           ),
-          child: VoiceInterviewView(track: track),
         );
       },
 
-      AppRoutes.history: (context) => HistoryTab(),
+      AppRoutes.history: (context) => ProtectedRoute(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
+
+            BlocProvider(create: (_) => getIt<ProfileCubit>()),
+          ],
+
+          child: const MainLayout(initialIndex: 1),
+        ),
+      ),
+
+      AppRoutes.profile: (context) => ProtectedRoute(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
+
+            BlocProvider(create: (_) => getIt<ProfileCubit>()),
+          ],
+
+          child: const MainLayout(initialIndex: 3),
+        ),
+        
+      ),
+      AppRoutes.faq: (context) => ProtectedRoute(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
+
+            BlocProvider(create: (_) => getIt<ProfileCubit>()),
+          ],
+
+          child: const MainLayout(initialIndex: 2),
+        ),
+      ),
       AppRoutes.feedback: (context) {
         final sessionId = ModalRoute.of(context)!.settings.arguments as int;
-        return FeedbackScreen(sessionId: sessionId);
+
+        return ProtectedRoute(child: FeedbackScreen(sessionId: sessionId));
       },
 
       AppRoutes.questionOverview: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
         final interviewSession =
             args?['interviewSession'] as InterviewSessionEntity?;
+
         if (interviewSession == null) {
           return const SessionExpired();
         }
-        return QuestionOverview(interviewSession: interviewSession);
+
+        return ProtectedRoute(
+          child: QuestionOverview(interviewSession: interviewSession),
+        );
       },
+
       AppRoutes.codeWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-        if (args == null) return const SizedBox.shrink();
+
+        if (args == null) {
+          return const SizedBox.shrink();
+        }
+
         final sessionArgs = args['sessionArgs'] as SessionArguments;
-        return CodingWorkspace(
-          args: sessionArgs,
-          questionId: args['questionId'] as int,
-          questionTitle: args['questionTitle'] as String,
-          questionText: args['questionText'] as String,
-          testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
-          templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
-          savedCode: args['savedCode'] as Map<int, String>? ?? {},
-          savedLanguageId: args['savedLanguageId'] as int?,
-          onCodeChanged:
-              args['onCodeChanged'] as void Function(int, String)? ??
-              (_, __) {},
-          onCodeSaved:
-              args['onCodeSaved'] as void Function(int, String)? ?? (_, __) {},
-          onCodeReverted:
-              args['onCodeReverted'] as void Function(int)? ?? (_) {},
+
+        return ProtectedRoute(
+          child: CodingWorkspace(
+            args: sessionArgs,
+
+            questionId: args['questionId'] as int,
+
+            questionTitle: args['questionTitle'] as String,
+
+            questionText: args['questionText'] as String,
+
+            testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
+
+            templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
+
+            savedCode: args['savedCode'] as Map<int, String>? ?? {},
+
+            savedLanguageId: args['savedLanguageId'] as int?,
+
+            onCodeChanged:
+                args['onCodeChanged'] as void Function(int, String)? ??
+                (_, __) {},
+
+            onCodeSaved:
+                args['onCodeSaved'] as void Function(int, String)? ??
+                (_, __) {},
+
+            onCodeReverted:
+                args['onCodeReverted'] as void Function(int)? ?? (_) {},
+          ),
         );
       },
+
       AppRoutes.mcqWorkspace: (context) {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-        if (args == null) return const SizedBox.shrink();
+
+        if (args == null) {
+          return const SizedBox.shrink();
+        }
+
         final sessionArgs = args['sessionArgs'] as SessionArguments;
+
         final questionId = args['questionId'] as int? ?? 0;
-        return McqWorkspace(
-          args: sessionArgs,
-          questionId: questionId,
-          questionText: args['questionText'] as String,
-          options: (args['options'] as List).cast<McqOptionEntity>(),
-          isSaved: sessionArgs.savedQuestions.contains(questionId),
+
+        return ProtectedRoute(
+          child: McqWorkspace(
+            args: sessionArgs,
+
+            questionId: questionId,
+
+            questionText: args['questionText'] as String,
+
+            options: (args['options'] as List).cast<McqOptionEntity>(),
+
+            isSaved: sessionArgs.savedQuestions.contains(questionId),
+          ),
         );
       },
     };
