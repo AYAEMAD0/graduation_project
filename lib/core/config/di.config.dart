@@ -340,9 +340,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i473.SubmitCodeUseCase>(
       () => _i473.SubmitCodeUseCase(gh<_i344.SubmitCodeRepo>()),
     );
-    gh.factory<_i540.LogoutCubit>(
-      () => _i540.LogoutCubit(gh<_i976.LogoutUseCase>()),
-    );
     gh.factory<_i1033.VoiceInterviewRepo>(
       () => _i383.VoiceInterviewRepoImpl(
         dataSource: gh<_i624.VoiceInterviewRemoteDataSource>(),
@@ -394,6 +391,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i316.SubmitCodeCubit>(
       () => _i316.SubmitCodeCubit(gh<_i473.SubmitCodeUseCase>()),
+    );
+    gh.factory<_i540.LogoutCubit>(
+      () => _i540.LogoutCubit(
+        gh<_i976.LogoutUseCase>(),
+        gh<_i589.TokenStorage>(),
+      ),
     );
     gh.factory<_i849.StartLiveInterviewUseCase>(
       () => _i849.StartLiveInterviewUseCase(gh<_i1033.VoiceInterviewRepo>()),

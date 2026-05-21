@@ -3,6 +3,8 @@ abstract class AppRoutes {
   static const String onBoarding = '/onBoarding';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String profile = '/profile';
+  static const String faq = '/faq';
   static const String forgotPassword = '/forgotPassword';
   static const String forgotOtp = '/forgotOtp';
   static const String resetPassword = '/resetPassword';
