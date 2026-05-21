@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mock_mate_ai/features/session/viewmodel/interview_session/ai_interview_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/config/di.dart';
-import '../../../../core/helper/shared_check_helper.dart';
 import '../../../../core/theme/app_color.dart';
+import '../../viewmodel/interview_session/ai_interview_cubit.dart';
 import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../widget/greeting_section.dart';
 import '../widget/header.dart';
@@ -20,8 +19,6 @@ class UploadCvJd extends StatelessWidget {
   Widget build(BuildContext context) {
     final String mode = ModalRoute.of(context)?.settings.arguments as String? ?? 'db';
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final displayName =
-        SharedCheckHelper.getValue(SharedCheckHelper.keyDisplayName) ?? "User";
 
     return Scaffold(
       backgroundColor: AppColor.whiteDarkColor,
@@ -106,18 +103,17 @@ class UploadCvJd extends StatelessWidget {
                             ScrollViewKeyboardDismissBehavior.onDrag,
                         child: Center(
                           child: Container(
-                            constraints: const BoxConstraints(maxWidth: 1200),
+                            constraints: const BoxConstraints(maxWidth: 800),
                             padding: EdgeInsets.only(
-                              top: isMobile ? 20 : 50,
-                              bottom: 40,
+                              top: 20,
+                              bottom: 20,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                GreetingSection(displayName: displayName),
-                                SizedBox(height: isMobile ? 30 : 60),
+                                GreetingSection(),
+                                SizedBox(height: 15),
                                 StartSessionCard(mode: mode),
-                                SizedBox(height: 25),
                               ],
                             ),
                           ),

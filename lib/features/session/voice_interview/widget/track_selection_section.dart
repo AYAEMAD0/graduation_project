@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
-import '../../../../core/theme/app_color.dart';
+import 'segmented_bar.dart';
+import 'sub_track_panel.dart';
 
-class TrackSelectionSection extends StatelessWidget {
+class TrackSelectionSection extends StatefulWidget {
   final List<Map<String, dynamic>> tracks;
   final String? selectedTrack;
   final ValueChanged<String> onTrackSelected;
@@ -16,53 +17,94 @@ class TrackSelectionSection extends StatelessWidget {
   });
 
   @override
+  State<TrackSelectionSection> createState() => _TrackSelectionSectionState();
+}
+
+class _TrackSelectionSectionState extends State<TrackSelectionSection>
+    with SingleTickerProviderStateMixin {
+  String? _activeMain;
+  late AnimationController _animCtrl;
+  late Animation<double> _fadeAnim;
+
+  String? get _resolvedMain {
+    if (_activeMain != null) return _activeMain;
+    if (widget.selectedTrack == null) return null;
+    for (final t in widget.tracks) {
+      if ((t['subTracks'] as List<String>).contains(widget.selectedTrack)) {
+        return t['title'] as String;
+      }
+    }
+    return null;
+  }
+
+  Map<String, dynamic>? get _activeData => _resolvedMain == null
+      ? null
+      : widget.tracks.firstWhere(
+          (t) => t['title'] == _resolvedMain,
+          orElse: () => {},
+        );
+
+  @override
+  void initState() {
+    super.initState();
+    _animCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+    );
+    _fadeAnim = CurvedAnimation(parent: _animCtrl, curve: Curves.easeOut);
+    if (_resolvedMain != null) _animCtrl.value = 1;
+  }
+
+  @override
+  void dispose() {
+    _animCtrl.dispose();
+    super.dispose();
+  }
+
+  void _onSegmentTap(String title) {
+    setState(() {
+      if (_activeMain == title) {
+        _activeMain = null;
+        _animCtrl.reverse();
+      } else {
+        _activeMain = title;
+        _animCtrl.forward(from: 0);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('1. Select Your Track',
-            style: AppStyle.font24BlackBold.copyWith(fontSize: 20)),
-        const SizedBox(height: 8),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 6.5,
+        Text(
+          '1. Select Your Track',
+          style: AppStyle.font24BlackBold.copyWith(fontSize: 18),
+        ),
+        const SizedBox(height: 12),
+        SegmentedBar(
+          tracks: widget.tracks,
+          activeMain: _resolvedMain,
+          onTap: _onSegmentTap,
+        ),
+
+        FadeTransition(
+          opacity: _fadeAnim,
+          child: SizeTransition(
+            sizeFactor: _fadeAnim,
+            axisAlignment: -1,
+            child: _activeData != null
+                ? SubTrackPanel(
+                    trackData: _activeData!,
+                    selectedSub: widget.selectedTrack,
+                    onSubSelected: widget.onTrackSelected,
+                  )
+                : const SizedBox.shrink(),
           ),
-          itemCount: tracks.length,
-          itemBuilder: (context, index) {
-            final track = tracks[index];
-            final isSelected = selectedTrack == track['title'];
-            return GestureDetector(
-              onTap: () => onTrackSelected(track['title']),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? (track['color'] as Color).withValues(alpha: 0.2)
-                      : AppColor.grayLightColor,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: isSelected ? track['color'] : Colors.transparent,
-                    width: 2,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(track['icon'], color: track['color'], size: 32),
-                    const SizedBox(width: 12),
-                    Text(track['title'], style: AppStyle.font16BlackSemiBold),
-                  ],
-                ),
-              ),
-            );
-          },
         ),
       ],
     );
   }
 }
+

@@ -14,6 +14,9 @@ class ExampleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (inputExample.isEmpty && outputExample.isEmpty) {
+      return const SizedBox(height: 15);
+    }
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 18, bottom: 18, right: 15),

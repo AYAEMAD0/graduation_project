@@ -2,7 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/helper/picker_helper.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/theme/app_color.dart';
 import '../viewmodel/upload_cv_cubit.dart';
@@ -15,8 +14,6 @@ class BuildUploadCvSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
     return BlocBuilder<UploadCvCubit, UploadCvState>(
       builder: (context, state) {
         final cubit = context.read<UploadCvCubit>();
@@ -38,7 +35,7 @@ class BuildUploadCvSection extends StatelessWidget {
             ),
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: isMobile ? 40 : 50),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: state.hasFile
                   ? BuildSuccessContent(
                       text: state.selectedFile!.name,

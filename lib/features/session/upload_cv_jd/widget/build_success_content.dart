@@ -21,25 +21,25 @@ class BuildSuccessContent extends StatelessWidget {
       children: [
         Icon(
           Icons.check_circle,
-          size: isMobile ? 35 : 75,
+          size: isMobile ? 30 : 40,
           color: AppColor.purple,
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: 8),
         Text(
           "CV Uploaded Successfully",
           style: AppStyle.font16BlackSemiBold.copyWith(
-            fontSize: isMobile ? 16 : 22,
+            fontSize: isMobile ? 16 : 20,
             color: AppColor.purple,
           ),
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: 8),
         Text(
           text,
           style: AppStyle.font14GrayRegular.copyWith(
-            fontSize: isMobile ? 13 : 18,
+            fontSize: isMobile ? 13 : 16,
           ),
         ),
-        const SizedBox(height: 25),
+        SizedBox(height: 10),
         TextButton.icon(
           onPressed: onRemove,
           icon: const Icon(Icons.delete, color: Colors.red, size: 20),

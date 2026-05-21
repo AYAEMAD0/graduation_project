@@ -38,8 +38,6 @@ class BuildProfilePersonalInfo extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          // Divider(thickness: 1.2, color: Colors.black.withValues(alpha: .1)),
-          // const SizedBox(height: 20),
           Text(
             "Full Name",
             style: AppStyle.font18BlackRegular.copyWith(

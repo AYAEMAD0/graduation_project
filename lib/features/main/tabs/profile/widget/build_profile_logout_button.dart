@@ -3,6 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../core/theme/app_style.dart';
 import '../../../../../core/widget/custom_button.dart';
+import '../../../../../core/widget/custom_dialog.dart';
 
 class BuildProfileLogoutButton extends StatelessWidget {
   final bool isLoading;
@@ -19,7 +20,19 @@ class BuildProfileLogoutButton extends StatelessWidget {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return CustomButton(
       widthBtn: isMobile ? 150 : 300,
-      onPressed: isLoading ? null : onPressed,
+      onPressed: isLoading
+          ? null
+          : () async {
+              final confirm = await CustomDialog.showConfirm(
+                context: context,
+                title: "Confirm Logout",
+                message: "Are you sure you want to logout from your account?",
+              );
+
+              if (confirm == true) {
+                onPressed();
+              }
+            },
       child: isLoading
           ? const Center(
               child: SizedBox(

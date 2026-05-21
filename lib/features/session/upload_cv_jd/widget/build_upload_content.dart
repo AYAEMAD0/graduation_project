@@ -15,21 +15,21 @@ class BuildUploadContent extends StatelessWidget {
       children: [
         Icon(
           Icons.cloud_upload,
-          size: isMobile ? 30 : 70,
+          size: isMobile ? 30 : 45,
           color: AppColor.grayMediumColor,
         ),
-        SizedBox(height: isMobile ? 12 : 22),
+        SizedBox(height: 8),
         Text(
           "Upload CV (PDF)",
           style: AppStyle.font16BlackSemiBold.copyWith(
-            fontSize: isMobile ? 16 : 25,
+            fontSize: isMobile ? 16 : 18,
           ),
         ),
-        SizedBox(height: isMobile ? 6 : 12),
+        SizedBox(height: 8),
         Text(
           "or drag and drop here",
           style: AppStyle.font14GrayRegular.copyWith(
-            fontSize: isMobile ? 14 : 20,
+            fontSize: isMobile ? 14 : 16,
           ),
         ),
       ],

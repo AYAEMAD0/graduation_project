@@ -24,7 +24,7 @@ class BuildHowWorkSection extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          "Four simple steps to land your dream job.",
+          "From setup to feedback \n Four simple steps to land your dream job.",
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: isMobile ? 22 : 30,
@@ -39,24 +39,24 @@ class BuildHowWorkSection extends StatelessWidget {
               delay: const Duration(milliseconds: 100),
               child: FeatureStepCard(
                 stepNumber: "1",
-                title: " Upload CV",
+                title: "Choose Interview Type",
                 description:
-                    "Our AI scans your resume to tailor questions specifically to your experience.",
-                icon: AppAsset.upload,
-                iconBackgroundColor: const Color(0xffDBEAFE),
+                    "Pick the interview style that suits you — Standard questions, Ai-generated, or a Voice simulation.",
+                icon: Icons.tune_rounded,
+                iconBackgroundColor: const Color(0xffF3E8FF),
               ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
             ScrollAnimate(
-              direction: SlideDirection.right, // ✅ من اليمين
+              direction: SlideDirection.right,
               delay: const Duration(milliseconds: 100),
               child: FeatureStepCard(
                 stepNumber: "2",
-                title: " Analyze Gap",
+                title: "Set Up Your Session",
                 description:
-                    "Identify missing keywords and skills compared to the job description.",
-                icon: AppAsset.analyze,
-                iconBackgroundColor: const Color(0xffF3E8FF),
+                    "Upload your CV and job description, or simply choose your track if you're going with a Voice interview — we'll tailor everything for you.",
+                icon: AppAsset.upload,
+                iconBackgroundColor: const Color(0xffDBEAFE),
               ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
@@ -65,9 +65,9 @@ class BuildHowWorkSection extends StatelessWidget {
               delay: const Duration(milliseconds: 100),
               child: FeatureStepCard(
                 stepNumber: "3",
-                title: "Live AI Interview",
+                title: "Start & Answer",
                 description:
-                    "Interactive voice session with our AI avatar simulating a real HR manager.",
+                    "Go through your interview and answer at your own pace.",
                 icon: AppAsset.live,
                 iconBackgroundColor: const Color(0xffFCE7F3),
               ),
@@ -78,9 +78,9 @@ class BuildHowWorkSection extends StatelessWidget {
               delay: const Duration(milliseconds: 100),
               child: FeatureStepCard(
                 stepNumber: "4",
-                title: "Instant Feedback",
+                title: "Get Your Feedback",
                 description:
-                    "Get a detailed score, transcripts, and actionable advice to improve.",
+                    "Get a detailed score with insights on every answer to help you improve.",
                 icon: AppAsset.feedBack,
                 iconBackgroundColor: const Color(0xffDCFCE7),
               ),

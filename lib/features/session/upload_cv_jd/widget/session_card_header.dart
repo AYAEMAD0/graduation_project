@@ -14,17 +14,17 @@ class SessionCardHeader extends StatelessWidget {
       children: [
         Icon(
           Icons.rocket_launch,
-          size: isMobile ? 25 : 60,
+          size: isMobile ? 25 : 30,
           color: AppColor.purple,
         ),
-        SizedBox(width: isMobile ? 12 : 22),
+        SizedBox(width: 10),
         Flexible(
           child: Text(
             "Start New Session",
             overflow: TextOverflow.ellipsis,
             style: isMobile
                 ? AppStyle.font20BlackSemiBold
-                : AppStyle.font24BlackBold.copyWith(fontSize: 40),
+                : AppStyle.font24BlackBold,
           ),
         ),
       ],

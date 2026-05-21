@@ -15,16 +15,36 @@ class PreInterviewCard extends StatelessWidget {
   const PreInterviewCard({super.key, required this.isMobile});
 
   static const List<Map<String, dynamic>> _tracks = [
-    {'title': 'Backend', 'icon': Icons.storage_rounded, 'color': Colors.blue},
-    {'title': 'Frontend', 'icon': Icons.web_rounded, 'color': Colors.orange},
+    {
+      'title': 'Web',
+      'icon': Icons.web_rounded,
+      'color': Colors.blue,
+      'subTracks': ['Frontend', 'Backend', 'Full Stack'],
+    },
     {
       'title': 'Mobile',
       'icon': Icons.smartphone_rounded,
       'color': Colors.green,
+      'subTracks': ['Android', 'iOS', 'Flutter'],
     },
-    {'title': 'AI', 'icon': Icons.auto_awesome, 'color': Colors.purple},
+    {
+      'title': 'AI',
+      'icon': Icons.auto_awesome_rounded,
+      'color': Colors.purple,
+      'subTracks': [
+        'Machine Learning',
+        'Deep Learning',
+        'NLP',
+        'Computer Vision'
+      ],
+    },
+    {
+      'title': 'Infra',
+      'icon': Icons.cloud_rounded,
+      'color': Colors.orange,
+      'subTracks': ['Cloud', 'Networking', 'Cyber Security', 'DevOps'],
+    },
   ];
-
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<VoicePreInterviewCubit>();

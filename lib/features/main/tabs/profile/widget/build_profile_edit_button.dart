@@ -7,38 +7,46 @@ import '../../../../../core/widget/custom_button.dart';
 class BuildProfileEditButton extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onPressed;
+  final bool isEnabled;
 
   const BuildProfileEditButton({
     super.key,
     required this.isLoading,
     required this.onPressed,
+    required this.isEnabled,
   });
 
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    return CustomButton(
-      widthBtn: isMobile ? 150 : 300,
-      onPressed: isLoading ? null : onPressed,
-      child: isLoading
-          ? const Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2.5,
+
+    final isDisabled = isLoading || !isEnabled;
+
+    return Opacity(
+      opacity: isDisabled ? 0.5 : 1.0,
+      child: CustomButton(
+        widthBtn: isMobile ? 150 : 300,
+        onPressed: isDisabled ? null : onPressed,
+        child: isLoading
+            ? const Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2.5,
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  "Edit",
+                  style: AppStyle.font18WhiteBold,
+                  textAlign: TextAlign.center,
                 ),
               ),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: Text(
-                "Edit",
-                style: AppStyle.font18WhiteBold,
-                textAlign: TextAlign.center,
-              ),
-            ),
+      ),
     );
   }
 }

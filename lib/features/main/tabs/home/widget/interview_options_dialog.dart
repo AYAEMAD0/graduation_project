@@ -25,7 +25,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Choose Your Path",
+              "Choose Your Type Interview",
               style: AppStyle.font18WhiteBold.copyWith(
                 color: AppColor.grayDarkColor,
                 fontSize: 28,

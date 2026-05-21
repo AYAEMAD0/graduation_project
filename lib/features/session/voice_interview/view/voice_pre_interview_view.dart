@@ -100,14 +100,17 @@ class _VoicePreInterviewView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: isMobile ? 8 : 20,
                     ),
-                    child: Center(
-                      child: Container(
-                        constraints: const BoxConstraints(maxWidth: 800),
-                        padding: EdgeInsets.only(
-                          top: 15,
-                          bottom: 15,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Center(
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 800),
+                          padding: EdgeInsets.only(
+                            top: 15,
+                            bottom: 15,
+                          ),
+                          child: PreInterviewCard(isMobile: isMobile),
                         ),
-                        child: PreInterviewCard(isMobile: isMobile),
                       ),
                     ),
                   ),

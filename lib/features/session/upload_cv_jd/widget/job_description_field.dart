@@ -26,17 +26,17 @@ class JobDescriptionField extends StatelessWidget {
                   color: const Color(0xff64748B),
                 )
               : AppStyle.font24BlackBold.copyWith(
-                  color: const Color(0xff64748B),
+              color: const Color(0xff64748B), fontSize: 18
                 ),
         ),
-        SizedBox(height: isMobile ? 12 : 20),
+        SizedBox(height: 8),
         CustomTextField(
           controller: controller,
           hint: "Paste the job description here to analyze gaps...",
           hintStyle: AppStyle.font14GrayRegular.copyWith(
-            fontSize: isMobile ? 14 : 22,
+            fontSize: isMobile ? 14 : 18,
           ),
-          maxLines: isMobile ? 3 : 5,
+          maxLines: 3,
           cursorColor: AppColor.purple,
           borderColor: const Color(0xffCBD5E1),
           borderFocuseColor: AppColor.purple,

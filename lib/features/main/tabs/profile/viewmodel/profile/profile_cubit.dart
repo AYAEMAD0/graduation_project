@@ -19,15 +19,30 @@ class ProfileCubit extends Cubit<ProfileState> {
   Uint8List? _imageBytes;
   UserEntity? _currentUser;
 
+  String? _originalName;
+  String? _originalPhone;
 
   ProfileCubit(this.getProfileUseCase, this.updateProfileUseCase)
       : super(const ProfileInitial());
+
+  bool hasChanges({
+    required String displayName,
+    required String phoneNumber,
+  }) {
+    final nameChanged = displayName.trim() != (_originalName ?? '');
+    final phoneChanged = phoneNumber.trim() != (_originalPhone ?? '');
+    final imageChanged = _imagePath != null || _imageBytes != null;
+
+    return nameChanged || phoneChanged || imageChanged;
+  }
 
   Future<void> getProfile(int id) async {
     emit(const ProfileLoading());
     try {
       final user = await getProfileUseCase(id);
       _currentUser = user;
+      _originalName = user.displayName;
+      _originalPhone = user.phoneNumber;
       emit(ProfileSuccess(user));
     } catch (e) {
       emit(ProfileError(e.toString(), lastUser: _currentUser));
@@ -44,6 +59,30 @@ class ProfileCubit extends Cubit<ProfileState> {
     ));
   }
 
+
+  void checkChanges({
+    required String displayName,
+    required String phoneNumber,
+  }) {
+    final nameChanged = displayName.trim() != (_originalName?.trim() ?? '');
+    final phoneChanged = phoneNumber.trim() != (_originalPhone?.trim() ?? '');
+    final imageChanged = _imagePath != null || _imageBytes != null;
+
+    final changed = nameChanged || phoneChanged || imageChanged;
+
+    final currentState = state;
+    if (currentState is ProfileSuccess) {
+      emit(ProfileSuccess(currentState.user, hasChanges: changed));
+    } else if (currentState is ProfileImageSelected) {
+      emit(ProfileImageSelected(
+        imagePath: _imagePath,
+        imageBytes: _imageBytes,
+        user: _currentUser,
+        hasChanges: changed,
+      ));
+    }
+  }
+
   void clearImage() {
     _imagePath = null;
     _imageBytes = null;
@@ -51,6 +90,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       imagePath: null,
       imageBytes: null,
       user: _currentUser,
+      hasChanges: false,
     ));
   }
 

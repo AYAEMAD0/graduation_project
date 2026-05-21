@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mock_mate_ai/core/constants/app_asset.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'build_footer_link.dart';
-
 class CopyrightSection extends StatefulWidget {
   const CopyrightSection({super.key});
 
@@ -79,18 +77,6 @@ class _CopyrightSectionState extends State<CopyrightSection>
           ),
 
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 37),
-              BuildFooterLink(label: 'Privacy'),
-              const SizedBox(width: 47),
-              BuildFooterLink(label: 'Terms'),
-              const SizedBox(width: 47),
-              BuildFooterLink(label: 'Support'),
-            ],
-          ),
-          const SizedBox(height: 32),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(

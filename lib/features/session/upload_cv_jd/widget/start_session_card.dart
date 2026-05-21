@@ -3,29 +3,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/config/di.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/widget/custom_toast.dart';
-import 'package:mock_mate_ai/features/session/viewmodel/interview_session/ai_interview_cubit.dart';
-import 'package:mock_mate_ai/features/session/viewmodel/interview_session/ai_interview_state.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/widget/custom_dialog.dart';
+import '../../viewmodel/interview_session/ai_interview_cubit.dart';
+import '../../viewmodel/interview_session/ai_interview_state.dart';
 import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../../viewmodel/interview_session/interview_session_state.dart';
 import '../viewmodel/upload_cv_cubit.dart';
+import 'build_available_tracks.dart';
 import 'build_btn_upload_cv.dart';
 import 'build_upload_cv_section.dart';
 import 'job_description_field.dart';
 import 'session_card_header.dart';
 
-class StartSessionCard extends StatelessWidget {
-  final String mode; // 'ai' or 'db'
+class StartSessionCard extends StatefulWidget {
+  final String mode;
 
   const StartSessionCard({super.key, required this.mode});
 
   @override
+  State<StartSessionCard> createState() => _StartSessionCardState();
+}
+
+class _StartSessionCardState extends State<StartSessionCard> {
+  late final TextEditingController _jobDescriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    _jobDescriptionController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _jobDescriptionController.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final jobDescriptionController = TextEditingController();
 
     return BlocProvider(
       create: (_) => getIt<UploadCvCubit>(),
@@ -66,7 +86,7 @@ class StartSessionCard extends StatelessWidget {
                 },
               ),
             ],
-            child: _buildUI(context, isMobile, jobDescriptionController),
+            child: _buildUI(context, isMobile, _jobDescriptionController),
           );
         },
       ),
@@ -82,8 +102,7 @@ class StartSessionCard extends StatelessWidget {
             return Center(
               child: Container(
                 width: isMobile ? double.infinity : 1010,
-                padding: EdgeInsets.all(isMobile ? 28 : 40),
-                margin: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 20),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
                 decoration: BoxDecoration(
                   color: AppColor.whiteDarkColor,
                   borderRadius: BorderRadius.circular(32),
@@ -99,16 +118,17 @@ class StartSessionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SessionCardHeader(isMobile: isMobile),
-                    SizedBox(height: isMobile ? 25 : 40),
+                    SizedBox(height: 15),
+                    if (widget.mode != 'ai') BuildAvailableTracks(),
                     const BuildUploadCvSection(),
-                    SizedBox(height: isMobile ? 25 : 45),
+                    SizedBox(height: 20),
                     JobDescriptionField(
                       isMobile: isMobile,
                       controller: controller,
                     ),
-                    SizedBox(height: isMobile ? 25 : 50),
+                    SizedBox(height: 20),
                     BuildBtnUploadCv(
-                      isLoading: (mode == 'ai')
+                      isLoading: (widget.mode == 'ai')
                           ? aiState is AiInterviewLoading
                           : dbState is InterviewSessionLoading,
 
@@ -140,10 +160,8 @@ class StartSessionCard extends StatelessWidget {
       CustomToast.showToast(message: "Please enter a job description.", context: context);
       return;
     }
-
     CustomDialog.showGenerating(context: context);
-
-    if (mode == 'ai') {
+    if (widget.mode == 'ai') {
       context.read<AiInterviewCubit>().startAiInterview(
         cvBytes: cvState.selectedFile!.bytes!,
         cvFileName: cvState.selectedFile!.name,

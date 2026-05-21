@@ -17,6 +17,7 @@ class BuildProfileBody extends StatelessWidget {
   final VoidCallback onEditImageTap;
   final VoidCallback onUpdatePressed;
   final VoidCallback onLogoutPressed;
+  final bool hasChanges;
 
   const BuildProfileBody({
     super.key,
@@ -29,6 +30,7 @@ class BuildProfileBody extends StatelessWidget {
     required this.onEditImageTap,
     required this.onUpdatePressed,
     required this.onLogoutPressed,
+    required this.hasChanges,
   });
 
   @override
@@ -60,6 +62,7 @@ class BuildProfileBody extends StatelessWidget {
                 children: [
                   BuildProfileEditButton(
                     isLoading: isLoadingEdit,
+                    isEnabled: hasChanges,
                     onPressed: onUpdatePressed,
                   ),
                   SizedBox(width: isMobile ? 20 : 20),

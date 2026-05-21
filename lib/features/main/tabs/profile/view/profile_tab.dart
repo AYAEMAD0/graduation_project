@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/helper/picker_helper.dart';
@@ -7,14 +5,12 @@ import 'package:mock_mate_ai/core/helper/shared_check_helper.dart';
 
 import '../../../../../core/config/di.dart';
 import '../../../../../core/routes/app_routes.dart';
-import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/widget/custom_toast.dart';
 import '../viewmodel/logout/logout_cubit.dart';
 import '../viewmodel/logout/logout_state.dart';
 import '../viewmodel/profile/profile_cubit.dart';
 import '../viewmodel/profile/profile_state.dart';
-import '../widget/build_profile_background_effect.dart';
-import '../widget/build_profile_body.dart';
+import 'profile_tab_view.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -29,15 +25,36 @@ class _ProfileTabState extends State<ProfileTab> {
   late ProfileCubit cubitProfile;
   late LogoutCubit cubitLogout;
 
+  String _lastFullName = '';
+  String _lastPhone = '';
+
   @override
   void initState() {
     super.initState();
     cubitProfile = context.read<ProfileCubit>();
     cubitLogout = getIt<LogoutCubit>();
+    fullNameController.addListener(_onTextChanged);
+    phoneController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    final nameChanged = fullNameController.text != _lastFullName;
+    final phoneChanged = phoneController.text != _lastPhone;
+
+    if (nameChanged || phoneChanged) {
+      _lastFullName = fullNameController.text;
+      _lastPhone = phoneController.text;
+      cubitProfile.checkChanges(
+        displayName: fullNameController.text,
+        phoneNumber: phoneController.text,
+      );
+    }
   }
 
   @override
   void dispose() {
+    fullNameController.removeListener(_onTextChanged);
+    phoneController.removeListener(_onTextChanged);
     fullNameController.dispose();
     phoneController.dispose();
     super.dispose();
@@ -54,9 +71,12 @@ class _ProfileTabState extends State<ProfileTab> {
         listeners: [
           BlocListener<ProfileCubit, ProfileState>(
             listener: (context, state) {
-              if (state is ProfileUpdateSuccess) {
-                fullNameController.clear();
-                phoneController.clear();
+              if (state is ProfileSuccess || state is ProfileUpdateSuccess) {
+                final user = (state as dynamic).user;
+                fullNameController.text = user.displayName ?? '';
+                phoneController.text = user.phoneNumber ?? '';
+                _lastFullName = user.displayName ?? '';
+                _lastPhone = user.phoneNumber ?? '';
                 cubitProfile.clearImage();
               }
               if (state is ProfileError) {
@@ -81,74 +101,27 @@ class _ProfileTabState extends State<ProfileTab> {
             },
           ),
         ],
-        child: BlocBuilder<ProfileCubit, ProfileState>(
-          builder: (context, state) {
-            final isLoading = state is ProfileLoading;
-
-            final user = switch (state) {
-              ProfileSuccess s => s.user,
-              ProfileUpdateSuccess s => s.user,
-              ProfileImageSelected s => s.user,
-              ProfileError s => s.lastUser,
-              _ => null,
-            };
-
-            final ImageProvider? currentImage = switch (state) {
-              ProfileImageSelected s when s.imageBytes != null => MemoryImage(
-                s.imageBytes!,
-              ),
-              ProfileImageSelected s when s.imagePath != null => FileImage(
-                File(s.imagePath!),
-              ),
-              _
-                  when (user?.avatarPath != null &&
-                      user!.avatarPath!.isNotEmpty) =>
-                NetworkImage(user.avatarPath!),
-              _ => null,
-            };
-
-            return Scaffold(
-              backgroundColor: AppColor.homeBackground,
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      ...BuildProfileBackgroundEffect.items(context),
-                      BuildProfileBody(
-                        isLoadingEdit: isLoading,
-                        user: user,
-                        currentImage: currentImage,
-                        fullNameController: fullNameController,
-                        phoneController: phoneController,
-                        onEditImageTap: () async {
-                          final file = await PickerHelper.pickFile(context, [
-                            'jpg',
-                            'jpeg',
-                            'png',
-                          ]);
-                          if (file != null) {
-                            cubitProfile.selectImage(
-                              imagePath: file.path,
-                              imageBytes: file.bytes,
-                            );
-                          }
-                        },
-                        onUpdatePressed: () => cubitProfile.updateProfile(
-                          displayName: fullNameController.text,
-                          phoneNumber: phoneController.text,
-                        ),
-                        onLogoutPressed: () => cubitLogout.logout(),
-                        isLoadingLogout:
-                            context.watch<LogoutCubit>().state is LogoutLoading,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
+        child: ProfileTabView(
+          fullNameController: fullNameController,
+          phoneController: phoneController,
+          onEditImageTap: () async {
+            final file = await PickerHelper.pickFile(context, [
+              'jpg',
+              'jpeg',
+              'png',
+            ]);
+            if (file != null) {
+              cubitProfile.selectImage(
+                imagePath: file.path,
+                imageBytes: file.bytes,
+              );
+            }
           },
+          onUpdatePressed: () => cubitProfile.updateProfile(
+            displayName: fullNameController.text,
+            phoneNumber: phoneController.text,
+          ),
+          onLogoutPressed: () => cubitLogout.logout(),
         ),
       ),
     );

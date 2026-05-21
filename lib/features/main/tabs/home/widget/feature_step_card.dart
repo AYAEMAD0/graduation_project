@@ -8,7 +8,7 @@ class FeatureStepCard extends StatelessWidget {
   final String stepNumber;
   final String title;
   final String description;
-  final String icon;
+  final dynamic icon;
   final Color iconBackgroundColor;
 
   const FeatureStepCard({
@@ -56,11 +56,13 @@ class FeatureStepCard extends StatelessWidget {
               color: iconBackgroundColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: SvgPicture.asset(
-              icon,
-              width: isMobile ? 24 : 26,
-              height: isMobile ? 24 : 26,
-            ),
+            child: icon is IconData
+                ? Icon(icon, size: isMobile ? 24 : 26, color: Color(0xff9333EA))
+                : SvgPicture.asset(
+                    icon,
+                    width: isMobile ? 24 : 26,
+                    height: isMobile ? 24 : 26,
+                  ),
           ),
           const SizedBox(width: 24),
           Flexible(
