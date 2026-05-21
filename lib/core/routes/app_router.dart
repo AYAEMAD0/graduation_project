@@ -7,7 +7,6 @@ import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
 import 'package:mock_mate_ai/features/feedback/view/feedback.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
-import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
