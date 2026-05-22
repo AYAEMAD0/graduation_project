@@ -18,8 +18,10 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onRequest(RequestOptions options,
-      RequestInterceptorHandler handler,) async {
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final accessToken = await tokenStorage.getAccessToken();
 
     if (accessToken != null && accessToken.isNotEmpty) {
@@ -64,8 +66,19 @@ class DioInterceptor extends Interceptor {
 
           return handler.resolve(retryResponse);
         }
-      } catch (_) {
-        await tokenStorage.clearTokens();
+      } on DioException catch (e) {
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout ||
+            e.type == DioExceptionType.receiveTimeout ||
+            e.type == DioExceptionType.sendTimeout) {
+          return handler.next(err);
+        }
+
+        if (e.response?.statusCode == 401) {
+          await tokenStorage.clearTokens();
+        }
+
+        return handler.next(err);
       }
     }
 

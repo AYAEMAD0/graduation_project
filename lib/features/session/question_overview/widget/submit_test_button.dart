@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/theme/app_gradient.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
@@ -16,14 +17,17 @@ class SubmitTestButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SubmitAnswerCubit, SubmitAnswerState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is SubmitAnswerSuccess) {
+          await InterviewCacheService.clearSession();
+
           Navigator.pushReplacementNamed(
             context,
             AppRoutes.feedback,
-            arguments: sessionId, 
+            arguments: sessionId,
           );
         }
+
         if (state is SubmitAnswerError) {
           CustomToast.showToast(message: state.message, context: context);
         }
@@ -42,7 +46,9 @@ class SubmitTestButton extends StatelessWidget {
           borderRadius: 20,
           hasShadow: true,
           child: state is SubmitAnswerLoading
-              ? Center(child: const CircularProgressIndicator(color: Colors.white))
+              ? Center(
+                  child: const CircularProgressIndicator(color: Colors.white),
+                )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

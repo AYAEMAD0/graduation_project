@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/routes/protected_route.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
@@ -7,11 +8,9 @@ import 'package:mock_mate_ai/features/auth/presentation/screen/login/view/login_
 import 'package:mock_mate_ai/features/auth/presentation/screen/signup/view/signup_screen.dart';
 import 'package:mock_mate_ai/features/feedback/view/feedback.dart';
 import 'package:mock_mate_ai/features/main/main_layout.dart';
-import 'package:mock_mate_ai/features/main/tabs/history/view/history_tab.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
-
 import '../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../domain/repo/auth/token/token_storage.dart';
 import '../../domain/repo/session/voice/voice_interview_repo.dart';
@@ -108,7 +107,6 @@ class AppRouter {
 
           child: const MainLayout(initialIndex: 3),
         ),
-        
       ),
       AppRoutes.faq: (context) => ProtectedRoute(
         child: MultiBlocProvider(
@@ -131,8 +129,16 @@ class AppRouter {
         final args =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-        final interviewSession =
+        InterviewSessionEntity? interviewSession =
             args?['interviewSession'] as InterviewSessionEntity?;
+
+        if (interviewSession == null) {
+          final cachedSession = InterviewCacheService.getSession();
+
+          if (cachedSession != null) {
+            interviewSession = InterviewSessionEntity.fromJson(cachedSession);
+          }
+        }
 
         if (interviewSession == null) {
           return const SessionExpired();
@@ -148,7 +154,13 @@ class AppRouter {
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
-          return const SizedBox.shrink();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, AppRoutes.questionOverview);
+          });
+
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
@@ -190,7 +202,13 @@ class AppRouter {
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
-          return const SizedBox.shrink();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, AppRoutes.questionOverview);
+          });
+
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
