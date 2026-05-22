@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/helper/picker_helper.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/widget/custom_toast.dart';

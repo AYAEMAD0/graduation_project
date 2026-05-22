@@ -120,7 +120,13 @@ class AppRouter {
         ),
       ),
       AppRoutes.feedback: (context) {
-        final sessionId = ModalRoute.of(context)!.settings.arguments as int;
+        int? sessionId = ModalRoute.of(context)?.settings.arguments as int?;
+
+        sessionId ??= InterviewCacheService.getFeedbackSessionId();
+
+        if (sessionId == null) {
+          return const SessionExpired();
+        }
 
         return ProtectedRoute(child: FeedbackScreen(sessionId: sessionId));
       },

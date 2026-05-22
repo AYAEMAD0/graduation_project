@@ -5,6 +5,8 @@ class InterviewCacheService {
 
   static const String sessionKey = 'interview_session';
 
+  static const _feedbackSessionId = 'feedback_session_id';
+
   static Future<void> saveSession(Map<String, dynamic> data) async {
     await _box.put(sessionKey, data);
   }
@@ -21,5 +23,13 @@ class InterviewCacheService {
 
   static Future<void> clearSession() async {
     await _box.delete(sessionKey);
+  }
+
+  static Future<void> saveFeedbackSessionId(int sessionId) async {
+    await _box.put(_feedbackSessionId, sessionId);
+  }
+
+  static int? getFeedbackSessionId() {
+    return _box.get(_feedbackSessionId);
   }
 }

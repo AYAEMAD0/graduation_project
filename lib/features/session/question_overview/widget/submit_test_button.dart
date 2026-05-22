@@ -19,14 +19,21 @@ class SubmitTestButton extends StatelessWidget {
     return BlocConsumer<SubmitAnswerCubit, SubmitAnswerState>(
       listener: (context, state) async {
         if (state is SubmitAnswerSuccess) {
-          await InterviewCacheService.clearSession();
 
-          Navigator.pushReplacementNamed(
-            context,
-            AppRoutes.feedback,
-            arguments: sessionId,
-          );
-        }
+  await InterviewCacheService
+      .saveFeedbackSessionId(
+    sessionId,
+  );
+
+  Navigator.pushReplacementNamed(
+
+    context,
+
+    AppRoutes.feedback,
+
+    arguments: sessionId,
+  );
+}
 
         if (state is SubmitAnswerError) {
           CustomToast.showToast(message: state.message, context: context);
