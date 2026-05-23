@@ -22,9 +22,12 @@ class SessionLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: AppColor.homeBackground,
+      backgroundColor: isDark
+          ? const Color(0xff0F111A)
+          : AppColor.homeBackground,
       body: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -37,7 +40,9 @@ class SessionLayout extends StatelessWidget {
                 width: 700,
                 height: 600,
                 decoration: BoxDecoration(
-                  color: AppColor.homeEffectBlue.withValues(alpha: 0.70),
+                  color: AppColor.homeEffectBlue.withValues(
+                    alpha: isDark ? 0.15 : 0.70,
+                  ),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -52,7 +57,9 @@ class SessionLayout extends StatelessWidget {
                 width: 700,
                 height: 600,
                 decoration: BoxDecoration(
-                  color: AppColor.purple.withValues(alpha: 0.70),
+                  color: AppColor.purple.withValues(
+                    alpha: isDark ? 0.15 : 0.70,
+                  ),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -76,7 +83,9 @@ class SessionLayout extends StatelessWidget {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.65),
+                          color: isDark
+                              ? const Color(0xff141824).withValues(alpha: 0.4)
+                              : Colors.white.withValues(alpha: 0.65),
                         ),
                         child: Column(
                           children: [

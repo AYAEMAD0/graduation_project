@@ -8,30 +8,37 @@ class BuildProfileBackgroundEffect extends StatelessWidget {
 
   static List<Widget> items(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return [
       Positioned(
-        top: -150, left: -100,
+        top: isMobile ? -100 : -150,
+        left: isMobile ? -80 : -100,
         child: ImageFiltered(
           imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
           child: Container(
-            width: isMobile ? 350 : 700,
-            height: isMobile ? 350 : 600,
+            width: isMobile ? 300 : 700,
+            height: isMobile ? 300 : 600,
             decoration: BoxDecoration(
-              color: AppColor.homeEffectBlue.withValues(alpha: 0.15),
+              color: AppColor.homeEffectBlue.withValues(
+                alpha: isDark ? 0.15 : 0.05,
+              ),
               shape: BoxShape.circle,
             ),
           ),
         ),
       ),
+
       Positioned(
-        top: 220, right: -150,
+        top: isMobile ? 300 : 220,
+        right: isMobile ? -100 : -150,
         child: ImageFiltered(
           imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
           child: Container(
-            width: isMobile ? 350 : 800,
-            height: isMobile ? 350 : 800,
+            width: isMobile ? 300 : 800,
+            height: isMobile ? 300 : 800,
             decoration: BoxDecoration(
-              color: AppColor.purple.withValues(alpha: 0.2),
+              color: AppColor.purple.withValues(alpha: isDark ? 0.18 : 0.04),
               shape: BoxShape.circle,
             ),
           ),

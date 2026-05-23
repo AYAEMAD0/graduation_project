@@ -9,6 +9,7 @@ class BuildTitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
     double fontSize = isMobile ? 48 : 90;
@@ -18,6 +19,7 @@ class BuildTitleSection extends StatelessWidget {
         style: AppStyle.font154ExtraBold.copyWith(
           fontSize: fontSize,
           height: 1.1,
+          color: isDark ? Colors.white : const Color(0xff000000),
         ),
         children: [
           const TextSpan(text: "Master Your\n"),

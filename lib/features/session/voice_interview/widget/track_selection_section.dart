@@ -75,12 +75,17 @@ class _TrackSelectionSectionState extends State<TrackSelectionSection>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '1. Select Your Track',
-          style: AppStyle.font24BlackBold.copyWith(fontSize: 18),
+          style: AppStyle.font24BlackBold.copyWith(
+            fontSize: 18,
+            color: isDark ? Colors.white : null,
+          ),
         ),
         const SizedBox(height: 12),
         SegmentedBar(
@@ -107,4 +112,3 @@ class _TrackSelectionSectionState extends State<TrackSelectionSection>
     );
   }
 }
-

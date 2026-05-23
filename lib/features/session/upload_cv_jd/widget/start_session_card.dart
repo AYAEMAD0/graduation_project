@@ -42,7 +42,6 @@ class _StartSessionCardState extends State<StartSessionCard> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
@@ -57,7 +56,10 @@ class _StartSessionCardState extends State<StartSessionCard> {
                 listener: (context, state) {
                   if (state is InterviewSessionError) {
                     CustomDialog.hideLoading(context: context);
-                    CustomToast.showToast(message: state.message, context: context);
+                    CustomToast.showToast(
+                      message: state.message,
+                      context: context,
+                    );
                   }
                   if (state is InterviewSessionSuccess) {
                     CustomDialog.hideLoading(context: context);
@@ -73,7 +75,10 @@ class _StartSessionCardState extends State<StartSessionCard> {
                 listener: (context, state) {
                   if (state is AiInterviewError) {
                     CustomDialog.hideLoading(context: context);
-                    CustomToast.showToast(message: state.message, context: context);
+                    CustomToast.showToast(
+                      message: state.message,
+                      context: context,
+                    );
                   }
                   if (state is AiInterviewSuccess) {
                     CustomDialog.hideLoading(context: context);
@@ -93,22 +98,34 @@ class _StartSessionCardState extends State<StartSessionCard> {
     );
   }
 
-  Widget _buildUI(BuildContext context, bool isMobile, TextEditingController controller) {
+  Widget _buildUI(
+    BuildContext context,
+    bool isMobile,
+    TextEditingController controller,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<InterviewSessionCubit, InterviewSessionState>(
       builder: (context, dbState) {
         return BlocBuilder<AiInterviewCubit, AiInterviewState>(
           builder: (context, aiState) {
-
             return Center(
               child: Container(
                 width: isMobile ? double.infinity : 1010,
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 18,
+                ),
                 decoration: BoxDecoration(
-                  color: AppColor.whiteDarkColor,
+                  color: isDark
+                      ? Theme.of(context).cardColor
+                      : AppColor.whiteDarkColor,
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColor.blackColor.withValues(alpha: 0.2),
+                      color: isDark
+                          ? Colors.black.withValues(alpha: 0.4)
+                          : AppColor.blackColor.withValues(alpha: 0.2),
                       blurRadius: 60,
                       offset: const Offset(0, 25),
                     ),
@@ -118,24 +135,22 @@ class _StartSessionCardState extends State<StartSessionCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SessionCardHeader(isMobile: isMobile),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     if (widget.mode != 'ai') BuildAvailableTracks(),
                     const BuildUploadCvSection(),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     JobDescriptionField(
                       isMobile: isMobile,
                       controller: controller,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     BuildBtnUploadCv(
                       isLoading: (widget.mode == 'ai')
                           ? aiState is AiInterviewLoading
                           : dbState is InterviewSessionLoading,
 
-                      onAnalyzePressed: () => _onAnalyzePressed(
-                        context,
-                        controller,
-                      ),
+                      onAnalyzePressed: () =>
+                          _onAnalyzePressed(context, controller),
                     ),
                   ],
                 ),
@@ -148,16 +163,22 @@ class _StartSessionCardState extends State<StartSessionCard> {
   }
 
   void _onAnalyzePressed(
-      BuildContext context,
-      TextEditingController jobDescriptionController,
-      ) {
+    BuildContext context,
+    TextEditingController jobDescriptionController,
+  ) {
     final cvState = context.read<UploadCvCubit>().state;
     if (!cvState.hasFile || cvState.selectedFile!.bytes == null) {
-      CustomToast.showToast(message: "Please upload your CV first.", context: context);
+      CustomToast.showToast(
+        message: "Please upload your CV first.",
+        context: context,
+      );
       return;
     }
     if (jobDescriptionController.text.trim().isEmpty) {
-      CustomToast.showToast(message: "Please enter a job description.", context: context);
+      CustomToast.showToast(
+        message: "Please enter a job description.",
+        context: context,
+      );
       return;
     }
     CustomDialog.showGenerating(context: context);

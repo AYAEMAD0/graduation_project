@@ -29,6 +29,12 @@ class ProfileTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final Color backgroundColor = isDark
+        ? const Color(0xff0A0D14)
+        : Colors.white;
+
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         final isLoading = state is ProfileLoading;
@@ -55,12 +61,12 @@ class ProfileTabView extends StatelessWidget {
             File(s.imagePath!),
           ),
           _ when (user?.avatarPath != null && user!.avatarPath!.isNotEmpty) =>
-            NetworkImage(user.avatarPath!),
+              NetworkImage(user.avatarPath!),
           _ => null,
         };
 
         return Scaffold(
-          backgroundColor: AppColor.homeBackground,
+          backgroundColor: backgroundColor,
           body: SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -79,7 +85,7 @@ class ProfileTabView extends StatelessWidget {
                     onUpdatePressed: onUpdatePressed,
                     onLogoutPressed: onLogoutPressed,
                     isLoadingLogout:
-                        context.watch<LogoutCubit>().state is LogoutLoading,
+                    context.watch<LogoutCubit>().state is LogoutLoading,
                   ),
                 ],
               ),

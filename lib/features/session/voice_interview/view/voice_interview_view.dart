@@ -96,90 +96,101 @@ class _VoiceInterviewViewState extends State<VoiceInterviewView> {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints
-        .of(context)
-        .isMobile;
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark
+          ? Theme.of(context).scaffoldBackgroundColor
+          : null,
       body: !_isServiceInitialized
           ? const Center(
               child: CircularProgressIndicator(color: Colors.blueAccent),
             )
           : SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: isMobile ? -80 : 90,
-              left: isMobile ? -120 : -100,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                child: Container(
-                  width: isMobile ? 400 : 800,
-                  height: isMobile ? 300 : 700,
-                  decoration: BoxDecoration(
-                    color: AppColor.homeEffectBlue.withValues(alpha: 0.15),
-                    shape: BoxShape.circle,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: isMobile ? -80 : 90,
+                    left: isMobile ? -120 : -100,
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: Container(
+                        width: isMobile ? 400 : 800,
+                        height: isMobile ? 300 : 700,
+                        decoration: BoxDecoration(
+                          color: AppColor.homeEffectBlue.withValues(
+                            alpha: isDark ? 0.10 : 0.15,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    top: 620,
+                    left: -100,
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 300, sigmaY: 100),
+                      child: Container(
+                        width: isMobile ? 300 : 600,
+                        height: isMobile ? 300 : 600,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColor.homeEffectBlue.withValues(alpha: 0.06)
+                              : const Color(0xffE2ECF1).withValues(alpha: 0.90),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: -150,
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 600, sigmaY: 400),
+                      child: Container(
+                        width: isMobile ? 300 : 1500,
+                        height: isMobile ? 300 : 900,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.02)
+                              : AppColor.grayColor.withValues(alpha: 0.18),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 450,
+                    right: -150,
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: Container(
+                        width: isMobile ? 400 : 900,
+                        height: isMobile ? 400 : 900,
+                        decoration: BoxDecoration(
+                          color: AppColor.purple.withValues(
+                            alpha: isDark ? 0.10 : 0.16,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  VoiceInterviewBody(
+                    track: widget.track,
+                    isCameraInitialized: _isCameraInitialized,
+                    cameraController: _cameraController,
+                    onStart: () {
+                      _cubit.connect(widget.track);
+                      _startTimer();
+                    },
+                    onEnd: _handleEndInterview,
+                  ),
+                ],
               ),
             ),
-            Positioned(
-              top: 620,
-              left: -100,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 300, sigmaY: 100),
-                child: Container(
-                  width: isMobile ? 300 : 600,
-                  height: isMobile ? 300 : 600,
-                  decoration: BoxDecoration(
-                    color: Color(0xffE2ECF1).withValues(alpha: 0.90),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: -150,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 600, sigmaY: 400),
-                child: Container(
-                  width: isMobile ? 300 : 1500,
-                  height: isMobile ? 300 : 900,
-                  decoration: BoxDecoration(
-                    color: AppColor.grayColor.withValues(alpha: 0.18),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 450,
-              right: -150,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                child: Container(
-                  width: isMobile ? 400 : 900,
-                  height: isMobile ? 400 : 900,
-                  decoration: BoxDecoration(
-                    color: AppColor.purple.withValues(alpha: 0.16),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            VoiceInterviewBody(
-              track: widget.track,
-              isCameraInitialized: _isCameraInitialized,
-              cameraController: _cameraController,
-              onStart: () {
-                _cubit.connect(widget.track);
-                _startTimer();
-              },
-              onEnd: _handleEndInterview,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

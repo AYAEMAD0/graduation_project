@@ -8,6 +8,7 @@ class BuildAvailableTracks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(10),
       margin: EdgeInsets.only(bottom: 20),
@@ -23,7 +24,9 @@ class BuildAvailableTracks extends StatelessWidget {
           Expanded(
             child: Text(
               "Available pathways: Backend, Frontend, Full Stack, Mobile Applications, AI & ML, Cybersecurity. Otherwise, it would be General Software.",
-              style: AppStyle.font15GrayDarkRegular,
+              style: AppStyle.font15GrayDarkRegular.copyWith(
+                color: isDark ? Colors.white : Colors.grey,
+              ),
             ),
           ),
         ],

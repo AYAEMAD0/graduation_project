@@ -26,6 +26,8 @@ class QuestionPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +52,10 @@ class QuestionPanel extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             questionTitle,
-            style: AppStyle.font32BlackBold.copyWith(fontSize: 25),
+            style: AppStyle.font32BlackBold.copyWith(
+              fontSize: 25,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -58,7 +63,7 @@ class QuestionPanel extends StatelessWidget {
             child: Text(
               QuestionParserHelper.description(questionText),
               style: AppStyle.font14GrayMedium.copyWith(
-                color: AppColor.darkGray,
+                color: isDark ? const Color(0xff94A3B8) : AppColor.darkGray,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),

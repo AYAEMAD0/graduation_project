@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
-
 import '../theme/app_color.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -25,7 +24,8 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final Color? fillColor;
   final EdgeInsetsGeometry? contentPadding;
-  final Color?cursorColor;
+  final Color? cursorColor;
+  final TextStyle? textStyle;
 
   const CustomTextField({
     super.key,
@@ -49,12 +49,43 @@ class CustomTextField extends StatelessWidget {
     this.labelStyle,
     this.borderFocuseColor,
     this.cursorColor,
+    this.textStyle,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final resolvedTextStyle =
+        textStyle ??
+        (isDark
+            ? AppStyle.font18BlackRegular.copyWith(color: Colors.white)
+            : AppStyle.font18BlackRegular);
+
+    final resolvedHintStyle =
+        hintStyle ??
+            (isDark
+                ? AppStyle.font14GrayRegular.copyWith(color: Colors.white.withOpacity(0.4))
+                : AppStyle.font14GrayRegular);
+
+    final resolvedLabelStyle =
+        labelStyle ??
+            (isDark
+                ? AppStyle.font14GrayRegular.copyWith(color: Colors.white.withOpacity(0.7))
+                : AppStyle.font14GrayRegular);
+
+    final resolvedFillColor =
+        fillColor ??
+        (isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : AppColor.whiteDarkColor);
+
+    final resolvedPrefixStyle = isDark
+        ? AppStyle.font18BlackRegular.copyWith(color: Colors.white)
+        : AppStyle.font18BlackRegular;
+
     return TextFormField(
-      style: AppStyle.font18BlackRegular,
+      style: resolvedTextStyle,
       controller: controller,
       validator: validator,
       onChanged: onChanged,
@@ -68,38 +99,50 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboard ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: hintStyle ?? AppStyle.font14GrayRegular,
+        hintStyle: resolvedHintStyle,
         labelText: label,
-        labelStyle: labelStyle ?? AppStyle.font14GrayRegular,
+        labelStyle: resolvedLabelStyle,
         contentPadding:
             contentPadding ??
-            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        border: builtBorder(borderColor ?? AppColor.transparentColor),
-        enabledBorder: builtBorder(borderColor ?? AppColor.transparentColor),
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+
+        border: builtBorder(
+          borderColor ??
+              (isDark ? Colors.transparent : AppColor.transparentColor),
+        ),
+        enabledBorder: builtBorder(
+          borderColor ?? (isDark ? Colors.white10 : AppColor.transparentColor),
+        ),
         focusedBorder: builtBorder(
-            borderFocuseColor ?? AppColor.primaryBlueColor),
+          borderFocuseColor ?? AppColor.primaryBlueColor,
+        ),
         errorBorder: builtBorder(),
         focusedErrorBorder: builtBorder(),
+
         prefixText: prefixText,
-        prefixStyle: AppStyle.font18BlackRegular,
+        prefixStyle: resolvedPrefixStyle,
         prefixIcon: prefixIcon != null
             ? Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Icon(prefixIcon),
-        )
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Icon(prefixIcon),
+              )
             : null,
         isDense: true,
-        prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
-        prefixIconColor: AppColor.grayColor,
+        prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+        prefixIconColor: isDark ? Colors.white60 : AppColor.grayColor,
+
         suffixIcon: suffixIcon != null
-            ? GestureDetector(onTap: onSuffixTap, child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Icon(suffixIcon),
-        ))
+            ? GestureDetector(
+                onTap: onSuffixTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Icon(suffixIcon),
+                ),
+              )
             : null,
-        suffixIconColor: AppColor.grayColor,
+        suffixIconColor: isDark ? Colors.white60 : AppColor.grayColor,
         filled: true,
-        fillColor: fillColor ?? AppColor.whiteDarkColor,
+        fillColor: resolvedFillColor,
       ),
     );
   }

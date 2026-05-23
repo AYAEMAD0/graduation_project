@@ -22,7 +22,12 @@ class WebOnboardingView extends StatelessWidget {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark
+          ? Theme.of(context).scaffoldBackgroundColor
+          : null,
       body: Stack(
         children: [
           Positioned.fill(
@@ -39,7 +44,7 @@ class WebOnboardingView extends StatelessWidget {
                         height: isMobile ? 300 : 700,
                         decoration: BoxDecoration(
                           color: AppColor.homeEffectBlue.withValues(
-                            alpha: 0.15,
+                            alpha: isDark ? 0.12 : 0.15,
                           ),
                           shape: BoxShape.circle,
                         ),
@@ -55,7 +60,9 @@ class WebOnboardingView extends StatelessWidget {
                         width: isMobile ? 300 : 600,
                         height: isMobile ? 300 : 600,
                         decoration: BoxDecoration(
-                          color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                          color: isDark
+                              ? AppColor.homeEffectBlue.withValues(alpha: 0.08)
+                              : const Color(0xffE2ECF1).withValues(alpha: 0.90),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -70,7 +77,9 @@ class WebOnboardingView extends StatelessWidget {
                         width: isMobile ? 300 : 1500,
                         height: isMobile ? 300 : 900,
                         decoration: BoxDecoration(
-                          color: AppColor.grayColor.withValues(alpha: 0.18),
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.02)
+                              : AppColor.grayColor.withValues(alpha: 0.18),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -85,7 +94,9 @@ class WebOnboardingView extends StatelessWidget {
                         width: isMobile ? 400 : 900,
                         height: isMobile ? 400 : 900,
                         decoration: BoxDecoration(
-                          color: AppColor.purple.withValues(alpha: 0.16),
+                          color: AppColor.purple.withValues(
+                            alpha: isDark ? 0.10 : 0.16,
+                          ),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -96,7 +107,7 @@ class WebOnboardingView extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Center(
               child: Column(
                 children: [
@@ -105,19 +116,19 @@ class WebOnboardingView extends StatelessWidget {
                     image: pages[0].image,
                     description: pages[0].description,
                   ),
-                  SizedBox(height: 100),
+                  const SizedBox(height: 100),
                   OnboardingSection(
                     title: pages[2].title,
                     image: pages[2].image,
                     description: pages[2].description,
                   ),
-                  SizedBox(height: 100),
+                  const SizedBox(height: 100),
                   OnboardingSection(
                     title: pages[1].title,
                     image: pages[1].image,
                     description: pages[1].description,
                   ),
-                  SizedBox(height: 60),
+                  const SizedBox(height: 60),
                   CustomButton(
                     text: "NEXT",
                     widthBtn: 380,
@@ -131,7 +142,7 @@ class WebOnboardingView extends StatelessWidget {
                       Navigator.pushReplacementNamed(context, AppRoutes.login);
                     },
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

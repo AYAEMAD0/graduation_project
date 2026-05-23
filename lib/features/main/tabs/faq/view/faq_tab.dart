@@ -9,6 +9,7 @@ class FaqTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return MainBackground(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -17,12 +18,12 @@ class FaqTab extends StatelessWidget {
           children: [
             ScrollAnimate(
               direction: SlideDirection.up,
-              child: const Text(
+              child: Text(
                 "FAQ",
                 style: TextStyle(
+                  color: isDark ? Colors.white : Colors.black,
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
             ),
@@ -32,12 +33,12 @@ class FaqTab extends StatelessWidget {
             ScrollAnimate(
               direction: SlideDirection.up,
               delay: const Duration(milliseconds: 100),
-              child: const Text(
+              child: Text(
                 "Choose the format that best matches your upcoming interview. You can switch modes later.",
                 style: TextStyle(
                   fontSize: 20,
                   height: 1.6,
-                  color: Color(0xff64748B),
+                  color: isDark ? const Color(0xff94A3B8) : const Color(0xff64748B),
                 ),
               ),
             ),

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 
@@ -11,6 +10,7 @@ class MainBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 600;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -29,12 +29,15 @@ class MainBackground extends StatelessWidget {
                       width: isMobile ? 400 : 800,
                       height: isMobile ? 500 : 700,
                       decoration: BoxDecoration(
-                        color: AppColor.homeEffectBlue.withValues(alpha: 0.15),
+                        color: isDark
+                            ? AppColor.homeEffectBlue.withValues(alpha: 0.08)
+                            : AppColor.homeEffectBlue.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
                     ),
                   ),
                 ),
+
                 Positioned(
                   bottom: -480,
                   left: -100,
@@ -44,12 +47,15 @@ class MainBackground extends StatelessWidget {
                       width: isMobile ? 300 : 600,
                       height: isMobile ? 300 : 600,
                       decoration: BoxDecoration(
-                        color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                        color: isDark
+                            ? const Color(0xff1E293B).withValues(alpha: 0.40)
+                            : const Color(0xffE2ECF1).withValues(alpha: 0.90),
                         shape: BoxShape.circle,
                       ),
                     ),
                   ),
                 ),
+
                 Positioned(
                   top: 300,
                   right: -150,
@@ -59,12 +65,15 @@ class MainBackground extends StatelessWidget {
                       width: isMobile ? 300 : 1500,
                       height: isMobile ? 300 : 900,
                       decoration: BoxDecoration(
-                        color: AppColor.grayColor.withValues(alpha: 0.16),
+                        color: isDark
+                            ? Colors.black.withValues(alpha: 0.2)
+                            : AppColor.grayColor.withValues(alpha: 0.16),
                         shape: BoxShape.circle,
                       ),
                     ),
                   ),
                 ),
+
                 Positioned(
                   top: 0,
                   right: -300,
@@ -74,7 +83,9 @@ class MainBackground extends StatelessWidget {
                       width: isMobile ? 400 : 900,
                       height: isMobile ? 400 : 900,
                       decoration: BoxDecoration(
-                        color: AppColor.purple.withValues(alpha: 0.18),
+                        color: isDark
+                            ? AppColor.purple.withValues(alpha: 0.10)
+                            : AppColor.purple.withValues(alpha: 0.18),
                         shape: BoxShape.circle,
                       ),
                     ),

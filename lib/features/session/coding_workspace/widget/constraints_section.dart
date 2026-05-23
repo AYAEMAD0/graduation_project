@@ -8,13 +8,15 @@ class ConstraintsSection extends StatelessWidget {
   final String descConstraints;
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "CONSTRAINTS",
           style: AppStyle.font16WhiteBold.copyWith(
-            color: Colors.black,
+            color: isDark ? Colors.white : Colors.black,
             fontSize: 14,
           ),
         ),

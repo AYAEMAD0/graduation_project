@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/theme/cubit/theme_cubit.dart';
 
 import '../tabs/profile/viewmodel/profile/profile_cubit.dart';
 import '../tabs/profile/viewmodel/profile/profile_state.dart';
@@ -18,7 +19,7 @@ class BuildNavTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;    return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         NavItem(
@@ -38,6 +39,21 @@ class BuildNavTab extends StatelessWidget {
           index: 2,
           currentIndex: currentIndex,
           onTap: () => onTap(2),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: IconButton(
+            onPressed: () {
+              context.read<ThemeCubit>().toggleTheme();
+
+            },
+            icon: Icon(
+              isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+              size: 22,
+              color: Colors.white,
+            ),
+            tooltip: isDarkMode ? 'Switch to Light' : 'Switch to Dark',
+          ),
         ),
         const SizedBox(width: 10),
         BlocBuilder<ProfileCubit, ProfileState>(

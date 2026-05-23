@@ -18,8 +18,6 @@ import '../../features/auth/presentation/screen/forgot/view/forgot_password_scre
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/successful_screen.dart';
-import '../../features/main/tabs/history/viewModel/history_cubit.dart';
-import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
 import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
@@ -52,22 +50,15 @@ class AppRouter {
       AppRoutes.successful: (context) => SuccessfulScreen(),
 
       AppRoutes.uploadCvJd: (context) =>
-          const ProtectedRoute(child: UploadCvJd()),
+      const ProtectedRoute(child: UploadCvJd()),
 
-      AppRoutes.home: (context) => ProtectedRoute(
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
-            BlocProvider(create: (_) => getIt<ProfileCubit>()),
-          ],
-
-          child: const MainLayout(initialIndex: 0),
-        ),
+      // 🛠️ تم تنظيف الهوم من الـ Providers المتكررة لضمان ثبات الثيم والـ Index
+      AppRoutes.home: (context) => const ProtectedRoute(
+        child: MainLayout(initialIndex: 0),
       ),
 
       AppRoutes.voicePreInterview: (context) =>
-          const ProtectedRoute(child: VoicePreInterviewView()),
+      const ProtectedRoute(child: VoicePreInterviewView()),
 
       AppRoutes.voiceInterview: (context) {
         final track = ModalRoute.of(context)!.settings.arguments as String;
@@ -76,50 +67,28 @@ class AppRouter {
           child: BlocProvider(
             create: (_) => VoiceInterviewCubit(
               repo: getIt<VoiceInterviewRepo>(),
-
               tokenStorage: getIt<TokenStorage>(),
             ),
-
             child: VoiceInterviewView(track: track),
           ),
         );
       },
 
-      AppRoutes.history: (context) => ProtectedRoute(
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
-            BlocProvider(create: (_) => getIt<ProfileCubit>()),
-          ],
-
-          child: const MainLayout(initialIndex: 1),
-        ),
+      // 🛠️ تم تنظيف الهيستوري
+      AppRoutes.history: (context) => const ProtectedRoute(
+        child: MainLayout(initialIndex: 1),
       ),
 
-      AppRoutes.profile: (context) => ProtectedRoute(
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
-            BlocProvider(create: (_) => getIt<ProfileCubit>()),
-          ],
-
-          child: const MainLayout(initialIndex: 3),
-        ),
-        
+      // 🛠️ تم تنظيف البروفايل
+      AppRoutes.profile: (context) => const ProtectedRoute(
+        child: MainLayout(initialIndex: 3),
       ),
-      AppRoutes.faq: (context) => ProtectedRoute(
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
 
-            BlocProvider(create: (_) => getIt<ProfileCubit>()),
-          ],
-
-          child: const MainLayout(initialIndex: 2),
-        ),
+      // 🛠️ تم تنظيف الـ FAQ لضمان عدم هروب الصفحة للهوم مجدداً عند قلب الثيم
+      AppRoutes.faq: (context) => const ProtectedRoute(
+        child: MainLayout(initialIndex: 2),
       ),
+
       AppRoutes.feedback: (context) {
         final sessionId = ModalRoute.of(context)!.settings.arguments as int;
 
@@ -128,10 +97,10 @@ class AppRouter {
 
       AppRoutes.questionOverview: (context) {
         final args =
-            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         final interviewSession =
-            args?['interviewSession'] as InterviewSessionEntity?;
+        args?['interviewSession'] as InterviewSessionEntity?;
 
         if (interviewSession == null) {
           return const SessionExpired();
@@ -144,7 +113,7 @@ class AppRouter {
 
       AppRoutes.codeWorkspace: (context) {
         final args =
-            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
           return const SizedBox.shrink();
@@ -155,57 +124,42 @@ class AppRouter {
         return ProtectedRoute(
           child: CodingWorkspace(
             args: sessionArgs,
-
             questionId: args['questionId'] as int,
-
             questionTitle: args['questionTitle'] as String,
-
             questionText: args['questionText'] as String,
-
             testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
-
             templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
-
             savedCode: args['savedCode'] as Map<int, String>? ?? {},
-
             savedLanguageId: args['savedLanguageId'] as int?,
-
             onCodeChanged:
-                args['onCodeChanged'] as void Function(int, String)? ??
-                (_, __) {},
-
+            args['onCodeChanged'] as void Function(int, String)? ??
+                    (_, __) {},
             onCodeSaved:
-                args['onCodeSaved'] as void Function(int, String)? ??
-                (_, __) {},
-
+            args['onCodeSaved'] as void Function(int, String)? ??
+                    (_, __) {},
             onCodeReverted:
-                args['onCodeReverted'] as void Function(int)? ?? (_) {},
+            args['onCodeReverted'] as void Function(int)? ?? (_) {},
           ),
         );
       },
 
       AppRoutes.mcqWorkspace: (context) {
         final args =
-            ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
           return const SizedBox.shrink();
         }
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
-
         final questionId = args['questionId'] as int? ?? 0;
 
         return ProtectedRoute(
           child: McqWorkspace(
             args: sessionArgs,
-
             questionId: questionId,
-
             questionText: args['questionText'] as String,
-
             options: (args['options'] as List).cast<McqOptionEntity>(),
-
             isSaved: sessionArgs.savedQuestions.contains(questionId),
           ),
         );

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:mock_mate_ai/core/theme/cubit/theme_cubit.dart';
+import 'package:mock_mate_ai/features/main/tabs/history/viewModel/history_cubit.dart';
+import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'core/config/di.dart';
 import 'core/config/my_bloc_observer.dart';
@@ -19,23 +22,34 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => getIt<ThemeCubit>()),
         BlocProvider(create: (_) => getIt<ProfileCubit>()),
+        BlocProvider(create: (_) => getIt<HistoryCubit>()),
       ],
       child: const MyApp(),
     ),
   );
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, themeMode) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.theme,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.dark,
+
           initialRoute: AppRoutes.splash,
           routes: AppRouter.routes,
+
+          onUnknownRoute: (settings) =>
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
+
           builder: (context, child) => ResponsiveBreakpoints.builder(
             child: child!,
             breakpoints: [
@@ -46,5 +60,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
         );
+      },
+    );
   }
 }

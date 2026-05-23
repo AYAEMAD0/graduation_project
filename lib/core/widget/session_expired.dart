@@ -13,7 +13,12 @@ class SessionExpired extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark
+          ? const Color(0xff0F111A)
+          : Theme.of(context).scaffoldBackgroundColor,
       body: SizedBox(
         height: double.infinity,
         child: Stack(
@@ -33,7 +38,7 @@ class SessionExpired extends StatelessWidget {
                           height: isMobile ? 500 : 700,
                           decoration: BoxDecoration(
                             color: AppColor.homeEffectBlue.withValues(
-                              alpha: 0.15,
+                              alpha: isDark ? 0.10 : 0.15,
                             ),
                             shape: BoxShape.circle,
                           ),
@@ -49,7 +54,13 @@ class SessionExpired extends StatelessWidget {
                           width: isMobile ? 300 : 600,
                           height: isMobile ? 300 : 600,
                           decoration: BoxDecoration(
-                            color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                            color: isDark
+                                ? const Color(
+                                    0xff1E293B,
+                                  ).withValues(alpha: 0.20)
+                                : const Color(
+                                    0xffE2ECF1,
+                                  ).withValues(alpha: 0.90),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -64,7 +75,9 @@ class SessionExpired extends StatelessWidget {
                           width: isMobile ? 300 : 1500,
                           height: isMobile ? 300 : 900,
                           decoration: BoxDecoration(
-                            color: AppColor.grayColor.withValues(alpha: 0.18),
+                            color: AppColor.grayColor.withValues(
+                              alpha: isDark ? 0.05 : 0.18,
+                            ),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -79,7 +92,9 @@ class SessionExpired extends StatelessWidget {
                           width: isMobile ? 400 : 900,
                           height: isMobile ? 400 : 900,
                           decoration: BoxDecoration(
-                            color: AppColor.purple.withValues(alpha: 0.16),
+                            color: AppColor.purple.withValues(
+                              alpha: isDark ? 0.08 : 0.16,
+                            ),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -96,18 +111,25 @@ class SessionExpired extends StatelessWidget {
                   Icon(
                     Icons.timer_off_outlined,
                     size: 67,
-                    color: AppColor.purple,
+                    color: isDark ? const Color(0xffA855F7) : AppColor.purple,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     "Session Expired",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text(
                     "Your session data was lost.\nPlease start a new session.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 22),
+                    style: TextStyle(
+                      color: isDark ? Colors.grey.shade400 : Colors.grey,
+                      fontSize: 22,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   CustomButton(

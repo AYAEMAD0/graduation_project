@@ -17,14 +17,25 @@ class BuildProfilePersonalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: isDark ? const Color(0xff121624) : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(28),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.transparent,
+          width: 1,
+        ),
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: .1), blurRadius: 10),
+          BoxShadow(
+            color: isDark
+                ? Colors.black.withValues(alpha: .4)
+                : Colors.black.withValues(alpha: .1),
+            blurRadius: 15,
+          ),
         ],
       ),
       child: Column(
@@ -33,7 +44,7 @@ class BuildProfilePersonalInfo extends StatelessWidget {
           Text(
             "Personal Information",
             style: AppStyle.font24BlackBold.copyWith(
-              color: Color(0xFFA806F9),
+              color: isDark ? Colors.white : const Color(0xFFA806F9),
               fontSize: isMobile ? 20 : 24,
             ),
           ),
@@ -42,14 +53,16 @@ class BuildProfilePersonalInfo extends StatelessWidget {
             "Full Name",
             style: AppStyle.font18BlackRegular.copyWith(
               fontSize: 20,
-              color: Color(0xffBD85F8),
+              color: isDark ? Colors.white : const Color(0xffBD85F8),
             ),
           ),
           const SizedBox(height: 8),
           CustomTextField(
             hint: "Name",
             controller: fullNameController,
-            fillColor: Color(0x80C0BFC0),
+            fillColor: isDark
+                ? const Color(0xff1A1F31)
+                : const Color(0x80C0BFC0),
             prefixIcon: Icons.person,
           ),
           const SizedBox(height: 18),
@@ -57,14 +70,16 @@ class BuildProfilePersonalInfo extends StatelessWidget {
             "Phone Number",
             style: AppStyle.font18BlackRegular.copyWith(
               fontSize: 20,
-              color: Color(0xffBD85F8),
+              color: isDark ? Colors.white : const Color(0xffBD85F8),
             ),
           ),
           const SizedBox(height: 8),
           CustomTextField(
             hint: "+20 11*****53",
             controller: phoneController,
-            fillColor: Color(0x80C0BFC0),
+            fillColor: isDark
+                ? const Color(0xff1A1F31)
+                : const Color(0x80C0BFC0),
             prefixIcon: Icons.phone,
             keyboard: TextInputType.phone,
           ),

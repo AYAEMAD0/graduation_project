@@ -119,6 +119,7 @@ class CodingWorkspace extends StatelessWidget {
         final secs = seconds % 60;
         final time =
             '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+        final isDark = Theme.of(context).brightness == Brightness.dark;
 
         return SessionLayout(
           time: time,
@@ -130,13 +131,13 @@ class CodingWorkspace extends StatelessWidget {
               BlocProvider(create: (_) => getIt<SubmitCodeCubit>()),
             ],
             child: Container(
-              color: const Color(0xffF8FAFC),
+              color: isDark ? Colors.transparent : const Color(0xffF8FAFC),
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: QuestionPanel(
                         questionNumber: args.currentQuestion,
                         questionTitle: questionTitle,
@@ -144,6 +145,7 @@ class CodingWorkspace extends StatelessWidget {
                         testCases: testCases,
                       ),
                     ),
+                    const SizedBox(width: 15),
                     Expanded(
                       flex: 7,
                       child: CodeEditor(

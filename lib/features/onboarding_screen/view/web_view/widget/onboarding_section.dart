@@ -16,23 +16,24 @@ class OnboardingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Text(
           title,
-          style: AppStyle.font40BlackSemiBold, //font34BlackSemiBold.
+          style: AppStyle.font40BlackSemiBold.copyWith(
+            color: isDark ? Colors.white : Colors.black,
+          ),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 30),
-        Image.asset(
-          image,
-          height: 350, //300
-          fit: BoxFit.contain,
-        ),
+        Image.asset(image, height: 350, fit: BoxFit.contain),
         SizedBox(height: 30),
         Text(
           description,
-          style: AppStyle.font27BlackLight, //font22BlackLight
+          style: AppStyle.font27BlackLight.copyWith(
+            color: isDark ? Colors.grey.shade300 : Colors.black87,
+          ),
           textAlign: TextAlign.center,
         ),
       ],

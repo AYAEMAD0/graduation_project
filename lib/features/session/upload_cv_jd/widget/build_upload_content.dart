@@ -9,6 +9,7 @@ class BuildUploadContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Column(
@@ -22,6 +23,7 @@ class BuildUploadContent extends StatelessWidget {
         Text(
           "Upload CV (PDF)",
           style: AppStyle.font16BlackSemiBold.copyWith(
+            color: isDark ? Colors.white : AppColor.blackColor,
             fontSize: isMobile ? 16 : 18,
           ),
         ),
@@ -29,6 +31,7 @@ class BuildUploadContent extends StatelessWidget {
         Text(
           "or drag and drop here",
           style: AppStyle.font14GrayRegular.copyWith(
+            color: isDark ? Colors.white : AppColor.grayColor,
             fontSize: isMobile ? 14 : 16,
           ),
         ),

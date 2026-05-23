@@ -36,46 +36,57 @@ class BuildProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 40),
-          child: Column(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 32,
+        vertical: isMobile ? 20 : 40,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          BuildProfileCard(
+            isLoading: isLoadingEdit,
+            displayName: user?.displayName ?? "No Name",
+            phone: user?.phoneNumber ?? "No Phone",
+            currentImage: currentImage,
+            onEditImageTap: onEditImageTap,
+          ),
+
+          const SizedBox(height: 32),
+
+          BuildProfilePersonalInfo(
+            fullNameController: fullNameController,
+            phoneController: phoneController,
+          ),
+
+          const SizedBox(height: 32),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: isMobile ? 20 : 30),
-              BuildProfileCard(
-                isLoading: isLoadingEdit,
-                displayName: user?.displayName ?? "No Name",
-                phone: user?.phoneNumber ?? "No Phone",
-                currentImage: currentImage,
-                onEditImageTap: onEditImageTap,
+              Expanded(
+                child: BuildProfileEditButton(
+                  isLoading: isLoadingEdit,
+                  isEnabled: hasChanges,
+                  onPressed: onUpdatePressed,
+                ),
               ),
-              const SizedBox(height: 30),
-              BuildProfilePersonalInfo(
-                fullNameController: fullNameController,
-                phoneController: phoneController,
+
+              SizedBox(width: isMobile ? 16 : 24),
+
+              Expanded(
+                child: BuildProfileLogoutButton(
+                  isLoading: isLoadingLogout,
+                  onPressed: onLogoutPressed,
+                ),
               ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  BuildProfileEditButton(
-                    isLoading: isLoadingEdit,
-                    isEnabled: hasChanges,
-                    onPressed: onUpdatePressed,
-                  ),
-                  SizedBox(width: isMobile ? 20 : 20),
-                  BuildProfileLogoutButton(
-                    isLoading: isLoadingLogout,
-                    onPressed: onLogoutPressed,
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
             ],
           ),
-        ),
+
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }

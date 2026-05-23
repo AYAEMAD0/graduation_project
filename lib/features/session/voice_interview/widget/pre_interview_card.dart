@@ -35,7 +35,7 @@ class PreInterviewCard extends StatelessWidget {
         'Machine Learning',
         'Deep Learning',
         'NLP',
-        'Computer Vision'
+        'Computer Vision',
       ],
     },
     {
@@ -45,23 +45,34 @@ class PreInterviewCard extends StatelessWidget {
       'subTracks': ['Cloud', 'Networking', 'Cyber Security', 'DevOps'],
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<VoicePreInterviewCubit>();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocBuilder<VoicePreInterviewCubit, VoicePreInterviewState>(
       builder: (context, state) {
         return Center(
           child: Container(
             width: isMobile ? double.infinity : 1010,
-            padding: EdgeInsets.only(top: 20, bottom: 15, right: 20, left: 20),
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 15,
+              right: 20,
+              left: 20,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: AppColor.whiteDarkColor,
+              color: isDark
+                  ? Theme.of(context).cardColor
+                  : AppColor.whiteDarkColor,
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: AppColor.blackColor.withValues(alpha: 0.2),
+                  color: isDark
+                      ? Colors.black.withValues(alpha: 0.4)
+                      : AppColor.blackColor.withValues(alpha: 0.2),
                   blurRadius: 60,
                   offset: const Offset(0, 25),
                 ),

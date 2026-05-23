@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
       SharedCheckHelper.keyIsOnBoarding,
     );
     if (!hasOnboarded) {
-      return OnboardingScreen();
+      return const OnboardingScreen();
     }
     final accessToken = await SharedCheckHelper.getValue(
       SharedCheckHelper.keyAccessToken,
@@ -32,6 +32,8 @@ class SplashScreen extends StatelessWidget {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final logoWidth = isMobile ? 180.0 : 320.0;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return FutureBuilder<Widget>(
       future: _getNextScreen(),
       builder: (context, snapshot) {
@@ -40,11 +42,22 @@ class SplashScreen extends StatelessWidget {
         return AnimatedSplashScreen(
           duration: 5000,
           splashIconSize: double.infinity,
-          backgroundColor: Colors.transparent,
+          backgroundColor: isDark ? Theme.of(context).scaffoldBackgroundColor : Colors.white,
           splash: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(gradient: AppGradient.gradientSplash),
+            decoration: BoxDecoration(
+              gradient: isDark
+                  ? LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(context).scaffoldBackgroundColor,
+                  Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.95),
+                ],
+              )
+                  : AppGradient.gradientSplash,
+            ),
             child: Center(
               child: TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0.0, end: 1.0),

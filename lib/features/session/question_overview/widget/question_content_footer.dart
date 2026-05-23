@@ -6,13 +6,12 @@ import 'submit_test_button.dart';
 class QuestionContentFooter extends StatelessWidget {
   final int sessionId;
 
-  const QuestionContentFooter({
-    super.key,
-    required this.sessionId,
-  });
+  const QuestionContentFooter({super.key, required this.sessionId});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,13 +20,13 @@ class QuestionContentFooter extends StatelessWidget {
           padding: const EdgeInsets.only(left: 14.0),
           child: Text(
             "All questions must be submitted before the timer runs out.",
-            style: AppStyle.font16GrayMediumSemiBold,
+            style: AppStyle.font16GrayMediumSemiBold.copyWith(
+              color: isDark ? Colors.grey.shade400 : null,
+            ),
           ),
         ),
         const SizedBox(height: 24),
-         SubmitTestButton(
-          sessionId: sessionId,
-        ),
+        SubmitTestButton(sessionId: sessionId),
         const SizedBox(height: 40),
       ],
     );

@@ -18,15 +18,26 @@ class HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColor.whiteColor.withValues(alpha: 0.7),
+        color: isDark
+            ? Theme.of(context).cardColor
+            : AppColor.whiteColor.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: AppColor.whiteColor, width: 1.5),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.05)
+              : AppColor.whiteColor,
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             spreadRadius: 2,
             offset: const Offset(0, 8),
@@ -44,12 +55,16 @@ class HistoryCard extends StatelessWidget {
                   width: 52,
                   height: 52,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F0FE),
+                    color: isDark
+                        ? const Color(0xff1E293B)
+                        : const Color(0xFFE8F0FE),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Icon(
                     Icons.mic,
-                    color: AppColor.primaryBlueColor,
+                    color: isDark
+                        ? const Color(0xff60A5FA)
+                        : AppColor.primaryBlueColor,
                     size: 26,
                   ),
                 ),
@@ -62,7 +77,10 @@ class HistoryCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: AppColor.red,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(
+                          color: isDark ? Colors.grey.shade900 : Colors.white,
+                          width: 2,
+                        ),
                       ),
                       child: Text(
                         "$notifications",
@@ -82,11 +100,11 @@ class HistoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data.trackName ?? "Unknow",
-                    style: const TextStyle(
+                    data.trackName ?? "Unknown",
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
-                      color: AppColor.slateDark,
+                      color: isDark ? Colors.white : AppColor.slateDark,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -94,10 +112,10 @@ class HistoryCard extends StatelessWidget {
                     "Mock Mate AI"
                     "   • ${data.seniorityLevel ?? ""}"
                     "   • ${data.interviewType ?? ""}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: AppColor.slateGray,
+                      color: isDark ? Colors.grey.shade400 : AppColor.slateGray,
                     ),
                   ),
                 ],
@@ -117,10 +135,12 @@ class HistoryCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   FormatDate.formatDate(data.startDate ?? ""),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: AppColor.grayMediumColor,
+                    color: isDark
+                        ? Colors.grey.shade500
+                        : AppColor.grayMediumColor,
                   ),
                 ),
               ],

@@ -21,10 +21,12 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final horizontalPadding = isMobile ? 20.0 : 60.0;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return BlocProvider(
       create: (_) => getIt<LoginCubit>(),
       child: Scaffold(
+        backgroundColor: isDark ? Theme.of(context).scaffoldBackgroundColor : null,
         body: SizedBox(
           height: double.infinity,
           child: Stack(
@@ -47,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                             height: isMobile ? 500 : 700,
                             decoration: BoxDecoration(
                               color: AppColor.homeEffectBlue.withValues(
-                                alpha: 0.15,
+                                alpha: isDark ? 0.12 : 0.15,
                               ),
                               shape: BoxShape.circle,
                             ),
@@ -66,7 +68,9 @@ class LoginScreen extends StatelessWidget {
                             width: isMobile ? 300 : 600,
                             height: isMobile ? 300 : 600,
                             decoration: BoxDecoration(
-                              color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                              color: isDark
+                                  ? AppColor.homeEffectBlue.withValues(alpha: 0.08)
+                                  : const Color(0xffE2ECF1).withValues(alpha: 0.90),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -84,7 +88,9 @@ class LoginScreen extends StatelessWidget {
                             width: isMobile ? 300 : 1500,
                             height: isMobile ? 300 : 900,
                             decoration: BoxDecoration(
-                              color: AppColor.grayColor.withValues(alpha: 0.18),
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.02)
+                                  : AppColor.grayColor.withValues(alpha: 0.18),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -102,7 +108,9 @@ class LoginScreen extends StatelessWidget {
                             width: isMobile ? 400 : 900,
                             height: isMobile ? 400 : 900,
                             decoration: BoxDecoration(
-                              color: AppColor.purple.withValues(alpha: 0.16),
+                              color: AppColor.purple.withValues(
+                                alpha: isDark ? 0.10 : 0.16,
+                              ),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -154,7 +162,7 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               AppRoutes.home,
-                              (route) => false,
+                                  (route) => false,
                             );
                           }
                         },

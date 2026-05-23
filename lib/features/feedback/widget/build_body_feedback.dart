@@ -21,6 +21,8 @@ class BuildBodyFeedback extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -29,38 +31,48 @@ class BuildBodyFeedback extends StatelessWidget {
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.w900,
             fontSize: 40,
-            color: const Color(0xff000000),
+            color: isDark ? Colors.white : const Color(0xff000000),
           ),
         ),
         const SizedBox(height: 15),
+
         OverallSummaryCard(
           summary: feedback.overallSummary,
           score: session.score.toString(),
         ),
         const SizedBox(height: 16),
+
         IntrinsicHeight(
           child: Row(
             children: [
-              InfoCard(
-                backgroundColor: const Color(0x0D06F916),
-                headerIcon: AppAsset.strength,
-                title: "Strengths",
-                descriptionIcon: Icons.done_all,
-                descriptionIconColor: const Color(0xff10B981),
-                descriptions: feedback.strengths,
-                descriptionIconSize: 15,
+              Expanded(
+                child: InfoCard(
+                  backgroundColor: isDark
+                      ? const Color(0xff10B981).withValues(alpha: 0.06)
+                      : const Color(0x0D06F916),
+                  headerIcon: AppAsset.strength,
+                  title: "Strengths",
+                  descriptionIcon: Icons.done_all,
+                  descriptionIconColor: const Color(0xff10B981),
+                  descriptions: feedback.strengths,
+                  descriptionIconSize: 15,
+                ),
               ),
 
               const SizedBox(width: 20),
 
-              InfoCard(
-                backgroundColor: const Color(0x0DF937A6),
-                headerIcon: AppAsset.error,
-                title: "Weaknesses",
-                descriptionIcon: Icons.priority_high,
-                descriptionIconColor: const Color(0xffF59E0B),
-                descriptions: feedback.weaknesses,
-                descriptionIconSize: 23.76,
+              Expanded(
+                child: InfoCard(
+                  backgroundColor: isDark
+                      ? const Color(0xffEF4444).withValues(alpha: 0.06)
+                      : const Color(0x0DF937A6),
+                  headerIcon: AppAsset.error,
+                  title: "Weaknesses",
+                  descriptionIcon: Icons.priority_high,
+                  descriptionIconColor: const Color(0xffF59E0B),
+                  descriptions: feedback.weaknesses,
+                  descriptionIconSize: 23.76,
+                ),
               ),
             ],
           ),
@@ -81,7 +93,7 @@ class BuildBodyFeedback extends StatelessWidget {
             final colors = [
               const Color(0xff10B981),
               const Color(0xffFBBF24),
-              const Color(0xff3C473F),
+              isDark ? const Color(0xffA855F7) : const Color(0xff3C473F),
             ];
 
             return Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/theme/app_style.dart';
+import 'package:mock_mate_ai/core/theme/app_style.dart';
 import 'permission_check_tile.dart';
 
 class HardwareCheckSection extends StatelessWidget {
@@ -23,11 +22,18 @@ class HardwareCheckSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('2. Hardware Check',
-            style: AppStyle.font24BlackBold.copyWith(fontSize: 20)),
+        Text(
+          '2. Hardware Check',
+          style: AppStyle.font24BlackBold.copyWith(
+            fontSize: 20,
+            color: isDark ? Colors.white : null,
+          ),
+        ),
         const SizedBox(height: 8),
         PermissionCheckTile(
           isAllowed: isMicAllowed,
@@ -35,9 +41,9 @@ class HardwareCheckSection extends StatelessWidget {
           title: 'Microphone',
           allowedSubtitle: 'Your browser has granted microphone permissions.',
           deniedSubtitle:
-              'We need access to your microphone to conduct the voice interview.',
+          'We need access to your microphone to conduct the voice interview.',
           icon: Icons.mic,
-          accentColor: Colors.blueAccent,
+          accentColor: isDark ? const Color(0xff38BDF8) : Colors.blueAccent,
           onAllow: onAllowMic,
         ),
         const SizedBox(height: 8),
@@ -47,9 +53,9 @@ class HardwareCheckSection extends StatelessWidget {
           title: 'Camera',
           allowedSubtitle: 'Your browser has granted camera permissions.',
           deniedSubtitle:
-              'We need access to your camera for the local mirror preview.',
+          'We need access to your camera for the local mirror preview.',
           icon: Icons.videocam,
-          accentColor: Colors.purpleAccent,
+          accentColor: isDark ? const Color(0xffC084FC) : Colors.purpleAccent,
           onAllow: onAllowCamera,
         ),
       ],

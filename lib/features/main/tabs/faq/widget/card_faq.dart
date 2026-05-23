@@ -10,6 +10,7 @@ class CardFaq extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return ClipRRect(
       borderRadius: BorderRadius.circular(35.63),
       child: BackdropFilter(
@@ -28,20 +29,20 @@ class CardFaq extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                   height: 1.4,
                 ),
               ),
               const SizedBox(height: 10),
               Text(
                 desc,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xff94A3B8),
+                  color: isDark ? const Color(0xff94A3B8) : const Color(0xff64748B),
                   height: 1.6,
                 ),
               ),

@@ -182,6 +182,7 @@ import '../../features/session/viewmodel/interview_session/ai_interview_cubit.da
     as _i608;
 import '../../features/session/viewmodel/interview_session/interview_session_cubit.dart'
     as _i220;
+import '../theme/cubit/theme_cubit.dart' as _i194;
 import 'storage_module.dart' as _i371;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -193,6 +194,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     final storageModule = _$StorageModule();
+    gh.factory<_i194.ThemeCubit>(() => _i194.ThemeCubit());
     gh.factory<_i941.CodeEditorCubit>(() => _i941.CodeEditorCubit());
     gh.factory<_i715.QuestionOverviewCubit>(
       () => _i715.QuestionOverviewCubit(),

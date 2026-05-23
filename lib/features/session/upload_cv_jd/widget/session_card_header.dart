@@ -10,6 +10,8 @@ class SessionCardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       children: [
         Icon(
@@ -17,14 +19,16 @@ class SessionCardHeader extends StatelessWidget {
           size: isMobile ? 25 : 30,
           color: AppColor.purple,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Flexible(
           child: Text(
             "Start New Session",
             overflow: TextOverflow.ellipsis,
-            style: isMobile
-                ? AppStyle.font20BlackSemiBold
-                : AppStyle.font24BlackBold,
+            style:
+                (isMobile
+                        ? AppStyle.font20BlackSemiBold
+                        : AppStyle.font24BlackBold)
+                    .copyWith(color: isDark ? Colors.white : Colors.black),
           ),
         ),
       ],

@@ -14,15 +14,18 @@ class FeedbackScreen extends StatelessWidget {
   final int sessionId;
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocProvider(
       create: (context) =>
       getIt<GetSessionCubit>()
         ..getSession(sessionId: sessionId), //todo--22
       child: Scaffold(
+        backgroundColor: isDark ? const Color(0xff0A0D14) : Theme.of(context).scaffoldBackgroundColor,
         body: BlocBuilder<GetSessionCubit, GetSessionState>(
           builder: (context, state) {
             if (state is GetSessionLoading) {
-              return Center(
+              return const Center(
                   child: CircularProgressIndicator(color: Color(0xffA855F7)));
             }
 
@@ -57,7 +60,7 @@ class FeedbackScreen extends StatelessWidget {
                                 height: 700,
                                 decoration: BoxDecoration(
                                   color: AppColor.homeEffectBlue.withValues(
-                                    alpha: 0.15,
+                                    alpha: isDark ? 0.06 : 0.15,
                                   ),
                                   shape: BoxShape.circle,
                                 ),
@@ -76,9 +79,9 @@ class FeedbackScreen extends StatelessWidget {
                                 width: 600,
                                 height: 600,
                                 decoration: BoxDecoration(
-                                  color: const Color(
-                                    0xffE2ECF1,
-                                  ).withValues(alpha: 0.90),
+                                  color: isDark
+                                      ? const Color(0xff1E293B).withValues(alpha: 0.15)
+                                      : const Color(0xffE2ECF1).withValues(alpha: 0.90),
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -97,7 +100,7 @@ class FeedbackScreen extends StatelessWidget {
                                 height: 900,
                                 decoration: BoxDecoration(
                                   color: AppColor.grayColor.withValues(
-                                    alpha: 0.18,
+                                    alpha: isDark ? 0.04 : 0.18,
                                   ),
                                   shape: BoxShape.circle,
                                 ),
@@ -117,7 +120,7 @@ class FeedbackScreen extends StatelessWidget {
                                 height: 900,
                                 decoration: BoxDecoration(
                                   color: AppColor.purple.withValues(
-                                    alpha: 0.16,
+                                    alpha: isDark ? 0.06 : 0.16,
                                   ),
                                   shape: BoxShape.circle,
                                 ),
@@ -137,7 +140,9 @@ class FeedbackScreen extends StatelessWidget {
                           vertical: 15,
                         ),
                         child: BuildBodyFeedback(
-                          feedback: feedback, session: session,),
+                          feedback: feedback,
+                          session: session,
+                        ),
                       ),
                     ),
                   ),

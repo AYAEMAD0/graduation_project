@@ -9,6 +9,7 @@ class BuildHaveAccountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final spacingLarge = isMobile ? 30.0 : 30.0;
     return Column(
@@ -20,6 +21,7 @@ class BuildHaveAccountSection extends StatelessWidget {
               child: Text(
                 "Don’t have an account?",
                 style: AppStyle.font16GrayRegular.copyWith(
+                  color: isDark ? Colors.white : Colors.black,
                   fontSize: isMobile ? 16 : 18,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -33,6 +35,7 @@ class BuildHaveAccountSection extends StatelessWidget {
                 child: Text(
                   "Sign Up",
                   style: AppStyle.font16BlackBold.copyWith(
+                    color: isDark ? Colors.white : Colors.black,
                     fontSize: isMobile ? 16 : 18,
                   ),
                   overflow: TextOverflow.ellipsis,

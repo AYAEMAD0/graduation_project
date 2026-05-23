@@ -16,6 +16,7 @@ class BuildBodySignupSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     final horizontalPadding = isMobile ? 15.0 : 50.0;
@@ -64,10 +65,10 @@ class BuildBodySignupSection extends StatelessWidget {
                         width: logoWidth,
                         height: logoHeight,
                       ),
-                      //   SizedBox(height: spacingSmall),
                       Text(
                         "Let’s Get Started!",
                         style: AppStyle.font24BlackBold.copyWith(
+                          color: isDark ? Colors.white : Colors.black,
                           fontSize: titleFontSize,
                         ),
                       ),

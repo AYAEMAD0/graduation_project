@@ -48,7 +48,7 @@ class _QuestionHeaderState extends State<QuestionHeader> {
           Navigator.pushNamedAndRemoveUntil(
             context,
             AppRoutes.feedback,
-            (route) => route.settings.name == AppRoutes.home,
+                (route) => route.settings.name == AppRoutes.home,
             arguments: sessionId,
           );
         },
@@ -59,6 +59,8 @@ class _QuestionHeaderState extends State<QuestionHeader> {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return StreamBuilder<int>(
       stream: widget.args.timerStream,
       initialData: widget.args.remainingSeconds,
@@ -71,43 +73,56 @@ class _QuestionHeaderState extends State<QuestionHeader> {
         final isLow = seconds <= 60;
 
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: isMobile
               ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
-                    const SizedBox(height: 16),
-                    _timerWidget(timeText, isLow),
-                    const SizedBox(height: 16),
-                    _progressWidget(isMobile),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("QUESTIONS", style: AppStyle.font18BlackSemiBold),
-                    Row(
-                      children: [
-                        _timerWidget(timeText, isLow),
-                        const SizedBox(width: 24),
-                        _progressWidget(isMobile),
-                      ],
-                    ),
-                  ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "QUESTIONS",
+                style: AppStyle.font18BlackSemiBold.copyWith(
+                  color: isDark ? Colors.white : null,
                 ),
+              ),
+              const SizedBox(height: 16),
+              _timerWidget(timeText, isLow, isDark),
+              const SizedBox(height: 16),
+              _progressWidget(isMobile, isDark),
+            ],
+          )
+              : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "QUESTIONS",
+                style: AppStyle.font18BlackSemiBold.copyWith(
+                  color: isDark ? Colors.white : null,
+                ),
+              ),
+              Row(
+                children: [
+                  _timerWidget(timeText, isLow, isDark),
+                  const SizedBox(width: 24),
+                  _progressWidget(isMobile, isDark),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
   }
 
-  Widget _timerWidget(String timeText, bool isLow) {
+  Widget _timerWidget(String timeText, bool isLow, bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xff1E2330) : Colors.white,
         borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.transparent,
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -115,13 +130,13 @@ class _QuestionHeaderState extends State<QuestionHeader> {
           Icon(
             Icons.access_time,
             size: 16,
-            color: isLow ? Colors.red : AppColor.primaryPurpleColor,
+            color: isLow ? Colors.red : (isDark ? const Color(0xffA855F7) : AppColor.primaryPurpleColor),
           ),
           const SizedBox(width: 8),
           Text(
             timeText,
             style: AppStyle.font16BlackMedium.copyWith(
-              color: isLow ? Colors.red : null,
+              color: isLow ? Colors.red : (isDark ? Colors.white : null),
             ),
           ),
         ],
@@ -129,7 +144,7 @@ class _QuestionHeaderState extends State<QuestionHeader> {
     );
   }
 
-  Widget _progressWidget(bool isMobile) {
+  Widget _progressWidget(bool isMobile, bool isDark) {
     return SizedBox(
       width: isMobile ? double.infinity : null,
       child: Column(
@@ -139,7 +154,9 @@ class _QuestionHeaderState extends State<QuestionHeader> {
         children: [
           Text(
             "Q${widget.currentQuestion} OF ${widget.totalQuestions}",
-            style: AppStyle.font16GrayMediumSemiBold,
+            style: AppStyle.font16GrayMediumSemiBold.copyWith(
+              color: isDark ? Colors.grey.shade400 : null,
+            ),
           ),
         ],
       ),

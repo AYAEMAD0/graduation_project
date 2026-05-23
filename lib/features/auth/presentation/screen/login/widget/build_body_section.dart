@@ -21,6 +21,7 @@ class BuildBodySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final logoWidth = isMobile ? 180.0 : 200.0;
     final spacingMedium = isMobile ? 25.0 : 30.0;
@@ -38,7 +39,9 @@ class BuildBodySection extends StatelessWidget {
           ),
           Text(
             "Welcome back!",
-            style: AppStyle.font24BlackBold.copyWith(fontSize: textFontSize),
+            style: AppStyle.font24BlackBold.copyWith(
+                color: isDark ? Colors.white : Colors.black,
+                fontSize: textFontSize),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: spacingMedium),
@@ -71,6 +74,7 @@ class BuildBodySection extends StatelessWidget {
               child: Text(
                 "Forgot Password?",
                 style: AppStyle.font14GrayMedium.copyWith(
+                  color: isDark ? Colors.white : Colors.black,
                   fontSize: isMobile ? 14.0 : 16.0,
                 ),
               ),

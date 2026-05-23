@@ -30,8 +30,7 @@ class _NavbarState extends State<Navbar> with TickerProviderStateMixin {
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
-    )
-      ..repeat(reverse: true);
+    )..repeat(reverse: true);
 
     _pulse = Tween<double>(begin: 0.8, end: 1.08).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
@@ -82,16 +81,22 @@ class _NavbarState extends State<Navbar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final bool isMobile = MediaQuery
-        .of(context)
-        .size
-        .width < 700;
+    final bool isMobile = MediaQuery.of(context).size.width < 700;
     if (isMobile) return Container();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(gradient: AppGradient.primaryGradient),
+      decoration: BoxDecoration(
+        gradient: isDark
+            ? const LinearGradient(
+                colors: [AppColor.darkBackgroundColor, Color(0xFF1E1E2C)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              )
+            : AppGradient.primaryGradient,
+      ),
       child: Row(
         children: [
           AnimatedBuilder(
@@ -147,7 +152,7 @@ class _NavbarState extends State<Navbar> with TickerProviderStateMixin {
             ],
           ),
           const Spacer(),
-          BuildNavTab(currentIndex: widget.currentIndex, onTap: widget.onTap,),
+          BuildNavTab(currentIndex: widget.currentIndex, onTap: widget.onTap),
         ],
       ),
     );

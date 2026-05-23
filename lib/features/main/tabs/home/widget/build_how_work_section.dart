@@ -14,12 +14,15 @@ class BuildHowWorkSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         Text(
           "How It Works?",
           style: AppStyle.font154ExtraBold.copyWith(
             fontSize: isMobile ? 36 : 60,
+            color: isDark ? Colors.white : null,
           ),
         ),
         const SizedBox(height: 20),
@@ -28,7 +31,7 @@ class BuildHowWorkSection extends StatelessWidget {
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: isMobile ? 22 : 30,
-            color: const Color(0xFF475569),
+            color: isDark ? Colors.grey.shade400 : const Color(0xFF475569),
           ),
         ),
         SizedBox(height: isMobile ? 40 : 60),
@@ -43,7 +46,9 @@ class BuildHowWorkSection extends StatelessWidget {
                 description:
                     "Pick the interview style that suits you — Standard questions, Ai-generated, or a Voice simulation.",
                 icon: Icons.tune_rounded,
-                iconBackgroundColor: const Color(0xffF3E8FF),
+                iconBackgroundColor: isDark
+                    ? const Color(0xff2A1B4E)
+                    : const Color(0xffF3E8FF),
               ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
@@ -56,7 +61,9 @@ class BuildHowWorkSection extends StatelessWidget {
                 description:
                     "Upload your CV and job description, or simply choose your track if you're going with a Voice interview — we'll tailor everything for you.",
                 icon: AppAsset.upload,
-                iconBackgroundColor: const Color(0xffDBEAFE),
+                iconBackgroundColor: isDark
+                    ? const Color(0xff1E293B)
+                    : const Color(0xffDBEAFE),
               ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
@@ -69,7 +76,9 @@ class BuildHowWorkSection extends StatelessWidget {
                 description:
                     "Go through your interview and answer at your own pace.",
                 icon: AppAsset.live,
-                iconBackgroundColor: const Color(0xffFCE7F3),
+                iconBackgroundColor: isDark
+                    ? const Color(0xff3F1D38)
+                    : const Color(0xffFCE7F3),
               ),
             ),
             SizedBox(height: isMobile ? 20 : 60),
@@ -82,7 +91,9 @@ class BuildHowWorkSection extends StatelessWidget {
                 description:
                     "Get a detailed score with insights on every answer to help you improve.",
                 icon: AppAsset.feedBack,
-                iconBackgroundColor: const Color(0xffDCFCE7),
+                iconBackgroundColor: isDark
+                    ? const Color(0xff143520)
+                    : const Color(0xffDCFCE7),
               ),
             ),
           ],

@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:mock_mate_ai/core/theme/app_style.dart';
 
 import '../theme/app_color.dart';
-import '../theme/app_theme.dart';
 
 class CustomDialog {
-  static void showLoading({
-    required BuildContext context,
-  }) {
+  static void showLoading({required BuildContext context}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: AppTheme.theme.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Row(
             spacing: 20,
             children: [
               CircularProgressIndicator(color: AppColor.primaryBlueColor),
-              Text('Loading', style:AppStyle.font20BlackSemiBold,),
+              Text(
+                'Loading',
+                style: AppStyle.font20BlackSemiBold.copyWith(
+                  color: isDark ? Colors.white : null,
+                ),
+              ),
             ],
           ),
         );
@@ -40,6 +44,7 @@ class CustomDialog {
     String? nagActionName,
     Function? nagActionClick,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     List<Widget>? actions = [];
     if (posActionName != null) {
       actions.add(
@@ -59,7 +64,7 @@ class CustomDialog {
             Navigator.pop(context);
             nagActionClick?.call();
           },
-          child: Text(nagActionName, style:  AppStyle.font20BlueDarkBold),
+          child: Text(nagActionName, style: AppStyle.font20BlueDarkBold),
         ),
       );
     }
@@ -69,15 +74,24 @@ class CustomDialog {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor:  AppTheme.theme.scaffoldBackgroundColor,
-          title: Text(title, style: AppStyle.font20BlackBold),
-          content: Text(message, style: AppStyle.font16BlackRegular,),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: Text(
+            title,
+            style: AppStyle.font20BlackBold.copyWith(
+              color: isDark ? Colors.white : null,
+            ),
+          ),
+          content: Text(
+            message,
+            style: AppStyle.font16BlackRegular.copyWith(
+              color: isDark ? Colors.white70 : null,
+            ),
+          ),
           actions: actions,
         );
       },
     );
   }
-
 
   static Future<bool?> showConfirm({
     required BuildContext context,
@@ -86,36 +100,52 @@ class CustomDialog {
     String confirmText = "Yes",
     String cancelText = "No",
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return showDialog<bool>(
       context: context,
-      builder: (ctx) =>
-          AlertDialog(
-            backgroundColor: AppColor.whiteColor,
-            title: Text(title, style: AppStyle.font20BlackBold),
-            content: Text(message, style: AppStyle.font16BlackRegular),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(cancelText, style: AppStyle.font20BlueDarkBold),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(confirmText, style: AppStyle.font20BlueDarkBold),
-              ),
-            ],
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark
+            ? Theme.of(context).cardColor
+            : AppColor.whiteColor,
+        title: Text(
+          title,
+          style: AppStyle.font20BlackBold.copyWith(
+            color: isDark ? Colors.white : null,
           ),
+        ),
+        content: Text(
+          message,
+          style: AppStyle.font16BlackRegular.copyWith(
+            color: isDark ? Colors.white70 : null,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(cancelText, style: AppStyle.font20BlueDarkBold),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(confirmText, style: AppStyle.font20BlueDarkBold),
+          ),
+        ],
+      ),
     );
   }
 
   static void showGenerating({required BuildContext context}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: Colors.white,
+          backgroundColor: isDark ? Theme.of(context).cardColor : Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24)),
+            borderRadius: BorderRadius.circular(24),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
             child: Column(
@@ -134,14 +164,16 @@ class CustomDialog {
                 const SizedBox(height: 28),
                 Text(
                   "Generating Your Interview",
-                  style: AppStyle.font20BlackSemiBold,
+                  style: AppStyle.font20BlackSemiBold.copyWith(
+                    color: isDark ? Colors.white : null,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   "Please wait while we prepare your questions...",
                   style: AppStyle.font16BlackRegular.copyWith(
-                    color: Colors.grey,
+                    color: isDark ? Colors.grey.shade400 : Colors.grey,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -157,23 +189,32 @@ class CustomDialog {
     required BuildContext context,
     required VoidCallback onSubmit,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: AppTheme.theme.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Row(
             spacing: 12,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.timer_off, color: Colors.red),
-              Text("Time's Up!", style: AppStyle.font20BlackBold),
+              Text(
+                "Time's Up!",
+                style: AppStyle.font20BlackBold.copyWith(
+                  color: isDark ? Colors.white : null,
+                ),
+              ),
             ],
           ),
           content: Text(
             "Your time has expired.\nYou will be redirected to the submit page.",
-            style: AppStyle.font16BlackRegular,
+            style: AppStyle.font16BlackRegular.copyWith(
+              color: isDark ? Colors.white70 : null,
+            ),
             textAlign: TextAlign.center,
           ),
           actionsAlignment: MainAxisAlignment.center,

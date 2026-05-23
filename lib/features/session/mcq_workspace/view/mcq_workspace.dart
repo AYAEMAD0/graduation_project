@@ -141,6 +141,7 @@ class McqWorkspace extends StatelessWidget {
                   );
                 }
               }
+              final isDark = Theme.of(context).brightness == Brightness.dark;
 
               return SessionLayout(
                 time: time,
@@ -148,8 +149,7 @@ class McqWorkspace extends StatelessWidget {
                   hasUnsavedAnswer: hasUnsavedAnswer,
                 ),
                 body: Container(
-                  color: const Color(0xffF9FAFB),
-                  child: SafeArea(
+                  color: isDark ? Theme.of(context).scaffoldBackgroundColor : const Color(0xffF9FAFB),                  child: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.all(24),
                       child: SingleChildScrollView(
@@ -161,6 +161,7 @@ class McqWorkspace extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
+                                color: isDark ? Colors.white : Colors.black87,
                               ),
                             ),
                             const SizedBox(height: 15),

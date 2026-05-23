@@ -7,17 +7,21 @@ class GreetingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           RichText(
             text: TextSpan(
-              style: isMobile
+              style: (isMobile
                   ? AppStyle.font34BlackSemiBold
-                  : AppStyle.font48BlackBold.copyWith(fontSize: 28),
+                  : AppStyle.font48BlackBold.copyWith(fontSize: 28)).copyWith(
+                color: isDark ? Colors.white : Colors.black,
+              ),
               children: const [
                 TextSpan(text: "Ready to ace your "),
                 TextSpan(

@@ -15,9 +15,11 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      backgroundColor: AppColor.whiteColor,
+      backgroundColor: isDark ? Theme.of(context).cardColor : AppColor.whiteColor,
       child: Container(
         padding: const EdgeInsets.all(32),
         width: 600,
@@ -27,7 +29,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
             Text(
               "Choose Your Type Interview",
               style: AppStyle.font18WhiteBold.copyWith(
-                color: AppColor.grayDarkColor,
+                color: isDark ? Colors.white : AppColor.grayDarkColor,
                 fontSize: 28,
               ),
             ),
@@ -36,6 +38,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               children: [
                 Expanded(
                   child: _buildOptionCard(
+                    isDark: isDark,
                     title: "Standard",
                     desc: "Curated industry questions",
                     icon: Icons.library_books_rounded,
@@ -45,6 +48,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: _buildOptionCard(
+                    isDark: isDark,
                     title: "AI Power",
                     desc: "Tailored to your experience",
                     icon: Icons.auto_awesome,
@@ -54,6 +58,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: _buildOptionCard(
+                    isDark: isDark,
                     title: "Live Interview",
                     desc: "Real-time conversational AI",
                     icon: Icons.video_camera_front_rounded,
@@ -70,6 +75,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                disabledBackgroundColor: isDark ? Colors.white10 : null,
               ),
               onPressed: selectedMode == null
                   ? null
@@ -85,9 +91,11 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
                   );
                 }
               },
-              child: const Text(
+              child: Text(
                 "Confirm Selection",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: selectedMode == null && isDark ? Colors.white30 : Colors.white,
+                ),
               ),
             ),
           ],
@@ -97,6 +105,7 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
   }
 
   Widget _buildOptionCard({
+    required bool isDark,
     required String title,
     required String desc,
     required IconData icon,
@@ -114,20 +123,24 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
         duration: const Duration(milliseconds: 250),
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
         decoration: BoxDecoration(
-          color: AppColor.whiteColor,
+          color: isSelected
+              ? (isDark ? const Color(0xff2A1B4E) : AppColor.whiteColor)
+              : (isDark ? const Color(0xff1E1E24) : AppColor.whiteColor),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColor.purple : AppColor.slate200,
+            color: isSelected
+                ? AppColor.purple
+                : (isDark ? Colors.white.withValues(alpha: 0.08) : AppColor.slate200),
             width: isSelected ? 2.5 : 1,
           ),
           boxShadow: isSelected
               ? [
-                  BoxShadow(
-                    color: AppColor.purple.withValues(alpha: 0.15),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ]
+            BoxShadow(
+              color: AppColor.purple.withValues(alpha: isDark ? 0.3 : 0.15),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ]
               : [],
         ),
         child: Column(
@@ -137,20 +150,22 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
               decoration: BoxDecoration(
                 color: isSelected
                     ? AppColor.purple.withValues(alpha: 0.1)
-                    : AppColor.whiteDarkColor,
+                    : (isDark ? Colors.white.withValues(alpha: 0.05) : AppColor.whiteDarkColor),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 icon,
                 size: 35,
-                color: isSelected ? AppColor.purple : AppColor.slateGray,
+                color: isSelected ? AppColor.purple : (isDark ? Colors.grey.shade400 : AppColor.slateGray),
               ),
             ),
             const SizedBox(height: 20),
             Text(
               title,
               style: AppStyle.font18WhiteBold.copyWith(
-                color: isSelected ? AppColor.purple : AppColor.grayDarkColor,
+                color: isSelected
+                    ? AppColor.purple
+                    : (isDark ? Colors.white : AppColor.grayDarkColor),
                 fontSize: 16,
               ),
             ),
@@ -158,7 +173,10 @@ class _InterviewOptionsDialogState extends State<InterviewOptionsDialog> {
             Text(
               desc,
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColor.slateGray, fontSize: 12),
+              style: TextStyle(
+                color: isDark ? Colors.grey.shade400 : AppColor.slateGray,
+                fontSize: 12,
+              ),
             ),
           ],
         ),

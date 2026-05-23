@@ -16,9 +16,12 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocProvider(
       create: (_) => getIt<SignupCubit>(),
       child: Scaffold(
+        backgroundColor: isDark ? Theme.of(context).scaffoldBackgroundColor : null,
         body: SizedBox(
           height: double.infinity,
           child: Stack(
@@ -32,14 +35,13 @@ class SignupScreen extends StatelessWidget {
                         top: isMobile ? -80 : -60,
                         left: isMobile ? -120 : -300,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 100,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
                           child: Container(
                             width: isMobile ? 400 : 800,
                             height: isMobile ? 550 : 700,
                             decoration: BoxDecoration(
                               color: AppColor.homeEffectBlue.withValues(
-                                alpha: 0.15,
+                                alpha: isDark ? 0.12 : 0.15,
                               ),
                               shape: BoxShape.circle,
                             ),
@@ -50,13 +52,14 @@ class SignupScreen extends StatelessWidget {
                         bottom: 0,
                         left: -100,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 300,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(sigmaX: 300, sigmaY: 100),
                           child: Container(
                             width: isMobile ? 300 : 600,
                             height: isMobile ? 300 : 600,
                             decoration: BoxDecoration(
-                              color: Color(0xffE2ECF1).withValues(alpha: 0.90),
+                              color: isDark
+                                  ? AppColor.homeEffectBlue.withValues(alpha: 0.08)
+                                  : const Color(0xffE2ECF1).withValues(alpha: 0.90),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -66,13 +69,14 @@ class SignupScreen extends StatelessWidget {
                         top: 10,
                         right: -150,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 600,
-                              sigmaY: 400),
+                          imageFilter: ImageFilter.blur(sigmaX: 600, sigmaY: 400),
                           child: Container(
                             width: isMobile ? 300 : 1500,
                             height: isMobile ? 300 : 900,
                             decoration: BoxDecoration(
-                              color: AppColor.grayColor.withValues(alpha: 0.18),
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.02)
+                                  : AppColor.grayColor.withValues(alpha: 0.18),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -82,13 +86,14 @@ class SignupScreen extends StatelessWidget {
                         bottom: 0,
                         right: -150,
                         child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(sigmaX: 100,
-                              sigmaY: 100),
+                          imageFilter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
                           child: Container(
                             width: isMobile ? 400 : 900,
                             height: isMobile ? 400 : 900,
                             decoration: BoxDecoration(
-                              color: AppColor.purple.withValues(alpha: 0.16),
+                              color: AppColor.purple.withValues(
+                                alpha: isDark ? 0.10 : 0.16,
+                              ),
                               shape: BoxShape.circle,
                             ),
                           ),

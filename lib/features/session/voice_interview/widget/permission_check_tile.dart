@@ -26,11 +26,19 @@ class PermissionCheckTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.black12,
+        color: isDark ? const Color(0xff121624) : Colors.black12,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.04)
+              : Colors.transparent,
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
@@ -55,12 +63,19 @@ class PermissionCheckTile extends StatelessWidget {
               children: [
                 Text(
                   isAllowed ? '$title Ready' : '$title Access Required',
-                  style: AppStyle.font18BlackSemiBold.copyWith(fontSize: 16),
+                  style: AppStyle.font18BlackSemiBold.copyWith(
+                    fontSize: 16,
+                    color: isDark ? Colors.white : Colors.black,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   isAllowed ? allowedSubtitle : deniedSubtitle,
-                  style: AppStyle.font12Black87,
+                  style: AppStyle.font12Black87.copyWith(
+                    color: isDark
+                        ? Colors.grey.shade400
+                        : const Color(0xff475569),
+                  ),
                 ),
               ],
             ),

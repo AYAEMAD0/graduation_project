@@ -11,6 +11,7 @@ class BuildBottomAlready extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final textFontSize = isMobile ? 15.0 : 18.0;
 
@@ -21,6 +22,7 @@ class BuildBottomAlready extends StatelessWidget {
           child: Text(
             "Already have an account?",
             style: AppStyle.font16GrayRegular.copyWith(
+              color: isDark ? Colors.white : Colors.black,
               fontSize: textFontSize,
             ),
           ),
@@ -30,16 +32,13 @@ class BuildBottomAlready extends StatelessWidget {
             onPressed: isLoading
                 ? null
                 : () {
-              Navigator.pushReplacementNamed(
-                context,
-                AppRoutes.login,
-              );
-            },
+                    Navigator.pushReplacementNamed(context, AppRoutes.login);
+                  },
             child: Text(
               "Login here",
               style: AppStyle.font16BlackBold.copyWith(
                 fontSize: textFontSize,
-                color: isLoading ? Colors.grey : null,
+                color: isLoading ? Colors.grey : Colors.white,
               ),
               overflow: TextOverflow.ellipsis,
             ),

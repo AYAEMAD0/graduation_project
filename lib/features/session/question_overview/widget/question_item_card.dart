@@ -26,6 +26,8 @@ class QuestionItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -35,12 +37,16 @@ class QuestionItemCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: isActive
               ? AppColor.primaryPurpleColor.withValues(alpha: 0.08)
-              : Colors.white.withValues(alpha: 0.55),
+              : (isDark
+                    ? Theme.of(context).cardColor
+                    : Colors.white.withValues(alpha: 0.55)),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isActive
                 ? AppColor.primaryPurpleColor
-                : const Color(0xFFBBA6E8).withValues(alpha: 0.6),
+                : (isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : const Color(0xFFBBA6E8).withValues(alpha: 0.6)),
             width: isActive ? 1.8 : 1.2,
           ),
         ),
@@ -61,7 +67,9 @@ class QuestionItemCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: AppStyle.font20BlackSemiBold,
+                      style: AppStyle.font20BlackSemiBold.copyWith(
+                        color: isDark ? Colors.white : null,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

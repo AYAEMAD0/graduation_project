@@ -24,7 +24,7 @@ class _QuestionOverviewState extends State<QuestionOverview> {
 
   List<SidebarQuestion> _buildSidebarQuestions() => [
     ...widget.interviewSession.codingQuestions.asMap().entries.map(
-      (e) => SidebarQuestion(
+          (e) => SidebarQuestion(
         index: e.key + 1,
         type: "Coding",
         questionId: e.value.questionId,
@@ -35,7 +35,7 @@ class _QuestionOverviewState extends State<QuestionOverview> {
       ),
     ),
     ...widget.interviewSession.mcqQuestions.asMap().entries.map(
-      (e) => SidebarQuestion(
+          (e) => SidebarQuestion(
         index: e.key + widget.interviewSession.codingQuestions.length + 1,
         type: "Multiple Choice",
         questionId: e.value.questionId,
@@ -46,12 +46,12 @@ class _QuestionOverviewState extends State<QuestionOverview> {
   ];
 
   bool _computeHasUnsavedAnswer(
-    QuestionOverviewState state,
-    Map<int, int> savedAnswers,
-    int currentQuestion,
-  ) {
+      QuestionOverviewState state,
+      Map<int, int> savedAnswers,
+      int currentQuestion,
+      ) {
     final question = _sidebarQuestions.firstWhere(
-      (q) => q.index == currentQuestion,
+          (q) => q.index == currentQuestion,
       orElse: () => SidebarQuestion(index: 0, type: ''),
     );
     if (question.type == "Coding") return false;
@@ -64,17 +64,15 @@ class _QuestionOverviewState extends State<QuestionOverview> {
   Widget build(BuildContext context) {
     final totalQuestions =
         widget.interviewSession.codingQuestions.length +
-        widget.interviewSession.mcqQuestions.length;
+            widget.interviewSession.mcqQuestions.length;
 
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => QuestionOverviewCubit()..init(totalQuestions),
         ),
-
         BlocProvider(create: (context) => getIt<SubmitAnswerCubit>()),
       ],
-
       child: BlocBuilder<QuestionOverviewCubit, QuestionOverviewState>(
         builder: (context, state) {
           final cubit = context.read<QuestionOverviewCubit>();
