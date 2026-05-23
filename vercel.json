@@ -1,5 +1,5 @@
 {
-  "buildCommand": "flutter build web --release",
+  "buildCommand": "/vercel/path0/flutter/bin/flutter build web --release",
   "outputDirectory": "build/web",
   "rewrites": [
     {
