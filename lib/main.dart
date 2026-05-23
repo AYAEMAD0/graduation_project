@@ -12,9 +12,13 @@ import 'core/routes/app_router.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 import 'features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  await Hive.openBox('interviewBox');
   usePathUrlStrategy();
   configureDependencies();
   Bloc.observer = MyBlocObserver();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
 
 import '../../../../../core/routes/app_routes.dart';
 import '../viewModel/history_cubit.dart';
@@ -81,11 +82,20 @@ class HistoryListView extends StatelessWidget {
                   : const Color(0xffA855F7);
 
               return GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  AppRoutes.feedback,
-                  arguments: interview.interviewSessionId,
-                ),
+                onTap: () async {
+                  await InterviewCacheService.saveFeedbackSessionId(
+                    interview.interviewSessionId,
+                  );
+
+                  Navigator.pushNamed(
+                    // ignore: use_build_context_synchronously
+                    context,
+
+                    AppRoutes.feedback,
+
+                    arguments: interview.interviewSessionId,
+                  );
+                },
                 child: HistoryCard(
                   data: interview,
                   notifications: 0,
@@ -102,4 +112,3 @@ class HistoryListView extends StatelessWidget {
     );
   }
 }
-

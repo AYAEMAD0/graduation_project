@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
 import 'package:mock_mate_ai/core/routes/app_routes.dart';
 import 'package:mock_mate_ai/core/routes/protected_route.dart';
 import 'package:mock_mate_ai/features/auth/presentation/screen/forgot/view/forgot_otp.dart';
@@ -10,7 +11,6 @@ import 'package:mock_mate_ai/features/main/main_layout.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
-
 import '../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../domain/repo/auth/token/token_storage.dart';
 import '../../domain/repo/session/voice/voice_interview_repo.dart';
@@ -79,9 +79,16 @@ class AppRouter {
         child: MainLayout(initialIndex: 1),
       ),
 
-      // 🛠️ تم تنظيف البروفايل
-      AppRoutes.profile: (context) => const ProtectedRoute(
-        child: MainLayout(initialIndex: 3),
+      AppRoutes.profile: (context) => ProtectedRoute(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
+
+            BlocProvider(create: (_) => getIt<ProfileCubit>()),
+          ],
+
+          child: const MainLayout(initialIndex: 3),
+        ),
       ),
 
       // 🛠️ تم تنظيف الـ FAQ لضمان عدم هروب الصفحة للهوم مجدداً عند قلب الثيم
@@ -90,7 +97,13 @@ class AppRouter {
       ),
 
       AppRoutes.feedback: (context) {
-        final sessionId = ModalRoute.of(context)!.settings.arguments as int;
+        int? sessionId = ModalRoute.of(context)?.settings.arguments as int?;
+
+        sessionId ??= InterviewCacheService.getFeedbackSessionId();
+
+        if (sessionId == null) {
+          return const SessionExpired();
+        }
 
         return ProtectedRoute(child: FeedbackScreen(sessionId: sessionId));
       },
@@ -99,8 +112,16 @@ class AppRouter {
         final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
-        final interviewSession =
-        args?['interviewSession'] as InterviewSessionEntity?;
+        InterviewSessionEntity? interviewSession =
+            args?['interviewSession'] as InterviewSessionEntity?;
+
+        if (interviewSession == null) {
+          final cachedSession = InterviewCacheService.getSession();
+
+          if (cachedSession != null) {
+            interviewSession = InterviewSessionEntity.fromJson(cachedSession);
+          }
+        }
 
         if (interviewSession == null) {
           return const SessionExpired();
@@ -116,7 +137,13 @@ class AppRouter {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
-          return const SizedBox.shrink();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, AppRoutes.questionOverview);
+          });
+
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
@@ -148,7 +175,13 @@ class AppRouter {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
 
         if (args == null) {
-          return const SizedBox.shrink();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, AppRoutes.questionOverview);
+          });
+
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
