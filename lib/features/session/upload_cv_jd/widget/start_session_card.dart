@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
 import 'package:mock_mate_ai/core/config/di.dart';
 import 'package:mock_mate_ai/core/theme/app_color.dart';
 import 'package:mock_mate_ai/core/widget/custom_toast.dart';
@@ -53,22 +54,87 @@ class _StartSessionCardState extends State<StartSessionCard> {
         builder: (context) {
           return MultiBlocListener(
             listeners: [
-              BlocListener<InterviewSessionCubit, InterviewSessionState>(
-                listener: (context, state) {
-                  if (state is InterviewSessionError) {
-                    CustomDialog.hideLoading(context: context);
-                    CustomToast.showToast(message: state.message, context: context);
-                  }
-                  if (state is InterviewSessionSuccess) {
-                    CustomDialog.hideLoading(context: context);
-                    Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.questionOverview,
-                      arguments: {'interviewSession': state.interviewSession},
-                    );
-                  }
-                },
-              ),
+            BlocListener<InterviewSessionCubit,
+    InterviewSessionState>(
+
+  listener: (context, state) async {
+
+    if (state is InterviewSessionError) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      CustomToast.showToast(
+        message: state.message,
+        context: context,
+      );
+    }
+
+    if (state is InterviewSessionSuccess) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      await InterviewCacheService
+          .saveSession(
+        state.interviewSession
+            .toJson(),
+      );
+
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.questionOverview,
+        arguments: {
+          'interviewSession':
+          state.interviewSession,
+        },
+      );
+    }
+  },
+),
+
+BlocListener<AiInterviewCubit,
+    AiInterviewState>(
+
+  listener: (context, state) async {
+
+    if (state is AiInterviewError) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      CustomToast.showToast(
+        message: state.message,
+        context: context,
+      );
+    }
+
+    if (state is AiInterviewSuccess) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      await InterviewCacheService
+          .saveSession(
+        state.interviewSession
+            .toJson(),
+      );
+
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.questionOverview,
+        arguments: {
+          'interviewSession':
+          state.interviewSession,
+        },
+      );
+    }
+  },
+),
               BlocListener<AiInterviewCubit, AiInterviewState>(
                 listener: (context, state) {
                   if (state is AiInterviewError) {

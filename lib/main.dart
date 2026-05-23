@@ -9,42 +9,43 @@ import 'core/routes/app_router.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 import 'features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  await Hive.openBox('interviewBox');
   usePathUrlStrategy();
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   await SharedCheckHelper.init();
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => getIt<ProfileCubit>()),
-      ],
+      providers: [BlocProvider(create: (_) => getIt<ProfileCubit>())],
       child: const MyApp(),
     ),
   );
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.theme,
-          initialRoute: AppRoutes.splash,
-          routes: AppRouter.routes,
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-            ],
-          ),
-        );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.theme,
+      initialRoute: AppRoutes.splash,
+      routes: AppRouter.routes,
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
+      ),
+    );
   }
 }
