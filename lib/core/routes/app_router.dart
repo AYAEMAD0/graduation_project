@@ -11,22 +11,28 @@ import 'package:mock_mate_ai/features/main/main_layout.dart';
 import 'package:mock_mate_ai/features/onboarding_screen/view/onboarding_screen.dart';
 import 'package:mock_mate_ai/features/session/mcq_workspace/view/mcq_workspace.dart';
 import 'package:mock_mate_ai/features/splash_screen/splash_screen.dart';
+
 import '../../domain/entities/session/interview_session/interview_session_entity.dart';
 import '../../domain/repo/auth/token/token_storage.dart';
 import '../../domain/repo/session/voice/voice_interview_repo.dart';
+
 import '../../features/auth/presentation/screen/forgot/view/forgot_password_screen.dart';
 import '../../features/auth/presentation/screen/forgot/view/new_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/reset_password.dart';
 import '../../features/auth/presentation/screen/forgot/view/successful_screen.dart';
+
 import '../../features/main/tabs/history/viewModel/history_cubit.dart';
 import '../../features/main/tabs/profile/viewmodel/profile/profile_cubit.dart';
+
 import '../../features/session/coding_workspace/view/coding_workspace.dart';
 import '../../features/session/model/session_arguments.dart';
 import '../../features/session/question_overview/view/question_overview.dart';
 import '../../features/session/upload_cv_jd/view/upload_cv_jd.dart';
+
 import '../../features/session/voice_interview/view/voice_interview_view.dart';
 import '../../features/session/voice_interview/view/voice_pre_interview_view.dart';
 import '../../features/session/voice_interview/viewmodel/voice_interview_cubit.dart';
+
 import '../config/di.dart';
 import '../widget/session_expired.dart';
 
@@ -58,10 +64,8 @@ class AppRouter {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
             BlocProvider(create: (_) => getIt<ProfileCubit>()),
           ],
-
           child: const MainLayout(initialIndex: 0),
         ),
       ),
@@ -76,10 +80,8 @@ class AppRouter {
           child: BlocProvider(
             create: (_) => VoiceInterviewCubit(
               repo: getIt<VoiceInterviewRepo>(),
-
               tokenStorage: getIt<TokenStorage>(),
             ),
-
             child: VoiceInterviewView(track: track),
           ),
         );
@@ -89,10 +91,8 @@ class AppRouter {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
             BlocProvider(create: (_) => getIt<ProfileCubit>()),
           ],
-
           child: const MainLayout(initialIndex: 1),
         ),
       ),
@@ -101,24 +101,22 @@ class AppRouter {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
             BlocProvider(create: (_) => getIt<ProfileCubit>()),
           ],
-
           child: const MainLayout(initialIndex: 3),
         ),
       ),
+
       AppRoutes.faq: (context) => ProtectedRoute(
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => getIt<HistoryCubit>()..fetchHistory()),
-
             BlocProvider(create: (_) => getIt<ProfileCubit>()),
           ],
-
           child: const MainLayout(initialIndex: 2),
         ),
       ),
+
       AppRoutes.feedback: (context) {
         int? sessionId = ModalRoute.of(context)?.settings.arguments as int?;
 
@@ -150,9 +148,7 @@ class AppRouter {
           return const SessionExpired();
         }
 
-        return ProtectedRoute(
-          child: QuestionOverview(interviewSession: interviewSession),
-        );
+        return QuestionOverview(interviewSession: interviewSession);
       },
 
       AppRoutes.codeWorkspace: (context) {
@@ -171,35 +167,32 @@ class AppRouter {
 
         final sessionArgs = args['sessionArgs'] as SessionArguments;
 
-        return ProtectedRoute(
-          child: CodingWorkspace(
-            args: sessionArgs,
+        return CodingWorkspace(
+          args: sessionArgs,
 
-            questionId: args['questionId'] as int,
+          questionId: args['questionId'] as int,
 
-            questionTitle: args['questionTitle'] as String,
+          questionTitle: args['questionTitle'] as String,
 
-            questionText: args['questionText'] as String,
+          questionText: args['questionText'] as String,
 
-            testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
+          testCases: (args['testCases'] as List).cast<TestCaseEntity>(),
 
-            templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
+          templates: (args['templates'] as List).cast<CodeTemplateEntity>(),
 
-            savedCode: args['savedCode'] as Map<int, String>? ?? {},
+          savedCode: args['savedCode'] as Map<int, String>? ?? {},
 
-            savedLanguageId: args['savedLanguageId'] as int?,
+          savedLanguageId: args['savedLanguageId'] as int?,
 
-            onCodeChanged:
-                args['onCodeChanged'] as void Function(int, String)? ??
-                (_, __) {},
+          onCodeChanged:
+              args['onCodeChanged'] as void Function(int, String)? ??
+              (_, __) {},
 
-            onCodeSaved:
-                args['onCodeSaved'] as void Function(int, String)? ??
-                (_, __) {},
+          onCodeSaved:
+              args['onCodeSaved'] as void Function(int, String)? ?? (_, __) {},
 
-            onCodeReverted:
-                args['onCodeReverted'] as void Function(int)? ?? (_) {},
-          ),
+          onCodeReverted:
+              args['onCodeReverted'] as void Function(int)? ?? (_) {},
         );
       },
 
@@ -221,18 +214,16 @@ class AppRouter {
 
         final questionId = args['questionId'] as int? ?? 0;
 
-        return ProtectedRoute(
-          child: McqWorkspace(
-            args: sessionArgs,
+        return McqWorkspace(
+          args: sessionArgs,
 
-            questionId: questionId,
+          questionId: questionId,
 
-            questionText: args['questionText'] as String,
+          questionText: args['questionText'] as String,
 
-            options: (args['options'] as List).cast<McqOptionEntity>(),
+          options: (args['options'] as List).cast<McqOptionEntity>(),
 
-            isSaved: sessionArgs.savedQuestions.contains(questionId),
-          ),
+          isSaved: sessionArgs.savedQuestions.contains(questionId),
         );
       },
     };
