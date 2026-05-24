@@ -12,6 +12,7 @@ import '../viewmodel/run_code/run_code_cubit.dart';
 import '../viewmodel/submit_code/submit_code_cubit.dart';
 import '../widget/code_editor_panel.dart';
 import '../widget/question_panel.dart';
+import '../widget/resizable_panel.dart';
 
 class CodingWorkspace extends StatelessWidget {
   final SessionArguments args;
@@ -133,34 +134,30 @@ class CodingWorkspace extends StatelessWidget {
               color: const Color(0xffF8FAFC),
               child: Padding(
                 padding: const EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: QuestionPanel(
-                        questionNumber: args.currentQuestion,
-                        questionTitle: questionTitle,
-                        questionText: questionText,
-                        testCases: testCases,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: CodeEditor(
-                        templates: templates,
-                        testCases: testCases,
-                        sessionId: args.sessionId,
-                        questionId: questionId,
-                        savedCode: savedCode,
-                        savedLanguageId: savedLanguageId,
-                        onCodeChanged: onCodeChanged,
-                        onCodeSaved: onCodeSaved,
-                        onCodeReverted: onCodeReverted,
-                        savedCodeQuestions: args.savedCodeQuestions,
-                        onSubmit: () => goToNextQuestion(context),
-                      ),
-                    ),
-                  ],
+                child: ResizablePanel(
+                  axis: Axis.horizontal,
+                  initialFraction: 0.25,
+                  minFraction: 0.15,
+                  maxFraction: 0.50,
+                  first: QuestionPanel(
+                    questionNumber: args.currentQuestion,
+                    questionTitle: questionTitle,
+                    questionText: questionText,
+                    testCases: testCases,
+                  ),
+                  second: CodeEditor(
+                    templates: templates,
+                    testCases: testCases,
+                    sessionId: args.sessionId,
+                    questionId: questionId,
+                    savedCode: savedCode,
+                    savedLanguageId: savedLanguageId,
+                    onCodeChanged: onCodeChanged,
+                    onCodeSaved: onCodeSaved,
+                    onCodeReverted: onCodeReverted,
+                    savedCodeQuestions: args.savedCodeQuestions,
+                    onSubmit: () => goToNextQuestion(context),
+                  ),
                 ),
               ),
             ),

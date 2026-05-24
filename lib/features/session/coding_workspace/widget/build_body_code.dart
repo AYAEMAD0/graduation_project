@@ -7,6 +7,7 @@ import '../../../../domain/entities/session/interview_session/interview_session_
 import 'code_toolbar.dart';
 import 'console_footer.dart';
 import 'console_panel.dart';
+import 'resizable_panel.dart';
 
 class BuildBodyCode extends StatelessWidget {
   const BuildBodyCode({
@@ -38,8 +39,25 @@ class BuildBodyCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final codeView = CodeTheme(
+      data: CodeThemeData(styles: monokaiSublimeTheme),
+      child: SingleChildScrollView(
+        child: CodeField(
+          controller: codeController,
+          textStyle: GoogleFonts.firaCode(fontSize: 14, height: 1.5),
+          gutterStyle: GutterStyle(
+            background: const Color(0xFF0E141E),
+            textStyle: const TextStyle(color: Color(0xFF455A64)),
+            showLineNumbers: true,
+            margin: 12,
+          ),
+          background: const Color(0xFF0E141E),
+        ),
+      ),
+    );
+
     return Container(
-      color: Color(0xFF0E141E),
+      color: const Color(0xFF0E141E),
       child: Column(
         children: [
           CodeToolbar(
@@ -48,30 +66,25 @@ class BuildBodyCode extends StatelessWidget {
             onChanged: onLanguageChanged,
           ),
           Expanded(
-            child: CodeTheme(
-              data: CodeThemeData(styles: monokaiSublimeTheme),
-              child: SingleChildScrollView(
-                child: CodeField(
-                  controller: codeController,
-                  textStyle: GoogleFonts.firaCode(fontSize: 14, height: 1.5),
-                  gutterStyle: GutterStyle(
-                    background: Color(0xFF0E141E),
-                    textStyle: const TextStyle(color: Color(0xFF455A64)),
-                    showLineNumbers: true,
-                    margin: 12,
-                  ),
-                  background: Color(0xFF0E141E),
-                ),
-              ),
-            ),
+            child: showConsole
+                ? ResizablePanel(
+                    axis: Axis.vertical,
+                    initialFraction: 0.65,
+                    minFraction: 0.20,
+                    maxFraction: 0.85,
+                    dividerColor: const Color(0xFF2A3550),
+                    first: codeView,
+                    second: const ConsolePanel(),
+                  )
+                : codeView,
           ),
-          if (showConsole) ConsolePanel(),
           ConsoleFooter(
             showConsole: showConsole,
             onToggleConsole: onToggleConsole,
             onRunCode: onRunCode,
             onSaveCode: onSaveCode,
-            isAlreadySaved: savedCodeQuestions.contains(questionId), onSubmit: onSubmit,
+            isAlreadySaved: savedCodeQuestions.contains(questionId),
+            onSubmit: onSubmit,
           ),
         ],
       ),

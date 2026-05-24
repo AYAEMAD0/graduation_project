@@ -55,6 +55,14 @@ class _BuildSidebarState extends State<BuildSidebar> {
     );
   }
 
+  // ✅ helper مركزي لحساب isSaved/isModified لأي سؤال
+  bool _isQuestionSolved(SidebarQuestion question) {
+    if (question.type == "Coding") {
+      return widget.args.savedCodeQuestions.contains(question.questionId);
+    }
+    return widget.args.savedAnswers.containsKey(question.questionId);
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -106,20 +114,16 @@ class _BuildSidebarState extends State<BuildSidebar> {
                   (q) => q.index == number,
                   orElse: () => SidebarQuestion(index: number, type: ''),
                 );
-                final isSaved = question.type == "Coding"
-                    ? widget.args.savedCodeQuestions
-                        .contains(question.questionId)
-                    : widget.args.savedAnswers
-                        .containsKey(question.questionId);
 
-                // ✅ تحديد اللون
-                final bgColor = isSaved
-                    ? const Color(0xFF22C55E) // أخضر
+                final isSolved = _isQuestionSolved(question);
+
+                final bgColor = isSolved
+                    ? const Color(0xFF22C55E)
                     : isActive
-                        ? AppColor.primaryPurpleColor // بنفسجي
-                        : const Color(0xFFE5E7EB); // رمادي فاتح
+                    ? AppColor.primaryPurpleColor
+                    : const Color(0xFFE5E7EB);
 
-                final textColor = isSaved || isActive
+                final textColor = isSolved || isActive
                     ? Colors.white
                     : AppColor.grayMediumColor;
 
@@ -136,7 +140,7 @@ class _BuildSidebarState extends State<BuildSidebar> {
                       decoration: BoxDecoration(
                         color: bgColor,
                         shape: BoxShape.circle,
-                        boxShadow: isActive || isSaved
+                        boxShadow: isActive || isSolved
                             ? [
                                 BoxShadow(
                                   color: bgColor.withValues(alpha: 0.4),

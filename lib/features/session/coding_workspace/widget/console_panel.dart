@@ -28,7 +28,7 @@ class _ConsolePanelState extends State<ConsolePanel> {
   Widget build(BuildContext context) {
     return BlocBuilder<RunCodeCubit, RunCodeState>(
       builder: (context, state) => Container(
-        height: 220,
+        //todo height: 220,
         decoration: const BoxDecoration(
           color: Color(0xFF0E141E),
           border: Border(top: BorderSide(color: Colors.white24)),

@@ -82,7 +82,7 @@ class _StartSessionCardState extends State<StartSessionCard> {
         state.interviewSession
             .toJson(),
       );
-
+      if (!context.mounted) return;
       Navigator.pushReplacementNamed(
         context,
         AppRoutes.questionOverview,
@@ -123,7 +123,7 @@ BlocListener<AiInterviewCubit,
         state.interviewSession
             .toJson(),
       );
-
+      if (!context.mounted) return;
       Navigator.pushReplacementNamed(
         context,
         AppRoutes.questionOverview,

@@ -19,10 +19,8 @@ class PickerHelper {
 
       if (result != null) {
         return result.files.first;
-      } else {
-        CustomToast.showToast(message: "User Canceled", context: context);
-        return null;
       }
+      return null;
     } catch (e) {
       if (!context.mounted) return null;
       CustomToast.showToast(message: "Error picking", context: context);

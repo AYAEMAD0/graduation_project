@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../../../core/constants/app_asset.dart';
-import '../../../../../../core/routes/app_routes.dart';
 import '../../../../../../core/theme/app_style.dart';
 import '../../../../../../core/widget/custom_button.dart';
 import '../../../../../../core/widget/custom_text_field.dart';
@@ -66,7 +65,8 @@ class BuildBodySection extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, AppRoutes.forgotPassword);
+                //todo forget
+                //todo  Navigator.pushNamed(context, AppRoutes.forgotPassword);
               },
               child: Text(
                 "Forgot Password?",

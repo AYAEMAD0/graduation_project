@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
+  final Widget? prefixWidget;
 
   final Color? borderColor;
   final Color? borderFocuseColor;
@@ -48,7 +49,7 @@ class CustomTextField extends StatelessWidget {
     this.hintStyle,
     this.labelStyle,
     this.borderFocuseColor,
-    this.cursorColor,
+    this.cursorColor, this.prefixWidget,
   });
 
   @override
@@ -82,12 +83,13 @@ class CustomTextField extends StatelessWidget {
         focusedErrorBorder: builtBorder(),
         prefixText: prefixText,
         prefixStyle: AppStyle.font18BlackRegular,
-        prefixIcon: prefixIcon != null
-            ? Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Icon(prefixIcon),
-        )
-            : null,
+        prefixIcon: prefixWidget ??
+            (prefixIcon != null
+                ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Icon(prefixIcon),
+            )
+                : null),
         isDense: true,
         prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
         prefixIconColor: AppColor.grayColor,

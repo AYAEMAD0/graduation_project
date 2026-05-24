@@ -24,12 +24,13 @@ class SignupCubit extends Cubit<SignupState> {
   final passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isShowPassword = false;
+  String selectedCountryCode = "+20";
 
   Future<void> signup() async {
     if (formKey.currentState!.validate()) {
       emit(SignupLoading());
 
-      final fullPhone = "+20 ${phoneController.text}";
+      final fullPhone = "$selectedCountryCode${phoneController.text}";
       try {
         final result = await signupUsecase(
           username: userNameController.text,

@@ -45,11 +45,9 @@ class _QuestionOverviewState extends State<QuestionOverview> {
     ),
   ];
 
-  bool _computeHasUnsavedAnswer(
-    QuestionOverviewState state,
-    Map<int, int> savedAnswers,
-    int currentQuestion,
-  ) {
+  bool _computeHasUnsavedAnswer(QuestionOverviewState state,
+      Map<int, int> savedAnswers,
+      int currentQuestion,) {
     final question = _sidebarQuestions.firstWhere(
       (q) => q.index == currentQuestion,
       orElse: () => SidebarQuestion(index: 0, type: ''),
@@ -58,6 +56,23 @@ class _QuestionOverviewState extends State<QuestionOverview> {
     final qId = question.questionId;
     if (!state.selectedAnswers.containsKey(qId)) return false;
     return state.selectedAnswers[qId] != savedAnswers[qId];
+  }
+
+  bool _computeIsModified(
+    Set<int> savedCodeQuestions,
+    Map<int, int> savedAnswers,
+    int currentQuestion,
+  ) {
+    final question = _sidebarQuestions.firstWhere(
+      (q) => q.index == currentQuestion,
+      orElse: () => SidebarQuestion(index: 0, type: ''),
+    );
+    final qId = question.questionId;
+    if (question.type == "Coding") {
+      return savedCodeQuestions.contains(qId);
+    } else {
+      return savedAnswers.containsKey(qId);
+    }
   }
 
   @override
@@ -71,10 +86,8 @@ class _QuestionOverviewState extends State<QuestionOverview> {
         BlocProvider(
           create: (context) => QuestionOverviewCubit()..init(totalQuestions),
         ),
-
         BlocProvider(create: (context) => getIt<SubmitAnswerCubit>()),
       ],
-
       child: BlocBuilder<QuestionOverviewCubit, QuestionOverviewState>(
         builder: (context, state) {
           final cubit = context.read<QuestionOverviewCubit>();
@@ -100,6 +113,11 @@ class _QuestionOverviewState extends State<QuestionOverview> {
             savedCodeQuestions: cubit.savedCodeQuestions,
             onCodeSaved: cubit.markCodeSaved,
             timerStream: cubit.timerStream,
+            isModified: _computeIsModified(
+              cubit.savedCodeQuestions,
+              cubit.savedAnswers,
+              state.currentQuestion,
+            ),
           );
 
           return SessionLayout(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import '../../../../../../core/widget/custom_text_field.dart';
 import '../viewmodel/signup_cubit.dart';
+import 'phone_field_widget.dart';
 
 class BuildForm extends StatelessWidget {
   const BuildForm({super.key, required this.viewmodel});
@@ -25,12 +27,12 @@ class BuildForm extends StatelessWidget {
           prefixIcon: Icons.person_outline_sharp,
         ),
         SizedBox(height: spacingMedium),
-        CustomTextField(
-          hint: "Phone",
+        PhoneFieldWidget(
           controller: viewmodel.phoneController,
-          keyboard: TextInputType.phone,
-          prefixText: "+20 ",
-          prefixIcon: Icons.phone_outlined,
+          initialCountryCode: viewmodel.selectedCountryCode,
+          onCountryChanged: (code) {
+            viewmodel.selectedCountryCode = code;
+          },
         ),
         SizedBox(height: spacingMedium),
         CustomTextField(
@@ -56,3 +58,4 @@ class BuildForm extends StatelessWidget {
     );
   }
 }
+

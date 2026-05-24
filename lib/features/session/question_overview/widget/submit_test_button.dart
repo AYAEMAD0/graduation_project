@@ -9,6 +9,8 @@ import 'package:mock_mate_ai/core/widget/custom_toast.dart';
 import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_cubit.dart';
 import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_state.dart';
 
+import '../../../../core/widget/custom_dialog.dart';
+
 class SubmitTestButton extends StatelessWidget {
   final int sessionId;
 
@@ -19,21 +21,14 @@ class SubmitTestButton extends StatelessWidget {
     return BlocConsumer<SubmitAnswerCubit, SubmitAnswerState>(
       listener: (context, state) async {
         if (state is SubmitAnswerSuccess) {
-
-  await InterviewCacheService
-      .saveFeedbackSessionId(
-    sessionId,
-  );
-
-  Navigator.pushReplacementNamed(
-
-    context,
-
-    AppRoutes.feedback,
-
-    arguments: sessionId,
-  );
-}
+          await InterviewCacheService.saveFeedbackSessionId(sessionId);
+          if (!context.mounted) return;
+          Navigator.pushReplacementNamed(
+            context,
+            AppRoutes.feedback,
+            arguments: sessionId,
+          );
+        }
 
         if (state is SubmitAnswerError) {
           CustomToast.showToast(message: state.message, context: context);
@@ -45,8 +40,20 @@ class SubmitTestButton extends StatelessWidget {
           gradient: AppGradient.primaryGradient,
           onPressed: state is SubmitAnswerLoading
               ? null
-              : () {
-                  context.read<SubmitAnswerCubit>().submitAnswer(sessionId);
+              : () async {
+                  final cubit = context.read<SubmitAnswerCubit>();
+
+                  final confirmed = await CustomDialog.showConfirm(
+                    context: context,
+                    title: "Submit",
+                    message: "Are you sure you want to submit?",
+                    confirmText: "Yes",
+                    cancelText: "No",
+                  );
+
+                  if (confirmed != true) return;
+
+                  cubit.submitAnswer(sessionId); // ← مش محتاج context هنا
                 },
           widthBtn: 300,
           height: 60,

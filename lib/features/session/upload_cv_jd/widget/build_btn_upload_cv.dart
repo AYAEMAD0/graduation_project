@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mock_mate_ai/core/widget/custom_button.dart';
 
-import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_style.dart';
 
 class BuildBtnUploadCv extends StatelessWidget {
@@ -18,29 +18,28 @@ class BuildBtnUploadCv extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 45,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.purple,
-          disabledBackgroundColor: AppColor.purple.withValues(alpha: 0.6),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 0,
-        ),
+      child: CustomButton(
         onPressed: isLoading ? null : onAnalyzePressed,
+        borderRadius: 14,
         child: isLoading
-            ? const SizedBox(
-          height: 24,
-          width: 24,
-          child: CircularProgressIndicator(
-            color: Colors.white,
-            strokeWidth: 2,
-          ),
-        )
-            : Text(
-          "Analyze and Generate Questions",
-          style: AppStyle.font18WhiteBold,
-        ),
+            ? Center(
+                child: const SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Analyze and Generate Questions",
+                  textAlign: TextAlign.center,
+                  style: AppStyle.font18WhiteBold,
+                ),
+              ),
       ),
     );
   }

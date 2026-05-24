@@ -18,8 +18,8 @@ class SessionArguments {
   final Map<int, int> savedAnswers;
   final Set<int> savedCodeQuestions;
   final void Function(int questionId) onCodeSaved;
-
   final Stream<int> timerStream;
+  final bool isModified;
 
   const SessionArguments({
     required this.currentQuestion,
@@ -38,6 +38,7 @@ class SessionArguments {
     required this.savedCodeQuestions,
     required this.onCodeSaved,
     required this.timerStream,
+    required this.isModified,
   });
 
   SessionArguments copyWith({
@@ -57,6 +58,7 @@ class SessionArguments {
     Set<int>? savedCodeQuestions,
     void Function(int)? onCodeSaved,
     Stream<int>? timerStream,
+    bool? isModified,
   }) {
     return SessionArguments(
       currentQuestion: currentQuestion ?? this.currentQuestion,
@@ -75,6 +77,7 @@ class SessionArguments {
       savedCodeQuestions: savedCodeQuestions ?? this.savedCodeQuestions,
       onCodeSaved: onCodeSaved ?? this.onCodeSaved,
       timerStream: timerStream ?? this.timerStream,
+      isModified: isModified ?? this.isModified,
     );
   }
 }
