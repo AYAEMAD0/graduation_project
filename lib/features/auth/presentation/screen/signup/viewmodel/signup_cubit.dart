@@ -30,7 +30,7 @@ class SignupCubit extends Cubit<SignupState> {
     if (formKey.currentState!.validate()) {
       emit(SignupLoading());
 
-      final fullPhone = "$selectedCountryCode${phoneController.text}";
+      final fullPhone = "$selectedCountryCode ${phoneController.text}";
       try {
         final result = await signupUsecase(
           username: userNameController.text,
