@@ -11,7 +11,7 @@ abstract class VoiceInterviewRepo {
     required String feedback,
   });
 
-  void connectWebSocket({required String token, required String track});
+  Future<void> connectWebSocket({required String token, required String track});
 
   void sendWsEvent(Map<String, dynamic> payload);
 

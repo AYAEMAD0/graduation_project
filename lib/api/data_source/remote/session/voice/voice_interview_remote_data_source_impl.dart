@@ -48,12 +48,14 @@ class VoiceInterviewRemoteDataSourceImpl
   }
 
   @override
-  void connectWebSocket({required String token, required String track}) {
+  Future<void> connectWebSocket(
+      {required String token, required String track}) async {
     final wsUrl = Uri.parse(
       'wss://mockmate-ai-5caj.onrender.com/ws/voice-interview',
     );
     _channel = WebSocketChannel.connect(wsUrl);
-
+    //todo add
+    await _channel!.ready;
     _channel!.sink.add(jsonEncode({'token': token}));
     _channel!.sink.add(
       jsonEncode({'event': 'start_interview', 'track': track}),
@@ -69,7 +71,14 @@ class VoiceInterviewRemoteDataSourceImpl
           debugPrint('WS parse error: $e');
         }
       },
-      onDone: () => _eventController.add(WsDisconnectedEvent()),
+      //todo onDone: () => _eventController.add(WsDisconnectedEvent()),
+      onDone: () {
+        Future.delayed(const Duration(seconds: 2), () {
+          if (!_eventController.isClosed) {
+            _eventController.add(WsDisconnectedEvent());
+          }
+        });
+      },
       onError: (e) {
         debugPrint('WS error: $e');
         _eventController.add(WsDisconnectedEvent());

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../domain/entities/session/voice/voice_interview_entity.dart';
 import '../../../../domain/repo/session/voice/voice_interview_repo.dart';
 import '../../../data_source/remote/session/voice/voice_interview_remote_data_source.dart';
@@ -43,7 +44,8 @@ class VoiceInterviewRepoImpl implements VoiceInterviewRepo {
   }
 
   @override
-  void connectWebSocket({required String token, required String track}) =>
+  Future<void> connectWebSocket(
+      {required String token, required String track}) =>
       _dataSource.connectWebSocket(token: token, track: track);
 
   @override

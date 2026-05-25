@@ -48,7 +48,13 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
           if (state.isConnected &&
               _aiFinishedGenerating &&
               !state.isAiSpeaking) {
-            Future.delayed(const Duration(milliseconds: 100), startListening);
+            Future.delayed(const Duration(milliseconds: 500), () {
+              if (state.isConnected &&
+                  _aiFinishedGenerating &&
+                  !state.isAiSpeaking) {
+                startListening();
+              }
+            });
           }
         }
       },
@@ -74,7 +80,7 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
     final sessionId = await _startUseCase(track);
     final token = await _tokenStorage.getAccessToken() ?? '';
 
-    _repo.connectWebSocket(token: token, track: track);
+    await _repo.connectWebSocket(token: token, track: track);
     emit(
       state.copyWith(
         status: VoiceInterviewStatus.connected,
@@ -140,47 +146,47 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
   }
 
   void startListening() {
-    if (!state.isConnected || state.isAiSpeaking || !_aiFinishedGenerating) {
+    if (!state.isConnected || state.isAiSpeaking || !_aiFinishedGenerating)
       return;
-    }
+
     _lastRecognizedWords = '';
     _lastRawRecognizedWords = '';
     _cancelTimer();
 
-    if (!_stt.isListening) {
-      _stt.listen(
-        onResult: (result) {
-          if (!state.isListening ||
-              state.isAiSpeaking ||
-              !_aiFinishedGenerating) {
-            return;
-          }
-          if (result.recognizedWords.isEmpty) return;
-
-          _lastRawRecognizedWords = result.recognizedWords;
-          var currentWords = result.recognizedWords;
-
-          if (_lastSentSpeech.isNotEmpty &&
-              currentWords.startsWith(_lastSentSpeech)) {
-            currentWords = currentWords
-                .substring(_lastSentSpeech.length)
-                .trim();
-          }
-
-          if (currentWords.isNotEmpty) {
-            _lastRecognizedWords = currentWords;
-            _cancelTimer();
-            _silenceTimer = Timer(const Duration(milliseconds: 1200), () {
-              if (_lastRecognizedWords.isNotEmpty) {
-                stopListening();
-                _sendSpeech();
-              }
-            });
-          }
-        },
-        localeId: 'en-US',
-      );
+    if (_stt.isListening) {
+      _stt.stop();
+      Future.delayed(const Duration(milliseconds: 300), startListening);
+      return;
     }
+
+    _stt.listen(
+      onResult: (result) {
+        if (!state.isListening || state.isAiSpeaking || !_aiFinishedGenerating)
+          return;
+        if (result.recognizedWords.isEmpty) return;
+
+        _lastRawRecognizedWords = result.recognizedWords;
+        var currentWords = result.recognizedWords;
+
+        if (_lastSentSpeech.isNotEmpty &&
+            currentWords.startsWith(_lastSentSpeech)) {
+          currentWords = currentWords.substring(_lastSentSpeech.length).trim();
+        }
+
+        if (currentWords.isNotEmpty) {
+          _lastRecognizedWords = currentWords;
+          _cancelTimer();
+          _silenceTimer = Timer(const Duration(milliseconds: 1200), () {
+            if (_lastRecognizedWords.isNotEmpty) {
+              stopListening();
+              _sendSpeech();
+            }
+          });
+        }
+      },
+      localeId: 'en-US',
+    );
+
     emit(state.copyWith(isListening: true));
   }
 
