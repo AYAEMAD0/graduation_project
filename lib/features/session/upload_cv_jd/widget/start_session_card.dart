@@ -54,87 +54,81 @@ class _StartSessionCardState extends State<StartSessionCard> {
         builder: (context) {
           return MultiBlocListener(
             listeners: [
-            BlocListener<InterviewSessionCubit,
-    InterviewSessionState>(
+              BlocListener<InterviewSessionCubit,
+                  InterviewSessionState>(
 
-  listener: (context, state) async {
+                listener: (context, state) async {
+                  if (state is InterviewSessionError) {
+                    CustomDialog.hideLoading(
+                      context: context,
+                    );
 
-    if (state is InterviewSessionError) {
+                    CustomToast.showToast(
+                      message: state.message,
+                      context: context,
+                    );
+                  }
 
-      CustomDialog.hideLoading(
-        context: context,
-      );
+                  if (state is InterviewSessionSuccess) {
+                    CustomDialog.hideLoading(
+                      context: context,
+                    );
 
-      CustomToast.showToast(
-        message: state.message,
-        context: context,
-      );
-    }
+                    await InterviewCacheService
+                        .saveSession(
+                      state.interviewSession
+                          .toJson(),
+                    );
+                    if (!context.mounted) return;
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppRoutes.questionOverview,
+                      arguments: {
+                        'interviewSession':
+                        state.interviewSession,
+                      },
+                    );
+                  }
+                },
+              ),
 
-    if (state is InterviewSessionSuccess) {
+              BlocListener<AiInterviewCubit,
+                  AiInterviewState>(
 
-      CustomDialog.hideLoading(
-        context: context,
-      );
+                listener: (context, state) async {
+                  if (state is AiInterviewError) {
+                    CustomDialog.hideLoading(
+                      context: context,
+                    );
 
-      await InterviewCacheService
-          .saveSession(
-        state.interviewSession
-            .toJson(),
-      );
-      if (!context.mounted) return;
-      Navigator.pushReplacementNamed(
-        context,
-        AppRoutes.questionOverview,
-        arguments: {
-          'interviewSession':
-          state.interviewSession,
-        },
-      );
-    }
-  },
-),
+                    CustomToast.showToast(
+                      message: state.message,
+                      context: context,
+                    );
+                  }
 
-BlocListener<AiInterviewCubit,
-    AiInterviewState>(
+                  if (state is AiInterviewSuccess) {
+                    CustomDialog.hideLoading(
+                      context: context,
+                    );
 
-  listener: (context, state) async {
-
-    if (state is AiInterviewError) {
-
-      CustomDialog.hideLoading(
-        context: context,
-      );
-
-      CustomToast.showToast(
-        message: state.message,
-        context: context,
-      );
-    }
-
-    if (state is AiInterviewSuccess) {
-
-      CustomDialog.hideLoading(
-        context: context,
-      );
-
-      await InterviewCacheService
-          .saveSession(
-        state.interviewSession
-            .toJson(),
-      );
-      if (!context.mounted) return;
-      Navigator.pushReplacementNamed(
-        context,
-        AppRoutes.questionOverview,
-        arguments: {
-          'interviewSession':
-          state.interviewSession,
-        },
-      );
-    }
-  },
-),
+                    await InterviewCacheService
+                        .saveSession(
+                      state.interviewSession
+                          .toJson(),
+                    );
+                    if (!context.mounted) return;
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppRoutes.questionOverview,
+                      arguments: {
+                        'interviewSession':
+                        state.interviewSession,
+                      },
+                    );
+                  }
+                },
+              ),
               BlocListener<AiInterviewCubit, AiInterviewState>(
                 listener: (context, state) {
                   if (state is AiInterviewError) {
