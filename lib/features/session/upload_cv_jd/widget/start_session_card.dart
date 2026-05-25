@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mock_mate_ai/core/cache/interview_cache_service.dart';
+import 'package:mock_mate_ai/core/config/di.dart';
+import 'package:mock_mate_ai/core/theme/app_color.dart';
+import 'package:mock_mate_ai/core/widget/custom_toast.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../../core/config/di.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/widget/custom_dialog.dart';
-import '../../../../core/widget/custom_toast.dart';
 import '../../viewmodel/interview_session/ai_interview_cubit.dart';
 import '../../viewmodel/interview_session/ai_interview_state.dart';
 import '../../viewmodel/interview_session/interview_session_cubit.dart';
 import '../../viewmodel/interview_session/interview_session_state.dart';
 import '../viewmodel/upload_cv_cubit.dart';
-import 'build_ui_start_session.dart';
-import 'session_bloc_listeners.dart';
-
+import 'build_available_tracks.dart';
+import 'build_btn_upload_cv.dart';
+import 'build_upload_cv_section.dart';
+import 'job_description_field.dart';
+import 'session_card_header.dart';
 
 class StartSessionCard extends StatefulWidget {
   final String mode;
+
   const StartSessionCard({super.key, required this.mode});
 
   @override
@@ -36,89 +43,98 @@ class _StartSessionCardState extends State<StartSessionCard> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
     return BlocProvider(
       create: (_) => getIt<UploadCvCubit>(),
       child: Builder(
         builder: (context) {
           return MultiBlocListener(
             listeners: [
-              BlocListener<InterviewSessionCubit,
-                  InterviewSessionState>(
+            BlocListener<InterviewSessionCubit,
+    InterviewSessionState>(
 
-                listener: (context, state) async {
-                  if (state is InterviewSessionError) {
-                    CustomDialog.hideLoading(
-                      context: context,
-                    );
+  listener: (context, state) async {
 
-                    CustomToast.showToast(
-                      message: state.message,
-                      context: context,
-                    );
-                  }
+    if (state is InterviewSessionError) {
 
-                  if (state is InterviewSessionSuccess) {
-                    CustomDialog.hideLoading(
-                      context: context,
-                    );
+      CustomDialog.hideLoading(
+        context: context,
+      );
 
-                    await InterviewCacheService
-                        .saveSession(
-                      state.interviewSession
-                          .toJson(),
-                    );
-                    if (!context.mounted) return;
-                    Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.questionOverview,
-                      arguments: {
-                        'interviewSession':
-                        state.interviewSession,
-                      },
-                    );
-                  }
-                },
-              ),
+      CustomToast.showToast(
+        message: state.message,
+        context: context,
+      );
+    }
 
-              BlocListener<AiInterviewCubit,
-                  AiInterviewState>(
+    if (state is InterviewSessionSuccess) {
 
-                listener: (context, state) async {
-                  if (state is AiInterviewError) {
-                    CustomDialog.hideLoading(
-                      context: context,
-                    );
+      CustomDialog.hideLoading(
+        context: context,
+      );
 
-                    CustomToast.showToast(
-                      message: state.message,
-                      context: context,
-                    );
-                  }
+      await InterviewCacheService
+          .saveSession(
+        state.interviewSession
+            .toJson(),
+      );
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.questionOverview,
+        arguments: {
+          'interviewSession':
+          state.interviewSession,
+        },
+      );
+    }
+  },
+),
 
-                  if (state is AiInterviewSuccess) {
-                    CustomDialog.hideLoading(
-                      context: context,
-                    );
+BlocListener<AiInterviewCubit,
+    AiInterviewState>(
 
-                    await InterviewCacheService
-                        .saveSession(
-                      state.interviewSession
-                          .toJson(),
-                    );
-                    if (!context.mounted) return;
-                    Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.questionOverview,
-                      arguments: {
-                        'interviewSession':
-                        state.interviewSession,
-                      },
-                    );
-                  }
-                },
-              ),
+  listener: (context, state) async {
+
+    if (state is AiInterviewError) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      CustomToast.showToast(
+        message: state.message,
+        context: context,
+      );
+    }
+
+    if (state is AiInterviewSuccess) {
+
+      CustomDialog.hideLoading(
+        context: context,
+      );
+
+      await InterviewCacheService
+          .saveSession(
+        state.interviewSession
+            .toJson(),
+      );
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.questionOverview,
+        arguments: {
+          'interviewSession':
+          state.interviewSession,
+        },
+      );
+    }
+  },
+),
               BlocListener<AiInterviewCubit, AiInterviewState>(
                 listener: (context, state) {
                   if (state is AiInterviewError) {
@@ -179,44 +195,34 @@ class _StartSessionCardState extends State<StartSessionCard> {
                     SizedBox(height: 20),
                     BuildBtnUploadCv(
                       isLoading: (widget.mode == 'ai')
-          return SessionBlocListeners(
-            child: BlocBuilder<InterviewSessionCubit, InterviewSessionState>(
-              builder: (context, dbState) {
-                return BlocBuilder<AiInterviewCubit, AiInterviewState>(
-                  builder: (context, aiState) {
-                    return BuildUiStartSession(
-                      isLoading: widget.mode == 'ai'
                           ? aiState is AiInterviewLoading
                           : dbState is InterviewSessionLoading,
-                      controller: _jobDescriptionController,
-                      mode: widget.mode,
+
                       onAnalyzePressed: () => _onAnalyzePressed(
                         context,
-                        _jobDescriptionController,
+                        controller,
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-          );
-        },
-      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
   void _onAnalyzePressed(
       BuildContext context,
-      TextEditingController controller,
+      TextEditingController jobDescriptionController,
       ) {
     final cvState = context.read<UploadCvCubit>().state;
     if (!cvState.hasFile || cvState.selectedFile!.bytes == null) {
       CustomToast.showToast(message: "Please upload your CV first.", context: context);
       return;
     }
-    if (controller.text
-        .trim()
-        .isEmpty) {
+    if (jobDescriptionController.text.trim().isEmpty) {
       CustomToast.showToast(message: "Please enter a job description.", context: context);
       return;
     }
@@ -225,13 +231,13 @@ class _StartSessionCardState extends State<StartSessionCard> {
       context.read<AiInterviewCubit>().startAiInterview(
         cvBytes: cvState.selectedFile!.bytes!,
         cvFileName: cvState.selectedFile!.name,
-        jobDescription: controller.text.trim(),
+        jobDescription: jobDescriptionController.text.trim(),
       );
     } else {
       context.read<InterviewSessionCubit>().startInterview(
         cvBytes: cvState.selectedFile!.bytes!,
         cvFileName: cvState.selectedFile!.name,
-        jobDescription: controller.text.trim(),
+        jobDescription: jobDescriptionController.text.trim(),
       );
     }
   }
