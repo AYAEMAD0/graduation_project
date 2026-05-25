@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mock_mate_ai/api/api_endpoint.dart';
+import 'package:mock_mate_ai/core/helper/jwt_helper.dart';
 import 'package:mock_mate_ai/domain/repo/auth/token/token_storage.dart';
 
 import '../../core/exception/app_exception.dart';
@@ -13,8 +14,50 @@ class DioInterceptor extends Interceptor {
 
   DioInterceptor(this.tokenStorage);
 
+  bool _isRefreshing = false;
+  Future<String?>? _refreshFuture;
+
   void setDio(Dio dio) {
     _dio = dio;
+  }
+
+  Future<String?> _refreshToken() async {
+    if (_isRefreshing) {
+      return _refreshFuture;
+    }
+
+    _isRefreshing = true;
+    _refreshFuture = Future<String?>(() async {
+      try {
+        final refreshToken = await tokenStorage.getRefreshToken();
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return null;
+        }
+
+        final response = await _dio.post(
+          ApiEndpoint.refreshTokenApi,
+          data: {"token": refreshToken},
+        );
+
+        final accessToken = response.data['accessToken'];
+
+        final newRefreshToken = response.data['refreshToken'];
+
+        await tokenStorage.saveAccessToken(accessToken);
+
+        await tokenStorage.saveRefreshToken(newRefreshToken);
+
+        return accessToken;
+      } catch (_) {
+        await tokenStorage.clearTokens();
+
+        return null;
+      } finally {
+        _isRefreshing = false;
+      }
+    });
+    return _refreshFuture;
   }
 
   @override
@@ -22,10 +65,23 @@ class DioInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final accessToken = await tokenStorage.getAccessToken();
+    // Prevent refresh recursion
+    if (options.path.contains('/refresh')) {
+      return handler.next(options);
+    }
+
+    String? accessToken = await tokenStorage.getAccessToken();
 
     if (accessToken != null && accessToken.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $accessToken';
+      final isExpired = JwtHelper.isTokenExpired(accessToken);
+
+      if (isExpired) {
+        accessToken = await _refreshToken();
+      }
+
+      if (accessToken != null) {
+        options.headers['Authorization'] = 'Bearer $accessToken';
+      }
     }
 
     handler.next(options);
@@ -33,62 +89,50 @@ class DioInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
+    // Prevent refresh recursion
     if (err.requestOptions.path.contains('/refresh')) {
       return handler.next(err);
     }
 
     if (err.response?.statusCode == 401) {
+      final newAccessToken = await _refreshToken();
+
+      if (newAccessToken == null) {
+        return handler.reject(
+          DioException(
+            requestOptions: err.requestOptions,
+            response: err.response,
+            type: DioExceptionType.badResponse,
+            error: "Session expired",
+          ),
+        );
+      }
+
+      final requestOptions = err.requestOptions.copyWith(
+        headers: {
+          ...err.requestOptions.headers,
+          'Authorization': 'Bearer $newAccessToken',
+        },
+      );
+
       try {
-        final refreshToken = await tokenStorage.getRefreshToken();
+        final retryResponse = await _dio.fetch(requestOptions);
 
-        if (refreshToken == null) {
-          //  return handler.next(err);
-        } else {
-          final refreshResponse = await _dio.post(
-            ApiEndpoint.refreshTokenApi,
-            data: {"token": refreshToken},
-          );
-
-          final newAccessToken = refreshResponse.data['accessToken'];
-          final newRefreshToken = refreshResponse.data['refreshToken'];
-
-          await tokenStorage.saveAccessToken(newAccessToken);
-          await tokenStorage.saveRefreshToken(newRefreshToken);
-
-          final requestOptions = err.requestOptions.copyWith(
-            headers: {
-              ...err.requestOptions.headers,
-              'Authorization': 'Bearer $newAccessToken',
-            },
-          );
-
-          final retryResponse = await _dio.fetch(requestOptions);
-
-          return handler.resolve(retryResponse);
-        }
-      } on DioException catch (e) {
-        if (e.type == DioExceptionType.connectionError ||
-            e.type == DioExceptionType.connectionTimeout ||
-            e.type == DioExceptionType.receiveTimeout ||
-            e.type == DioExceptionType.sendTimeout) {
-          return handler.next(err);
-        }
-
-        if (e.response?.statusCode == 401) {
-          await tokenStorage.clearTokens();
-        }
-
+        return handler.resolve(retryResponse);
+      } catch (_) {
         return handler.next(err);
       }
     }
 
     final responseData = err.response?.data;
+
     if (responseData is Map<String, dynamic>) {
       if (responseData['validationErrors'] != null) {
         final validationErrors =
             responseData['validationErrors'] as Map<String, dynamic>;
 
         final Map<String, List<String>> errors = {};
+
         validationErrors.forEach((key, value) {
           errors[key] = List<String>.from(value);
         });
@@ -118,6 +162,7 @@ class DioInterceptor extends Interceptor {
         ),
       );
     }
+
     return handler.next(err);
   }
 }

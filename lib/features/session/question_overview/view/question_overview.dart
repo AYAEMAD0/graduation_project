@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mock_mate_ai/core/config/di.dart';
+import 'package:mock_mate_ai/core/routes/app_routes.dart';
+import 'package:mock_mate_ai/core/widget/custom_dialog.dart';
 import 'package:mock_mate_ai/features/session/question_overview/viewmodel/submit_answer_cubit.dart';
 
 import '../../../../domain/entities/session/interview_session/interview_session_entity.dart';
@@ -45,9 +47,11 @@ class _QuestionOverviewState extends State<QuestionOverview> {
     ),
   ];
 
-  bool _computeHasUnsavedAnswer(QuestionOverviewState state,
-      Map<int, int> savedAnswers,
-      int currentQuestion,) {
+  bool _computeHasUnsavedAnswer(
+    QuestionOverviewState state,
+    Map<int, int> savedAnswers,
+    int currentQuestion,
+  ) {
     final question = _sidebarQuestions.firstWhere(
       (q) => q.index == currentQuestion,
       orElse: () => SidebarQuestion(index: 0, type: ''),
@@ -120,13 +124,50 @@ class _QuestionOverviewState extends State<QuestionOverview> {
             ),
           );
 
-          return SessionLayout(
-            time: cubit.formattedTime,
-            args: sessionArgs,
-            body: QuestionContent(
-              interviewSession: widget.interviewSession,
-              sessionArgs: sessionArgs,
-              scrollController: cubit.scrollController,
+          return PopScope(
+            canPop: false,
+
+            onPopInvoked: (didPop) async {
+              if (didPop) return;
+
+              final confirmed = await CustomDialog.showConfirm(
+                context: context,
+                title: "Leave Session?",
+
+                message:
+                    "Your current progress will be submitted if you leave this session.\n\n"
+                    "Do you want to continue?",
+
+                confirmText: "Submit & Leave",
+                cancelText: "Stay",
+              );
+
+              if (confirmed != true) return;
+
+              try {
+                await context.read<SubmitAnswerCubit>().submitAnswer(
+                  widget.interviewSession.interviewSessionId,
+                );
+
+                if (!context.mounted) return;
+
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.feedback,
+                  (route) => false,
+                  arguments: widget.interviewSession.interviewSessionId,
+                );
+              } catch (_) {}
+            },
+
+            child: SessionLayout(
+              time: cubit.formattedTime,
+              args: sessionArgs,
+              body: QuestionContent(
+                interviewSession: widget.interviewSession,
+                sessionArgs: sessionArgs,
+                scrollController: cubit.scrollController,
+              ),
             ),
           );
         },

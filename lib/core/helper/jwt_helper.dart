@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-
 class JwtHelper {
   static int? getUserIdFromToken(String token) {
     try {
@@ -12,8 +11,12 @@ class JwtHelper {
       String payload = parts[1];
 
       switch (payload.length % 4) {
-        case 2: payload += '=='; break;
-        case 3: payload += '='; break;
+        case 2:
+          payload += '==';
+          break;
+        case 3:
+          payload += '=';
+          break;
       }
 
       final decoded = utf8.decode(base64Url.decode(payload));
@@ -27,6 +30,39 @@ class JwtHelper {
     } catch (e) {
       debugPrint('JwtHelper error: $e');
       return null;
+    }
+  }
+
+  static bool isTokenExpired(String token) {
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return true;
+
+      String payload = parts[1];
+
+      switch (payload.length % 4) {
+        case 2:
+          payload += '==';
+          break;
+        case 3:
+          payload += '=';
+          break;
+      }
+
+      final decoded = utf8.decode(base64Url.decode(payload));
+      final Map<String, dynamic> json = jsonDecode(decoded);
+
+      final exp = json['exp'];
+
+      if (exp == null) return true;
+
+      final expiryDate = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+
+      return DateTime.now().isAfter(
+        expiryDate.subtract(const Duration(minutes: 1)),
+      );
+    } catch (_) {
+      return true;
     }
   }
 }
