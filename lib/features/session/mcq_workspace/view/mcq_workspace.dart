@@ -30,14 +30,14 @@ class McqWorkspace extends StatelessWidget {
 
   void _goToNextQuestion(BuildContext context) {
     final nextIndex = args.currentQuestion + 1;
-     if (nextIndex > args.totalQuestions) {
-    args.onQuestionSelected(0);
-    Navigator.popUntil(
-      context,
-      ModalRoute.withName(AppRoutes.questionOverview),
-    );
-    return;
-  }
+    if (nextIndex > args.totalQuestions) {
+      args.onQuestionSelected(0);
+      Navigator.popUntil(
+        context,
+        ModalRoute.withName(AppRoutes.questionOverview),
+      );
+      return;
+    }
 
     final question = args.questions.firstWhere(
       (q) => q.index == nextIndex,
@@ -110,7 +110,9 @@ class McqWorkspace extends StatelessWidget {
           create: (_) {
             final cubit = getIt<McqWorkspaceCubit>();
             cubit.init(
-              initialOptionId: args.savedAnswers[questionId],
+              initialOptionId:
+                  args.selectedAnswers[questionId] ??
+                  args.savedAnswers[questionId],
               initialIsSaved: isSaved,
               options: options,
             );
@@ -119,8 +121,7 @@ class McqWorkspace extends StatelessWidget {
           child: BlocConsumer<McqWorkspaceCubit, McqWorkspaceState>(
             listener: (context, state) {
               if (state is McqWorkspaceError) {
-                CustomToast.showToast(
-                    message: state.message, context: context);
+                CustomToast.showToast(message: state.message, context: context);
               }
             },
             builder: (context, state) {
@@ -144,9 +145,7 @@ class McqWorkspace extends StatelessWidget {
 
               return SessionLayout(
                 time: time,
-                args: args.copyWith(
-                  hasUnsavedAnswer: hasUnsavedAnswer,
-                ),
+                args: args.copyWith(hasUnsavedAnswer: hasUnsavedAnswer),
                 body: Container(
                   color: const Color(0xffF9FAFB),
                   child: SafeArea(
@@ -167,12 +166,11 @@ class McqWorkspace extends StatelessWidget {
                             McqOptionsList(
                               options: options,
                               selectedIndex: selectedIndex,
-                              onSelect: ({
-                                required index,
-                                required optionId,
-                              }) {
+                              onSelect: ({required index, required optionId}) {
                                 cubit.selectAnswer(
-                                    index: index, optionId: optionId);
+                                  index: index,
+                                  optionId: optionId,
+                                );
                                 args.onAnswerSelected(questionId, optionId);
                               },
                             ),
@@ -183,8 +181,9 @@ class McqWorkspace extends StatelessWidget {
                               onPressed: () async {
                                 if (state is McqWorkspaceInitial) {
                                   CustomToast.showToast(
-                                      message: "Please select an option first",
-                                      context: context);
+                                    message: "Please select an option first",
+                                    context: context,
+                                  );
                                   return;
                                 }
 
@@ -196,8 +195,9 @@ class McqWorkspace extends StatelessWidget {
                                 }
 
                                 await cubit.saveAnswer(
-                                    sessionId: args.sessionId,
-                                    questionId: questionId);
+                                  sessionId: args.sessionId,
+                                  questionId: questionId,
+                                );
                                 args.onQuestionSaved(questionId);
 
                                 if (context.mounted) {
