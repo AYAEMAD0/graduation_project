@@ -87,9 +87,10 @@ class PreInterviewCard extends StatelessWidget {
                 const SizedBox(height: 15),
                 ProceedButton(
                   isEnabled: state.canProceed,
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    AppRoutes.voiceInterview,
+                  onPressed: () =>
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.voiceInterview,
                     arguments: state.selectedTrack,
                   ),
                 ),
@@ -101,3 +102,4 @@ class PreInterviewCard extends StatelessWidget {
     );
   }
 }
+
