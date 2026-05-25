@@ -64,6 +64,28 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String displayName,
     required String phoneNumber,
   }) {
+    final nameNotEmpty = displayName
+        .trim()
+        .isNotEmpty;
+    final phoneNotEmpty = phoneNumber
+        .trim()
+        .isNotEmpty;
+
+    if (!nameNotEmpty || !phoneNotEmpty) {
+      final currentState = state;
+      if (currentState is ProfileSuccess) {
+        emit(ProfileSuccess(currentState.user, hasChanges: false));
+      } else if (currentState is ProfileImageSelected) {
+        emit(ProfileImageSelected(
+          imagePath: _imagePath,
+          imageBytes: _imageBytes,
+          user: _currentUser,
+          hasChanges: false,
+        ));
+      }
+      return;
+    }
+
     final nameChanged = displayName.trim() != (_originalName?.trim() ?? '');
     final phoneChanged = phoneNumber.trim() != (_originalPhone?.trim() ?? '');
     final imageChanged = _imagePath != null || _imageBytes != null;
@@ -82,7 +104,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       ));
     }
   }
-
   void clearImage() {
     _imagePath = null;
     _imageBytes = null;
