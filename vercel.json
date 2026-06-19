@@ -4,19 +4,19 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://mockmate-001-site1.mtempurl.com/api/:path*"
+      "destination": "https://mockmateai-001-site1.jtempurl.com/api/:path*"
     },
     {
       "source": "/interview-sessions/:path*",
-      "destination": "http://mockmate-001-site1.mtempurl.com/interview-sessions/:path*"
+      "destination": "https://mockmateai-001-site1.jtempurl.com/interview-sessions/:path*"
     },
     {
       "source": "/interviews/:path*",
-      "destination": "http://mockmate-001-site1.mtempurl.com/interviews/:path*"
+      "destination": "https://mockmateai-001-site1.jtempurl.com/interviews/:path*"
     },
     {
       "source": "/users/:path*",
-      "destination": "http://mockmate-001-site1.mtempurl.com/users/:path*"
+      "destination": "https://mockmateai-001-site1.jtempurl.com/users/:path*"
     },
     {
       "source": "/(.*)",
