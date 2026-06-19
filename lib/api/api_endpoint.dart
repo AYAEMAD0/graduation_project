@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class ApiEndpoint {
   static String baseUrl = kDebugMode
-      ? 'http://mockmate-001-site1.mtempurl.com'
+      ? 'http://mockmateai-001-site1.jtempurl.com'
       : '';
   static const String signupApi = '/api/users';
   static const String loginApi = '/api/users/login';
