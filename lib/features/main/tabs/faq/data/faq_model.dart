@@ -6,9 +6,9 @@ class FaqModel {
 
   static List<FaqModel> data = [
     FaqModel(
-      title: "1. What is MockFlow?",
+      title: "1. What is MockMate.ai?",
       des:
-          "MockFlow is an AI-powered platform that helps you practice job interviews through realistic simulations and personalized feedback.",
+          "MockMate.ai is an AI-powered platform that helps you practice job interviews through realistic simulations and personalized feedback.",
     ),
     FaqModel(
       title: "2. How does the app work?",
@@ -31,7 +31,7 @@ class FaqModel {
           "Yes, the app stores your past interviews and displays your progress, scores, and improvements.",
     ),
     FaqModel(
-      title: "6. What distinguishes MockFlow from other platforms?",
+      title: "6. What distinguishes MockMate.ai from other platforms?",
       des:
           "Generates personalized questions , Simulates real interviews , Provides instant AI feedback",
     ),
