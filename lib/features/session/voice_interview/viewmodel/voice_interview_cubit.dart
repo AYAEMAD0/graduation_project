@@ -204,11 +204,17 @@ class VoiceInterviewCubit extends Cubit<VoiceInterviewState> {
     }
   }
 
-  void _processNextTts() {
+  void _processNextTts() async {
     if (isClosed) return;
     if (_ttsQueue.isNotEmpty) {
+      final wasAiSpeaking = state.isAiSpeaking;
       emit(state.copyWith(isAiSpeaking: true));
-      _tts.speak(_ttsQueue.removeAt(0));
+      final nextText = _ttsQueue.removeAt(0);
+      if (!wasAiSpeaking) {
+        await Future.delayed(const Duration(milliseconds: 150));
+      }
+      if (isClosed) return;
+      _tts.speak(nextText);
     } else {
       emit(state.copyWith(isAiSpeaking: false));
       if (_aiFinishedGenerating && state.isConnected) startListening();

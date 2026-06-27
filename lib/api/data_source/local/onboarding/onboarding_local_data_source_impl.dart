@@ -31,17 +31,17 @@ class OnboardingLocalDataSourceImpl extends OnboardingLocalDataSource {
       OnboardingModelDTO(
         title: "Personalized Interview Experience",
         image: AppAsset.onboarding1Image,
-        description: "Upload your CV or paste a job description to receive fully customized interview\n questions tailored to your skills,experience, and target role.Our smart system \nanalyzes your profile to generate relevant technical,behavioral,and \nrole-specific questions.",
+        description: "Upload your CV or paste a job description to receive fully customized interview\n questions tailored to your skills, experience, and target role. Our smart system \nanalyzes your profile to generate relevant technical, behavioral, and \nrole-specific questions.",
       ),
       OnboardingModelDTO(
         title: "Practice Like It’s the Real Interview",
         image: AppAsset.onboarding2Image,
-        description: "Experience timed MCQs, coding challenges, and scenario-based questions designed\n to simulate real interview environments.Get instant feedback, improve your \nproblem-solving speed,and build confidence under pressure.",
+        description: "Experience timed MCQs, coding challenges, and scenario-based questions designed\n to simulate real interview environments. Get instant feedback, improve your \nproblem-solving speed, and build confidence under pressure.",
       ),
       OnboardingModelDTO(
         title: "Track, Improve, and Succeed",
         image: AppAsset.onboarding3Image,
-        description: "Monitor your scores, review past attempts, and gain detailed performance insights.\nIdentify your strengths,discover areas for improvement, and follow your growth \njourney step by step until you're fully interview-ready.",
+        description: "Monitor your scores, review past attempts, and gain detailed performance insights.\nIdentify your strengths, discover areas for improvement, and follow your growth \njourney step by step until you're fully interview-ready.",
       ),
     ];
     return dtos.map((e) => e.toEntity(),).toList();

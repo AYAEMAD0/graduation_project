@@ -24,7 +24,7 @@ class BuildHowWorkSection extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          "From setup to feedback \n Four simple steps to land your dream job.",
+          "From setup to feedback \nFour simple steps to land your dream job.",
           textAlign: TextAlign.center,
           style: GoogleFonts.inter(
             fontSize: isMobile ? 22 : 30,
@@ -41,7 +41,7 @@ class BuildHowWorkSection extends StatelessWidget {
                 stepNumber: "1",
                 title: "Choose Interview Type",
                 description:
-                    "Pick the interview style that suits you — Standard questions, Ai-generated, or a Voice simulation.",
+                    "Pick the interview style that suits you — Standard questions, AI-generated, or a Live Video Interview.",
                 icon: Icons.tune_rounded,
                 iconBackgroundColor: const Color(0xffF3E8FF),
               ),
@@ -54,7 +54,7 @@ class BuildHowWorkSection extends StatelessWidget {
                 stepNumber: "2",
                 title: "Set Up Your Session",
                 description:
-                    "Upload your CV and job description, or simply choose your track if you're going with a Voice interview — we'll tailor everything for you.",
+                    "Upload your CV and job description, or simply choose your track if you're going with a Live Video Interview — we'll tailor everything for you.",
                 icon: AppAsset.upload,
                 iconBackgroundColor: const Color(0xffDBEAFE),
               ),

@@ -9,6 +9,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/theme/app_color.dart';
 import '../viewmodel/voice_interview_cubit.dart';
+import '../viewmodel/voice_interview_state.dart';
 import '../widget/voice_interview_body.dart';
 
 class VoiceInterviewView extends StatefulWidget {
@@ -104,8 +105,18 @@ class _VoiceInterviewViewState extends State<VoiceInterviewView> {
           ? const Center(
               child: CircularProgressIndicator(color: Colors.blueAccent),
             )
-          : SafeArea(
-        child: Stack(
+          : BlocListener<VoiceInterviewCubit, VoiceInterviewState>(
+              listenWhen: (previous, current) =>
+                  !previous.isEvaluating && current.isEvaluating,
+              listener: (context, state) {
+                _cameraController?.dispose();
+                _cameraController = null;
+                if (mounted) {
+                  setState(() => _isCameraInitialized = false);
+                }
+              },
+              child: SafeArea(
+                child: Stack(
           children: [
             Positioned(
               top: isMobile ? -80 : 90,
@@ -180,6 +191,7 @@ class _VoiceInterviewViewState extends State<VoiceInterviewView> {
           ],
         ),
       ),
+    ),
     );
   }
 }

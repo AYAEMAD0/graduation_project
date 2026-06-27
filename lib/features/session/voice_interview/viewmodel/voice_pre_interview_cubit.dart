@@ -16,7 +16,8 @@ class VoicePreInterviewCubit extends Cubit<VoicePreInterviewState> {
     emit(state.copyWith(isCheckingMic: true));
 
     try {
-      await html.window.navigator.mediaDevices!.getUserMedia({'audio': true});
+      final stream = await html.window.navigator.mediaDevices!.getUserMedia({'audio': true});
+      stream.getTracks().forEach((track) => track.stop());
       if (!isClosed) {
         emit(state.copyWith(isMicAllowed: true, isCheckingMic: false));
       }
@@ -32,7 +33,8 @@ class VoicePreInterviewCubit extends Cubit<VoicePreInterviewState> {
     emit(state.copyWith(isCheckingCamera: true));
 
     try {
-      await html.window.navigator.mediaDevices!.getUserMedia({'video': true});
+      final stream = await html.window.navigator.mediaDevices!.getUserMedia({'video': true});
+      stream.getTracks().forEach((track) => track.stop());
       if (!isClosed) {
         emit(state.copyWith(isCameraAllowed: true, isCheckingCamera: false));
       }
