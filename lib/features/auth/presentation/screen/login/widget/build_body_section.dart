@@ -5,6 +5,7 @@ import '../../../../../../core/constants/app_asset.dart';
 import '../../../../../../core/theme/app_style.dart';
 import '../../../../../../core/widget/custom_button.dart';
 import '../../../../../../core/widget/custom_text_field.dart';
+import '../../../../../../core/routes/app_routes.dart';
 import '../viewModel/login_cubit.dart';
 import 'build_have_account_section.dart';
 
@@ -65,8 +66,7 @@ class BuildBodySection extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
-                //todo forget
-                //todo  Navigator.pushNamed(context, AppRoutes.forgotPassword);
+                Navigator.pushNamed(context, AppRoutes.forgotPassword);
               },
               child: Text(
                 "Forgot Password?",

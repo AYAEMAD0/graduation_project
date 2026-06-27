@@ -10,6 +10,8 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    
     final breakpoints = ResponsiveBreakpoints.of(context);
     final isMobile = breakpoints.isMobile;
 
@@ -48,7 +50,7 @@ class ResetPassword extends StatelessWidget {
                           ),
                           SizedBox(height: spacingMedium),
                           Text(
-                            "Your password has been successfully reset. \nclick confirm to set a new password",
+                            "Your OTP has been successfully verified. \nClick confirm to set a new password",
                             style: AppStyle.font16GrayMediumMedium
                                 .copyWith(fontSize: descFontSize),
                             textAlign: TextAlign.center,
@@ -58,7 +60,7 @@ class ResetPassword extends StatelessWidget {
                             text: "confirm",
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, AppRoutes.newPassword);
+                                  context, AppRoutes.newPassword, arguments: args);
                             },
                           ),
                         ],

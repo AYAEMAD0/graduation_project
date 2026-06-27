@@ -6,7 +6,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 class OtpFields extends StatefulWidget {
   final int? otpLength;
-  const OtpFields({super.key, this.otpLength});
+  final Function(String)? onOtpChanged;
+  const OtpFields({super.key, this.otpLength, this.onOtpChanged});
 
   @override
   State<OtpFields> createState() => _OtpFieldsState();
@@ -35,6 +36,13 @@ class _OtpFieldsState extends State<OtpFields> {
     }
     super.dispose();
   }
+  
+  void _triggerChanged() {
+    if (widget.onOtpChanged != null) {
+      String otp = controllers.map((e) => e.text).join();
+      widget.onOtpChanged!(otp);
+    }
+  }
 
   void _onChanged(String value, int index) {
     if (value.length > 1) {
@@ -47,6 +55,7 @@ class _OtpFieldsState extends State<OtpFields> {
     if (value.isEmpty && index > 0) {
       focusNodes[index - 1].requestFocus();
     }
+    _triggerChanged();
   }
 
   void _pasteCode(String code) {
@@ -54,6 +63,7 @@ class _OtpFieldsState extends State<OtpFields> {
       controllers[i].text = i < code.length ? code[i] : '';
     }
     focusNodes.last.unfocus();
+    _triggerChanged();
   }
 
   @override
