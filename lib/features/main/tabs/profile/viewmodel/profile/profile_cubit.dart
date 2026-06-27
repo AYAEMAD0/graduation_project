@@ -56,6 +56,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       imagePath: imagePath,
       imageBytes: imageBytes,
       user: _currentUser,
+      hasChanges: true,
     ));
   }
 
