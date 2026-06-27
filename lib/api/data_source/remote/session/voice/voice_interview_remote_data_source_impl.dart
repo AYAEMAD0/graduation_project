@@ -51,7 +51,7 @@ class VoiceInterviewRemoteDataSourceImpl
   Future<void> connectWebSocket(
       {required String token, required String track}) async {
     final wsUrl = Uri.parse(
-      'wss://mockmate-ai-5caj.onrender.com/ws/voice-interview',
+      'wss://mockmate-ai-1-8pzw.onrender.com/ws/voice-interview',
     );
     _channel = WebSocketChannel.connect(wsUrl);
     //todo add
